@@ -1445,6 +1445,48 @@
     .cp-promo-cta { align-self: stretch; justify-content: center; }
   }
 
+  /* in-chat upsell card */
+  .cp-upsell-card {
+    margin: 4px 0;
+    background: linear-gradient(135deg, #0f4c75 0%, #1a6fa3 60%, #00a884 100%);
+    border-radius: 16px; padding: 18px 20px;
+    color: #fff; display: flex; flex-direction: column; gap: 12px;
+    box-shadow: 0 6px 24px rgba(15,76,117,0.28);
+    position: relative; overflow: hidden;
+  }
+  .cp-upsell-card::before {
+    content: ''; position: absolute; top: -30px; right: -30px;
+    width: 120px; height: 120px; border-radius: 50%;
+    background: rgba(255,255,255,0.07);
+  }
+  .cp-upsell-top { display: flex; align-items: center; gap: 10px; }
+  .cp-upsell-emoji { font-size: 28px; flex-shrink: 0; }
+  .cp-upsell-title { font-size: 0.95rem; font-weight: 700; line-height: 1.3; font-family: 'Rubik', sans-serif; }
+  .cp-upsell-sub { font-size: 0.78rem; opacity: 0.85; line-height: 1.5; font-family: 'Rubik', sans-serif; }
+  .cp-upsell-sub em { font-style: normal; font-weight: 600; color: #7fffd4; }
+  .cp-upsell-features {
+    display: flex; flex-direction: column; gap: 5px;
+  }
+  .cp-upsell-feature {
+    display: flex; align-items: center; gap: 7px;
+    font-size: 0.75rem; font-family: 'Rubik', sans-serif; opacity: 0.92;
+  }
+  .cp-upsell-feature::before { content: "✓"; font-weight: 800; color: #7fffd4; font-size: 0.85rem; }
+  .cp-upsell-btn {
+    width: 100%; padding: 12px; border-radius: 30px; border: none;
+    background: #fff; color: #0f4c75;
+    font-size: 0.92rem; font-weight: 800; cursor: pointer;
+    font-family: 'Rubik', sans-serif;
+    transition: transform 0.15s, box-shadow 0.15s;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+  .cp-upsell-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.2); }
+  .cp-upsell-charity {
+    text-align: center; font-size: 0.68rem; opacity: 0.7;
+    font-family: 'Rubik', sans-serif;
+  }
+
   /* follow-up suggestion chips */
   .cp-suggestions {
     display: flex; flex-wrap: wrap; gap: 7px;
@@ -1556,7 +1598,7 @@
 
 <script>
   // ---- State ----
-  const CP_FREE_LIMIT = 1;
+  const CP_FREE_LIMIT = 2;
   const CP_PAID_LIMIT = 5;
   // portal-specific keys so each portal has its own quota
   const CP_FREE_KEY = 'carepedia_pk_free';
@@ -1604,6 +1646,40 @@
     return div;
   }
 
+  function cpShowUpsellCard() {
+    // Don't add a second card if one already exists
+    if (document.querySelector('.cp-upsell-card')) return;
+
+    const msgs = document.getElementById('cp-messages');
+    const card = document.createElement('div');
+    card.className = 'cp-upsell-card';
+    card.innerHTML = `
+      <div class="cp-upsell-top">
+        <div class="cp-upsell-emoji">🧠</div>
+        <div>
+          <div class="cp-upsell-title">You've used your 2 free questions</div>
+          <div class="cp-upsell-sub">Keep going for <em>$5</em> — unlocks 5 more questions on this portal.</div>
+        </div>
+      </div>
+      <div class="cp-upsell-features">
+        <div class="cp-upsell-feature">5 more questions on Parkinson's</div>
+        <div class="cp-upsell-feature">Answers grounded in this portal only</div>
+        <div class="cp-upsell-feature">Your $5 funds Parkinson's Foundation research</div>
+      </div>
+      <button class="cp-upsell-btn" onclick="cpMockPay()">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+        Unlock 5 Questions — $5
+      </button>
+      <div class="cp-upsell-charity">💙 100% goes to the Parkinson's Foundation</div>
+    `;
+    msgs.appendChild(card);
+    msgs.scrollTop = msgs.scrollHeight;
+
+    // Disable input
+    document.getElementById('cp-input').disabled = true;
+    document.getElementById('cp-send-btn').disabled = true;
+  }
+
   function cpToggleDrawer() {
     const drawer = document.getElementById('cp-ai-drawer');
     drawer.classList.toggle('open');
@@ -1621,9 +1697,14 @@
     localStorage.setItem(CP_UNLOCK_KEY, '1');
     localStorage.setItem(CP_PAID_KEY, '0');
     document.getElementById('cp-paywall').classList.remove('show');
+    // Remove in-chat upsell card
+    const card = document.querySelector('.cp-upsell-card');
+    if (card) card.remove();
     cpUpdateQuota();
+    cpUpdateBadge();
     document.getElementById('cp-input').disabled = false;
     document.getElementById('cp-send-btn').disabled = false;
+    document.getElementById('cp-input').focus();
     const toast = document.getElementById('cp-unlock-toast');
     toast.classList.add('show');
     setTimeout(() => toast.classList.remove('show'), 2800);
@@ -1637,7 +1718,7 @@
     if (!q) return;
 
     if (cpQuestionsLeft() <= 0) {
-      document.getElementById('cp-paywall').classList.add('show');
+      cpShowUpsellCard();
       return;
     }
 
@@ -1734,7 +1815,7 @@
     cpUpdateBadge();
 
     if (cpQuestionsLeft() <= 0) {
-      setTimeout(() => document.getElementById('cp-paywall').classList.add('show'), 800);
+      cpShowUpsellCard();
     } else {
       input.disabled = false;
       sendBtn.disabled = false;
