@@ -1631,6 +1631,7 @@
     cpAddMessage(q, 'user');
     const typing = cpAddMessage('Thinking…', 'bot typing');
 
+    let success = false;
     try {
       const res = await fetch(CP_API_URL, {
         method: 'POST',
@@ -1638,12 +1639,25 @@
         body: JSON.stringify({ question: q }),
       });
       const data = await res.json();
-      typing.textContent = data.reply || data.error || 'Something went wrong — please try again.';
+      if (data.reply) {
+        typing.textContent = data.reply;
+        success = true;
+      } else {
+        typing.textContent = 'Something went wrong — please try again.';
+      }
     } catch {
-      typing.textContent = 'Could not reach the AI server. Make sure it is running on localhost:3001.';
+      typing.textContent = 'Could not reach the AI. Please try again in a moment.';
     }
 
     typing.classList.remove('typing');
+
+    // Don't burn a question on a failed request
+    if (!success) {
+      input.disabled = false;
+      sendBtn.disabled = false;
+      input.focus();
+      return;
+    }
 
     // If portal didn't have the answer, offer a research request
     const NOT_FOUND_PHRASE = "isn't covered in this portal";
