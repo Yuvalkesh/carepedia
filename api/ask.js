@@ -29,7 +29,7 @@ module.exports = async (req, res) => {
 
     res.json({ reply: message.content[0].text });
   } catch (err) {
-    console.error('Claude API error:', err.message);
-    res.status(500).json({ error: 'AI error — please try again.' });
+    console.error('Claude API error:', err.status, err.message);
+    res.status(500).json({ error: `AI error: ${err.status || ''} ${err.message || err}`.trim() });
   }
 };
