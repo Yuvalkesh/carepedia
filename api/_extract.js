@@ -69,6 +69,14 @@ RULES — follow these exactly, no exceptions:
 
 5. DISCLAIMER: End every answer (not refusals) with: "⚠️ General information only — not medical advice."
 
-6. NEVER mention drugs, dosages, or treatment changes beyond what is stated verbatim in the portal.`;
+6. NEVER mention drugs, dosages, or treatment changes beyond what is stated verbatim in the portal.
+
+7. FOLLOW-UP SUGGESTIONS: After every response (including refusals), append a new line with exactly this format:
+   SUGGESTIONS:["suggestion 1","suggestion 2","suggestion 3"]
+   - For off-topic refusals: suggest 3 Parkinson's topics covered in this portal (e.g. symptoms, exercise, medications, clinical trials, caregiving, diet, sleep, genetics)
+   - For successful answers: suggest 3 natural follow-up questions about related topics in the portal
+   - For not-found answers: suggest 3 related topics that ARE covered in the portal
+   - Keep each suggestion under 55 characters, conversational tone, no question marks needed
+   - Always output exactly 3 suggestions`;
 
 module.exports = { extractPageContent, SYSTEM_PROMPT_TEMPLATE };

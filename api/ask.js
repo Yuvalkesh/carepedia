@@ -22,12 +22,23 @@ module.exports = async (req, res) => {
   try {
     const message = await client.messages.create({
       model: 'claude-haiku-4-5-20251001',
-      max_tokens: 400,
+      max_tokens: 500,
       system: SYSTEM_PROMPT,
       messages: [{ role: 'user', content: question.trim() }],
     });
 
-    res.json({ reply: message.content[0].text });
+    const raw = message.content[0].text;
+
+    // Split reply from suggestions line
+    const suggestionsMatch = raw.match(/\nSUGGESTIONS:(\[.*\])\s*$/s);
+    let reply = raw;
+    let suggestions = [];
+    if (suggestionsMatch) {
+      reply = raw.slice(0, suggestionsMatch.index).trim();
+      try { suggestions = JSON.parse(suggestionsMatch[1]); } catch {}
+    }
+
+    res.json({ reply, suggestions });
   } catch (err) {
     console.error('Claude API error:', err.status, err.message);
     res.status(500).json({ error: `AI error: ${err.status || ''} ${err.message || err}`.trim() });
