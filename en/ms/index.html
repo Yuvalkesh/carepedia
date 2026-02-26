@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Multiple Sclerosis Hub | CarePedia Information Center</title>
+  <link rel="alternate" hreflang="he" href="https://carepedia.org/ms"/>
+  <link rel="alternate" hreflang="en" href="https://carepedia.org/en/ms"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
+  <style>
+    :root {
+      --primary: #0f4c75;
+      --primary-light: #3282b8;
+      --accent: #00b894;
+      --accent-light: #00cec9;
+      --warm: #e17055;
+      --warm-dark: #c0392b;
+      --bg: #f0f4f8;
+      --card: #ffffff;
+      --text: #1a2533;
+      --text-light: #5a6a7a;
+      --shadow: 0 4px 20px rgba(15,76,117,0.10);
+      --shadow-hover: 0 8px 32px rgba(15,76,117,0.18);
+      --radius: 16px;
+      --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Rubik', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+    #scroll-progress { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--primary-light)); z-index: 9999; width: 0%; transition: width 0.1s; }
+    .sidebar {
+      position: fixed; top: 0; left: 0; width: 280px; height: 100vh;
+      background: rgba(15,76,117,0.85); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+      color: #fff; z-index: 1000; display: flex; flex-direction: column;
+      overflow-y: auto; overflow-x: hidden; transition: transform var(--transition);
+      border-right: 1px solid rgba(255,255,255,0.10);
+    }
+    .sidebar-header { padding: 28px 20px 20px; border-bottom: 1px solid rgba(255,255,255,0.12); display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .sidebar-icon { font-size: 44px; color: #ffd166; }
+    .sidebar-title { font-size: 1.05rem; font-weight: 700; text-align: center; line-height: 1.35; letter-spacing: 0.01em; }
+    .sidebar-subtitle { font-size: 0.72rem; opacity: 0.65; text-align: center; letter-spacing: 0.04em; text-transform: uppercase; }
+    .sidebar-search { padding: 14px 16px 10px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .sidebar-search input { width: 100%; padding: 9px 14px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.10); color: #fff; font-size: 0.82rem; font-family: 'Rubik', sans-serif; outline: none; transition: border var(--transition); }
+    .sidebar-search input::placeholder { color: rgba(255,255,255,0.45); }
+    .sidebar-search input:focus { border-color: rgba(255,255,255,0.45); }
+    nav { padding: 10px 0 20px; flex: 1; }
+    nav a { display: flex; align-items: center; gap: 11px; padding: 10px 22px; color: rgba(255,255,255,0.82); text-decoration: none; font-size: 0.88rem; font-weight: 500; border-radius: 0 30px 30px 0; margin-right: 12px; transition: all var(--transition); border-left: 3px solid transparent; }
+    nav a:hover, nav a.active { background: rgba(255,255,255,0.12); color: #fff; border-left-color: var(--accent); transform: translateX(4px); }
+    nav a .iconify { font-size: 18px; flex-shrink: 0; opacity: 0.8; }
+    nav a:hover .iconify, nav a.active .iconify { opacity: 1; }
+    .nav-section-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.38); padding: 14px 22px 4px; }
+    .main { margin-left: 280px; min-height: 100vh; }
+    .disclaimer-banner { background: linear-gradient(135deg, #fff3cd, #ffeaa7); border-bottom: 2px solid #f9ca24; padding: 11px 28px; display: flex; align-items: center; gap: 10px; font-size: 0.82rem; color: #856404; font-weight: 500; }
+    .disclaimer-banner .iconify { font-size: 20px; color: #e17055; flex-shrink: 0; }
+    .hero { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 60%, var(--accent-light) 100%); color: white; padding: 56px 48px 48px; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; top: -60px; right: -60px; width: 300px; height: 300px; border-radius: 50%; background: rgba(255,255,255,0.06); }
+    .hero::after { content: ''; position: absolute; bottom: -80px; left: 30%; width: 220px; height: 220px; border-radius: 50%; background: rgba(255,255,255,0.04); }
+    .hero-badge { display: inline-flex; align-items: center; gap: 7px; background: rgba(255,255,255,0.15); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.25); border-radius: 30px; padding: 6px 16px; font-size: 0.78rem; font-weight: 600; margin-bottom: 18px; letter-spacing: 0.03em; }
+    .hero h1 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 800; line-height: 1.2; margin-bottom: 14px; }
+    .hero p { font-size: 1.05rem; opacity: 0.88; max-width: 620px; line-height: 1.65; margin-bottom: 28px; }
+    .hero-stats { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 10px; }
+    .hero-stat { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.20); border-radius: 14px; padding: 14px 20px; backdrop-filter: blur(8px); text-align: center; min-width: 130px; }
+    .hero-stat strong { display: block; font-size: 1.5rem; font-weight: 800; line-height: 1; }
+    .hero-stat span { font-size: 0.72rem; opacity: 0.78; margin-top: 3px; display: block; }
+    .cat-grid-section { padding: 36px 48px 12px; }
+    .cat-grid-section h2 { font-size: 1.15rem; font-weight: 700; color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+    .cat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 14px; }
+    .cat-card { background: var(--card); border-radius: 14px; padding: 18px 14px; text-align: center; box-shadow: var(--shadow); cursor: pointer; transition: all var(--transition); border: 2px solid transparent; text-decoration: none; color: var(--text); display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .cat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); border-color: var(--primary-light); color: var(--primary); }
+    .cat-card .iconify { font-size: 30px; color: var(--primary-light); }
+    .cat-card span { font-size: 0.80rem; font-weight: 600; }
+    .content-section { padding: 36px 48px; }
+    .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 16px; border-bottom: 2px solid rgba(15,76,117,0.10); }
+    .section-icon { width: 52px; height: 52px; background: linear-gradient(135deg, var(--primary), var(--primary-light)); border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .section-icon .iconify { font-size: 26px; color: white; }
+    .section-header h2 { font-size: 1.55rem; font-weight: 800; color: var(--primary); }
+    .section-header p { font-size: 0.9rem; color: var(--text-light); margin-top: 3px; }
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-bottom: 28px; }
+    .info-card { background: var(--card); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); border-top: 4px solid var(--primary-light); transition: all var(--transition); }
+    .info-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+    .info-card h3 { font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    .info-card h3 .iconify { font-size: 20px; color: var(--accent); }
+    .info-card p { font-size: 0.875rem; color: var(--text-light); line-height: 1.65; }
+    .info-card ul { margin-top: 10px; padding-left: 18px; }
+    .info-card ul li { font-size: 0.86rem; color: var(--text-light); margin-bottom: 5px; line-height: 1.5; }
+    .accent-card { background: linear-gradient(135deg, var(--accent), var(--accent-light)); color: white; border-top-color: rgba(255,255,255,0.3); }
+    .accent-card h3, .accent-card p, .accent-card li { color: white !important; }
+    .accent-card h3 .iconify { color: rgba(255,255,255,0.85) !important; }
+    .warm-card { border-top-color: var(--warm); }
+    .warm-card h3 { color: var(--warm-dark) !important; }
+    .tab-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+    .tab-btn { padding: 9px 20px; border-radius: 30px; border: 2px solid var(--primary-light); background: transparent; color: var(--primary); font-size: 0.84rem; font-weight: 600; cursor: pointer; transition: all var(--transition); font-family: 'Rubik', sans-serif; }
+    .tab-btn:hover { background: var(--primary-light); color: white; }
+    .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .med-table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); font-size: 0.85rem; margin-bottom: 20px; }
+    .med-table th { background: var(--primary); color: white; padding: 12px 16px; text-align: left; font-weight: 600; }
+    .med-table td { padding: 11px 16px; border-bottom: 1px solid #e8edf2; }
+    .med-table tr:last-child td { border-bottom: none; }
+    .med-table tr:hover td { background: rgba(15,76,117,0.04); }
+    .med-table td:first-child { font-weight: 600; color: var(--primary); }
+    .accordion { margin-bottom: 12px; }
+    .accordion-header { background: var(--card); border-radius: 12px; padding: 16px 20px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; box-shadow: var(--shadow); transition: all var(--transition); font-weight: 600; font-size: 0.92rem; color: var(--primary); border-left: 4px solid var(--primary-light); }
+    .accordion-header:hover { background: rgba(15,76,117,0.04); }
+    .accordion-header.open { border-radius: 12px 12px 0 0; border-left-color: var(--accent); }
+    .accordion-header .iconify { transition: transform var(--transition); font-size: 20px; }
+    .accordion-header.open .iconify { transform: rotate(180deg); }
+    .accordion-body { background: var(--card); border-radius: 0 0 12px 12px; max-height: 0; overflow: hidden; transition: max-height 0.4s ease; border-left: 4px solid var(--accent); }
+    .accordion-body.open { max-height: 1600px; }
+    .accordion-inner { padding: 18px 22px; font-size: 0.875rem; color: var(--text-light); line-height: 1.7; }
+    .accordion-inner ul { padding-left: 18px; margin-top: 8px; }
+    .accordion-inner ul li { margin-bottom: 6px; }
+    .alert-box { border-radius: 12px; padding: 16px 20px; margin-bottom: 18px; display: flex; gap: 12px; font-size: 0.875rem; line-height: 1.6; }
+    .alert-box .iconify { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+    .alert-info { background: #e8f4fd; border-left: 4px solid var(--primary-light); color: #1a3a5c; }
+    .alert-info .iconify { color: var(--primary-light); }
+    .alert-success { background: #e6f9f4; border-left: 4px solid var(--accent); color: #0d4a3a; }
+    .alert-success .iconify { color: var(--accent); }
+    .alert-warning { background: #fff8e6; border-left: 4px solid #f9ca24; color: #6b4c00; }
+    .alert-warning .iconify { color: #e67e22; }
+    .timeline { position: relative; padding-left: 24px; }
+    .timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--primary-light), var(--accent)); }
+    .timeline-item { position: relative; margin-bottom: 22px; }
+    .timeline-item::before { content: ''; position: absolute; left: -20px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); border: 2px solid white; box-shadow: 0 0 0 2px var(--accent); }
+    .timeline-item h4 { font-size: 0.92rem; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+    .timeline-item p { font-size: 0.84rem; color: var(--text-light); line-height: 1.6; }
+    .highlight-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .highlight-box { background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: white; border-radius: var(--radius); padding: 22px; }
+    .highlight-box .iconify { font-size: 28px; margin-bottom: 10px; color: rgba(255,255,255,0.85); display: block; }
+    .highlight-box h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; }
+    .highlight-box p { font-size: 0.82rem; opacity: 0.88; line-height: 1.55; }
+    .story-card { background: var(--card); border-radius: var(--radius); padding: 26px; box-shadow: var(--shadow); border-left: 5px solid var(--accent); margin-bottom: 18px; transition: all var(--transition); }
+    .story-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+    .story-card blockquote { font-size: 1.0rem; font-style: italic; color: var(--text); line-height: 1.75; margin-bottom: 14px; }
+    .story-card cite { font-size: 0.82rem; color: var(--text-light); font-style: normal; font-weight: 600; }
+    .resource-links { display: flex; flex-direction: column; gap: 12px; }
+    .resource-link { background: var(--card); border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; gap: 14px; box-shadow: var(--shadow); text-decoration: none; color: var(--text); transition: all var(--transition); border: 1px solid transparent; }
+    .resource-link:hover { border-color: var(--primary-light); transform: translateX(4px); box-shadow: var(--shadow-hover); }
+    .resource-link .iconify { font-size: 24px; color: var(--primary-light); flex-shrink: 0; }
+    .resource-link .rl-title { font-weight: 600; font-size: 0.9rem; color: var(--primary); }
+    .resource-link .rl-desc { font-size: 0.78rem; color: var(--text-light); margin-top: 2px; }
+    .action-step { background: var(--card); border-radius: var(--radius); padding: 20px 22px; margin-bottom: 14px; box-shadow: var(--shadow); display: flex; gap: 16px; align-items: flex-start; transition: all var(--transition); }
+    .action-step:hover { transform: translateX(4px); box-shadow: var(--shadow-hover); }
+    .step-num { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: white; font-weight: 800; font-size: 1rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-content h4 { font-size: 0.95rem; font-weight: 700; color: var(--primary); margin-bottom: 5px; }
+    .step-content p { font-size: 0.85rem; color: var(--text-light); line-height: 1.6; }
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; margin-right: 4px; margin-bottom: 4px; }
+    .badge-blue { background: #dbeafe; color: #1e40af; }
+    .badge-green { background: #d1fae5; color: #065f46; }
+    .badge-orange { background: #fed7aa; color: #9a3412; }
+    .badge-purple { background: #ede9fe; color: #5b21b6; }
+    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    .menu-toggle { display: none; position: fixed; top: 14px; left: 14px; z-index: 1100; background: var(--primary); color: white; border: none; border-radius: 10px; padding: 10px 12px; cursor: pointer; box-shadow: var(--shadow); }
+    .menu-toggle .iconify { font-size: 22px; }
+    #scroll-top { position: fixed; bottom: 28px; right: 28px; background: var(--primary); color: white; border: none; border-radius: 50%; width: 46px; height: 46px; cursor: pointer; box-shadow: var(--shadow-hover); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: all var(--transition); z-index: 900; }
+    #scroll-top.show { opacity: 1; pointer-events: all; }
+    #scroll-top:hover { transform: translateY(-3px); background: var(--primary-light); }
+    .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 999; }
+    .overlay.show { display: block; }
+    @media (max-width: 900px) {
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.open { transform: translateX(0); }
+      .main { margin-left: 0; }
+      .menu-toggle { display: flex; }
+      .hero { padding: 70px 24px 36px; }
+      .content-section { padding: 24px 20px; }
+      .cat-grid-section { padding: 24px 20px 10px; }
+      .cards-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 1.55rem; }
+      .hero-stats { gap: 10px; }
+      .hero-stat { min-width: 100px; padding: 10px 14px; }
+      .tab-btn { padding: 7px 14px; font-size: 0.78rem; }
+    }
+  </style>
+</head>
+<body>
+<div id="scroll-progress"></div>
+<button class="menu-toggle" onclick="toggleMenu()" aria-label="Open menu">
+  <span class="iconify" data-icon="solar:hamburger-menu-bold"></span>
+</button>
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <span class="iconify sidebar-icon" data-icon="solar:brain-bold-duotone"></span>
+    <div class="sidebar-title">Multiple Sclerosis Hub</div>
+    <div class="sidebar-subtitle">CarePedia Information Center</div>
+  </div>
+  <div class="sidebar-search">
+    <input type="text" id="search-input" placeholder="Search the portal..." oninput="searchPortal(this.value)" aria-label="Search portal"/>
+  </div>
+  <nav id="main-nav">
+    <div class="nav-section-label">Overview</div>
+    <a href="#home" onclick="navigate('home')" class="active"><span class="iconify" data-icon="solar:home-bold-duotone"></span> Home</a>
+    <a href="#about" onclick="navigate('about')"><span class="iconify" data-icon="solar:info-circle-bold-duotone"></span> About MS</a>
+    <a href="#types" onclick="navigate('types')"><span class="iconify" data-icon="solar:layers-bold-duotone"></span> Types of MS</a>
+    <div class="nav-section-label">Treatment</div>
+    <a href="#treatments" onclick="navigate('treatments')"><span class="iconify" data-icon="solar:pill-bold-duotone"></span> Treatments (DMTs)</a>
+    <a href="#trials" onclick="navigate('trials')"><span class="iconify" data-icon="solar:test-tube-bold-duotone"></span> Clinical Trials</a>
+    <a href="#research" onclick="navigate('research')"><span class="iconify" data-icon="solar:microscope-bold-duotone"></span> Research</a>
+    <div class="nav-section-label">Living Well</div>
+    <a href="#symptoms" onclick="navigate('symptoms')"><span class="iconify" data-icon="solar:health-bold-duotone"></span> Symptom Management</a>
+    <a href="#rehab" onclick="navigate('rehab')"><span class="iconify" data-icon="solar:bicycling-round-bold-duotone"></span> Rehabilitation</a>
+    <a href="#psychological-approach" onclick="navigate('psychological-approach')"><span class="iconify" data-icon="solar:heart-pulse-bold-duotone"></span> Mental Health</a>
+    <a href="#lifestyle" onclick="navigate('lifestyle')"><span class="iconify" data-icon="solar:running-round-bold-duotone"></span> Lifestyle</a>
+    <a href="#pregnancy" onclick="navigate('pregnancy')"><span class="iconify" data-icon="solar:baby-bold-duotone"></span> Pregnancy</a>
+    <div class="nav-section-label">Community</div>
+    <a href="#support" onclick="navigate('support')"><span class="iconify" data-icon="solar:users-group-rounded-bold-duotone"></span> Support</a>
+    <a href="#resources" onclick="navigate('resources')"><span class="iconify" data-icon="solar:library-bold-duotone"></span> Resources</a>
+  </nav>
+</aside>
+
+<div class="main">
+  <div class="disclaimer-banner">
+    <span class="iconify" data-icon="solar:danger-bold"></span>
+    <span><strong>This is not medical advice.</strong> Always consult your doctor before making any changes to your treatment plan.</span>
+  </div>
+
+  <section class="hero" id="home">
+    <div class="hero-badge"><span class="iconify" data-icon="solar:brain-bold-duotone"></span> Multiple Sclerosis Information Hub</div>
+    <h1>Understanding Multiple Sclerosis</h1>
+    <p>A comprehensive, evidence-based guide to MS — covering diagnosis, disease-modifying therapies, breakthrough research, symptom management, and global support networks. Updated with the latest clinical findings including 2025 breakthroughs.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><strong>2.8M</strong><span>People living with MS worldwide</span></div>
+      <div class="hero-stat"><strong>x32</strong><span>Increased risk after EBV infection (Science 2022)</span></div>
+      <div class="hero-stat"><strong>20+</strong><span>Approved disease-modifying therapies</span></div>
+      <div class="hero-stat"><strong>87%</strong><span>Relapse-free at 5 years with HSCT</span></div>
+    </div>
+  </section>
+
+  <div class="cat-grid-section">
+    <h2><span class="iconify" data-icon="solar:compass-bold-duotone"></span> Navigate the Portal</h2>
+    <div class="cat-grid">
+      <a class="cat-card" href="#about" onclick="navigate('about')"><span class="iconify" data-icon="solar:info-circle-bold-duotone"></span><span>About MS</span></a>
+      <a class="cat-card" href="#types" onclick="navigate('types')"><span class="iconify" data-icon="solar:layers-bold-duotone"></span><span>Types of MS</span></a>
+      <a class="cat-card" href="#treatments" onclick="navigate('treatments')"><span class="iconify" data-icon="solar:pill-bold-duotone"></span><span>DMTs</span></a>
+      <a class="cat-card" href="#trials" onclick="navigate('trials')"><span class="iconify" data-icon="solar:test-tube-bold-duotone"></span><span>Trials</span></a>
+      <a class="cat-card" href="#research" onclick="navigate('research')"><span class="iconify" data-icon="solar:microscope-bold-duotone"></span><span>Research</span></a>
+      <a class="cat-card" href="#symptoms" onclick="navigate('symptoms')"><span class="iconify" data-icon="solar:health-bold-duotone"></span><span>Symptoms</span></a>
+      <a class="cat-card" href="#rehab" onclick="navigate('rehab')"><span class="iconify" data-icon="solar:bicycling-round-bold-duotone"></span><span>Rehab</span></a>
+      <a class="cat-card" href="#psychological-approach" onclick="navigate('psychological-approach')"><span class="iconify" data-icon="solar:heart-pulse-bold-duotone"></span><span>Mental Health</span></a>
+      <a class="cat-card" href="#lifestyle" onclick="navigate('lifestyle')"><span class="iconify" data-icon="solar:running-round-bold-duotone"></span><span>Lifestyle</span></a>
+      <a class="cat-card" href="#pregnancy" onclick="navigate('pregnancy')"><span class="iconify" data-icon="solar:baby-bold-duotone"></span><span>Pregnancy</span></a>
+      <a class="cat-card" href="#support" onclick="navigate('support')"><span class="iconify" data-icon="solar:users-group-rounded-bold-duotone"></span><span>Support</span></a>
+      <a class="cat-card" href="#resources" onclick="navigate('resources')"><span class="iconify" data-icon="solar:library-bold-duotone"></span><span>Resources</span></a>
+    </div>
+  </div>
+
+  <section class="content-section fade-in" id="about">
+    <div class="section-header">
+      <div class="section-icon"><span class="iconify" data-icon="solar:info-circle-bold-duotone"></span></div>
+      <div><h2>What Is Multiple Sclerosis?</h2><p>Biology, causes, and the EBV breakthrough</p></div>
+    </div>
+    <div class="cards-grid">
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:brain-bold-duotone"></span> The Biology of MS</h3>
+        <p>MS is a chronic autoimmune disease in which the immune system attacks myelin — the protective sheath around nerve fibers in the brain and spinal cord. Demyelination disrupts or blocks electrical signal transmission, causing diverse neurological symptoms. Over time, repeated inflammation can cause axonal damage and irreversible disability.</p>
+        <p style="margin-top:10px;">The 2024 updated McDonald Criteria introduced new diagnostic biomarkers: <strong>Paramagnetic Rim Lesions (PRLs)</strong> and the <strong>Central Vein Sign</strong> — distinguishing MS lesions from mimics on MRI with much greater accuracy.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:virus-bold-duotone"></span> The EBV Breakthrough (Science 2022)</h3>
+        <p>A landmark 2022 study in Science analyzed 10 million US military recruits over 20 years and found that <strong>Epstein-Barr virus (EBV) infection increases MS risk by 32 times</strong>. Nearly all MS patients (99.5%) had prior EBV infection. This is the strongest evidence yet that EBV infection — specifically in genetically susceptible individuals — triggers the autoimmune cascade that causes MS.</p>
+        <p style="margin-top:8px;"><span class="badge badge-blue">Science 2022</span> <span class="badge badge-orange">x32 risk increase</span></p>
+      </div>
+      <div class="info-card warm-card">
+        <h3><span class="iconify" data-icon="solar:dna-bold-duotone"></span> Risk Factors</h3>
+        <ul>
+          <li><strong>EBV infection:</strong> Necessary but not sufficient; x32 risk increase</li>
+          <li><strong>Vitamin D deficiency:</strong> Strong inverse relationship with MS risk</li>
+          <li><strong>HLA-DRB1*15:01 gene variant:</strong> Most significant genetic risk factor</li>
+          <li><strong>Smoking:</strong> Doubles MS risk; accelerates disability progression</li>
+          <li><strong>Obesity in adolescence:</strong> Increases risk significantly</li>
+          <li><strong>Sex:</strong> Women affected 3x more than men (in RRMS)</li>
+          <li><strong>Latitude effect:</strong> Higher prevalence at greater distances from equator</li>
+        </ul>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span><span class="iconify" data-icon="solar:clipboard-bold-duotone"></span> &nbsp;Diagnosis (2024 McDonald Criteria)</span>
+        <span class="iconify" data-icon="solar:alt-arrow-down-bold"></span>
+      </div>
+      <div class="accordion-body">
+        <div class="accordion-inner">
+          <p>MS diagnosis requires demonstration of lesions disseminated in space and time, with no better explanation. The 2024 McDonald Criteria update introduced new biomarkers:</p>
+          <ul>
+            <li><strong>MRI brain and spine:</strong> Core diagnostic tool; T2 lesions, gadolinium-enhancing lesions (active inflammation), PRLs, Central Vein Sign</li>
+            <li><strong>Cerebrospinal fluid (CSF) analysis:</strong> Oligoclonal bands in 85-95% of MS patients</li>
+            <li><strong>Visual evoked potentials (VEP):</strong> Detects optic nerve lesions</li>
+            <li><strong>Kappa free light chains (CSF):</strong> Now included as an alternative to oligoclonal bands in 2024 criteria</li>
+            <li><strong>NfL (neurofilament light chain):</strong> Blood biomarker for inflammation and axonal damage; increasingly used to monitor treatment response</li>
+            <li><strong>GFAP (glial fibrillary acidic protein):</strong> Emerging biomarker for progressive MS and astrocyte injury</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section fade-in" id="types">
+    <div class="section-header">
+      <div class="section-icon"><span class="iconify" data-icon="solar:layers-bold-duotone"></span></div>
+      <div><h2>Types of Multiple Sclerosis</h2><p>Understanding the different disease courses</p></div>
+    </div>
+    <div class="cards-grid">
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:refresh-bold-duotone"></span> RRMS — Relapsing-Remitting MS</h3>
+        <p>The most common form, accounting for approximately 85% of MS diagnoses. Characterized by clearly defined attacks (relapses) followed by partial or complete recovery (remissions). MRI often shows new gadolinium-enhancing lesions during relapses. Most approved DMTs are primarily designed for RRMS. After 10+ years, 50% of untreated RRMS patients develop secondary progressive MS.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:chart-arrow-up-bold-duotone"></span> SPMS — Secondary Progressive MS</h3>
+        <p>Follows RRMS in approximately 50% of patients within 10-15 years (untreated) or later with DMT use. Characterized by gradually worsening disability, with or without occasional relapses. Some high-efficacy DMTs (siponimod, cladribine, ocrelizumab) have been shown to slow SPMS progression. The active vs. inactive and progressing vs. stable modifiers help define treatment options.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:arrow-down-bold-duotone"></span> PPMS — Primary Progressive MS</h3>
+        <p>Affects 10-15% of patients. Disability accumulates from onset without distinct relapses. Predominantly affects men and older-onset patients. Only ocrelizumab (Ocrevus) is approved for PPMS. The Fenebrutinib trial (FENtrepid for PPMS) showed "unprecedented" results in November 2025 Phase 3 data and may expand the treatment landscape for PPMS significantly.</p>
+      </div>
+      <div class="info-card warm-card">
+        <h3><span class="iconify" data-icon="solar:eye-bold-duotone"></span> CIS — Clinically Isolated Syndrome</h3>
+        <p>A first demyelinating episode that may or may not progress to MS. MRI findings (number and location of lesions) and CSF findings can predict conversion to MS. Early treatment with DMTs after CIS reduces conversion risk by up to 50%. Considered part of the MS spectrum by the 2024 diagnostic criteria update.</p>
+      </div>
+    </div>
+    <div class="alert-box alert-info">
+      <span class="iconify" data-icon="solar:info-circle-bold"></span>
+      <div><strong>Disease course modifiers (2024):</strong> Each MS type can now be further classified as <strong>active</strong> (new relapses or MRI activity in past year) or <strong>inactive</strong>, and as <strong>with progression</strong> or <strong>without progression</strong>. These modifiers guide treatment escalation decisions.</div>
+    </div>
+  </section>
+
+  <section class="content-section fade-in" id="treatments">
+    <div class="section-header">
+      <div class="section-icon"><span class="iconify" data-icon="solar:pill-bold-duotone"></span></div>
+      <div><h2>Disease-Modifying Therapies (DMTs)</h2><p>Injectable, oral, infusion, relapse treatment, and emerging therapies</p></div>
+    </div>
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab(this,'treatments-group','inject')">Injectable</button>
+      <button class="tab-btn" onclick="switchTab(this,'treatments-group','oral')">Oral</button>
+      <button class="tab-btn" onclick="switchTab(this,'treatments-group','infusion')">Infusion</button>
+      <button class="tab-btn" onclick="switchTab(this,'treatments-group','relapse')">Relapse Treatment</button>
+      <button class="tab-btn" onclick="switchTab(this,'treatments-group','emerging')">Emerging</button>
+    </div>
+    <div data-tab-group="treatments-group">
+      <div data-tab-content="inject" class="tab-content active">
+        <div class="alert-box alert-info">
+          <span class="iconify" data-icon="solar:info-circle-bold"></span>
+          <div>Injectable therapies are generally considered moderate-efficacy DMTs. They are well-tolerated with long safety records and are still appropriate for many patients with milder disease activity. The trend in 2024-2025 is toward high-efficacy therapy earlier in the disease course.</div>
+        </div>
+        <table class="med-table">
+          <thead><tr><th>Drug (Brand)</th><th>Type</th><th>Efficacy (Relapse Reduction)</th><th>Key Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Interferon beta-1a (Avonex, Rebif)</td><td>Injected weekly/3x week</td><td>~30% relapse reduction</td><td>Well-established safety record; flu-like side effects common initially</td></tr>
+            <tr><td>Interferon beta-1b (Betaseron, Extavia)</td><td>Subcutaneous every other day</td><td>~30% relapse reduction</td><td>Injection site reactions; flu-like symptoms; long-term safety data</td></tr>
+            <tr><td>Peginterferon beta-1a (Plegridy)</td><td>Subcutaneous every 2 weeks</td><td>~36% relapse reduction</td><td>Less frequent injections than standard IFN-beta; convenient option</td></tr>
+            <tr><td>Glatiramer acetate (Copaxone, Glatopa)</td><td>Subcutaneous daily or 3x week</td><td>~30% relapse reduction</td><td>Immunomodulator (not immunosuppressant); safe in pregnancy; no flu-like effects</td></tr>
+            <tr><td>Ofatumumab (Kesimpta)</td><td>Subcutaneous monthly (after loading doses)</td><td>~50-60% relapse reduction</td><td>Anti-CD20 B-cell depleting; self-injected at home; high-efficacy injectable</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div data-tab-content="oral" class="tab-content">
+        <table class="med-table">
+          <thead><tr><th>Drug (Brand)</th><th>Mechanism</th><th>Efficacy</th><th>Key Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Fingolimod (Gilenya)</td><td>S1P receptor modulator; sequesters lymphocytes in lymph nodes</td><td>~54% relapse reduction</td><td>First-dose cardiac monitoring required; ophthalmology and skin monitoring</td></tr>
+            <tr><td>Siponimod (Mayzent)</td><td>S1P receptor modulator (S1P1,5 selective)</td><td>~55% relapse reduction in SPMS</td><td>Approved for active SPMS; requires HLA genotyping before starting</td></tr>
+            <tr><td>Ozanimod (Zeposia)</td><td>S1P receptor modulator</td><td>~48% relapse reduction</td><td>No first-dose cardiac monitoring needed; dietary tyramine restrictions</td></tr>
+            <tr><td>Teriflunomide (Aubagio)</td><td>Pyrimidine synthesis inhibitor</td><td>~31-36% relapse reduction</td><td>TERATOGENIC — must use contraception; monthly liver monitoring; 2-year washout if stopping</td></tr>
+            <tr><td>Dimethyl fumarate (Tecfidera)</td><td>Nrf2 pathway activation; anti-inflammatory</td><td>~49% relapse reduction</td><td>Flushing and GI side effects initially; lymphocyte monitoring required</td></tr>
+            <tr><td>Cladribine (Mavenclad)</td><td>Purine analogue; lymphocyte depletion</td><td>~58% relapse reduction</td><td>Short oral treatment courses (2 years then usually drug-free); high-efficacy oral DMT</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div data-tab-content="infusion" class="tab-content">
+        <div class="alert-box alert-success">
+          <span class="iconify" data-icon="solar:star-bold"></span>
+          <div>Infusion therapies include the highest-efficacy approved DMTs. Anti-CD20 therapies (ocrelizumab, ublituximab) are now among the most widely used MS treatments globally due to their high efficacy, well-understood safety profile, and convenient dosing (every 6 months).</div>
+        </div>
+        <table class="med-table">
+          <thead><tr><th>Drug (Brand)</th><th>Mechanism</th><th>Efficacy</th><th>Key Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Natalizumab (Tysabri)</td><td>Anti-VLA-4; prevents lymphocyte migration into CNS</td><td>~68% relapse reduction</td><td>Risk of PML (JC virus brain infection) — requires JC antibody monitoring; extended interval dosing reduces PML risk</td></tr>
+            <tr><td>Ocrelizumab IV (Ocrevus)</td><td>Anti-CD20 B-cell depleting antibody</td><td>~47-46% relapse reduction; approved for both RRMS and PPMS</td><td>Every 6-month infusion; standard for PPMS; infection and malignancy monitoring</td></tr>
+            <tr><td>Ocrelizumab SC (Ocrevus Zunovo)</td><td>Anti-CD20 (subcutaneous formulation)</td><td>Equivalent to IV Ocrevus</td><td>Approved September 2024; at-home subcutaneous injection alternative to IV infusion</td></tr>
+            <tr><td>Ublituximab (Briumvi)</td><td>Anti-CD20; glycoengineered for faster infusion</td><td>~59% relapse reduction</td><td>Shorter infusion time than Ocrevus (1 hour vs 3.5 hours); approved 2022</td></tr>
+            <tr><td>Alemtuzumab (Lemtrada)</td><td>Anti-CD52; profound immune reconstitution</td><td>~49-49% relapse reduction; long-term remission in many patients</td><td>Reserved for highly active MS; serious autoimmune and infusion reactions; 5-year post-treatment monitoring</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div data-tab-content="relapse" class="tab-content">
+        <div class="cards-grid">
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:medical-kit-bold-duotone"></span> IV Methylprednisolone (IVMP)</h3>
+            <p>High-dose intravenous corticosteroids (1g/day for 3-5 days) is the standard treatment for acute MS relapses that cause functional disability. IVMP speeds recovery but does not change long-term disability outcomes. Oral high-dose methylprednisolone is an evidence-based equivalent for some relapses and can be administered at home.</p>
+          </div>
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:drop-bold-duotone"></span> Plasma Exchange (PLEX)</h3>
+            <p>Plasmapheresis is used for severe relapses that do not respond to corticosteroids ("steroid-refractory" relapses). PLEX removes circulating antibodies and inflammatory mediators from the blood. Used for catastrophic relapses causing paraplegia, severe vision loss, or other major disability. Typically 5-7 exchanges over 2 weeks.</p>
+          </div>
+        </div>
+        <div class="alert-box alert-warning">
+          <span class="iconify" data-icon="solar:danger-bold"></span>
+          <div><strong>What counts as a relapse?</strong> A true MS relapse is a new or worsening neurological symptom lasting more than 24 hours, occurring at least 30 days from the previous relapse, in the absence of fever or infection (Uhthoff's phenomenon can cause temporary worsening with heat). Not every symptom worsening is a relapse — contact your neurologist before starting steroids.</div>
+        </div>
+      </div>
+      <div data-tab-content="emerging" class="tab-content">
+        <div class="cards-grid">
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:lightning-bold-duotone"></span> BTK Inhibitors — Fenebrutinib</h3>
+            <p>Bruton's tyrosine kinase (BTK) inhibitors represent the most exciting emerging class for MS. Fenebrutinib's Phase 3 trial (FENtrepid for PPMS) reported "unprecedented" results in November 2025 — the first time a drug showed meaningful efficacy in PPMS beyond ocrelizumab. BTK inhibitors target both B cells and microglia, potentially addressing the CNS-compartmentalized inflammation that drives progression.</p>
+            <p style="margin-top:8px;"><span class="badge badge-orange">PPMS breakthrough 2025</span></p>
+          </div>
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:cells-bold-duotone"></span> HSCT — Hematopoietic Stem Cell Transplantation</h3>
+            <p>Autologous HSCT uses high-dose chemotherapy to ablate the immune system, followed by reinfusion of the patient's own stem cells to "reboot" immunity. Long-term data shows 87% relapse-free survival at 5 years in highly active RRMS. Now offered at specialized centers in the US, Europe, Russia, and Mexico. Best candidates: young patients with highly active RRMS who have failed multiple DMTs.</p>
+          </div>
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:shield-bold-duotone"></span> CAR-T Cell Therapy</h3>
+            <p>CAR-T therapies targeting B cells (KYV-101, Azer-cel) are in Phase 1/2 trials for highly refractory MS. Early 2025 data showed remarkable efficacy — some patients with treatment-resistant MS achieved remission after a single CAR-T infusion. The goal is a deep, potentially durable immune reset beyond what current DMTs can achieve.</p>
+          </div>
+          <div class="info-card warm-card">
+            <h3><span class="iconify" data-icon="solar:refresh-bold-duotone"></span> Remyelination Therapy</h3>
+            <p>The CCMR-Two trial (Clemastine + Metformin) aims to promote remyelination — actually repairing the myelin damaged by MS, not just stopping further damage. Clemastine (an antihistamine) and Metformin (a diabetes drug) both independently showed remyelination signals. Combination therapy may be synergistic. Results expected 2025.</p>
+          </div>
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:virus-bold-duotone"></span> EBV Vaccine — mRNA-1195 (Moderna)</h3>
+            <p>Following the Science 2022 EBV-MS link, Moderna is developing an EBV vaccine (mRNA-1195) in Phase 1/2. If EBV infection can be prevented, MS incidence may be dramatically reduced. A second EBV vaccine candidate (MDX2201) is also in early trials. This is potentially the first MS prevention vaccine.</p>
+          </div>
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:pill-bold-duotone"></span> Vidofludimus Calcium (ENSURE Trial)</h3>
+            <p>Vidofludimus calcium is an oral small molecule with a novel dual mechanism: DHODH inhibition (reducing lymphocyte proliferation) and Nrf2 activation (neuroprotection). The ENSURE trial is evaluating it in relapsing and progressive MS. Phase 2 data showed meaningful effects on progression markers.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section fade-in" id="trials">
+    <div class="section-header">
+      <div class="section-icon"><span class="iconify" data-icon="solar:test-tube-bold-duotone"></span></div>
+      <div><h2>Clinical Trials</h2><p>Key active trials — as of late 2025</p></div>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <h4>Fenebrutinib — FENhance (RRMS) and FENtrepid (PPMS)</h4>
+        <p>Phase 3 trials of this BTK inhibitor. FENtrepid for PPMS reported "unprecedented" efficacy results in November 2025 — the most significant PPMS advancement since Ocrevus approval. FENhance for RRMS is also showing strong results. Regulatory submission anticipated 2026.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Tolebrutinib — Phase 3 (RRMS, PPMS, SPMS)</h4>
+        <p>Sanofi's BTK inhibitor; FDA rejected its application in December 2025 due to liver safety concerns. The company is working with FDA on a path forward with enhanced monitoring. Phase 3 trials for progressive forms are ongoing. The liver enzyme elevation issue may be manageable with close monitoring.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Remibrutinib — Phase 3 (RRMS)</h4>
+        <p>Novartis's BTK inhibitor in Phase 3 RRMS trial. Unlike tolebrutinib, preliminary data suggests a more favorable liver safety profile. CNS-penetrant BTK inhibitors aim to target both peripheral B cells and resident microglia to address compartmentalized progressive MS pathology.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>CCMR-Two — Clemastine + Metformin Remyelination Trial</h4>
+        <p>A unique trial targeting remyelination rather than inflammation. Clemastine (antihistamine) and Metformin (diabetes drug) both showed independent signals for promoting myelin repair in earlier studies. The combination is being tested in patients with stable MS and significant prior myelin damage. If successful, would be the first approved remyelination therapy.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>mRNA-1195 — Moderna EBV Vaccine (Phase 1/2)</h4>
+        <p>An mRNA vaccine targeting EBV antigens (LMP2, EBNA3C) in healthy EBV-seronegative adults. The primary goal is EBV prevention; the MS-prevention implication is profound. Phase 1 safety data expected 2025-2026. If successful, could represent the first strategy to prevent MS from occurring.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Foralumab — INFORM-MS Trial (RRMS)</h4>
+        <p>Foralumab is the only fully human nasal anti-CD3 monoclonal antibody — administered as a nasal spray. Intranasal anti-CD3 modulates gut-brain immune axis. Phase 2 INFORM-MS trial is evaluating nasal foralumab in progressive MS patients. Preliminary data has shown immune modulation and possible neuroprotective effects.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>CAR-T Trials — KYV-101 and Azer-cel</h4>
+        <p>Phase 1 trials of CD19-targeting CAR-T therapies in treatment-refractory relapsing MS. Early 2025 data showed remarkable responses in patients who had failed multiple high-efficacy DMTs. Questions remain about durability, safety, and production at scale. Phase 2 trials are being planned based on early results.</p>
+      </div>
+    </div>
+    <div class="alert-box alert-success">
+      <span class="iconify" data-icon="solar:verified-check-bold"></span>
+      <div><strong>Find MS Trials:</strong> Visit <a href="https://www.clinicaltrials.gov" target="_blank" style="color:inherit;">ClinicalTrials.gov</a> (search "multiple sclerosis"), the <a href="https://www.msif.org" target="_blank" style="color:inherit;">MSIF trial directory</a>, or the <a href="https://www.nationalmssociety.org" target="_blank" style="color:inherit;">National MS Society clinical trial finder</a>. Many MS trials accept participants who are currently stable on DMTs.</div>
+    </div>
+  </section>
+
+  <section class="content-section fade-in" id="research">
+    <div class="section-header">
+      <div class="section-icon"><span class="iconify" data-icon="solar:microscope-bold-duotone"></span></div>
+      <div><h2>Latest Research</h2><p>Breakthroughs from 2023-2025</p></div>
+    </div>
+    <div class="cards-grid">
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:virus-bold-duotone"></span> EBV Mechanism Decoded</h3>
+        <p>A 2026 Nature Immunology study traced the precise molecular mechanism by which EBV infection triggers anti-myelin autoimmunity — confirming the molecular mimicry hypothesis: EBV protein GlialCAM mimics myelin antigens, causing cross-reactive T cells that attack myelin. This finding validates EBV vaccines and EBV-targeting therapies as rational MS prevention strategies.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:lightning-bold-duotone"></span> Fenebrutinib Breakthrough (PPMS)</h3>
+        <p>The November 2025 Phase 3 FENtrepid results for PPMS showed statistically significant reduction in 6-month confirmed disability progression — a result described as "unprecedented" by independent experts. This is only the second drug ever to show efficacy in PPMS and the first with CNS-penetrant activity, potentially addressing the compartmentalized inflammation that drives progressive MS.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:test-tube-bold-duotone"></span> New Biomarkers: NfL and GFAP</h3>
+        <p>Neurofilament light chain (NfL) and glial fibrillary acidic protein (GFAP) measured in blood are now validated biomarkers for MS monitoring. NfL reflects axonal injury and disease activity; GFAP reflects astrocyte damage and is elevated in progressive MS. Together, they can help predict DMT response and detect subclinical worsening years before clinical disability emerges.</p>
+      </div>
+      <div class="info-card warm-card">
+        <h3><span class="iconify" data-icon="solar:cells-bold-duotone"></span> CAR-T Milestones (2025)</h3>
+        <p>Multiple MS patients who had failed 5+ DMTs achieved complete remission after CAR-T infusions in Phase 1 trials. One patient remained relapse-free and MRI-stable at 2 years post-infusion without any ongoing therapy. These are preliminary results in small numbers, but they suggest CAR-T may achieve immune resets impossible with current DMTs.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:shield-bold-duotone"></span> Tolebrutinib FDA Rejection (2025)</h3>
+        <p>Sanofi's tolebrutinib received a complete response letter from the FDA in December 2025 due to liver enzyme elevation signals in Phase 3 trials. This underscores the importance of safety monitoring for CNS-penetrant BTK inhibitors. The liver safety profile differs between compounds in this class — fenebrutinib and remibrutinib appear to have more favorable profiles.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:health-bold-duotone"></span> Gut Microbiome in MS (2025)</h3>
+        <p>A Frontiers in Immunology 2025 meta-analysis confirmed consistent microbiome differences in MS patients versus controls — reduced Butyricicoccus and Faecalibacterium prausnitzii (anti-inflammatory bacteria), increased Akkermansia and Methanobrevibacter. Microbiome-targeted interventions (probiotics, dietary changes) are being tested in small trials with preliminary positive results on inflammation markers.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section fade-in" id="symptoms">
+    <div class="section-header">
+      <div class="section-icon"><span class="iconify" data-icon="solar:health-bold-duotone"></span></div>
+      <div><h2>Symptom Management</h2><p>Addressing the full spectrum of MS symptoms</p></div>
+    </div>
+    <div class="cards-grid">
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:running-round-bold-duotone"></span> Motor Symptoms</h3>
+        <p>Spasticity (muscle stiffness) affects up to 80% of MS patients. Treatment: physiotherapy (stretching, strengthening), baclofen (oral or intrathecal pump), tizanidine, cannabis-based oral spray (nabiximols/Sativex where approved), and Botox injections for focal spasticity. Weakness is addressed through exercise, orthotics, and functional electrical stimulation (FES).</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:eye-bold-duotone"></span> Vision — Optic Neuritis</h3>
+        <p>Optic neuritis (ON) — pain with eye movement followed by vision loss — is the presenting symptom in 20% of MS patients. Recovery occurs in most cases within weeks to months. IV methylprednisolone speeds recovery but does not improve long-term visual outcomes. Persistent low-contrast visual deficits are common. Optical coherence tomography (OCT) can measure retinal nerve fiber layer thinning.</p>
+      </div>
+      <div class="info-card warm-card">
+        <h3><span class="iconify" data-icon="solar:sleep-bold-duotone"></span> Fatigue</h3>
+        <p>MS fatigue affects 80% of patients and is the most disabling symptom for many. It differs from normal tiredness — it can be profound and unrelated to activity. Management: energy conservation techniques (pacing), modafinil or amantadine (pharmacological), aerobic exercise (paradoxically helps), cognitive behavioral therapy (CBT) for fatigue, and treating contributing factors (poor sleep, depression, anemia, thyroid).</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:brain-bold-duotone"></span> Cognitive Impairment</h3>
+        <p>Cognitive changes affect 40-65% of MS patients, most commonly affecting information processing speed, memory, and executive function. Cognitive reserve can be built through education and mental activity. Neuropsychological assessment identifies specific deficits. Cognitive rehabilitation programs (including computerized training, REHACOP protocol) have shown benefit. Fatigue management also improves cognition.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:thermometer-bold-duotone"></span> Uhthoff's Phenomenon</h3>
+        <p>Temporary worsening of MS symptoms with increased body temperature — from exercise, hot weather, fever, or hot baths. This is NOT a relapse — symptoms typically resolve within minutes to hours of cooling down. Management: cool environments, cooling vests, pre-cooling before exercise, avoiding hot tubs/saunas. Important: Uhthoff's does not cause permanent damage.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:drop-bold-duotone"></span> Bladder and Bowel</h3>
+        <p>Bladder dysfunction affects 75% of MS patients: urgency, frequency, incontinence, or retention. Treatment: anticholinergics or mirabegron for urgency/frequency; intermittent catheterization for retention; Botox intravesical injection for refractory overactive bladder. Bowel constipation is also very common — treated with dietary fiber, adequate hydration, and timed bowel programs.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section fade-in" id="rehab">
+    <div class="section-header">
+      <div class="section-icon"><span class="iconify" data-icon="solar:bicycling-round-bold-duotone"></span></div>
+      <div><h2>Rehabilitation</h2><p>Physiotherapy, occupational therapy, and speech therapy in MS</p></div>
+    </div>
+    <div class="alert-box alert-success">
+      <span class="iconify" data-icon="solar:star-bold"></span>
+      <div><strong>Rehabilitation is recommended for all MS patients at all disease stages.</strong> Unlike many conditions, MS rehabilitation has strong evidence for improving function, quality of life, and participation — even when the underlying disease is progressing. The right rehabilitation team can make a profound difference.</div>
+    </div>
+    <div class="cards-grid">
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:running-round-bold-duotone"></span> Physiotherapy</h3>
+        <p>MS-specialized physiotherapy addresses: spasticity management (stretching, positioning), strengthening, gait training and cueing, balance and fall prevention, aerobic exercise prescription, and fatigue management. Exercise programs for MS show consistent benefits for walking speed, strength, fatigue, depression, and quality of life. 150 minutes of moderate aerobic exercise per week is the evidence-based target.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:home-bold-duotone"></span> Occupational Therapy</h3>
+        <p>OT focuses on independence in daily activities: adaptive equipment for dressing, cooking, and self-care; workplace accommodations; home modifications (grab bars, ramps, equipment); energy conservation strategies; cognitive adaptations; and driving assessment. OT is critical when fatigue, hand function, or cognition begins to affect daily life.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:microphone-bold-duotone"></span> Speech-Language Therapy</h3>
+        <p>Dysarthria (slurred speech) and dysphagia (swallowing difficulty) can occur in MS, particularly with brainstem involvement or progressive disease. Speech therapy addresses: speech clarity, swallowing safety, communication strategies, voice amplification, and AAC devices when needed. Early intervention significantly improves outcomes.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:wheelchair-bold-duotone"></span> Mobility Aids and Equipment</h3>
+        <p>Adaptive mobility equipment should be introduced early and adjusted as needed: walking aids (canes, crutches, rollators), ankle-foot orthoses (AFOs) for foot drop, functional electrical stimulation (FES) devices like WalkAide/Bioness, manual and power wheelchairs, and scooters. Dalfampridine (Ampyra) — an oral medication — improves walking speed in some MS patients with walking impairment.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section fade-in" id="psychological-approach">
+    <div class="section-header">
+      <div class="section-icon"><span class="iconify" data-icon="solar:heart-pulse-bold-duotone"></span></div>
+      <div><h2>Mental Health</h2><p>Depression, anxiety, cognitive changes, and psychological wellbeing in MS</p></div>
+    </div>
+    <div class="cards-grid">
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:chart-2-bold-duotone"></span> Prevalence of Mental Health Challenges</h3>
+        <ul>
+          <li><strong>Depression:</strong> Affects approximately 50% of MS patients over their lifetime — 3x the general population rate</li>
+          <li><strong>Anxiety:</strong> Affects approximately 22% of patients</li>
+          <li><strong>Suicidal ideation:</strong> Affects 22.6% of MS patients — significantly higher than general population</li>
+          <li><strong>Pseudobulbar affect (PBA):</strong> Uncontrolled laughing or crying; affects 10-46% of patients</li>
+          <li><strong>Cognitive changes:</strong> Affects 34-70% of patients across disease stages</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:chat-square-like-bold-duotone"></span> Evidence-Based Psychological Interventions</h3>
+        <ul>
+          <li><strong>CBT:</strong> Strong evidence for depression and anxiety in MS; also effective for fatigue and pain management</li>
+          <li><strong>ACT (Acceptance and Commitment Therapy):</strong> Helps with chronic uncertainty and disability adaptation</li>
+          <li><strong>MBSR (Mindfulness-Based Stress Reduction):</strong> Reduces anxiety and fatigue; online programs available</li>
+          <li><strong>REHACOP Protocol:</strong> Structured cognitive rehabilitation program developed for MS; improves processing speed and memory</li>
+          <li><strong>iCBT for fatigue:</strong> Internet-based CBT programs specifically targeting MS fatigue have level 1 evidence</li>
+        </ul>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span><span class="iconify" data-icon="solar:pill-bold-duotone"></span> &nbsp;Pharmacological Management of Neuropsychiatric Symptoms</span>
+        <span class="iconify" data-icon="solar:alt-arrow-down-bold"></span>
+      </div>
+      <div class="accordion-body">
+        <div class="accordion-inner">
+          <ul>
+            <li><strong>Depression:</strong> SSRIs (sertraline, escitalopram) and SNRIs (duloxetine) are first-line; venlafaxine is useful when pain is a co-morbidity</li>
+            <li><strong>Anxiety:</strong> SSRIs, buspirone, or short-term benzodiazepines under supervision; pregabalin for anxiety with neuropathic pain</li>
+            <li><strong>PBA:</strong> Nuedexta (dextromethorphan/quinidine) is FDA-approved specifically for PBA; SSRIs and TCAs also used off-label</li>
+            <li><strong>Cognitive impairment:</strong> No drugs are currently approved specifically for MS cognitive impairment; treating fatigue, depression, and sleep often improves cognition indirectly</li>
+            <li><strong>Pain:</strong> Neuropathic pain (burning, tingling) — gabapentin, pregabalin, duloxetine, tricyclics; Lhermitte's sign — carbamazepine</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span><span class="iconify" data-icon="solar:users-group-rounded-bold-duotone"></span> &nbsp;Living with Uncertainty and Family Impact</span>
+        <span class="iconify" data-icon="solar:alt-arrow-down-bold"></span>
+      </div>
+      <div class="accordion-body">
+        <div class="accordion-inner">
+          <p>MS's unpredictability — not knowing when or how the next relapse will occur, or how the disease will progress — is one of its most psychologically challenging aspects. Key strategies:</p>
+          <ul>
+            <li>Work with a psychologist experienced in chronic illness to develop coping frameworks for uncertainty</li>
+            <li>MS peer support groups provide validation and practical coping strategies from people who truly understand</li>
+            <li>Caregiver burden in MS: partners spend an average of 6.5 hours per day on caregiving activities; caregiver support and respite are essential</li>
+            <li>Couples counseling addresses relationship changes and communication patterns</li>
+            <li>Online communities (MSWorld, Shift.ms, My MSAA Community) provide 24/7 connection to peers</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section fade-in" id="lifestyle">
+    <div class="section-header">
+      <div class="section-icon"><span class="iconify" data-icon="solar:running-round-bold-duotone"></span></div>
+      <div><h2>Lifestyle</h2><p>Exercise, diet, vitamin D, and heat management</p></div>
+    </div>
+    <div class="cards-grid">
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:running-round-bold-duotone"></span> Exercise</h3>
+        <p>Regular aerobic exercise — walking, cycling, swimming, yoga, Tai Chi — consistently improves fatigue, mood, strength, and quality of life in MS. 150 minutes of moderate-intensity aerobic exercise per week, plus resistance training twice weekly, is the evidence-based recommendation. Exercise does not worsen MS; it is actively neuroprotective. Even patients with significant disability can benefit from chair-based or aquatic exercise.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:leaf-bold-duotone"></span> Mediterranean Diet and Gut Health</h3>
+        <p>The Mediterranean diet is the best-studied dietary pattern for MS — associated with lower relapse rates, slower disability progression, and better cognitive function in observational studies. High fiber intake promotes beneficial gut bacteria. A 2025 Frontiers in Immunology meta-analysis confirmed consistent gut dysbiosis in MS and the potential benefit of dietary fiber and probiotic supplementation on inflammatory markers.</p>
+      </div>
+      <div class="info-card warm-card">
+        <h3><span class="iconify" data-icon="solar:sun-bold-duotone"></span> Vitamin D</h3>
+        <p>Vitamin D deficiency is strongly associated with MS risk and relapse rates. Supplementation is standard practice for all MS patients. Target serum 25-OH vitamin D levels: 40-60 ng/mL (100-150 nmol/L). Most patients need 4,000-10,000 IU/day to reach this target (with monitoring). High-dose Vitamin D (Coimbra Protocol) remains controversial and requires medical supervision due to hypercalcemia risk.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:thermometer-bold-duotone"></span> Heat Management</h3>
+        <p>Because of Uhthoff's phenomenon, heat management is critical: exercise in the cool part of the day or air-conditioned spaces; use cooling vests or ice packs before and during exercise; avoid hot tubs, saunas, and long hot showers; stay hydrated; use fans during exercise. Pre-cooling strategies (wearing a cooling vest for 30 minutes before exercise) significantly improve exercise tolerance.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:close-circle-bold-duotone"></span> Smoking Cessation</h3>
+        <p>Smoking doubles the risk of developing MS and significantly accelerates disability progression and conversion from RRMS to SPMS. Smoking cessation is one of the most impactful modifiable factors in MS management. Discuss cessation strategies (varenicline, NRT, bupropion, behavioral support) with your healthcare team. The benefit of quitting is seen even in established MS.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section fade-in" id="pregnancy">
+    <div class="section-header">
+      <div class="section-icon"><span class="iconify" data-icon="solar:baby-bold-duotone"></span></div>
+      <div><h2>Pregnancy and MS</h2><p>Planning, managing disease activity, and DMT safety</p></div>
+    </div>
+    <div class="alert-box alert-success">
+      <span class="iconify" data-icon="solar:star-bold"></span>
+      <div><strong>MS does not prevent pregnancy.</strong> Most women with MS can have healthy pregnancies. MS itself does not increase miscarriage, birth defect, or premature birth risk. With careful planning and coordination between your neurologist and obstetrician, pregnancy in MS can be managed safely.</div>
+    </div>
+    <div class="cards-grid">
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:refresh-bold-duotone"></span> Disease Activity During Pregnancy</h3>
+        <p>Pregnancy has a significant natural immunomodulatory effect. Relapse rates drop substantially in the third trimester (by approximately 70%), likely due to the immune-tolerizing effects of pregnancy hormones and regulatory T cells. However, the postpartum period (months 3-6 after delivery) carries a significantly increased relapse risk — planning for this window is critical.</p>
+      </div>
+      <div class="info-card warm-card">
+        <h3><span class="iconify" data-icon="solar:shield-warning-bold-duotone"></span> DMT Safety in Pregnancy</h3>
+        <ul>
+          <li><strong>Glatiramer acetate:</strong> Generally considered safe; often continued through pregnancy</li>
+          <li><strong>Interferon betas:</strong> Usually discontinued at pregnancy confirmation; low risk if used in early pregnancy</li>
+          <li><strong>Teriflunomide (Aubagio):</strong> CONTRAINDICATED — teratogenic; must complete accelerated elimination procedure before conception</li>
+          <li><strong>Natalizumab:</strong> Often continued until week 34; rebound risk if stopped abruptly</li>
+          <li><strong>Anti-CD20 therapies:</strong> The 2025 trend is to use high-efficacy anti-CD20 before pregnancy to achieve sustained remission, then pause during pregnancy; timing washout is key</li>
+          <li><strong>Fingolimod, Siponimod:</strong> Discontinued before conception; requires 2-month washout</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:heart-bold-duotone"></span> Breastfeeding</h3>
+        <p>Exclusive breastfeeding is associated with a 63% reduced risk of postpartum relapse in MS — a significant protective effect. The mechanism may involve continued hormonal immunomodulation. Glatiramer acetate is considered safe while breastfeeding. Most other DMTs should be avoided during breastfeeding. Coordinate timing of DMT resumption with your neurologist.</p>
+      </div>
+    </div>
+    <div class="alert-box alert-warning">
+      <span class="iconify" data-icon="solar:danger-bold"></span>
+      <div><strong>Plan pregnancy with your MS neurologist well in advance.</strong> DMT washout periods, disease activity suppression before conception, and postpartum management strategies should be planned at least 6-12 months before attempting conception. Unplanned pregnancy while on teratogenic DMTs (especially teriflunomide) requires immediate medical consultation.</div>
+    </div>
+  </section>
+
+  <section class="content-section fade-in" id="support">
+    <div class="section-header">
+      <div class="section-icon"><span class="iconify" data-icon="solar:users-group-rounded-bold-duotone"></span></div>
+      <div><h2>Community and Support</h2><p>Global MS communities, peer support, and online platforms</p></div>
+    </div>
+    <div class="highlight-grid">
+      <div class="highlight-box">
+        <span class="iconify" data-icon="solar:global-bold-duotone"></span>
+        <h4>MSWorld</h4>
+        <p>One of the largest MS online communities with 220,000+ members. Forums, chat, and peer support 24/7.</p>
+      </div>
+      <div class="highlight-box">
+        <span class="iconify" data-icon="solar:users-group-rounded-bold-duotone"></span>
+        <h4>MyMSTeam</h4>
+        <p>Social network specifically for MS patients — connect with others by symptom, treatment, and location.</p>
+      </div>
+      <div class="highlight-box">
+        <span class="iconify" data-icon="solar:map-point-bold-duotone"></span>
+        <h4>Shift.ms</h4>
+        <p>UK-based community for young MS patients. Video content, forums, real stories from people living well with MS.</p>
+      </div>
+      <div class="highlight-box">
+        <span class="iconify" data-icon="solar:heart-bold-duotone"></span>
+        <h4>Overcoming MS</h4>
+        <p>Evidence-based lifestyle program (Swank + McDougall inspired) with global online and in-person community groups.</p>
+      </div>
+      <div class="highlight-box">
+        <span class="iconify" data-icon="solar:diploma-bold-duotone"></span>
+        <h4>National MS Society</h4>
+        <p>US-based; chapter network, support groups, MS Navigator helpline, wellness programs, research funding.</p>
+      </div>
+      <div class="highlight-box">
+        <span class="iconify" data-icon="solar:chat-round-bold-duotone"></span>
+        <h4>My MSAA Community</h4>
+        <p>MS Association of America online community — moderated forums, expert Q&amp;As, symptom tracking tools.</p>
+      </div>
+    </div>
+    <div class="story-card">
+      <blockquote>"I was diagnosed with RRMS at 28. After two years on a moderate-efficacy DMT with breakthrough activity, my neurologist switched me to ocrelizumab. Three years later, no relapses, no new MRI lesions. I'm training for a 10K. MS is part of my life, but it doesn't define it."</blockquote>
+      <cite>— Rachel, 33, RRMS, on ocrelizumab since 2021</cite>
+    </div>
+    <div class="story-card">
+      <blockquote>"I had HSCT at 36, after failing three DMTs. It's been four years. No relapses, no new MRI lesions, and some of my previous deficits have actually improved. The first year was very hard — but I would make the same choice again without hesitation."</blockquote>
+      <cite>— Thomas, 40, highly active RRMS, HSCT 2021</cite>
+    </div>
+    <div class="story-card">
+      <blockquote>"Joining Shift.ms changed everything. I stopped feeling alone with this disease. Seeing people my age living full lives with MS — working, traveling, having families — made me realize I could do the same. I just had to learn how."</blockquote>
+      <cite>— Amelia, 26, CIS to RRMS diagnosis 2023</cite>
+    </div>
+  </section>
+
+  <section class="content-section fade-in" id="resources">
+    <div class="section-header">
+      <div class="section-icon"><span class="iconify" data-icon="solar:library-bold-duotone"></span></div>
+      <div><h2>Resources and Organizations</h2><p>Leading international organizations, centers, and tools</p></div>
+    </div>
+    <h3 style="font-size:1rem; font-weight:700; color:var(--primary); margin-bottom:16px;">International Organizations</h3>
+    <div class="resource-links" style="margin-bottom:28px;">
+      <a class="resource-link" href="https://www.msif.org" target="_blank">
+        <span class="iconify" data-icon="solar:global-bold-duotone"></span>
+        <div><div class="rl-title">MS International Federation (MSIF)</div><div class="rl-desc">Global MS advocacy umbrella; connects MS societies in 90+ countries; research funding; policy work</div></div>
+      </a>
+      <a class="resource-link" href="https://www.nationalmssociety.org" target="_blank">
+        <span class="iconify" data-icon="solar:diploma-bold-duotone"></span>
+        <div><div class="rl-title">National MS Society (US)</div><div class="rl-desc">Largest MS nonprofit in the US; research funding, care navigation, chapter network, MS Navigator helpline</div></div>
+      </a>
+      <a class="resource-link" href="https://www.mstrust.org.uk" target="_blank">
+        <span class="iconify" data-icon="solar:map-point-bold-duotone"></span>
+        <div><div class="rl-title">MS Trust (UK)</div><div class="rl-desc">Comprehensive MS information resource; clinical guidance for patients and professionals; UK-focused</div></div>
+      </a>
+      <a class="resource-link" href="https://www.mssociety.org.uk" target="_blank">
+        <span class="iconify" data-icon="solar:users-group-rounded-bold-duotone"></span>
+        <div><div class="rl-title">MS Society (UK)</div><div class="rl-desc">UK's largest MS charity; research funding, support groups, helpline, local branches</div></div>
+      </a>
+      <a class="resource-link" href="https://www.overcomingms.org" target="_blank">
+        <span class="iconify" data-icon="solar:heart-bold-duotone"></span>
+        <div><div class="rl-title">Overcoming MS</div><div class="rl-desc">Evidence-based lifestyle program; global retreat program; online community; free resources</div></div>
+      </a>
+    </div>
+    <h3 style="font-size:1rem; font-weight:700; color:var(--primary); margin-bottom:16px;">Leading MS Research Centers</h3>
+    <div class="resource-links" style="margin-bottom:28px;">
+      <a class="resource-link" href="https://msca.ucsf.edu" target="_blank">
+        <span class="iconify" data-icon="solar:hospital-bold-duotone"></span>
+        <div><div class="rl-title">UCSF MS Center (San Francisco)</div><div class="rl-desc">World-leading MS research; multiple active trials; multidisciplinary clinical care</div></div>
+      </a>
+      <a class="resource-link" href="https://www.brighamandwomens.org/neurology/multiple-sclerosis" target="_blank">
+        <span class="iconify" data-icon="solar:hospital-bold-duotone"></span>
+        <div><div class="rl-title">Brigham MS Center (Boston)</div><div class="rl-desc">Top-ranked MS center; pioneer in HSCT for MS; advanced clinical and research programs</div></div>
+      </a>
+      <a class="resource-link" href="https://www.hopkinsmedicine.org/neurology-neurosurgery/centers-clinics/multiple-sclerosis-center.html" target="_blank">
+        <span class="iconify" data-icon="solar:hospital-bold-duotone"></span>
+        <div><div class="rl-title">Johns Hopkins MS Center</div><div class="rl-desc">Comprehensive MS care; active research in progressive MS and biomarkers</div></div>
+      </a>
+    </div>
+    <h3 style="font-size:1rem; font-weight:700; color:var(--primary); margin-bottom:16px;">Key References</h3>
+    <div class="resource-links">
+      <a class="resource-link" href="https://www.clinicaltrials.gov" target="_blank">
+        <span class="iconify" data-icon="solar:test-tube-bold-duotone"></span>
+        <div><div class="rl-title">ClinicalTrials.gov — MS Trials</div><div class="rl-desc">Search "multiple sclerosis" for complete registry of active international trials</div></div>
+      </a>
+      <a class="resource-link" href="https://doi.org/10.1126/science.abj8222" target="_blank">
+        <span class="iconify" data-icon="solar:microscope-bold-duotone"></span>
+        <div><div class="rl-title">Epstein-Barr Virus and Multiple Sclerosis (Science 2022)</div><div class="rl-desc">Landmark study demonstrating x32 risk increase after EBV infection — the foundational EBV-MS paper</div></div>
+      </a>
+      <a class="resource-link" href="https://shift.ms" target="_blank">
+        <span class="iconify" data-icon="solar:chat-round-bold-duotone"></span>
+        <div><div class="rl-title">Shift.ms — Young People with MS</div><div class="rl-desc">Community videos, real stories, forums for people diagnosed in their 20s-40s</div></div>
+      </a>
+    </div>
+
+    <h3 style="font-size:1rem; font-weight:700; color:var(--primary); margin:28px 0 16px;">Your Action Plan — Key Steps</h3>
+    <div class="action-step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h4>Get to an MS specialist center</h4>
+        <p>MS comprehensive care centers provide access to the latest DMTs, clinical trials, and multidisciplinary teams. Studies show patients managed at MS centers have better outcomes. Find your nearest center via the MSIF or National MS Society website.</p>
+      </div>
+    </div>
+    <div class="action-step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h4>Discuss DMT strategy — aim high early</h4>
+        <p>The strongest evidence now supports starting with higher-efficacy therapy (anti-CD20, natalizumab, cladribine) in patients with active disease — rather than "escalating" from weaker therapies. Discuss your disease activity, risk factors, and treatment goals with your neurologist. Higher-efficacy therapy earlier reduces long-term disability accumulation.</p>
+      </div>
+    </div>
+    <div class="action-step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h4>Monitor proactively — MRI and biomarkers</h4>
+        <p>Annual MRI monitoring is standard while on DMTs. Ask your neurologist about regular NfL blood testing to detect subclinical disease activity. If new lesions appear despite treatment, escalation is warranted. No evidence of disease activity (NEDA) is the treatment goal for relapsing MS.</p>
+      </div>
+    </div>
+    <div class="action-step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h4>Lifestyle optimization — start now</h4>
+        <p>Start aerobic exercise, optimize vitamin D (test and supplement to 40-60 ng/mL), adopt a Mediterranean diet, quit smoking, and manage weight. These lifestyle factors have meaningful impact on MS activity and progression — they are not optional "extras" but essential parts of MS management.</p>
+      </div>
+    </div>
+    <div class="action-step">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        <h4>Address mental health proactively</h4>
+        <p>Do not wait until depression or anxiety becomes severe. Establish a relationship with a psychologist or therapist experienced in chronic illness early. CBT for MS-related depression and fatigue has level 1 evidence. Peer support through MS communities dramatically reduces isolation and improves quality of life.</p>
+      </div>
+    </div>
+    <div class="action-step">
+      <div class="step-num">6</div>
+      <div class="step-content">
+        <h4>Explore clinical trials</h4>
+        <p>MS has an exceptionally active trial pipeline — BTK inhibitors, remyelination therapies, CAR-T, and EBV vaccines. Even if you are stable on current therapy, many trials are open to treated patients. Visit ClinicalTrials.gov or the National MS Society trial finder to see what you may qualify for.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+  <span class="iconify" data-icon="solar:alt-arrow-up-bold"></span>
+</button>
+
+<script>
+  window.addEventListener('scroll', () => {
+    const st = document.documentElement.scrollTop;
+    const sh = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    document.getElementById('scroll-progress').style.width = ((st / sh) * 100) + '%';
+    document.getElementById('scroll-top').classList.toggle('show', st > 300);
+  });
+  function toggleMenu() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('overlay').classList.toggle('show');
+  }
+  function closeMenu() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('show');
+  }
+  function navigate(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+    const link = document.querySelector('nav a[onclick*="' + id + '"]');
+    if (link) link.classList.add('active');
+    if (window.innerWidth <= 900) closeMenu();
+    return false;
+  }
+  function navigateTo(id) { return navigate(id); }
+  function toggleAccordion(header) {
+    const body = header.nextElementSibling;
+    const isOpen = body.classList.contains('open');
+    document.querySelectorAll('.accordion-body.open').forEach(b => {
+      b.classList.remove('open');
+      b.previousElementSibling.classList.remove('open');
+    });
+    if (!isOpen) { body.classList.add('open'); header.classList.add('open'); }
+  }
+  function switchTab(btn, group, tabId) {
+    const groupEl = document.querySelector('[data-tab-group="' + group + '"]');
+    if (!groupEl) return;
+    groupEl.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    const target = groupEl.querySelector('[data-tab-content="' + tabId + '"]');
+    if (target) target.classList.add('active');
+    btn.closest('.tab-bar').querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        const id = entry.target.id;
+        if (id) {
+          document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+          const link = document.querySelector('nav a[onclick*="' + id + '"]');
+          if (link) link.classList.add('active');
+        }
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '-80px 0px -80px 0px' });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  function searchPortal(query) {
+    if (!query.trim()) { document.querySelectorAll('.content-section').forEach(s => s.style.display = ''); return; }
+    const q = query.toLowerCase();
+    document.querySelectorAll('.content-section').forEach(s => {
+      s.style.display = s.innerText.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

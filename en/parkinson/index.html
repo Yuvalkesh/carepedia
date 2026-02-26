@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Parkinson's Disease Hub | CarePedia Information Center</title>
+  <link rel="alternate" hreflang="he" href="https://carepedia.org/parkinson"/>
+  <link rel="alternate" hreflang="en" href="https://carepedia.org/en/parkinson"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
+  <style>
+    :root {
+      --primary: #0f4c75;
+      --primary-light: #3282b8;
+      --accent: #00b894;
+      --accent-light: #00cec9;
+      --warm: #e17055;
+      --warm-dark: #c0392b;
+      --bg: #f0f4f8;
+      --card: #ffffff;
+      --text: #1a2533;
+      --text-light: #5a6a7a;
+      --shadow: 0 4px 20px rgba(15,76,117,0.10);
+      --shadow-hover: 0 8px 32px rgba(15,76,117,0.18);
+      --radius: 16px;
+      --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Rubik', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+    #scroll-progress {
+      position: fixed; top: 0; left: 0; height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--primary-light));
+      z-index: 9999; width: 0%; transition: width 0.1s;
+    }
+    .sidebar {
+      position: fixed; top: 0; left: 0;
+      width: 280px; height: 100vh;
+      background: rgba(15,76,117,0.85);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      color: #fff; z-index: 1000;
+      display: flex; flex-direction: column;
+      overflow-y: auto; overflow-x: hidden;
+      transition: transform var(--transition);
+      border-right: 1px solid rgba(255,255,255,0.10);
+    }
+    .sidebar-header {
+      padding: 28px 20px 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.12);
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+    }
+    .sidebar-icon { font-size: 44px; color: #ffd166; }
+    .sidebar-title { font-size: 1.05rem; font-weight: 700; text-align: center; line-height: 1.35; letter-spacing: 0.01em; }
+    .sidebar-subtitle { font-size: 0.72rem; opacity: 0.65; text-align: center; letter-spacing: 0.04em; text-transform: uppercase; }
+    .sidebar-search { padding: 14px 16px 10px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .sidebar-search input {
+      width: 100%; padding: 9px 14px; border-radius: 30px;
+      border: 1px solid rgba(255,255,255,0.18);
+      background: rgba(255,255,255,0.10);
+      color: #fff; font-size: 0.82rem; font-family: 'Rubik', sans-serif;
+      outline: none; transition: border var(--transition);
+    }
+    .sidebar-search input::placeholder { color: rgba(255,255,255,0.45); }
+    .sidebar-search input:focus { border-color: rgba(255,255,255,0.45); }
+    nav { padding: 10px 0 20px; flex: 1; }
+    nav a {
+      display: flex; align-items: center; gap: 11px;
+      padding: 10px 22px; color: rgba(255,255,255,0.82);
+      text-decoration: none; font-size: 0.88rem; font-weight: 500;
+      border-radius: 0 30px 30px 0; margin-right: 12px;
+      transition: all var(--transition); border-left: 3px solid transparent;
+    }
+    nav a:hover, nav a.active {
+      background: rgba(255,255,255,0.12); color: #fff;
+      border-left-color: var(--accent); transform: translateX(4px);
+    }
+    nav a .iconify { font-size: 18px; flex-shrink: 0; opacity: 0.8; }
+    nav a:hover .iconify, nav a.active .iconify { opacity: 1; }
+    .nav-section-label {
+      font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.38); padding: 14px 22px 4px;
+    }
+    .main { margin-left: 280px; min-height: 100vh; }
+    .disclaimer-banner {
+      background: linear-gradient(135deg, #fff3cd, #ffeaa7);
+      border-bottom: 2px solid #f9ca24; padding: 11px 28px;
+      display: flex; align-items: center; gap: 10px;
+      font-size: 0.82rem; color: #856404; font-weight: 500;
+    }
+    .disclaimer-banner .iconify { font-size: 20px; color: #e17055; flex-shrink: 0; }
+    .hero {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 60%, var(--accent-light) 100%);
+      color: white; padding: 56px 48px 48px; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; top: -60px; right: -60px;
+      width: 300px; height: 300px; border-radius: 50%; background: rgba(255,255,255,0.06);
+    }
+    .hero::after {
+      content: ''; position: absolute; bottom: -80px; left: 30%;
+      width: 220px; height: 220px; border-radius: 50%; background: rgba(255,255,255,0.04);
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(255,255,255,0.15); backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.25); border-radius: 30px;
+      padding: 6px 16px; font-size: 0.78rem; font-weight: 600;
+      margin-bottom: 18px; letter-spacing: 0.03em;
+    }
+    .hero h1 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 800; line-height: 1.2; margin-bottom: 14px; }
+    .hero p { font-size: 1.05rem; opacity: 0.88; max-width: 620px; line-height: 1.65; margin-bottom: 28px; }
+    .hero-stats { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 10px; }
+    .hero-stat {
+      background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.20);
+      border-radius: 14px; padding: 14px 20px; backdrop-filter: blur(8px);
+      text-align: center; min-width: 130px;
+    }
+    .hero-stat strong { display: block; font-size: 1.5rem; font-weight: 800; line-height: 1; }
+    .hero-stat span { font-size: 0.72rem; opacity: 0.78; margin-top: 3px; display: block; }
+    .cat-grid-section { padding: 36px 48px 12px; }
+    .cat-grid-section h2 { font-size: 1.15rem; font-weight: 700; color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+    .cat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
+    .cat-card {
+      background: var(--card); border-radius: 14px; padding: 18px 14px; text-align: center;
+      box-shadow: var(--shadow); cursor: pointer; transition: all var(--transition);
+      border: 2px solid transparent; text-decoration: none; color: var(--text);
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+    }
+    .cat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); border-color: var(--primary-light); color: var(--primary); }
+    .cat-card .iconify { font-size: 30px; color: var(--primary-light); }
+    .cat-card span { font-size: 0.80rem; font-weight: 600; }
+    .content-section { padding: 36px 48px; }
+    .section-header {
+      display: flex; align-items: center; gap: 14px;
+      margin-bottom: 28px; padding-bottom: 16px;
+      border-bottom: 2px solid rgba(15,76,117,0.10);
+    }
+    .section-icon {
+      width: 52px; height: 52px;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .section-icon .iconify { font-size: 26px; color: white; }
+    .section-header h2 { font-size: 1.55rem; font-weight: 800; color: var(--primary); }
+    .section-header p { font-size: 0.9rem; color: var(--text-light); margin-top: 3px; }
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-bottom: 28px; }
+    .info-card {
+      background: var(--card); border-radius: var(--radius); padding: 24px;
+      box-shadow: var(--shadow); border-top: 4px solid var(--primary-light); transition: all var(--transition);
+    }
+    .info-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+    .info-card h3 { font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    .info-card h3 .iconify { font-size: 20px; color: var(--accent); }
+    .info-card p { font-size: 0.875rem; color: var(--text-light); line-height: 1.65; }
+    .info-card ul { margin-top: 10px; padding-left: 18px; }
+    .info-card ul li { font-size: 0.86rem; color: var(--text-light); margin-bottom: 5px; line-height: 1.5; }
+    .accent-card { background: linear-gradient(135deg, var(--accent), var(--accent-light)); color: white; border-top-color: rgba(255,255,255,0.3); }
+    .accent-card h3, .accent-card p, .accent-card li { color: white !important; }
+    .accent-card h3 .iconify { color: rgba(255,255,255,0.85) !important; }
+    .warm-card { border-top-color: var(--warm); }
+    .warm-card h3 { color: var(--warm-dark) !important; }
+    .tab-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+    .tab-btn {
+      padding: 9px 20px; border-radius: 30px; border: 2px solid var(--primary-light);
+      background: transparent; color: var(--primary); font-size: 0.84rem; font-weight: 600;
+      cursor: pointer; transition: all var(--transition); font-family: 'Rubik', sans-serif;
+    }
+    .tab-btn:hover { background: var(--primary-light); color: white; }
+    .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .med-table {
+      width: 100%; border-collapse: collapse; background: var(--card);
+      border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow);
+      font-size: 0.85rem; margin-bottom: 20px;
+    }
+    .med-table th { background: var(--primary); color: white; padding: 12px 16px; text-align: left; font-weight: 600; }
+    .med-table td { padding: 11px 16px; border-bottom: 1px solid #e8edf2; }
+    .med-table tr:last-child td { border-bottom: none; }
+    .med-table tr:hover td { background: rgba(15,76,117,0.04); }
+    .med-table td:first-child { font-weight: 600; color: var(--primary); }
+    .accordion { margin-bottom: 12px; }
+    .accordion-header {
+      background: var(--card); border-radius: 12px; padding: 16px 20px; cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between;
+      box-shadow: var(--shadow); transition: all var(--transition);
+      font-weight: 600; font-size: 0.92rem; color: var(--primary);
+      border-left: 4px solid var(--primary-light);
+    }
+    .accordion-header:hover { background: rgba(15,76,117,0.04); }
+    .accordion-header.open { border-radius: 12px 12px 0 0; border-left-color: var(--accent); }
+    .accordion-header .iconify { transition: transform var(--transition); font-size: 20px; }
+    .accordion-header.open .iconify { transform: rotate(180deg); }
+    .accordion-body {
+      background: var(--card); border-radius: 0 0 12px 12px;
+      max-height: 0; overflow: hidden; transition: max-height 0.4s ease;
+      border-left: 4px solid var(--accent);
+    }
+    .accordion-body.open { max-height: 1200px; }
+    .accordion-inner { padding: 18px 22px; font-size: 0.875rem; color: var(--text-light); line-height: 1.7; }
+    .accordion-inner ul { padding-left: 18px; margin-top: 8px; }
+    .accordion-inner ul li { margin-bottom: 6px; }
+    .alert-box { border-radius: 12px; padding: 16px 20px; margin-bottom: 18px; display: flex; gap: 12px; font-size: 0.875rem; line-height: 1.6; }
+    .alert-box .iconify { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+    .alert-info { background: #e8f4fd; border-left: 4px solid var(--primary-light); color: #1a3a5c; }
+    .alert-info .iconify { color: var(--primary-light); }
+    .alert-success { background: #e6f9f4; border-left: 4px solid var(--accent); color: #0d4a3a; }
+    .alert-success .iconify { color: var(--accent); }
+    .timeline { position: relative; padding-left: 24px; }
+    .timeline::before {
+      content: ''; position: absolute; left: 8px; top: 0; bottom: 0;
+      width: 2px; background: linear-gradient(to bottom, var(--primary-light), var(--accent));
+    }
+    .timeline-item { position: relative; margin-bottom: 22px; }
+    .timeline-item::before {
+      content: ''; position: absolute; left: -20px; top: 6px;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--accent); border: 2px solid white; box-shadow: 0 0 0 2px var(--accent);
+    }
+    .timeline-item h4 { font-size: 0.92rem; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+    .timeline-item p { font-size: 0.84rem; color: var(--text-light); line-height: 1.6; }
+    .highlight-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .highlight-box { background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: white; border-radius: var(--radius); padding: 22px; }
+    .highlight-box .iconify { font-size: 28px; margin-bottom: 10px; color: rgba(255,255,255,0.85); display: block; }
+    .highlight-box h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; }
+    .highlight-box p { font-size: 0.82rem; opacity: 0.88; line-height: 1.55; }
+    .story-card { background: var(--card); border-radius: var(--radius); padding: 26px; box-shadow: var(--shadow); border-left: 5px solid var(--accent); margin-bottom: 18px; transition: all var(--transition); }
+    .story-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+    .story-card blockquote { font-size: 1.0rem; font-style: italic; color: var(--text); line-height: 1.75; margin-bottom: 14px; }
+    .story-card cite { font-size: 0.82rem; color: var(--text-light); font-style: normal; font-weight: 600; }
+    .resource-links { display: flex; flex-direction: column; gap: 12px; }
+    .resource-link {
+      background: var(--card); border-radius: 12px; padding: 16px 20px;
+      display: flex; align-items: center; gap: 14px;
+      box-shadow: var(--shadow); text-decoration: none; color: var(--text);
+      transition: all var(--transition); border: 1px solid transparent;
+    }
+    .resource-link:hover { border-color: var(--primary-light); transform: translateX(4px); box-shadow: var(--shadow-hover); }
+    .resource-link .iconify { font-size: 24px; color: var(--primary-light); flex-shrink: 0; }
+    .resource-link .rl-title { font-weight: 600; font-size: 0.9rem; color: var(--primary); }
+    .resource-link .rl-desc { font-size: 0.78rem; color: var(--text-light); margin-top: 2px; }
+    .action-step {
+      background: var(--card); border-radius: var(--radius); padding: 20px 22px; margin-bottom: 14px;
+      box-shadow: var(--shadow); display: flex; gap: 16px; align-items: flex-start; transition: all var(--transition);
+    }
+    .action-step:hover { transform: translateX(4px); box-shadow: var(--shadow-hover); }
+    .step-num {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: white; font-weight: 800; font-size: 1rem;
+      display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    }
+    .step-content h4 { font-size: 0.95rem; font-weight: 700; color: var(--primary); margin-bottom: 5px; }
+    .step-content p { font-size: 0.85rem; color: var(--text-light); line-height: 1.6; }
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; margin-right: 4px; margin-bottom: 4px; }
+    .badge-blue { background: #dbeafe; color: #1e40af; }
+    .badge-green { background: #d1fae5; color: #065f46; }
+    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    .menu-toggle {
+      display: none; position: fixed; top: 14px; left: 14px; z-index: 1100;
+      background: var(--primary); color: white; border: none; border-radius: 10px;
+      padding: 10px 12px; cursor: pointer; box-shadow: var(--shadow);
+    }
+    .menu-toggle .iconify { font-size: 22px; }
+    #scroll-top {
+      position: fixed; bottom: 28px; right: 28px; background: var(--primary); color: white;
+      border: none; border-radius: 50%; width: 46px; height: 46px; cursor: pointer;
+      box-shadow: var(--shadow-hover); display: flex; align-items: center; justify-content: center;
+      opacity: 0; pointer-events: none; transition: all var(--transition); z-index: 900;
+    }
+    #scroll-top.show { opacity: 1; pointer-events: all; }
+    #scroll-top:hover { transform: translateY(-3px); background: var(--primary-light); }
+    .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 999; }
+    .overlay.show { display: block; }
+    @media (max-width: 900px) {
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.open { transform: translateX(0); }
+      .main { margin-left: 0; }
+      .menu-toggle { display: flex; }
+      .hero { padding: 70px 24px 36px; }
+      .content-section { padding: 24px 20px; }
+      .cat-grid-section { padding: 24px 20px 10px; }
+      .cards-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 1.55rem; }
+      .hero-stats { gap: 10px; }
+      .hero-stat { min-width: 100px; padding: 10px 14px; }
+      .tab-btn { padding: 7px 14px; font-size: 0.78rem; }
+    }
+  </style>
+</head>
+<body>
+<div id="scroll-progress"></div>
+<button class="menu-toggle" onclick="toggleMenu()" aria-label="Open menu">
+  <span class="iconify" data-icon="solar:hamburger-menu-bold"></span>
+</button>
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <span class="iconify sidebar-icon" data-icon="solar:brain-bold-duotone"></span>
+    <div class="sidebar-title">Parkinson's Disease Hub</div>
+    <div class="sidebar-subtitle">CarePedia Information Center</div>
+  </div>
+  <div class="sidebar-search">
+    <input type="text" id="search-input" placeholder="Search the portal..." oninput="searchPortal(this.value)" aria-label="Search portal"/>
+  </div>
+  <nav id="main-nav">
+    <div class="nav-section-label">Overview</div>
+    <a href="#home" onclick="navigate('home')" class="active"><span class="iconify" data-icon="solar:home-bold-duotone"></span> Home</a>
+    <a href="#about" onclick="navigate('about')"><span class="iconify" data-icon="solar:info-circle-bold-duotone"></span> About PD</a>
+    <div class="nav-section-label">Treatment</div>
+    <a href="#treatments" onclick="navigate('treatments')"><span class="iconify" data-icon="solar:pill-bold-duotone"></span> Treatments</a>
+    <a href="#trials" onclick="navigate('trials')"><span class="iconify" data-icon="solar:test-tube-bold-duotone"></span> Clinical Trials</a>
+    <a href="#research" onclick="navigate('research')"><span class="iconify" data-icon="solar:microscope-bold-duotone"></span> Research</a>
+    <div class="nav-section-label">Living Well</div>
+    <a href="#lifestyle" onclick="navigate('lifestyle')"><span class="iconify" data-icon="solar:running-round-bold-duotone"></span> Lifestyle</a>
+    <a href="#physio" onclick="navigate('physio')"><span class="iconify" data-icon="solar:bicycling-round-bold-duotone"></span> Physiotherapy</a>
+    <a href="#psychological-approach" onclick="navigate('psychological-approach')"><span class="iconify" data-icon="solar:heart-pulse-bold-duotone"></span> Mental Health</a>
+    <a href="#pingpong" onclick="navigate('pingpong')"><span class="iconify" data-icon="solar:gamepad-bold-duotone"></span> Ping Pong Therapy</a>
+    <div class="nav-section-label">Community</div>
+    <a href="#stories" onclick="navigate('stories')"><span class="iconify" data-icon="solar:users-group-rounded-bold-duotone"></span> Stories</a>
+    <a href="#action" onclick="navigate('action')"><span class="iconify" data-icon="solar:checklist-minimalistic-bold-duotone"></span> Action Plan</a>
+    <a href="#resources" onclick="navigate('resources')"><span class="iconify" data-icon="solar:library-bold-duotone"></span> Resources</a>
+  </nav>
+</aside>
+
+<div class="main">
+  <div class="disclaimer-banner">
+    <span class="iconify" data-icon="solar:danger-bold"></span>
+    <span><strong>This is not medical advice.</strong> Always consult your doctor before making any changes to your treatment plan.</span>
+  </div>
+
+  <section class="hero" id="home">
+    <div class="hero-badge"><span class="iconify" data-icon="solar:brain-bold-duotone"></span> Parkinson's Disease Information Hub</div>
+    <h1>Understanding Parkinson's Disease</h1>
+    <p>A comprehensive, evidence-based guide covering diagnosis, treatments, cutting-edge research, lifestyle strategies, and global support networks. Updated with the latest clinical findings.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><strong>10M+</strong><span>People worldwide with PD</span></div>
+      <div class="hero-stat"><strong>60K</strong><span>New diagnoses/year in the US</span></div>
+      <div class="hero-stat"><strong>58%</strong><span>Motor improvement with intensive training (Lancet 2024)</span></div>
+      <div class="hero-stat"><strong>200+</strong><span>Active clinical trials worldwide</span></div>
+    </div>
+  </section>
+
+  <div class="cat-grid-section">
+    <h2><span class="iconify" data-icon="solar:compass-bold-duotone"></span> Navigate the Portal</h2>
+    <div class="cat-grid">
+      <a class="cat-card" href="#about" onclick="navigate('about')"><span class="iconify" data-icon="solar:info-circle-bold-duotone"></span><span>About PD</span></a>
+      <a class="cat-card" href="#treatments" onclick="navigate('treatments')"><span class="iconify" data-icon="solar:pill-bold-duotone"></span><span>Treatments</span></a>
+      <a class="cat-card" href="#trials" onclick="navigate('trials')"><span class="iconify" data-icon="solar:test-tube-bold-duotone"></span><span>Clinical Trials</span></a>
+      <a class="cat-card" href="#research" onclick="navigate('research')"><span class="iconify" data-icon="solar:microscope-bold-duotone"></span><span>Research</span></a>
+      <a class="cat-card" href="#lifestyle" onclick="navigate('lifestyle')"><span class="iconify" data-icon="solar:running-round-bold-duotone"></span><span>Lifestyle</span></a>
+      <a class="cat-card" href="#physio" onclick="navigate('physio')"><span class="iconify" data-icon="solar:bicycling-round-bold-duotone"></span><span>Physiotherapy</span></a>
+      <a class="cat-card" href="#psychological-approach" onclick="navigate('psychological-approach')"><span class="iconify" data-icon="solar:heart-pulse-bold-duotone"></span><span>Mental Health</span></a>
+      <a class="cat-card" href="#pingpong" onclick="navigate('pingpong')"><span class="iconify" data-icon="solar:gamepad-bold-duotone"></span><span>Ping Pong</span></a>
+      <a class="cat-card" href="#stories" onclick="navigate('stories')"><span class="iconify" data-icon="solar:users-group-rounded-bold-duotone"></span><span>Stories</span></a>
+      <a class="cat-card" href="#action" onclick="navigate('action')"><span class="iconify" data-icon="solar:checklist-minimalistic-bold-duotone"></span><span>Action Plan</span></a>
+      <a class="cat-card" href="#resources" onclick="navigate('resources')"><span class="iconify" data-icon="solar:library-bold-duotone"></span><span>Resources</span></a>
+    </div>
+  </div>
+
+  <section class="content-section fade-in" id="about">
+    <div class="section-header">
+      <div class="section-icon"><span class="iconify" data-icon="solar:info-circle-bold-duotone"></span></div>
+      <div><h2>What Is Parkinson's Disease?</h2><p>Understanding the biology, symptoms, and causes</p></div>
+    </div>
+    <div class="cards-grid">
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:brain-bold-duotone"></span> The Biology of PD</h3>
+        <p>Parkinson's disease is a progressive neurodegenerative disorder caused by the gradual loss of dopamine-producing neurons in the <strong>Substantia Nigra</strong> — a region deep in the brainstem. Dopamine is essential for smooth, coordinated movement.</p>
+        <p style="margin-top:10px;">A hallmark of PD is the accumulation of <strong>alpha-synuclein</strong> protein into toxic clumps called <strong>Lewy bodies</strong>. When dopamine levels drop by approximately 80%, motor symptoms begin to appear.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:stethoscope-bold-duotone"></span> Core Motor Symptoms</h3>
+        <ul>
+          <li><strong>Tremor</strong> — Rhythmic shaking, most commonly in the hand at rest</li>
+          <li><strong>Rigidity</strong> — Muscle stiffness, resistance to passive movement</li>
+          <li><strong>Bradykinesia</strong> — Slowness of movement, reduced arm swing</li>
+          <li><strong>Postural instability</strong> — Balance problems, increased fall risk</li>
+          <li><strong>Freezing of gait</strong> — Sudden inability to initiate movement</li>
+          <li><strong>Masked face</strong> — Reduced facial expressiveness</li>
+        </ul>
+      </div>
+      <div class="info-card warm-card">
+        <h3><span class="iconify" data-icon="solar:health-bold-duotone"></span> Non-Motor Symptoms</h3>
+        <ul>
+          <li>Depression and anxiety (very common, often precede motor onset)</li>
+          <li>REM sleep behavior disorder</li>
+          <li>Cognitive changes; dementia in late stages</li>
+          <li>Constipation and digestive issues</li>
+          <li>Loss of smell (anosmia) — often precedes motor symptoms by years</li>
+          <li>Fatigue and autonomic dysfunction</li>
+          <li>Pain and sensory disturbances</li>
+        </ul>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span><span class="iconify" data-icon="solar:dna-bold-duotone"></span> &nbsp;Causes and Risk Factors</span>
+        <span class="iconify" data-icon="solar:alt-arrow-down-bold"></span>
+      </div>
+      <div class="accordion-body">
+        <div class="accordion-inner">
+          <p><strong>Age:</strong> The strongest risk factor — most people are diagnosed after age 60. Early-onset PD (before 50) affects about 5-10% of patients.</p>
+          <p style="margin-top:10px;"><strong>Genetics:</strong> About 10-15% of cases have a clear genetic cause. Key genes include LRRK2, PINK1, Parkin, SNCA, and GBA1. GBA1 variants are the most common genetic risk factor worldwide.</p>
+          <p style="margin-top:10px;"><strong>Environmental factors:</strong> Prolonged exposure to pesticides, herbicides (rotenone and paraquat), and heavy metals may increase risk. Rural living and well water use have been associated with higher rates in multiple studies.</p>
+          <p style="margin-top:10px;"><strong>Protective factors:</strong> Regular vigorous exercise, caffeine consumption, and higher uric acid levels have been associated with reduced PD risk in epidemiological studies.</p>
+        </div>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span><span class="iconify" data-icon="solar:clipboard-bold-duotone"></span> &nbsp;Diagnosis and Assessment</span>
+        <span class="iconify" data-icon="solar:alt-arrow-down-bold"></span>
+      </div>
+      <div class="accordion-body">
+        <div class="accordion-inner">
+          <p>Parkinson's disease is primarily a <strong>clinical diagnosis</strong> based on bradykinesia plus at least one of: resting tremor, rigidity, or a positive response to dopaminergic therapy.</p>
+          <ul>
+            <li><strong>MDS-UPDRS Scale:</strong> The gold-standard tool for measuring motor and non-motor symptom severity</li>
+            <li><strong>DaTscan (SPECT):</strong> Neuroimaging to detect dopamine transporter deficits in the striatum</li>
+            <li><strong>MRI:</strong> Used to rule out other conditions; not diagnostic for PD itself</li>
+            <li><strong>Alpha-synuclein SAA:</strong> A new blood/CSF biomarker with high sensitivity that may allow earlier diagnosis</li>
+            <li><strong>Smell testing:</strong> Anosmia is present in approximately 90% of PD patients</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="alert-box alert-info">
+      <span class="iconify" data-icon="solar:info-circle-bold"></span>
+      <div><strong>Prodromal Phase:</strong> PD symptoms may begin 10-20 years before motor diagnosis. Key early signs include REM sleep behavior disorder, loss of smell, constipation, and depression. These prodromal markers are now being studied for early intervention opportunities.</div>
+    </div>
+  </section>
+
+  <section class="content-section fade-in" id="treatments">
+    <div class="section-header">
+      <div class="section-icon"><span class="iconify" data-icon="solar:pill-bold-duotone"></span></div>
+      <div><h2>Treatments</h2><p>Medications, advanced therapies, and side effect management</p></div>
+    </div>
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab(this,'treatments-group','main-meds')">Standard Medications</button>
+      <button class="tab-btn" onclick="switchTab(this,'treatments-group','new-treatments')">Advanced Therapies</button>
+      <button class="tab-btn" onclick="switchTab(this,'treatments-group','side-effects')">Side Effects</button>
+      <button class="tab-btn" onclick="switchTab(this,'treatments-group','ask-doctor')">Ask Your Doctor</button>
+    </div>
+    <div data-tab-group="treatments-group">
+      <div data-tab-content="main-meds" class="tab-content active">
+        <div class="alert-box alert-info">
+          <span class="iconify" data-icon="solar:info-circle-bold"></span>
+          <div>Parkinson's medications manage symptoms by restoring or mimicking dopamine. Currently approved therapies do not slow disease progression. All medications require individual dosing adjusted by a specialist.</div>
+        </div>
+        <table class="med-table">
+          <thead><tr><th>Drug (Brand Name)</th><th>Class</th><th>How It Works</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Levodopa/Carbidopa (Sinemet)</td><td>Dopamine precursor</td><td>Converts to dopamine in the brain; carbidopa prevents peripheral breakdown</td><td>Gold standard; most effective. May cause dyskinesias over time.</td></tr>
+            <tr><td>Pramipexole (Mirapex)</td><td>Dopamine agonist</td><td>Mimics dopamine by binding to its receptors</td><td>Often used in early PD; risk of impulse control disorders</td></tr>
+            <tr><td>Ropinirole (Requip)</td><td>Dopamine agonist</td><td>Mimics dopamine activity in the brain</td><td>Similar profile to pramipexole; available in extended-release form</td></tr>
+            <tr><td>Rasagiline (Azilect)</td><td>MAO-B inhibitor</td><td>Slows breakdown of dopamine in the brain</td><td>Can be used as monotherapy or add-on; possible mild neuroprotective signal</td></tr>
+            <tr><td>Entacapone (Comtan)</td><td>COMT inhibitor</td><td>Prolongs levodopa effect by blocking its peripheral breakdown</td><td>Always used with levodopa; extends "on" time</td></tr>
+            <tr><td>Amantadine (Symmetrel/Gocovri)</td><td>NMDA antagonist</td><td>Reduces dyskinesias; mild dopaminergic effect</td><td>Gocovri (extended-release) FDA-approved specifically for dyskinesia</td></tr>
+            <tr><td>Safinamide (Xadago)</td><td>MAO-B inhibitor + glutamate blocker</td><td>Dual action: increases dopamine and reduces glutamate excitotoxicity</td><td>Add-on therapy; approved for fluctuating PD</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div data-tab-content="new-treatments" class="tab-content">
+        <div class="cards-grid">
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:lightning-bold-duotone"></span> Deep Brain Stimulation (DBS)</h3>
+            <p>The most established surgical intervention for PD. Electrodes implanted in the subthalamic nucleus (STN) or globus pallidus (GPi) deliver electrical pulses that regulate abnormal brain activity. Effective for tremor, rigidity, and motor fluctuations. Next-generation adaptive DBS (Medtronic BrainSense) adjusts stimulation in real time based on brain signals.</p>
+          </div>
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:medical-kit-bold-duotone"></span> Duopa / Duodopa Pump</h3>
+            <p>Continuous intestinal infusion of levodopa-carbidopa gel via a surgically placed tube. Provides more stable drug levels than oral pills, significantly decreasing "off" time by up to 4-5 hours per day. Effective for advanced PD with significant motor fluctuations.</p>
+          </div>
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:soundwave-bold-duotone"></span> Focused Ultrasound (FUS)</h3>
+            <p>A non-invasive procedure using focused sound waves to create a precise thermal lesion in the thalamus or subthalamic nucleus. FDA-approved for essential tremor and tremor-dominant PD. No incision required. The Exablate Neuro system is the leading device; bilateral treatment studies are ongoing.</p>
+          </div>
+          <div class="info-card warm-card">
+            <h3><span class="iconify" data-icon="solar:dna-bold-duotone"></span> Gene Therapy (Emerging)</h3>
+            <p>Multiple gene therapy approaches are in clinical trials: AAV vectors delivering AADC to improve levodopa conversion, and neuroprotective approaches targeting alpha-synuclein, LRRK2, and GBA1. The REGENERATE-PD trial (NCT06285643) is evaluating AAV gene therapy for GBA1-PD patients.</p>
+          </div>
+        </div>
+      </div>
+      <div data-tab-content="side-effects" class="tab-content">
+        <div class="accordion">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span>Motor fluctuations and dyskinesias</span>
+            <span class="iconify" data-icon="solar:alt-arrow-down-bold"></span>
+          </div>
+          <div class="accordion-body">
+            <div class="accordion-inner">
+              <p>After years of levodopa treatment, many patients experience:</p>
+              <ul>
+                <li><strong>"Wearing off":</strong> Benefits fade before the next dose; "off" periods increase in frequency and severity</li>
+                <li><strong>Dyskinesias:</strong> Involuntary, writhing movements that occur at peak levodopa levels</li>
+                <li><strong>"On-off" fluctuations:</strong> Sudden, unpredictable swings between mobility and freezing</li>
+              </ul>
+              <p style="margin-top:10px;"><strong>Management options:</strong> Smaller, more frequent doses; sustained-release formulations; adding amantadine (Gocovri); advanced device therapies (DBS, Duopa).</p>
+            </div>
+          </div>
+        </div>
+        <div class="accordion">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span>Impulse control disorders (ICDs)</span>
+            <span class="iconify" data-icon="solar:alt-arrow-down-bold"></span>
+          </div>
+          <div class="accordion-body">
+            <div class="accordion-inner">
+              <p>Dopamine agonists (pramipexole, ropinirole) carry a risk of impulse control disorders in approximately 1 in 6 patients, including:</p>
+              <ul>
+                <li>Pathological gambling</li>
+                <li>Hypersexuality</li>
+                <li>Binge eating</li>
+                <li>Compulsive shopping or hoarding</li>
+                <li>Dopamine dysregulation syndrome (compulsive medication overuse)</li>
+              </ul>
+              <p style="margin-top:10px;">Report any of these behaviors to your neurologist immediately. Dose reduction or medication change usually resolves the disorder.</p>
+            </div>
+          </div>
+        </div>
+        <div class="accordion">
+          <div class="accordion-header" onclick="toggleAccordion(this)">
+            <span>Other common side effects</span>
+            <span class="iconify" data-icon="solar:alt-arrow-down-bold"></span>
+          </div>
+          <div class="accordion-body">
+            <div class="accordion-inner">
+              <ul>
+                <li><strong>Nausea:</strong> Common with levodopa — take with food or with a carbidopa add-on</li>
+                <li><strong>Orthostatic hypotension:</strong> Dizziness when standing — manage with hydration, compression stockings</li>
+                <li><strong>Hallucinations/psychosis:</strong> More common in advanced PD — Pimavanserin (Nuplazid) is FDA-approved specifically for PD psychosis without worsening motor symptoms</li>
+                <li><strong>Excessive daytime sleepiness:</strong> Can occur with dopamine agonists — caution when driving</li>
+                <li><strong>Edema:</strong> Ankle and leg swelling with agonists</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div data-tab-content="ask-doctor" class="tab-content">
+        <div class="cards-grid">
+          <div class="info-card accent-card">
+            <h3><span class="iconify" data-icon="solar:question-circle-bold-duotone"></span> Key Questions to Ask</h3>
+            <ul>
+              <li>Should I start medication now or monitor first?</li>
+              <li>Should I see a movement disorder specialist?</li>
+              <li>Am I a candidate for DBS or other device therapies?</li>
+              <li>Should I have genetic testing (LRRK2, GBA1)?</li>
+              <li>What clinical trials am I eligible for?</li>
+              <li>Do you use the MDS-UPDRS to track my progress?</li>
+            </ul>
+          </div>
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:document-bold-duotone"></span> The Multidisciplinary Team</h3>
+            <p>Optimal PD care involves a team of specialists:</p>
+            <ul>
+              <li><strong>Movement disorder neurologist</strong> — core PD management</li>
+              <li><strong>Physiotherapist</strong> — movement, balance, gait rehabilitation</li>
+              <li><strong>Speech-language pathologist</strong> — speech and swallowing</li>
+              <li><strong>Occupational therapist</strong> — daily activities, home safety</li>
+              <li><strong>Psychologist/psychiatrist</strong> — mood, cognition, behavioral issues</li>
+              <li><strong>Dietitian</strong> — nutrition, protein timing with levodopa</li>
+              <li><strong>Specialist nurse</strong> — medication management, patient education</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section fade-in" id="trials">
+    <div class="section-header">
+      <div class="section-icon"><span class="iconify" data-icon="solar:test-tube-bold-duotone"></span></div>
+      <div><h2>Clinical Trials</h2><p>Active and recruiting trials worldwide — as of 2024/2025</p></div>
+    </div>
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab(this,'trials-group','international-trials')">Active Global Trials</button>
+      <button class="tab-btn" onclick="switchTab(this,'trials-group','how-to')">How to Participate</button>
+    </div>
+    <div data-tab-group="trials-group">
+      <div data-tab-content="international-trials" class="tab-content active">
+        <div class="timeline">
+          <div class="timeline-item">
+            <h4>VacSYn — Alpha-Synuclein Vaccine (NCT06015841)</h4>
+            <p>A first-in-class therapeutic vaccine designed to generate antibodies against alpha-synuclein aggregates. Phase 1/2 trial testing safety and immune response. This disease-modifying approach targets the root pathology of PD.</p>
+          </div>
+          <div class="timeline-item">
+            <h4>REGENERATE-PD — Gene Therapy for GBA1-PD (NCT06285643)</h4>
+            <p>AAV-based gene therapy delivering a functional GBA1 gene to neurons in patients with GBA1 mutations — the most common genetic form of PD. Phase 1/2 safety trial. A corrective gene therapy could significantly slow progression in this subgroup.</p>
+          </div>
+          <div class="timeline-item">
+            <h4>Prasinezumab — Anti-Alpha-Synuclein Antibody (Roche/Prothena)</h4>
+            <p>Phase 2b PADOVA trial in early-stage PD patients. The antibody targets and clears pathological alpha-synuclein. Early signals showed possible slowing of motor progression in fast-progressing patients. Phase 2b results expected 2025.</p>
+          </div>
+          <div class="timeline-item">
+            <h4>GLP-1 Receptor Agonists — Lixisenatide and Semaglutide</h4>
+            <p>GLP-1 drugs originally developed for diabetes have shown neuroprotective effects in PD. A French Phase 2 trial of lixisenatide (Lancet, 2023) showed significantly less motor decline versus placebo. Multiple larger trials with semaglutide are ongoing.</p>
+          </div>
+          <div class="timeline-item">
+            <h4>LUMA Study — LRRK2 Inhibitor (NCT06602193)</h4>
+            <p>Evaluating BIIB122 (DNL151), an oral LRRK2 kinase inhibitor, in patients with LRRK2-mutation PD. LRRK2 is the most common mutation in familial PD. Phase 2/3 — one of the most promising precision medicine approaches in PD research.</p>
+          </div>
+          <div class="timeline-item">
+            <h4>ACTIVATE — GBA1-Targeted Therapy (Ambroxol)</h4>
+            <p>Testing ambroxol and other GBA1-enhancing strategies to restore lysosomal function in GBA1-PD patients. Ambroxol has shown early promise by increasing GCase enzyme activity and reducing alpha-synuclein accumulation.</p>
+          </div>
+          <div class="timeline-item">
+            <h4>iPSC Stem Cell Therapy — Harvard/Brigham Study</h4>
+            <p>Phase 1 trials of dopaminergic neurons derived from induced pluripotent stem cells implanted in the striatum. Safety data in 2023-2024 showed cells survived and began producing dopamine. Could eventually offer cell replacement therapy for PD.</p>
+          </div>
+          <div class="timeline-item">
+            <h4>Adaptive DBS — Medtronic BrainSense</h4>
+            <p>Records local field potentials from implanted electrodes and uses them to automatically adjust stimulation in real time. Phase 3 clinical evaluations are ongoing. Aims to reduce side effects and extend battery life versus conventional open-loop DBS.</p>
+          </div>
+        </div>
+        <div class="alert-box alert-success">
+          <span class="iconify" data-icon="solar:verified-check-bold"></span>
+          <div><strong>Fox Trial Finder:</strong> The Michael J. Fox Foundation operates <a href="https://foxtrialfinder.michaeljfox.org" target="_blank" style="color:inherit;">Fox Trial Finder</a> — the most comprehensive database of PD trials worldwide. Enter your location and profile to find trials you may qualify for today.</div>
+        </div>
+      </div>
+      <div data-tab-content="how-to" class="tab-content">
+        <div class="cards-grid">
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:search-bold-duotone"></span> Finding a Trial</h3>
+            <ul>
+              <li><strong>Fox Trial Finder</strong> (foxtrialfinder.michaeljfox.org) — PD-specific, easy to use</li>
+              <li><strong>ClinicalTrials.gov</strong> — complete US and international trial registry</li>
+              <li><strong>EU Clinical Trials Register</strong> — European trials database</li>
+              <li><strong>WHO ICTRP</strong> — global registry network</li>
+              <li>Ask your movement disorder neurologist directly</li>
+            </ul>
+          </div>
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:document-add-bold-duotone"></span> The Enrollment Process</h3>
+            <ul>
+              <li>Review eligibility criteria (age, disease stage, medications)</li>
+              <li>Contact the trial coordinator by email or phone</li>
+              <li>Attend a screening visit — usually covered by the trial</li>
+              <li>Receive full informed consent documentation</li>
+              <li>You can withdraw at any time without affecting your regular care</li>
+            </ul>
+          </div>
+          <div class="info-card accent-card">
+            <h3><span class="iconify" data-icon="solar:hand-heart-bold-duotone"></span> Who Can Participate?</h3>
+            <p>Different trials need different participants:</p>
+            <ul>
+              <li>Newly diagnosed patients (disease-modifying trials)</li>
+              <li>People with specific gene mutations (LRRK2, GBA1, PINK1)</li>
+              <li>Advanced PD patients (device therapies)</li>
+              <li>Healthy relatives of PD patients (genetic risk studies)</li>
+              <li>Older adults without PD (prevention trials)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section fade-in" id="research">
+    <div class="section-header">
+      <div class="section-icon"><span class="iconify" data-icon="solar:microscope-bold-duotone"></span></div>
+      <div><h2>Latest Research</h2><p>Breakthroughs from 2023-2025</p></div>
+    </div>
+    <div class="cards-grid">
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:running-round-bold-duotone"></span> Exercise Restores Neurons</h3>
+        <p>A landmark Yale 2024 study (Bhatt et al.) demonstrated that intense aerobic exercise can restore the brain's dopaminergic system — not just slow its decline. Treadmill training increased BDNF expression and partially regenerated dopaminergic pathways in animal models, with human neuroimaging studies ongoing.</p>
+        <p style="margin-top:8px;"><span class="badge badge-green">Lancet 2024</span> <span class="badge badge-blue">58% motor improvement</span></p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:pill-bold-duotone"></span> GLP-1 Drugs Show Promise</h3>
+        <p>Diabetes drugs like lixisenatide and semaglutide (Ozempic) have emerged as potential neuroprotective agents for PD. A 2023 Lancet trial showed lixisenatide slowed motor progression compared to placebo. GLP-1 receptors in the brain may protect dopamine neurons from inflammation and oxidative stress.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:health-bold-duotone"></span> Gut-Brain Axis</h3>
+        <p>Growing evidence suggests PD may begin in the gut for many patients — alpha-synuclein misfolding propagates from enteric neurons to the brainstem via the vagus nerve (Braak hypothesis). Gut microbiome studies and appendix surgery data are revealing new targets for early intervention.</p>
+      </div>
+      <div class="info-card warm-card">
+        <h3><span class="iconify" data-icon="solar:test-tube-bold-duotone"></span> Biomarker Breakthrough: SAA</h3>
+        <p>The alpha-synuclein seed amplification assay (SAA) can detect PD pathology in cerebrospinal fluid or skin biopsies with high sensitivity — years before motor symptoms appear. Blood-based versions are now being validated for easier clinical use, potentially enabling preventive treatment trials.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:cells-bold-duotone"></span> Stem Cell Advances</h3>
+        <p>Multiple groups have demonstrated that iPSC-derived dopaminergic neurons can survive transplantation and integrate into primate and early human brains. Safety trials at Harvard/Brigham and Kyoto University show cell-replacement therapy may become realistic by the late 2020s.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:music-note-bold-duotone"></span> Music Therapy and Neuroplasticity</h3>
+        <p>A 2024 Cochrane meta-analysis confirmed that music therapy and rhythmic auditory stimulation (RAS) improve gait speed, stride length, and quality of life in PD. RAS uses an external rhythmic beat to help bypass basal ganglia dysfunction and restore walking automaticity.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section fade-in" id="lifestyle">
+    <div class="section-header">
+      <div class="section-icon"><span class="iconify" data-icon="solar:running-round-bold-duotone"></span></div>
+      <div><h2>Lifestyle Strategies</h2><p>Exercise, nutrition, speech, and mental wellness</p></div>
+    </div>
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab(this,'lifestyle-group','exercise')">Exercise</button>
+      <button class="tab-btn" onclick="switchTab(this,'lifestyle-group','nutrition')">Nutrition</button>
+      <button class="tab-btn" onclick="switchTab(this,'lifestyle-group','speech')">Speech</button>
+      <button class="tab-btn" onclick="switchTab(this,'lifestyle-group','mental')">Mental Health</button>
+    </div>
+    <div data-tab-group="lifestyle-group">
+      <div data-tab-content="exercise" class="tab-content active">
+        <div class="alert-box alert-success">
+          <span class="iconify" data-icon="solar:star-bold"></span>
+          <div><strong>Exercise is the single most powerful non-medication intervention in Parkinson's disease.</strong> Multiple large studies confirm it slows motor decline, improves balance, reduces falls, and enhances mood. Aim for at least 150 minutes of moderate-to-vigorous aerobic exercise per week.</div>
+        </div>
+        <div class="cards-grid">
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:boxing-bold-duotone"></span> Rock Steady Boxing</h3>
+            <p>Non-contact boxing program specifically developed for PD. Targets agility, speed, muscular endurance, balance, and hand-eye coordination. Available at 500+ affiliates in 30+ countries. Randomized trials show significant improvements in UPDRS scores, balance, and quality of life.</p>
+          </div>
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:bicycling-round-bold-duotone"></span> Intense Cycling (SPARX3)</h3>
+            <p>The SPARX3 trial demonstrated that high-cadence cycling (80+ RPM) significantly outperformed moderate cycling for motor symptom improvement. Vigorous aerobic activity appears to have neuroprotective effects beyond fitness, possibly stimulating BDNF and dopamine release.</p>
+          </div>
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:yoga-bold-duotone"></span> Tai Chi and Balance</h3>
+            <p>Multiple RCTs confirm Tai Chi reduces falls by up to 55% in PD patients. The slow, intentional weight-shifting movements improve proprioception and postural stability. Recommended by the Parkinson's Foundation as a core exercise modality. Even two sessions per week shows measurable effects.</p>
+          </div>
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:music-note-bold-duotone"></span> Tango and Dance</h3>
+            <p>Argentine tango has been specifically studied in PD and shown to improve balance, spatial cognition, and gait. The rhythmic, partnered nature provides auditory and tactile cues that help bypass basal ganglia timing deficits. Dance therapy programs are available at many movement disorder centers worldwide.</p>
+          </div>
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:swimming-bold-duotone"></span> Aquatic Therapy</h3>
+            <p>Water buoyancy reduces fall risk while enabling vigorous exercise. Aquatic therapy improves balance, strength, and gait in PD. Warm water also helps with rigidity. Available at hydrotherapy pools at many rehabilitation centers and sports facilities.</p>
+          </div>
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:walking-bold-duotone"></span> Nordic Walking</h3>
+            <p>Walking with poles engages the upper body, improves posture, reduces fall risk, and provides rhythmic bilateral movement patterns. Multiple studies show Nordic Walking improves gait speed, stride length, and balance in PD beyond standard walking.</p>
+          </div>
+        </div>
+      </div>
+      <div data-tab-content="nutrition" class="tab-content">
+        <div class="cards-grid">
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:leaf-bold-duotone"></span> Mediterranean Diet</h3>
+            <p>The Mediterranean diet — fruits, vegetables, whole grains, fish, olive oil, nuts — has the strongest evidence for neuroprotection in PD. Regular adherence is associated with slower progression and better cognitive function. Anti-inflammatory foods actively support neuronal health.</p>
+          </div>
+          <div class="info-card warm-card">
+            <h3><span class="iconify" data-icon="solar:clock-circle-bold-duotone"></span> Protein Redistribution Diet</h3>
+            <p>Large neutral amino acids in protein compete with levodopa for brain absorption. In patients with motor fluctuations, distributing protein to the evening meal can significantly improve levodopa effectiveness throughout the day. Work with a PD dietitian to implement this safely.</p>
+          </div>
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:health-bold-duotone"></span> Gut Microbiome and Probiotics</h3>
+            <p>Constipation affects 80% of PD patients and is often a pre-motor symptom. A 2024 randomized trial found probiotic supplementation significantly improved constipation and modestly improved motor scores. Adequate fiber intake and hydration are foundational gut health strategies.</p>
+          </div>
+        </div>
+        <h3 style="font-size:1rem; font-weight:700; color:var(--primary); margin:20px 0 14px;">Supplements — Evidence Summary</h3>
+        <table class="med-table">
+          <thead><tr><th>Supplement</th><th>Evidence Level</th><th>Rationale</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td>Vitamin D3</td><td>Moderate</td><td>PD patients commonly deficient; may slow progression</td><td>Check levels; aim for 40-60 ng/mL range</td></tr>
+            <tr><td>Omega-3 (DHA/EPA)</td><td>Moderate</td><td>Anti-inflammatory; neuroprotective in animal models</td><td>2-4g/day; fish oil or algae-based</td></tr>
+            <tr><td>Curcumin</td><td>Low-Moderate</td><td>Anti-inflammatory; inhibits alpha-synuclein aggregation in vitro</td><td>Low bioavailability — use with piperine or liposomal forms</td></tr>
+            <tr><td>CoQ10</td><td>Low</td><td>Mitochondrial support; early PD trial showed possible slowing</td><td>Phase 3 trial was negative; still used adjunctively</td></tr>
+            <tr><td>NAC (N-Acetyl Cysteine)</td><td>Low-Moderate</td><td>Glutathione precursor; IV form showed signal in PD study</td><td>Oral form less studied; 600mg twice daily typical</td></tr>
+            <tr><td>Vitamin B1 (Thiamine)</td><td>Low (Preliminary)</td><td>High-dose thiamine protocol reports improvements; mechanism unclear</td><td>Requires monitoring; do not self-administer high doses</td></tr>
+            <tr><td>Probiotics</td><td>Moderate</td><td>Improves constipation; potential gut-brain axis benefits</td><td>Multi-strain products; consistent daily use needed</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div data-tab-content="speech" class="tab-content">
+        <div class="cards-grid">
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:microphone-bold-duotone"></span> LSVT LOUD Therapy</h3>
+            <p>Lee Silverman Voice Treatment (LSVT LOUD) is the gold standard speech therapy for PD. It targets the soft, monotone voice by training patients to speak at high vocal effort ("LOUD"). Four sessions per week for four weeks. Shown to maintain improvements for 2+ years in RCTs.</p>
+          </div>
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:chat-round-bold-duotone"></span> Swallowing Difficulties</h3>
+            <p>Dysphagia affects up to 80% of PD patients and is a major cause of aspiration pneumonia — the leading cause of death in PD. A speech-language pathologist can assess swallowing function, recommend diet texture modifications, and teach compensatory swallowing techniques.</p>
+          </div>
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:device-mobile-bold-duotone"></span> Assistive Communication</h3>
+            <p>For advanced PD with significant dysarthria: speech amplifiers, voice banking (record your voice while still clear), speech-generating devices, and AAC apps. Voice banking should be done early — ModelTalker, VocaliD, and similar services allow you to build a synthetic voice from your own recordings.</p>
+          </div>
+        </div>
+      </div>
+      <div data-tab-content="mental" class="tab-content">
+        <div class="cards-grid">
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:heart-pulse-bold-duotone"></span> Depression in PD</h3>
+            <p>Depression affects approximately 40% of PD patients and is a core non-motor symptom, not just a reaction to diagnosis. It often precedes motor symptoms by years. SSRIs and SNRIs are the first-line pharmacological treatment. CBT combined with medication shows best outcomes. Exercise has well-documented antidepressant effects in PD.</p>
+          </div>
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:shield-warning-bold-duotone"></span> Anxiety</h3>
+            <p>Anxiety disorders affect 30-55% of PD patients and frequently co-occur with depression. Anxiety often worsens during "off" periods — making medication timing important. CBT is effective; some patients benefit from buspirone or supervised low-dose anxiolytics. Mindfulness-based approaches also show benefit.</p>
+          </div>
+          <div class="info-card warm-card">
+            <h3><span class="iconify" data-icon="solar:sleep-bold-duotone"></span> Sleep Disorders</h3>
+            <p>REM sleep behavior disorder (RBD) — acting out vivid dreams physically — is present in up to 50% of PD patients and often precedes motor onset by decades. Other sleep problems include insomnia, restless legs, sleep apnea, and excessive daytime sleepiness. Address sleep with a neurologist who specializes in sleep medicine.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section fade-in" id="physio">
+    <div class="section-header">
+      <div class="section-icon"><span class="iconify" data-icon="solar:bicycling-round-bold-duotone"></span></div>
+      <div><h2>Physiotherapy</h2><p>Evidence-based movement therapies for Parkinson's disease</p></div>
+    </div>
+    <div class="alert-box alert-success">
+      <span class="iconify" data-icon="solar:star-bold"></span>
+      <div><strong>Key principle:</strong> In Parkinson's disease, more intensive exercise is better. Unlike some neurological conditions, overexertion is not a major concern — the goal is to challenge the nervous system with vigorous, repetitive movement to drive neuroplasticity.</div>
+    </div>
+    <div class="cards-grid">
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:diploma-bold-duotone"></span> Neurological Physiotherapy</h3>
+        <p>A physiotherapist with neurological specialization designs personalized programs addressing gait, balance, posture, transfers, and fall prevention. Assessment includes the Berg Balance Scale, Timed Up and Go (TUG) test, and gait analysis. Physiotherapy is most effective when intensive and sustained over time.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:layers-bold-duotone"></span> LSVT BIG</h3>
+        <p>LSVT BIG applies the same high-amplitude, high-effort principle as LSVT LOUD but to movement. Trains large, exaggerated movements to counteract the small, shuffling patterns of PD. Four sessions per week for four weeks; RCTs show significant improvements in UPDRS motor scores, gait speed, and balance.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:boxing-bold-duotone"></span> Rock Steady Boxing</h3>
+        <p>RSB uses non-contact boxing drills to challenge speed, agility, coordination, and dual-tasking simultaneously. The competitive, social environment significantly increases long-term adherence. Available at 500+ certified affiliates worldwide. Benefits are sustained with continued participation.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:yoga-bold-duotone"></span> Tai Chi</h3>
+        <p>Multiple RCTs confirm Tai Chi reduces fall frequency by up to 55% in PD. The slow, deliberate weight shifting, turns, and stepping patterns directly target the core balance impairments of PD. The Yang Style 24-form is most studied. Even two sessions per week shows significant measurable effects.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:music-note-bold-duotone"></span> Tango Dance Therapy</h3>
+        <p>Argentine tango provides rhythmic cues, backward walking, turns, and partnered coordination. Studies from the Montreal Neurological Institute show improvements in balance, step length, and spatial memory. Tango classes adapted for PD are available at many movement centers and community programs worldwide.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:dumbbell-bold-duotone"></span> Resistance Training</h3>
+        <p>Progressive resistance training targeting lower limb and core strength reduces rigidity, improves functional capacity, and helps prevent sarcopenia (muscle loss) that accelerates disability in PD. Combined aerobic and resistance programs show superior outcomes to either approach alone.</p>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span><span class="iconify" data-icon="solar:walking-bold-duotone"></span> &nbsp;Gait Training and Cueing Strategies</span>
+        <span class="iconify" data-icon="solar:alt-arrow-down-bold"></span>
+      </div>
+      <div class="accordion-body">
+        <div class="accordion-inner">
+          <p>Freezing of gait (FOG) is one of the most disabling and fall-inducing symptoms of advanced PD. External cues can bypass the basal ganglia and trigger movement:</p>
+          <ul>
+            <li><strong>Auditory cueing:</strong> Rhythmic auditory stimulation — metronome, music — improves stride length and cadence</li>
+            <li><strong>Visual cueing:</strong> Lines on the floor, laser canes — "step over" the visual cue to initiate movement</li>
+            <li><strong>Attentional strategies:</strong> Consciously thinking about large steps, focusing attention on destination</li>
+            <li><strong>Anti-freezing devices:</strong> Wearable laser-cane devices (U-Step walker), vibrotactile stimulation devices</li>
+            <li><strong>Dual-task training:</strong> Practicing walking while talking or carrying objects — trains real-world walking challenges</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section fade-in" id="psychological-approach">
+    <div class="section-header">
+      <div class="section-icon"><span class="iconify" data-icon="solar:heart-pulse-bold-duotone"></span></div>
+      <div><h2>Psychological Approach</h2><p>Mental health, emotional wellbeing, and behavioral interventions</p></div>
+    </div>
+    <div class="cards-grid">
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:chart-2-bold-duotone"></span> Prevalence of Mental Health Challenges</h3>
+        <ul>
+          <li><strong>Depression:</strong> Affects approximately 38% of PD patients</li>
+          <li><strong>Anxiety:</strong> Affects 30-55% of patients</li>
+          <li><strong>Apathy</strong> (loss of motivation): Affects 40-60% of patients</li>
+          <li><strong>Impulse control disorders:</strong> Approximately 1 in 6 patients on dopamine agonists</li>
+          <li><strong>Psychosis/hallucinations:</strong> 20-40% in advanced PD</li>
+          <li><strong>Mild cognitive impairment:</strong> 25-30%; dementia in 75-80% over disease course</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:chat-square-like-bold-duotone"></span> Evidence-Based Psychotherapies</h3>
+        <ul>
+          <li><strong>CBT:</strong> Well-studied for depression and anxiety in PD — targets negative thought patterns and behavioral avoidance</li>
+          <li><strong>ACT (Acceptance and Commitment Therapy):</strong> Focuses on psychological flexibility and value-based living</li>
+          <li><strong>MBSR (Mindfulness-Based Stress Reduction):</strong> Reduces anxiety and improves quality of life; online programs available</li>
+          <li><strong>Interpersonal Therapy (IPT):</strong> Addresses grief, role transitions, and relationship changes in chronic illness</li>
+        </ul>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span><span class="iconify" data-icon="solar:pill-bold-duotone"></span> &nbsp;Pharmacological Treatment of Neuropsychiatric Symptoms</span>
+        <span class="iconify" data-icon="solar:alt-arrow-down-bold"></span>
+      </div>
+      <div class="accordion-body">
+        <div class="accordion-inner">
+          <ul>
+            <li><strong>Depression/Anxiety:</strong> SSRIs (sertraline, citalopram) and SNRIs (venlafaxine) are most commonly used and generally well-tolerated in PD</li>
+            <li><strong>Apathy:</strong> Pramipexole (dopamine agonist) has shown benefit; rivastigmine helps apathy in PD with cognitive impairment</li>
+            <li><strong>Psychosis:</strong> Pimavanserin (Nuplazid) — the only FDA-approved antipsychotic specifically for PD psychosis; does not worsen motor function</li>
+            <li><strong>Impulse control disorders:</strong> Reduce or discontinue dopamine agonists; naltrexone has been studied as an add-on</li>
+            <li><strong>Cognitive decline:</strong> Rivastigmine (Exelon) is FDA-approved for PD dementia; donepezil used off-label</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span><span class="iconify" data-icon="solar:users-group-rounded-bold-duotone"></span> &nbsp;Family and Caregiver Support</span>
+        <span class="iconify" data-icon="solar:alt-arrow-down-bold"></span>
+      </div>
+      <div class="accordion-body">
+        <div class="accordion-inner">
+          <p>Family members and caregivers of PD patients frequently experience high rates of burnout, depression, and anxiety. Caregiver wellbeing should be an integral part of the PD care plan:</p>
+          <ul>
+            <li>Caregiver education programs through the Parkinson's Foundation and Michael J. Fox Foundation</li>
+            <li>Respite care services and community support programs</li>
+            <li>Online and in-person caregiver support groups</li>
+            <li>Couples and family therapy to address relationship changes</li>
+            <li>Self-care planning and professional counseling for caregivers</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section fade-in" id="pingpong">
+    <div class="section-header">
+      <div class="section-icon"><span class="iconify" data-icon="solar:gamepad-bold-duotone"></span></div>
+      <div><h2>Ping Pong Therapy</h2><p>Table tennis as a neurological intervention for Parkinson's disease</p></div>
+    </div>
+    <div class="alert-box alert-success">
+      <span class="iconify" data-icon="solar:star-bold"></span>
+      <div><strong>PingPongParkinson</strong> is a global movement with 400+ clubs in 31 countries dedicated to using table tennis as therapy for PD. The sport combines aerobic exercise, rapid decision-making, hand-eye coordination, and social interaction — all in a single activity session.</div>
+    </div>
+    <div class="cards-grid">
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:brain-bold-duotone"></span> Neuroplasticity Mechanisms</h3>
+        <p>Table tennis demands rapid, precise responses to unpredictable ball trajectories — challenging cerebellar timing, visual-motor integration, and executive function simultaneously. This multi-domain stimulation appears to drive neuroplasticity in motor and cognitive circuits. The gamified, social format ensures high long-term adherence compared to traditional gym exercise.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:test-tube-bold-duotone"></span> Research Evidence</h3>
+        <p>A 2020 pilot study (PMC8299968) showed significant improvements in UPDRS motor scores, balance (Berg Scale), and quality of life after 6 months of twice-weekly table tennis sessions. Larger RCTs are underway. Multiple case studies report dramatic improvements even in advanced PD patients who had plateaued on other interventions.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:map-point-bold-duotone"></span> Find a PingPongParkinson Club</h3>
+        <p>Clubs meet weekly in sports centers, care homes, and community venues. All skill levels are welcome — beginners start with balloon and foam ball exercises. Visit <strong>pingpongparkinson.com</strong> to find your nearest club or learn how to start one in your community. The organization provides equipment and training for new clubs at no cost.</p>
+      </div>
+    </div>
+    <div class="highlight-grid">
+      <div class="highlight-box">
+        <span class="iconify" data-icon="solar:users-group-rounded-bold-duotone"></span>
+        <h4>400+ Clubs Worldwide</h4>
+        <p>Active PingPongParkinson clubs in 31 countries across 6 continents</p>
+      </div>
+      <div class="highlight-box">
+        <span class="iconify" data-icon="solar:running-round-bold-duotone"></span>
+        <h4>Multi-Domain Exercise</h4>
+        <p>Simultaneously challenges aerobic fitness, fine motor, cognitive, and social domains</p>
+      </div>
+      <div class="highlight-box">
+        <span class="iconify" data-icon="solar:heart-bold-duotone"></span>
+        <h4>High Adherence</h4>
+        <p>Game-based format achieves significantly higher long-term participation than gym exercise</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section fade-in" id="stories">
+    <div class="section-header">
+      <div class="section-icon"><span class="iconify" data-icon="solar:users-group-rounded-bold-duotone"></span></div>
+      <div><h2>Community Stories</h2><p>Experiences from people living with Parkinson's disease</p></div>
+    </div>
+    <div class="story-card">
+      <blockquote>"I was diagnosed at 54. After six months of intensive cycling — three times a week at high intensity — my neurologist told me my UPDRS scores had actually improved. Exercise became my main medication."</blockquote>
+      <cite>— Michael, 57, competitive cyclist, diagnosed 2021</cite>
+    </div>
+    <div class="story-card">
+      <blockquote>"DBS surgery changed my life. I went from barely being able to hold a fork to playing guitar again within weeks of my stimulator being turned on. It's not a cure, but for me it was transformative."</blockquote>
+      <cite>— Sandra, 63, musician, DBS implanted 2022</cite>
+    </div>
+    <div class="story-card">
+      <blockquote>"I joined a PingPongParkinson club two years ago. My balance has improved, my medications seem to work better, and I've made the best friends of my life. Nobody else understands what it's like the way these people do."</blockquote>
+      <cite>— David, 68, retired teacher, club member since 2022</cite>
+    </div>
+    <div class="story-card">
+      <blockquote>"The protein redistribution diet sounds like a small change, but it was transformative. By eating protein only at dinner and keeping breakfast and lunch low-protein, my levodopa works smoothly all day long."</blockquote>
+      <cite>— Margaret, 70, diagnosed 2018</cite>
+    </div>
+    <div class="alert-box alert-info">
+      <span class="iconify" data-icon="solar:info-circle-bold"></span>
+      <div>These are individual experiences. Parkinson's disease varies greatly between individuals. What works for one person may not work for another. Always discuss new treatments or lifestyle changes with your neurologist.</div>
+    </div>
+  </section>
+
+  <section class="content-section fade-in" id="action">
+    <div class="section-header">
+      <div class="section-icon"><span class="iconify" data-icon="solar:checklist-minimalistic-bold-duotone"></span></div>
+      <div><h2>Your Action Plan</h2><p>Steps you can take starting today</p></div>
+    </div>
+    <div class="action-steps">
+      <div class="action-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>See a movement disorder specialist</h4>
+          <p>Not all neurologists have deep expertise in PD. A movement disorder specialist has additional fellowship training specifically in Parkinson's and related conditions. Studies show patients managed by movement disorder specialists have significantly better outcomes. Search via the Parkinson's Foundation provider directory at parkinson.org.</p>
+        </div>
+      </div>
+      <div class="action-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>Start exercise — today</h4>
+          <p>Begin a structured exercise program immediately after diagnosis. Exercise is the most evidence-supported intervention for slowing PD progression. Aim for vigorous aerobic exercise — cycling, swimming, treadmill — at least 3 times per week. Find a PD-specialized physiotherapist through the Parkinson's Foundation's provider directory.</p>
+        </div>
+      </div>
+      <div class="action-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>Request genetic testing</h4>
+          <p>Genetic testing can identify LRRK2, GBA1, PINK1, and SNCA mutations. This may qualify you for specific clinical trials, inform your prognosis, guide family screening decisions, and enable precision medicine approaches now and in the near future. Discuss genetic counseling with your neurologist.</p>
+        </div>
+      </div>
+      <div class="action-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h4>Explore clinical trials</h4>
+          <p>Visit Fox Trial Finder (foxtrialfinder.michaeljfox.org) and ClinicalTrials.gov to find trials you may qualify for. Even placebo-controlled trials provide excellent monitoring and access to specialist teams. Many trials cover all study-related costs and travel expenses.</p>
+        </div>
+      </div>
+      <div class="action-step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <h4>Connect with the PD community</h4>
+          <p>Join a Parkinson's support group — in-person or online. The Parkinson's Foundation and Michael J. Fox Foundation have community programs, events, and helplines. PingPongParkinson clubs offer a social, therapeutic environment. Peer support significantly improves quality of life for both patients and caregivers.</p>
+        </div>
+      </div>
+      <div class="action-step">
+        <div class="step-num">6</div>
+        <div class="step-content">
+          <h4>Plan for the future — while you're well</h4>
+          <p>Advance care planning is easier when done early: review finances, insurance, employment accommodations, power of attorney, and future living arrangements. Many PD advocacy organizations provide practical planning guides. Having these conversations early significantly reduces stress for you and your family.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section fade-in" id="resources">
+    <div class="section-header">
+      <div class="section-icon"><span class="iconify" data-icon="solar:library-bold-duotone"></span></div>
+      <div><h2>Resources and Organizations</h2><p>Leading international organizations, centers, and tools</p></div>
+    </div>
+    <h3 style="font-size:1rem; font-weight:700; color:var(--primary); margin-bottom:16px;">International Organizations</h3>
+    <div class="resource-links" style="margin-bottom:28px;">
+      <a class="resource-link" href="https://www.parkinson.org" target="_blank">
+        <span class="iconify" data-icon="solar:global-bold-duotone"></span>
+        <div><div class="rl-title">Parkinson's Foundation (US)</div><div class="rl-desc">Patient resources, education, research funding, provider directory, helpline 1-800-4PD-INFO</div></div>
+      </a>
+      <a class="resource-link" href="https://www.michaeljfox.org" target="_blank">
+        <span class="iconify" data-icon="solar:diploma-bold-duotone"></span>
+        <div><div class="rl-title">Michael J. Fox Foundation</div><div class="rl-desc">Largest private funder of PD research; Fox Trial Finder; PPMI biomarker study; patient community</div></div>
+      </a>
+      <a class="resource-link" href="https://www.parkinsonsuk.org" target="_blank">
+        <span class="iconify" data-icon="solar:map-point-bold-duotone"></span>
+        <div><div class="rl-title">Parkinson's UK</div><div class="rl-desc">UK's leading PD charity; information, helpline, local groups, and research funding</div></div>
+      </a>
+      <a class="resource-link" href="https://www.epda.eu.com" target="_blank">
+        <span class="iconify" data-icon="solar:global-bold-duotone"></span>
+        <div><div class="rl-title">European Parkinson's Disease Association (EPDA)</div><div class="rl-desc">European advocacy network; patient resources in multiple languages; policy work</div></div>
+      </a>
+      <a class="resource-link" href="https://www.worldparkinsoncoalition.org" target="_blank">
+        <span class="iconify" data-icon="solar:users-group-rounded-bold-duotone"></span>
+        <div><div class="rl-title">World Parkinson Coalition</div><div class="rl-desc">Organizes the World Parkinson Congress every 3 years; builds global community connections</div></div>
+      </a>
+    </div>
+    <h3 style="font-size:1rem; font-weight:700; color:var(--primary); margin-bottom:16px;">Leading Centers of Excellence</h3>
+    <div class="resource-links" style="margin-bottom:28px;">
+      <a class="resource-link" href="https://pdcenter.neurology.ucsf.edu" target="_blank">
+        <span class="iconify" data-icon="solar:hospital-bold-duotone"></span>
+        <div><div class="rl-title">UCSF Weill Institute for Neurosciences (San Francisco)</div><div class="rl-desc">Top-ranked PD center; clinical trials, DBS, focused ultrasound, advanced therapies</div></div>
+      </a>
+      <a class="resource-link" href="https://www.hopkinsmedicine.org/neurology-neurosurgery/centers-clinics/parkinsons-disease.html" target="_blank">
+        <span class="iconify" data-icon="solar:hospital-bold-duotone"></span>
+        <div><div class="rl-title">Johns Hopkins Parkinson's Disease and Movement Disorders Center</div><div class="rl-desc">Comprehensive care, research, and surgery including DBS and focused ultrasound</div></div>
+      </a>
+      <a class="resource-link" href="https://www.pennmedicine.org/for-patients-and-visitors/find-a-program-or-service/neurology/parkinson-disease-and-movement-disorders-center" target="_blank">
+        <span class="iconify" data-icon="solar:hospital-bold-duotone"></span>
+        <div><div class="rl-title">University of Pennsylvania Parkinson's Disease Center</div><div class="rl-desc">Multidisciplinary PD care, cutting-edge research, comprehensive clinical program</div></div>
+      </a>
+    </div>
+    <h3 style="font-size:1rem; font-weight:700; color:var(--primary); margin-bottom:16px;">Tools and Trial Registries</h3>
+    <div class="resource-links">
+      <a class="resource-link" href="https://foxtrialfinder.michaeljfox.org" target="_blank">
+        <span class="iconify" data-icon="solar:test-tube-bold-duotone"></span>
+        <div><div class="rl-title">Fox Trial Finder</div><div class="rl-desc">Find PD clinical trials near you — personalized matching based on your profile and location</div></div>
+      </a>
+      <a class="resource-link" href="https://www.clinicaltrials.gov" target="_blank">
+        <span class="iconify" data-icon="solar:document-bold-duotone"></span>
+        <div><div class="rl-title">ClinicalTrials.gov</div><div class="rl-desc">Complete US and international clinical trial registry (US National Institutes of Health)</div></div>
+      </a>
+      <a class="resource-link" href="https://www.pingpongparkinson.com" target="_blank">
+        <span class="iconify" data-icon="solar:gamepad-bold-duotone"></span>
+        <div><div class="rl-title">PingPongParkinson</div><div class="rl-desc">Find your nearest table tennis therapy club — 400+ clubs in 31 countries worldwide</div></div>
+      </a>
+    </div>
+  </section>
+
+</div>
+
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+  <span class="iconify" data-icon="solar:alt-arrow-up-bold"></span>
+</button>
+
+<script>
+  window.addEventListener('scroll', () => {
+    const st = document.documentElement.scrollTop;
+    const sh = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    document.getElementById('scroll-progress').style.width = ((st / sh) * 100) + '%';
+    const btn = document.getElementById('scroll-top');
+    btn.classList.toggle('show', st > 300);
+  });
+  function toggleMenu() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('overlay').classList.toggle('show');
+  }
+  function closeMenu() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('show');
+  }
+  function navigate(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+    const link = document.querySelector('nav a[onclick*="' + id + '"]');
+    if (link) link.classList.add('active');
+    if (window.innerWidth <= 900) closeMenu();
+    return false;
+  }
+  function navigateTo(id) { return navigate(id); }
+  function toggleAccordion(header) {
+    const body = header.nextElementSibling;
+    const isOpen = body.classList.contains('open');
+    document.querySelectorAll('.accordion-body.open').forEach(b => {
+      b.classList.remove('open');
+      b.previousElementSibling.classList.remove('open');
+    });
+    if (!isOpen) { body.classList.add('open'); header.classList.add('open'); }
+  }
+  function switchTab(btn, group, tabId) {
+    const groupEl = document.querySelector('[data-tab-group="' + group + '"]');
+    if (!groupEl) return;
+    groupEl.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    const target = groupEl.querySelector('[data-tab-content="' + tabId + '"]');
+    if (target) target.classList.add('active');
+    btn.closest('.tab-bar').querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        const id = entry.target.id;
+        if (id) {
+          document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+          const link = document.querySelector('nav a[onclick*="' + id + '"]');
+          if (link) link.classList.add('active');
+        }
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '-80px 0px -80px 0px' });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  function searchPortal(query) {
+    if (!query.trim()) { document.querySelectorAll('.content-section').forEach(s => s.style.display = ''); return; }
+    const q = query.toLowerCase();
+    document.querySelectorAll('.content-section').forEach(s => {
+      s.style.display = s.innerText.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

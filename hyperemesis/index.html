@@ -1,0 +1,1875 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>היפרמזיס Hub | מרכז מידע ומחקר</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --primary: #8B2252;
+  --primary-light: #B8446E;
+  --accent: #E8829B;
+  --accent-light: #F4B8C8;
+  --warm: #fdcb6e;
+  --warm-dark: #e17055;
+  --bg: #f0f4f8;
+  --card: #ffffff;
+  --text: #2c3e50;
+  --text-light: #5d6d7e;
+  --shadow: 0 4px 20px rgba(0,0,0,0.08);
+  --shadow-hover: 0 12px 40px rgba(0,0,0,0.18);
+  --radius: 16px;
+  --transition: all 0.3s cubic-bezier(.4,0,.2,1);
+}
+
+body {
+  font-family: 'Rubik', 'Segoe UI', Tahoma, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.8;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background:
+    radial-gradient(ellipse at 10% 20%, rgba(139,34,82,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 80%, rgba(232,130,155,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(253,203,110,0.05) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 4px;
+  z-index: 2000;
+  background: transparent;
+}
+.scroll-progress .bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--primary-light), var(--warm));
+  border-radius: 0 0 0 4px;
+  transition: width 0.1s linear;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 280px;
+  height: 100vh;
+  background: rgba(139,34,82,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-left: 1px solid rgba(255,255,255,0.1);
+  z-index: 1000;
+  padding: 30px 20px;
+  overflow-y: auto;
+  transition: transform 0.4s cubic-bezier(.4,0,.2,1);
+}
+
+.sidebar .logo {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+.sidebar .logo .icon { font-size: 48px; }
+
+.sidebar .logo h2 {
+  color: #fff;
+  font-size: 18px;
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+.sidebar nav a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  color: rgba(255,255,255,0.8);
+  text-decoration: none;
+  border-radius: 12px;
+  margin-bottom: 4px;
+  font-size: 15px;
+  transition: var(--transition);
+}
+
+.sidebar nav a:hover, .sidebar nav a.active {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  transform: translateX(-4px);
+}
+
+.sidebar nav a .nav-icon { font-size: 22px; min-width: 30px; text-align: center; }
+
+.menu-toggle {
+  display: none;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1100;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+.menu-toggle:hover { transform: scale(1.05); }
+.menu-toggle.open { border-radius: 50%; background: var(--warm-dark); }
+
+.main {
+  margin-right: 280px;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--primary) 0%, #B8446E 40%, var(--accent) 100%);
+  padding: 80px 60px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%);
+  animation: float 20s linear infinite;
+}
+
+@keyframes float {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.hero-content { position: relative; z-index: 1; max-width: 900px; }
+
+.hero h1 {
+  font-size: 52px;
+  font-weight: 800;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.hero .greeting {
+  font-size: 22px;
+  opacity: 0.95;
+  margin-bottom: 30px;
+  line-height: 1.7;
+}
+
+.hero .subtitle {
+  font-size: 18px;
+  opacity: 0.8;
+  max-width: 700px;
+}
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.section {
+  padding: 60px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 3px solid var(--primary-light);
+}
+
+.section-header .sec-icon { font-size: 42px; }
+
+.section-header h2 {
+  font-size: 36px;
+  color: var(--primary);
+}
+
+.section-header p {
+  color: var(--text-light);
+  font-size: 16px;
+  margin-top: 4px;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 30px;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  border-top: 4px solid var(--primary-light);
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: var(--shadow-hover);
+}
+
+.card .card-icon { font-size: 40px; margin-bottom: 16px; }
+
+.card h3 {
+  font-size: 20px;
+  color: var(--primary);
+  margin-bottom: 12px;
+}
+
+.card p {
+  color: var(--text-light);
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.card.green { border-top-color: var(--accent); }
+.card.orange { border-top-color: var(--warm); }
+.card.blue { border-top-color: var(--primary-light); }
+
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.cat-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 30px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: var(--shadow);
+  text-decoration: none;
+  color: var(--text);
+}
+
+.cat-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: var(--shadow-hover);
+}
+
+.cat-card .cat-icon { font-size: 48px; margin-bottom: 14px; }
+
+.cat-card h3 { font-size: 18px; color: var(--primary); margin-bottom: 8px; }
+.cat-card p { font-size: 13px; color: var(--text-light); }
+
+.accordion { margin-bottom: 16px; }
+
+.accordion-header {
+  background: var(--card);
+  padding: 20px 24px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.accordion-header:hover { background: #fdf0f4; }
+
+.accordion-header .arrow {
+  transition: transform 0.3s ease;
+  font-size: 20px;
+}
+
+.accordion-header.open .arrow { transform: rotate(180deg); }
+
+.accordion-body {
+  max-height: 0;
+  overflow: clip;
+  transition: max-height 0.4s ease;
+  background: var(--card);
+  border-radius: 0 0 var(--radius) var(--radius);
+  margin-top: -8px;
+}
+
+.accordion-body .inner {
+  padding: 20px 24px 24px;
+  color: var(--text-light);
+  line-height: 2;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  padding: 12px 24px;
+  background: var(--card);
+  border: 2px solid #dde4eb;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--text-light);
+  transition: var(--transition);
+}
+
+.tab-btn:hover { border-color: var(--primary-light); color: var(--primary); }
+
+.tab-btn.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+.tab-content { display: none; animation: fadeIn 0.4s ease; }
+.tab-content.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.info-box {
+  background: linear-gradient(135deg, #fdf0f4 0%, #fce4ec 100%);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  margin: 24px 0;
+  border-right: 5px solid var(--primary-light);
+}
+
+.info-box.warning {
+  background: linear-gradient(135deg, #fef9e7 0%, #fdebd0 100%);
+  border-right-color: var(--warm);
+}
+
+.info-box.success {
+  background: linear-gradient(135deg, #e8f8f0 0%, #d5f5e3 100%);
+  border-right-color: var(--accent);
+}
+
+.info-box h4 { color: var(--primary); margin-bottom: 8px; font-size: 17px; }
+.info-box p { color: var(--text-light); font-size: 15px; }
+
+.link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: var(--primary);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 30px;
+  font-size: 15px;
+  transition: var(--transition);
+  margin: 6px;
+}
+
+.link-btn:hover { background: var(--primary-light); transform: translateY(-2px); }
+.link-btn.green { background: #00b894; }
+.link-btn.green:hover { background: #55efc4; color: var(--text); }
+.link-btn.orange { background: var(--warm-dark); }
+.link-btn.orange:hover { background: var(--warm); color: var(--text); }
+
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  background: var(--card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.styled-table thead { background: var(--primary); color: #fff; }
+.styled-table th { padding: 16px 20px; text-align: right; font-weight: 600; }
+.styled-table td { padding: 14px 20px; border-bottom: 1px solid #eee; }
+.styled-table tbody tr:hover { background: #f7fafc; }
+
+.timeline { position: relative; padding-right: 40px; margin: 30px 0; }
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  right: 12px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--primary-light), var(--accent));
+  border-radius: 3px;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 30px;
+  padding: 24px;
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  right: -34px;
+  top: 30px;
+  width: 16px;
+  height: 16px;
+  background: var(--accent);
+  border-radius: 50%;
+  border: 3px solid var(--bg);
+}
+
+.timeline-item h4 { color: var(--primary); font-size: 18px; margin-bottom: 8px; }
+.timeline-item p { color: var(--text-light); }
+.timeline-item .time-label {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  margin: 30px 0;
+}
+
+.stat-box {
+  background: linear-gradient(135deg, var(--card) 0%, #f7fafc 100%);
+  border-radius: var(--radius);
+  padding: 24px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  border-bottom: 3px solid var(--primary-light);
+  transition: var(--transition);
+}
+
+.stat-box:nth-child(2) { border-bottom-color: var(--accent); }
+.stat-box:nth-child(3) { border-bottom-color: var(--warm); }
+.stat-box:nth-child(4) { border-bottom-color: var(--warm-dark); }
+
+.stat-box:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+
+.stat-box .stat-num {
+  font-size: 36px;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.stat-box .stat-label { color: var(--text-light); font-size: 14px; margin-top: 6px; }
+
+.carepedia-cta {
+  background: linear-gradient(135deg, #1A73E8, #00C9A7);
+  padding: 48px 24px;
+  text-align: center;
+  color: #fff;
+}
+.carepedia-cta h3 { font-size: 24px; font-weight: 700; margin-bottom: 12px; }
+.carepedia-cta p { font-size: 16px; opacity: 0.9; margin-bottom: 24px; max-width: 500px; margin-left: auto; margin-right: auto; }
+.carepedia-cta .cta-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 32px; background: #fff; color: #1A73E8;
+  text-decoration: none; border-radius: 30px; font-size: 16px;
+  font-weight: 700; font-family: inherit; transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+.carepedia-cta .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+
+.credit-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 14px 20px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.85);
+  position: relative;
+  z-index: 1;
+}
+.credit-bar span { opacity: 0.9; }
+
+.portal-request-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  background: var(--primary-light);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 30px;
+  font-size: 14px;
+  font-family: inherit;
+  font-weight: 600;
+  transition: var(--transition);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+.portal-request-btn:hover { background: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+
+.footer {
+  background: var(--primary);
+  color: rgba(255,255,255,0.8);
+  text-align: center;
+  padding: 40px;
+  font-size: 14px;
+}
+
+.scroll-top {
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+  width: 50px;
+  height: 50px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 999;
+}
+
+.scroll-top.visible { opacity: 1; pointer-events: auto; }
+.scroll-top:hover { background: var(--primary-light); transform: translateY(-3px); }
+
+.search-box {
+  position: relative;
+  margin: 0 auto;
+  width: 100%;
+}
+.search-box input {
+  width: 100%;
+  padding: 14px 50px 14px 50px;
+  border: 2px solid rgba(139,34,82,0.15);
+  border-radius: 30px;
+  font-size: 16px;
+  font-family: 'Rubik', sans-serif;
+  background: var(--card);
+  color: var(--text);
+  transition: var(--transition);
+  box-sizing: border-box;
+  -webkit-appearance: none;
+}
+.search-box input:focus {
+  outline: none;
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 4px rgba(139,34,82,0.1);
+}
+.search-box .search-icon {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  pointer-events: none;
+}
+.search-clear {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: var(--text-light);
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 50%;
+  transition: var(--transition);
+  line-height: 1;
+}
+.search-clear:hover { background: var(--bg); color: var(--text); }
+#searchResults a:active { background: var(--bg); }
+
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.sidebar-overlay.active {
+  display: block;
+  opacity: 1;
+}
+
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(100%); width: 270px; }
+  .sidebar.open { transform: translateX(0); }
+  .menu-toggle { display: block; }
+  .main { margin-right: 0; }
+  .hero { padding: 60px 30px; }
+  .section { padding: 40px 24px; }
+  .search-box { max-width: 100% !important; }
+  #searchResults { max-width: 100% !important; }
+}
+
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(100%); width: 260px; }
+  .sidebar.open { transform: translateX(0); }
+  .menu-toggle { display: block; }
+  .main { margin-right: 0; }
+
+  .hero { padding: 40px 20px 36px; }
+  .hero h1 { font-size: 28px; line-height: 1.3; }
+  .hero .greeting { font-size: 16px; line-height: 1.7; }
+  .hero .subtitle { font-size: 14px; }
+
+  .section { padding: 28px 16px; }
+  .section-header { flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 24px; padding-bottom: 14px; }
+  .section-header .sec-icon { font-size: 32px; }
+  .section-header h2 { font-size: 24px; }
+  .section-header p { font-size: 14px; }
+
+  .cards-grid { grid-template-columns: 1fr; gap: 16px; margin-bottom: 24px; }
+  .card { padding: 20px; }
+  .card:hover { transform: none; }
+  .cat-card:hover { transform: none; }
+  .stat-box:hover { transform: none; }
+  .link-btn:hover { transform: none; }
+  .portal-request-btn:hover { transform: none; }
+  .scroll-top:hover { transform: none; }
+  .sidebar nav a:hover { transform: none; }
+  .card .card-icon { font-size: 32px; margin-bottom: 10px; }
+  .card h3 { font-size: 17px; }
+  .card p { font-size: 14px; }
+
+  .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 24px; }
+  .cat-card { padding: 18px 12px; }
+  .cat-card .cat-icon { font-size: 32px; margin-bottom: 8px; }
+  .cat-card h3 { font-size: 14px; }
+  .cat-card p { font-size: 11px; }
+
+  .stats-row { grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 20px 0; }
+  .stat-box { padding: 16px 10px; }
+  .stat-box .stat-num { font-size: 26px; }
+  .stat-box .stat-label { font-size: 12px; }
+
+  .tabs { gap: 6px; margin-bottom: 16px; }
+  .tab-btn { padding: 8px 14px; font-size: 13px; border-radius: 20px; }
+
+  .styled-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 13px; }
+  .styled-table th { padding: 10px 12px; font-size: 13px; white-space: nowrap; }
+  .styled-table td { padding: 10px 12px; font-size: 13px; min-width: 100px; }
+
+  .info-box { padding: 16px 18px; margin: 16px 0; }
+  .info-box h4 { font-size: 15px; }
+  .info-box p { font-size: 13px; }
+
+  .accordion-header { padding: 14px 16px; font-size: 15px; }
+  .accordion-body .inner { padding: 14px 16px 18px; font-size: 14px; line-height: 1.9; }
+
+  .timeline { padding-right: 30px; margin: 20px 0; }
+  .timeline-item { padding: 16px; margin-bottom: 20px; }
+  .timeline-item::before { right: -24px; width: 12px; height: 12px; top: 22px; }
+  .timeline-item h4 { font-size: 16px; }
+  .timeline-item p { font-size: 13px; }
+
+  .link-btn { padding: 10px 16px; font-size: 13px; margin: 4px 2px; }
+
+  .search-box input {
+    padding: 12px 40px 12px 40px;
+    font-size: 16px;
+    border-radius: 24px;
+  }
+  .search-box .search-icon { right: 14px; font-size: 18px; }
+  .search-clear { left: 10px; font-size: 16px; }
+  #searchResults { font-size: 14px; }
+  #searchResults a { padding: 10px 12px; }
+
+  .footer { padding: 28px 16px; font-size: 13px; }
+
+  .scroll-top { width: 42px; height: 42px; font-size: 18px; bottom: 20px; left: 16px; }
+}
+
+@media (max-width: 380px) {
+  .hero h1 { font-size: 24px; }
+  .hero .greeting { font-size: 15px; }
+  .cat-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .cat-card { padding: 14px 8px; }
+  .cat-card .cat-icon { font-size: 26px; }
+  .cat-card h3 { font-size: 13px; }
+  .cat-card p { display: none; }
+  .stats-row { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .stat-box .stat-num { font-size: 22px; }
+  .section { padding: 20px 12px; }
+  .tab-btn { padding: 7px 10px; font-size: 12px; }
+  .search-box input {
+    padding: 10px 36px 10px 36px;
+    border-radius: 20px;
+  }
+  .search-box .search-icon { right: 12px; font-size: 16px; }
+}
+
+/* DISCLAIMER BANNER */
+.disclaimer-banner {
+  background: linear-gradient(135deg, #FFF3E0, #FFF8E1);
+  border-bottom: 2px solid #FFB74D;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 13px;
+  color: #5D4037;
+  position: relative;
+  z-index: 1500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.disclaimer-banner strong { color: #E65100; }
+.disclaimer-banner a {
+  color: #1A73E8;
+  text-decoration: underline;
+  font-weight: 600;
+}
+.disclaimer-banner a:hover { color: #0D47A1; }
+@media (max-width: 768px) {
+  .disclaimer-banner { font-size: 12px; padding: 8px 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- DISCLAIMER BANNER -->
+<div class="disclaimer-banner">
+  <span>⚠️</span>
+  <span><strong>This is not medical advice.</strong> Always consult your doctor. <a href="/disclaimer">Full legal disclaimer &rarr;</a></span>
+</div>
+
+<!-- SCROLL PROGRESS BAR -->
+<div class="scroll-progress"><div class="bar" id="progressBar"></div></div>
+
+<!-- MOBILE OVERLAY -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeMenu()"></div>
+
+<!-- MOBILE MENU TOGGLE -->
+<button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">&#9776;</button>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="logo">
+    <div class="icon">&#129328;</div>
+    <h2>&#1492;&#1497;&#1508;&#1512;&#1502;&#1494;&#1497;&#1505; Hub</h2>
+  </div>
+  <nav>
+    <a href="#home" class="active" onclick="navigate(this)"><span class="nav-icon">&#127968;</span>דף הבית</a>
+    <a href="#about" onclick="navigate(this)"><span class="nav-icon">&#128214;</span>מה זה היפרמזיס?</a>
+    <a href="#treatments" onclick="navigate(this)"><span class="nav-icon">&#128138;</span>טיפולים ותרופות</a>
+    <a href="#trials" onclick="navigate(this)"><span class="nav-icon">&#128300;</span>ניסויים קליניים</a>
+    <a href="#research" onclick="navigate(this)"><span class="nav-icon">&#129516;</span>מחקרים חדשים</a>
+    <a href="#nutrition" onclick="navigate(this)"><span class="nav-icon">&#127822;</span>תזונה והידרציה</a>
+    <a href="#fetal" onclick="navigate(this)"><span class="nav-icon">&#128118;</span>בריאות העובר</a>
+    <a href="#psychological-approach" onclick="navigate(this)"><span class="nav-icon">&#128156;</span>גישה פסיכולוגית</a>
+    <a href="#future" onclick="navigate(this)"><span class="nav-icon">&#128337;</span>הריונות עתידיים</a>
+    <a href="#lifestyle" onclick="navigate(this)"><span class="nav-icon">&#127807;</span>אורח חיים וניהול</a>
+    <a href="#stories" onclick="navigate(this)"><span class="nav-icon">&#11088;</span>סיפורים ותמיכה</a>
+    <a href="#resources" onclick="navigate(this)"><span class="nav-icon">&#128279;</span>קישורים ומשאבים</a>
+  </nav>
+</aside>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="credit-bar">
+      <span>נבנה על ידי <strong>יובל קשטכר</strong> ועוזריו הרובוטים</span>
+      <a href="https://carepedia.org/#contact" target="_blank" class="portal-request-btn">
+        &#10133; רוצים פורטל למחלה אחרת?
+      </a>
+    </div>
+    <div class="hero-content">
+      <h1>מרכז מידע על היפרמזיס גרווידרום</h1>
+      <p class="greeting">
+        בחילות הריון קשות זה לא "בוקר טוב עם בחילה". זה מצב רפואי אמיתי.<br>
+        כאן תמצאו מידע מבוסס מחקר, טיפולים, ותמיכה למי שעוברת את זה.
+      </p>
+      <p class="subtitle">
+        פורטל זה מרכז את המחקרים העדכניים ביותר מ2025 ו2026, כולל פריצת הדרך בגילוי חלבון GDF15 כגורם המרכזי, טיפולים חדשים, וניסויים קליניים פעילים.
+      </p>
+      <div class="search-box" style="margin-top: 30px; max-width: 600px;">
+        <span class="search-icon">&#128269;</span>
+        <input type="text" id="portalSearch" placeholder="חיפוש בפורטל..." oninput="searchPortal(this.value)">
+        <button class="search-clear" id="searchClear" onclick="clearSearch()" style="display:none;">&#10005;</button>
+      </div>
+      <div id="searchResults" style="display:none; margin-top: 16px; max-width: 600px;"></div>
+    </div>
+  </section>
+
+  <!-- QUICK NAVIGATION -->
+  <section class="section fade-in" style="padding-bottom: 20px;">
+    <div class="cat-grid">
+      <a class="cat-card" href="#about" onclick="navigateTo('about')">
+        <div class="cat-icon">&#128214;</div>
+        <h3>מה זה היפרמזיס?</h3>
+        <p>הבנת המצב, גורמים ותסמינים</p>
+      </a>
+      <a class="cat-card" href="#treatments" onclick="navigateTo('treatments')">
+        <div class="cat-icon">&#128138;</div>
+        <h3>טיפולים ותרופות</h3>
+        <p>תרופות מאושרות וטיפולים חדשניים</p>
+      </a>
+      <a class="cat-card" href="#trials" onclick="navigateTo('trials')">
+        <div class="cat-icon">&#128300;</div>
+        <h3>ניסויים קליניים</h3>
+        <p>מחקרים פעילים וניסויים חדשים</p>
+      </a>
+      <a class="cat-card" href="#research" onclick="navigateTo('research')">
+        <div class="cat-icon">&#129516;</div>
+        <h3>מחקרים חדשים</h3>
+        <p>פריצות דרך מ2025 ו2026</p>
+      </a>
+      <a class="cat-card" href="#nutrition" onclick="navigateTo('nutrition')">
+        <div class="cat-icon">&#127822;</div>
+        <h3>תזונה והידרציה</h3>
+        <p>מה לאכול, עירוי נוזלים, ויטמינים</p>
+      </a>
+      <a class="cat-card" href="#fetal" onclick="navigateTo('fetal')">
+        <div class="cat-icon">&#128118;</div>
+        <h3>בריאות העובר</h3>
+        <p>השפעות על התינוק ותוצאות לידה</p>
+      </a>
+      <a class="cat-card" href="#psychological-approach" onclick="navigateTo('psychological-approach')">
+        <div class="cat-icon">&#128156;</div>
+        <h3>גישה פסיכולוגית</h3>
+        <p>טראומה, PTSD, דיכאון, ותמיכה רגשית</p>
+      </a>
+      <a class="cat-card" href="#future" onclick="navigateTo('future')">
+        <div class="cat-icon">&#128337;</div>
+        <h3>הריונות עתידיים</h3>
+        <p>חזרה, מניעה ותכנון מראש</p>
+      </a>
+      <a class="cat-card" href="#lifestyle" onclick="navigateTo('lifestyle')">
+        <div class="cat-icon">&#127807;</div>
+        <h3>אורח חיים וניהול</h3>
+        <p>תזונה, מנוחה וטיפולים משלימים</p>
+      </a>
+      <a class="cat-card" href="#stories" onclick="navigateTo('stories')">
+        <div class="cat-icon">&#11088;</div>
+        <h3>סיפורים ותמיכה</h3>
+        <p>קהילה, ארגונים וקבוצות תמיכה</p>
+      </a>
+      <a class="cat-card" href="#resources" onclick="navigateTo('resources')">
+        <div class="cat-icon">&#128279;</div>
+        <h3>קישורים ומשאבים</h3>
+        <p>בתי חולים, ארגונים ומידע בישראל</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- SECTION: ABOUT -->
+  <section class="section fade-in" id="about">
+    <div class="section-header">
+      <span class="sec-icon">&#128214;</span>
+      <div>
+        <h2>מה זה היפרמזיס גרווידרום?</h2>
+        <p>הבנת המצב הרפואי, הגורמים, והתסמינים</p>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-num">0.3-10%</div>
+        <div class="stat-label">מההריונות בעולם</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">1.2%</div>
+        <div class="stat-label">שכיחות בישראל</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">~20M &#8362;</div>
+        <div class="stat-label">עלות שנתית בישראל</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">GDF15</div>
+        <div class="stat-label">החלבון שגורם לבחילות</div>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">&#9888;&#65039;</div>
+        <h3>מה ההבדל מבחילות רגילות?</h3>
+        <p>בחילות בהריון (NVP) משפיעות על עד 80% מההריונות ובדרך כלל חולפות ללא סיבוכים. היפרמזיס גרווידרום (HG) הוא הצורה החמורה ביותר: הקאות מתמשכות, ירידה במשקל של מעל 5% ממשקל הגוף, התייבשות, והפרעות אלקטרוליטים. זה מצב רפואי שדורש טיפול.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">&#129516;</div>
+        <h3>פריצת דרך: חלבון GDF15</h3>
+        <p>מחקר פורץ דרך ב-Nature (2023) גילה שחלבון GDF15 שמיוצר בעיקר בשליה, נקשר לקולטן GFRAL במרכז ההקאות במוח. נשים עם רמות GDF15 נמוכות לפני ההריון רגישות יותר לעלייה החדה שלו, מה שמסביר למה חלק מהנשים סובלות יותר מאחרות.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#128202;</div>
+        <h3>גורמי סיכון</h3>
+        <p>היסטוריה קודמת של HG (גורם הסיכון החזק ביותר, RR 8.92), הריון ראשון, עובר נקבי, הריון מרובה עוברים, היסטוריה משפחתית, ומצב גנטי (אימהות עם מוטציה ב-GDF15 שהעובר שלהן נושא גן תקין נמצאות בסיכון הגבוה ביותר).</p>
+      </div>
+    </div>
+
+    <h3 style="color:var(--primary);margin-bottom:20px;">תסמינים</h3>
+    <div class="info-box">
+      <h4>&#128197; ציר זמן</h4>
+      <p>הופעה ראשונית: שבועות 4 עד 6 להריון. שיא: שבועות 8 עד 12. ב90% מהמקרים חולף עד שבוע 20. בחלק מהמקרים נמשך עד הלידה.</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">&#129326;</div>
+        <h3>תסמינים עיקריים</h3>
+        <p>בחילה מתמשכת (לעיתים 24/7), הקאות מעל 3 פעמים ביום, ירידה במשקל מעל 5%, חוסר יכולת לאכול או לשתות, ריור מוגבר (פטיאליזם).</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#128680;</div>
+        <h3>סימני התייבשות</h3>
+        <p>קטונים בשתן, לחץ דם נמוך בעמידה, דופק מהיר, ריריות יבשות, ירידה בתפוקת שתן. מחקר מ2026: היפונתרמיה ב29%, היפוקלמיה ב21%, היפוכלורמיה ב24% מהמאושפזות.</p>
+      </div>
+    </div>
+
+    <div class="info-box warning">
+      <h4>&#9888;&#65039; אנצפלופתיה של ורניקה (מצב חירום)</h4>
+      <p>מחסור בתיאמין (ויטמין B1) עלול לגרום לאנצפלופתיה של ורניקה: בלבול, הפרעות בתנועות העיניים, הפרעות הליכה, פגיעה בזיכרון. מופיע לרוב בשבועות 10 עד 15 להריון, אחרי כ7 שבועות של הקאות. זהו מצב חירום רפואי. ללא טיפול עלול לגרום לנזק מוחי בלתי הפיך.</p>
+    </div>
+
+    <h3 style="color:var(--primary);margin:30px 0 20px;">שאלות נפוצות</h3>
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>האם HG זה "בראש"?</span>
+        <span class="arrow">&#9660;</span>
+      </div>
+      <div class="accordion-body">
+        <div class="inner">לא. היפרמזיס הוא מצב רפואי מוכח עם בסיס ביולוגי ברור. מחקר ב-Nature (2023) הוכיח שחלבון GDF15 מהשליה גורם ישירות לבחילות דרך קולטנים במוח. הטענה ש"זה פסיכולוגי" הופרכה מדעית.</div>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>מתי צריך להגיע לבית חולים?</span>
+        <span class="arrow">&#9660;</span>
+      </div>
+      <div class="accordion-body">
+        <div class="inner">יש לפנות לבית חולים כאשר: הקאות מתמשכות למרות תרופות דרך הפה, התייבשות חמורה, ירידה במשקל מעל 5%, חוסר יכולת מוחלט לאכול או לשתות, קטונים בשתן, או תוצאות מעבדה חריגות.</div>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>איך מאבחנים HG?</span>
+        <span class="arrow">&#9660;</span>
+      </div>
+      <div class="accordion-body">
+        <div class="inner">האבחנה היא בעיקר קלינית: הקאות מתמשכות, ירידה במשקל מעל 5%, התייבשות, ואי יכולת לסבול אכילה. בדיקות מעבדה כוללות: קטונים בשתן, אלקטרוליטים (נתרן, אשלגן, כלור, מגנזיום), תפקודי כליות, תפקודי כבד, TSH (תריס), ספירת דם מלאה. חשוב לשלול אבחנות חלופיות כמו דלקת קיבה, דלקת כיס מרה, מולה הריונית (דורש אולטרסאונד), ותירוטוקסיקוזיס.</div>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>האם HG חוזר בהריון הבא?</span>
+        <span class="arrow">&#9660;</span>
+      </div>
+      <div class="accordion-body">
+        <div class="inner">כן, בסבירות גבוהה. שיעורי חזרה נעים בין 15% ל89% (תלוי בשיטת המחקר). היסטוריה של HG בהריון קודם הוא גורם הסיכון החזק ביותר (RR 8.92). יש אסטרטגיות מניעה כמו התחלת תרופות נגד בחילה מיד עם גילוי ההריון, ומחקרים חדשים מראים שמטפורמין לפני ההריון עשוי להפחית סיכון במעל 70%.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: TREATMENTS -->
+  <section class="section fade-in" id="treatments">
+    <div class="section-header">
+      <span class="sec-icon">&#128138;</span>
+      <div>
+        <h2>טיפולים ותרופות</h2>
+        <p>תרופות מאושרות, טיפולים חדשניים וניהול קליני</p>
+      </div>
+    </div>
+
+    <div class="tabs" data-tab-group="treatments">
+      <button class="tab-btn active" data-tab="first" onclick="switchTab('treatments','first')">קו ראשון</button>
+      <button class="tab-btn" data-tab="second" onclick="switchTab('treatments','second')">קו שני</button>
+      <button class="tab-btn" data-tab="iv" onclick="switchTab('treatments','iv')">עירוי והזנה</button>
+      <button class="tab-btn" data-tab="emerging" onclick="switchTab('treatments','emerging')">טיפולים מתפתחים</button>
+    </div>
+
+    <!-- TAB: FIRST LINE -->
+    <div class="tab-content active" data-tab-content="treatments" data-tab="first">
+      <div class="info-box success">
+        <h4>&#9989; תרופות קו ראשון</h4>
+        <p>תרופות שהוכחו בטוחות בהריון ומומלצות כטיפול ראשוני</p>
+      </div>
+
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>תרופה</th>
+            <th>שם מסחרי</th>
+            <th>מנגנון</th>
+            <th>מינון</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Doxylamine + Pyridoxine</strong></td>
+            <td>Diclegis / Xonvea</td>
+            <td>חוסם היסטמין H1 + ויטמין B6. התרופה היחידה שאושרה ע"י FDA לבחילות הריון</td>
+            <td>2 טבליות לפני השינה. אם נדרש: 1 בבוקר. מקסימום 4 ביום</td>
+          </tr>
+          <tr>
+            <td><strong>Metoclopramide</strong></td>
+            <td>Reglan / Pramin</td>
+            <td>חוסם קולטן דופמין D2 באזור הכימורצפטורי. מגביר תנועתיות קיבה</td>
+            <td>5 עד 10 מ"ג דרך הפה או IV כל 8 שעות</td>
+          </tr>
+          <tr>
+            <td><strong>Ondansetron</strong></td>
+            <td>Zofran</td>
+            <td>חוסם קולטן סרוטונין 5-HT3 סלקטיבי. התרופה הנפוצה ביותר בארה"ב</td>
+            <td>4 עד 8 מ"ג דרך הפה או IV כל 8 שעות</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="info-box">
+        <h4>&#128218; על בטיחות Ondansetron (Zofran)</h4>
+        <p>רוב המחקרים לא מצאו עלייה בסיכון למומים מולדים. מטא אנליזה מ2022 לא מצאה קשר כולל לתוצאות הריון חריגות. חלק מהמחקרים דיווחו על עלייה קטנה ותלוית מינון בסיכון לפגם מחיצה חדרית (VSD). הנחיות RCOG: קו שני. קונצנזוס מומחים: בטוח ויעיל.</p>
+      </div>
+    </div>
+
+    <!-- TAB: SECOND LINE -->
+    <div class="tab-content" data-tab-content="treatments" data-tab="second">
+      <div class="info-box warning">
+        <h4>&#9888;&#65039; תרופות קו שני</h4>
+        <p>משמשות כשטיפול קו ראשון לא מספיק</p>
+      </div>
+
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">&#128138;</div>
+          <h3>Promethazine (Phenergan)</h3>
+          <p>אנטיהיסטמין דור ראשון (חוסם H1) עם תכונות אנטיכולינרגיות. מינון: 12.5 עד 25 מ"ג דרך הפה, תוך שרירי, או רקטלי כל 4 עד 8 שעות. תופעת לוואי עיקרית: ישנוניות משמעותית.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon">&#128137;</div>
+          <h3>קורטיקוסטרואידים</h3>
+          <p>שמורים למקרים עמידים בלבד. Methylprednisolone: 16 מ"ג כל 8 שעות למשך 3 ימים, ואז ירידה הדרגתית על פני שבועיים. יש להימנע לפני שבוע 10 (סיכון קטן לשסע חך). Prednisolone נחשב בטוח יותר כי הוא מתנטרל בשליה.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">&#128167;</div>
+          <h3>Chlorpromazine (Thorazine)</h3>
+          <p>אנטיפסיכוטי מקבוצת הפנותיאזינים עם תכונות נוגדות הקאה. קו אחרון בלבד עקב תופעות לוואי משמעותיות כולל ישנוניות חמורה.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: IV & FEEDING -->
+    <div class="tab-content" data-tab-content="treatments" data-tab="iv">
+      <div class="cards-grid">
+        <div class="card green">
+          <div class="card-icon">&#128167;</div>
+          <h3>עירוי נוזלים תוך ורידי</h3>
+          <p>התחלה: 2 ליטר Lactated Ringer's על פני 2 עד 3 שעות. אחזקה: כיוונון לפי תפוקת שתן (מעל 100 מ"ל לשעה). ניטור יומי של אלקטרוליטים. <strong>קריטי: תיאמין (100 עד 500 מ"ג IV שלוש פעמים ביום) חייב להינתן לפני או במקביל לכל עירוי דקסטרוז</strong> למניעת אנצפלופתיה של ורניקה.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">&#127869;</div>
+          <h3>הזנה אנטרלית (זונדה)</h3>
+          <p>הזנה דרך צינורית נזוגסטרית או נזוג'ג'ונלית. מתאימה למטופלות שלא יכולות לאכול דרך הפה. הוכחה כמפחיתה תסמינים ומקצרת אשפוז. עדיפה על TPN בגלל פחות סיבוכים.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon">&#9888;&#65039;</div>
+          <h3>הזנה פרנטרלית (TPN)</h3>
+          <p>מוצא אחרון בלבד. הזנה תוך ורידית ישירה. נושאת סיכונים משמעותיים: זיהומי קו, פקקת, הפרעות כבד. נעשה שימוש רק כשכל האפשרויות האחרות נכשלו.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: EMERGING -->
+    <div class="tab-content" data-tab-content="treatments" data-tab="emerging">
+      <div class="info-box success">
+        <h4>&#127775; העתיד: חסימת מסלול GDF15-GFRAL</h4>
+        <p>ארבע אסטרטגיות טיפוליות נחקרות: נוגדן אנטי GFRAL, פפטיד אנטגוניסט, מעכב מולקולה קטנה, וננו חלקיקים ממוקדים.</p>
+      </div>
+
+      <div class="cards-grid">
+        <div class="card green">
+          <div class="card-icon">&#128161;</div>
+          <h3>NGM120 (המועמד המוביל)</h3>
+          <p>נוגדן מונוקלונלי מסוג GFRAL antagonist, פותח ע"י NGM Biopharmaceuticals. מנגנון: חוסם את GDF15 מלהיקשר לקולטן GFRAL. מתן: זריקה תת עורית בודדת. נסבלות טובה במעל 140 משתתפים לא בהריון. מימון: 122 מיליון דולר (Series A, יולי 2024). שלב 2 (EMERALD) החל בפברואר 2025.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">&#128138;</div>
+          <h3>מטפורמין כמניעה</h3>
+          <p>מטפורמין (תרופה נפוצה לסוכרת) מעלה רמות GDF15, ובכך עשוי "לאמן" את הגוף מראש. שימוש במשך 6 חודשים ומעלה לפני ההריון נקשר לירידה של למעלה מ70% בסיכון ל-HG. שכיחות HG של רק 1.1% בנשים שנטלו מטפורמין. ייתכן שזו אסטרטגיית המניעה הראשונה אי פעם.</p>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <h4>&#128269; שאלות לרופא/ה</h4>
+        <p>&#8226; האם ניתן לשלב טיפול תרופתי עם טיפולים משלימים?<br>
+        &#8226; האם יש צורך בתוספת תיאמין?<br>
+        &#8226; מה התוכנית אם התרופה הנוכחית לא עוזרת?<br>
+        &#8226; האם אני מתאימה לאחד הניסויים הקליניים?<br>
+        &#8226; האם כדאי לשקול אשפוז בית (homecure)?</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: CLINICAL TRIALS -->
+  <section class="section fade-in" id="trials">
+    <div class="section-header">
+      <span class="sec-icon">&#128300;</span>
+      <div>
+        <h2>ניסויים קליניים</h2>
+        <p>מחקרים פעילים וניסויים חדשים בעולם</p>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <span class="time-label">פברואר 2025 | שלב 2</span>
+        <h4>EMERALD: NGM120 נגד היפרמזיס</h4>
+        <p>הניסוי הקליני הראשון בעולם של נוגדן אנטי GFRAL בנשים בהריון עם HG. מתן: זריקה תת עורית בודדת. משתתפות: שבועות 9 עד 16 להריון. עיצוב: אקראי, מבוקר פלצבו. תקופת מעקב: 7 ימים. מקומות: בריטניה ואוסטרליה.<br>
+        <strong>מזהה: ISRCTN76681798 (UK) / ACTRN12624001421527 (AUS)</strong></p>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">רשום | מניעה</span>
+        <h4>הפחתת סיכון HG עם מטפורמין</h4>
+        <p>מחקר על שימוש במטפורמין לפני ההריון כאסטרטגיית מניעה ל-HG.<br>
+        <strong>מזהה: NCT07129473</strong></p>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">עודכן פברואר 2024</span>
+        <h4>קפסאיצין + מטוקלופרמיד + אונדנסטרון</h4>
+        <p>ניסוי של קפסאיצין מקומי בשילוב נוגדי הקאה סטנדרטיים. מקום: Women &amp; Infants Hospital, רוד איילנד.<br>
+        <strong>מזהה: NCT05098067</strong></p>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">רשום | השוואתי</span>
+        <h4>מירטזפין מול אונדנסטרון</h4>
+        <p>ניסוי השוואתי אקראי: מירטזפין מול אונדנסטרון מול פלצבו (1:1:1). רב מרכזי.<br>
+        <strong>מזהה: NCT03785691</strong></p>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">רשום | התערבותי</span>
+        <h4>היפנוזה בהיפרמזיס</h4>
+        <p>מחקר על יעילות היפנוזה כטיפול משלים ב-HG.<br>
+        <strong>מזהה: NCT04828967</strong></p>
+      </div>
+    </div>
+
+    <div style="margin-top:30px;text-align:center;flex-wrap:wrap;display:flex;justify-content:center;">
+      <a href="https://clinicaltrials.gov/search?cond=Hyperemesis+Gravidarum" target="_blank" class="link-btn">&#128269; חפשו ניסויים ב-ClinicalTrials.gov</a>
+      <a href="https://pregnancysicknesssupport.org.uk/the-emerald-study/" target="_blank" class="link-btn green">&#127793; מידע על ניסוי EMERALD</a>
+    </div>
+  </section>
+
+  <!-- SECTION: RESEARCH -->
+  <section class="section fade-in" id="research">
+    <div class="section-header">
+      <span class="sec-icon">&#129516;</span>
+      <div>
+        <h2>מחקרים חדשים</h2>
+        <p>פריצות דרך ותגליות מ2025 ו2026</p>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card green">
+        <div class="card-icon">&#128220;</div>
+        <h3>The Lancet: סקירה מקיפה (2025)</h3>
+        <p>סקירה מרכזית ב-The Lancet (כרך 406) סיכמה עשור של מחקר. מסקנה: רגישות יתר לעליית GDF15 בהריון היא הגורם העיקרי. חששות מרשימת תרופות בהריון וההנחה השגויה ש-HG חולף מעצמו גורמים לזלזול בנשים.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#129504;</div>
+        <h3>בריאות נפשית ו-HG (2025)</h3>
+        <p>מחקר קוהורט רטרוספקטיבי ב-Lancet Obstetrics מצא תוצאות נוירופסיכיאטריות ובריאות נפשית משמעותיות הקשורות ל-HG. מחקר נוסף ב-Lancet Psychiatry (רישום לאומי פינלנדי) אישר את הקשר בין HG לדיכאון.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#128118;</div>
+        <h3>תוצאות ארוכות טווח בילדים (2025)</h3>
+        <p>מחקר מבוסס אוכלוסייה בשיטת אחים מצא ש-HG ברחם קשור לסיכון מוגבר לגדילת מוח חריגה, עיכוב התפתחותי, אוטיזם, סרטן ילדות, והפרעות נשימה.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">&#128138;</div>
+        <h3>מטפורמין למניעה (2025/2026)</h3>
+        <p>מספר מחקרים תצפיתיים ב-AJOG הוכיחו שמטפורמין לפני ההריון (6 חודשים ומעלה) מפחית דרמטית את סיכון ה-HG. שינוי פרדיגמה פוטנציאלי במניעה.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128300;</div>
+        <h3>הפרעות אלקטרוליטים (2026)</h3>
+        <p>מחקר ב-Frontiers in Medicine כימת הפרעות דם ואלקטרוליטים ב-HG: היפונתרמיה ב29%, היפוקלמיה ב21%, היפוכלורמיה ב24%.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#9888;&#65039;</div>
+        <h3>"HG קל" זה מיסנומר (2025)</h3>
+        <p>פרשנות ב-Lancet טוענת ש"היפרמזיס קל" הוא מושג שגוי מיסודו. ביקורת על הזלזול בתסמיני HG והמגמה לסווג מקרים כקלים כשהם לא.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: NUTRITION -->
+  <section class="section fade-in" id="nutrition">
+    <div class="section-header">
+      <span class="sec-icon">&#127822;</span>
+      <div>
+        <h2>תזונה והידרציה</h2>
+        <p>מה לאכול, פרוטוקולי עירוי, ויטמינים קריטיים</p>
+      </div>
+    </div>
+
+    <div class="info-box warning">
+      <h4>&#9888;&#65039; תיאמין (ויטמין B1): הויטמין הקריטי ביותר</h4>
+      <p>מינון: 100 עד 500 מ"ג IV שלוש פעמים ביום. <strong>חייב להינתן לפני כל עירוי דקסטרוז</strong> (מתן דקסטרוז בלי תיאמין עלול לגרום לאנצפלופתיה של ורניקה). תיאמין דרך הפה עשוי שלא להספיק בגלל ההקאות. דיאטה עשירה בפחמימות (נפוצה ב-HG כי זה האוכל היחיד שנסבל) מרוקנת תיאמין מהר יותר.</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card green">
+        <div class="card-icon">&#127857;</div>
+        <h3>מזונות שנסבלים יותר</h3>
+        <p>קרקרים, טוסט יבש, אורז לבן, מזון קר (פחות ריח), חטיפי חלבון (אגוזים, גבינה), מזון תפל ודל שומן, שלגונים וקוביות קרח, טעמים חמוצים (לימון, סוכריות חמוצות), לגימות קטנות של משקאות אלקטרוליטים.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128167;</div>
+        <h3>פרוטוקול עירוי נוזלים</h3>
+        <p>התחלה: 2 ליטר Lactated Ringer's על פני 2 עד 3 שעות. כיוונון לפי תפוקת שתן (מעל 100 מ"ל לשעה). ניטור יומי של נתרן, אשלגן, כלור, מגנזיום ופוספט. היפוקלמיה מסוכנת במיוחד (סיכון לבבי).</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#128137;</div>
+        <h3>חוסרים תזונתיים שכיחים</h3>
+        <p>רוב נשים עם HG צורכות פחות ממחצית הכמות המומלצת של: תיאמין, ברזל, סידן, מגנזיום, ויטמין D, ויוד. מעקב והשלמה חיוניים.</p>
+      </div>
+    </div>
+
+    <div class="info-box success">
+      <h4>&#128161; טיפים מעשיים</h4>
+      <p>&#8226; אכלו כשאתן רעבות, לא לפי שעון<br>
+      &#8226; ארוחות קטנות ותכופות (כל שעה עד שעתיים)<br>
+      &#8226; העדיפו מזונות עשירים בפחמימות וחלבון (מפחיתים בחילה יותר ממזונות שומניים)<br>
+      &#8226; הימנעו ממזונות שומניים, חריפים, ובעלי ריח חזק<br>
+      &#8226; שמרו קרקרים ליד המיטה לבוקר<br>
+      &#8226; מזון קר נסבל יותר (פחות ריח)</p>
+    </div>
+  </section>
+
+  <!-- SECTION: FETAL HEALTH -->
+  <section class="section fade-in" id="fetal">
+    <div class="section-header">
+      <span class="sec-icon">&#128118;</span>
+      <div>
+        <h2>בריאות העובר</h2>
+        <p>השפעות על התינוק, תוצאות לידה, ותוצאות ארוכות טווח</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>&#128218; ממצאים ממטא אנליזות</h4>
+      <p>לידה מוקדמת (לפני שבוע 34): סיכון כפול. פגות כללית: סיכון פי 4. משקל לידה נמוך (מתחת ל1500 גרם): סיכון מוגבר. קטן לגיל ההריון (SGA): סיכון מוגבר. אשפוז ביילוד, החייאה, והפרדות שליה: סיכון מוגבר.</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">&#9888;&#65039;</div>
+        <h3>תוצאות לידה</h3>
+        <p>רעב אימהי ממושך וחוסרים תזונתיים מפריעים לאספקת חומרי הזנה ולתהליכים מטבוליים הנדרשים להתפתחות עוברית תקינה. טיפול מוקדם ותזונה נאותה עשויים לשפר תוצאות משמעותית.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#128118;</div>
+        <h3>תוצאות ארוכות טווח בילדים</h3>
+        <p>ילדים שנחשפו ל-HG ברחם נמצאו בסיכון מוגבר פי 3.82 לאלרגיות, עצירות כרונית, ריפלוקס, עיכוב גדילה, אי סבילות ללקטוז, זיהומי נשימה כרוניים, ובעיות שינה.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">&#129504;</div>
+        <h3>השפעות נוירו התפתחותיות</h3>
+        <p>שיעורים גבוהים יותר של הפרעות קשב, עיכובים התפתחותיים, אוטיזם, חרדה ובעיות שינה בצאצאים. גדילת מוח חריגה וסרטן ילדות (קשר קטן אך מובהק).</p>
+      </div>
+    </div>
+
+    <div class="info-box success">
+      <h4>&#128154; הערה חשובה</h4>
+      <p>רבות מהתוצאות קשורות ככל הנראה לחומרה ולמשך התת תזונה האימהית, ולא ל-HG עצמו. <strong>HG שמטופל כראוי עם תזונה הולמת עשוי להוביל לתוצאות עובריות טובות יותר.</strong> טיפול מוקדם ואגרסיבי הוא המפתח.</p>
+    </div>
+  </section>
+
+  <!-- SECTION: PSYCHOLOGICAL APPROACH -->
+  <section class="section fade-in" id="psychological-approach">
+    <div class="section-header">
+      <span class="sec-icon">&#128156;</span>
+      <div>
+        <h2>גישה פסיכולוגית</h2>
+        <p>טראומה, דיכאון, PTSD, בידוד, אבדן זהות, ומשאבי תמיכה</p>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-num">18%</div>
+        <div class="stat-label">עומדות בקריטריונים מלאים ל-PTSD</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">~50%</div>
+        <div class="stat-label">דיכאון אחרי לידה</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">25.5%</div>
+        <div class="stat-label">מחשבות אובדניות</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">5%</div>
+        <div class="stat-label">הפסקת הריון רצוי</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">82.8%</div>
+        <div class="stat-label">מוגבלות בפעילות יומיומית</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">2.7x</div>
+        <div class="stat-label">סיכון מוגבר לדיכאון אחרי לידה</div>
+      </div>
+    </div>
+
+    <h3 style="color:var(--primary);margin:30px 0 15px;">&#128148; PTSD והיפרמזיס: אחד ממצבי ההריון היחידים שגורמים לטראומה</h3>
+    <div class="info-box warning">
+      <h4>&#9888;&#65039; היפרמזיס הוא אחד ממצבי ההריון הבודדים שמתועדים כגורמי PTSD</h4>
+      <p>18% מנשים שעברו HG עומדות בקריטריונים המלאים לאבחון PTSD, ומעל 50% חוות תסמיני טראומה תת סיפיים. התסמינים כוללים: <strong>הימנעות</strong> (ממקומות, ריחות, מזונות שמזכירים את ה-HG), <strong>קהות רגשית</strong>, <strong>דריכות יתר</strong>, <strong>חוויה מחדש</strong> של תחושות הבחילה וההקאות, ו<strong>רגישות לטריגרים</strong> כמו ריחות אוכל, בתי חולים, או אפילו מילים הקשורות להריון. ב8 שבועות אחרי לידה, נשים שעברו HG הראו ציוני PTSD גבוהים משמעותית מנשים עם בחילות קלות או ללא בחילות. PTSD מ-HG קשור ישירות לקושי בהנקה, בעיות זוגיות, קשיים כלכליים, וירידה ביכולת תפקוד. התסמינים יכולים להימשך שנים אחרי ההריון.</p>
+      <p style="margin-top:10px;font-size:13px;opacity:0.8;">מקורות: HER Foundation; Mitchell-Jones et al., BJOG 2017 (סקירה שיטתית); Archives of Women's Mental Health 2018; Lancet Obstetrics 2025 (476,857 נשים, 18 מדינות)</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card orange">
+        <div class="card-icon">&#128546;</div>
+        <h3>דיכאון: בזמן ההריון ואחריו</h3>
+        <p>49% מנשים עם HG חוות דיכאון <strong>בזמן ההריון</strong> (לעומת 6% באוכלוסיה הכללית). 29% חוות דיכאון 6 שבועות אחרי הלידה (לעומת 7% בביקורת). מחקר קוהורט רטרוספקטיבי ב-Lancet (2025) מצא סיכון מוגבר פי 2.7 לדיכאון אחרי לידה. מחקר רישום לאומי פינלנדי אישר את הקשר. ממצא מפתיע: HG עם הפרעה מטבולית (חמור יותר, מטופל אגרסיבית) הראה דווקא <strong>ירידה</strong> בסיכון לדיכאון, לעומת HG "קל". המשמעות: טיפול הולם הוא מגן. התסמינים יכולים להימשך שנים.</p>
+        <p style="margin-top:8px;font-size:12px;opacity:0.7;">מקור: J Maternal-Fetal & Neonatal Medicine 2022; Lancet Obstetrics 2025; King's College London</p>
+      </div>
+      <div class="card" style="border-right:4px solid #e74c3c;">
+        <div class="card-icon">&#128548;</div>
+        <h3>טראומת אינוולידציה רפואית</h3>
+        <p>"זה סתם בחילות בוקר." "תנסי ג'ינג'ר." "זה פסיכולוגי." נשים עם HG מדווחות שוב ושוב על התעלמות מצד צוות רפואי, זלזול בתסמינים, וייחוס המצב לחרדה או דמיון. <strong>חוויית חולה שלילית מתועדת כגורם סיכון ישיר להפסקת הריון ולמחשבות אובדניות</strong> (Nana et al., 2022). 82.8% מהמטופלות מוגבלות בפעילות יומיומית, ובכל זאת רבות נתקלות בזלזול. תפקיד הצוות הרפואי הוא הפוך: ולידציה (הכרה שזה מצב אמיתי וקשה) היא גורם הגנה מתועד שמפחית סיכון לתוצאות נפשיות חמורות.</p>
+        <p style="margin-top:8px;font-size:12px;opacity:0.7;">מקור: Nana et al., Women's Health 2022; Frontiers in Health Services 2025; Psychiatric Times</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">&#128118;</div>
+        <h3>קשר אם ותינוק (bonding)</h3>
+        <p>HG עצמו <strong>לא פוגע ישירות</strong> בהיקשרות אם ותינוק. בשלבים מוקדמים של ההריון (שבועות 7 עד 16) נצפתה ירידה קלה בהיקשרות, אבל ההשפעה דעכה בהמשך ההריון (אחרי שבוע 26). לעומת זאת, דיכאון אחרי לידה (שכיח פי 2.7 אחרי HG) כן פוגע בהיקשרות. המסלול העקיף: HG גורם לדיכאון, והדיכאון פוגע בקשר. מחקר מ2023 מצא שתינוקות שנחשפו ל-HG ברחם הראו קשב מופחת במשחק עם אמם. נשים מתארות שבזמן ה-HG החמור "לא היה מקום לשום דבר אחר, כולל העובר," אבל אחרי שהתסמינים שככו "השקיעו מאמץ להשלים את הזמן האבוד בהיקשרות."</p>
+        <p style="margin-top:8px;font-size:12px;opacity:0.7;">מקור: PMC7554497 (מחקר פרוספקטיבי רב מרכזי); ScienceDirect 2023; PubMed 21413857</p>
+      </div>
+    </div>
+
+    <div class="info-box warning">
+      <h4>&#9888;&#65039; הפסקת הריון ומחשבות אובדניות</h4>
+      <p>5% מהנשים הפסיקו הריון רצוי בגלל HG. 52% נוספות שקלו זאת. 25.5% דיווחו על מחשבות אובדניות מזדמנות, 6.6% על מחשבות קבועות. <strong>סיבות להפסקה:</strong> חוסר יכולת לטפל במשפחה ובעצמן (66.7%), פחד שהן או התינוק ימותו (51.2%), פחד שהתינוק יהיה עם מום (22%). <strong>גורמי סיכון מתועדים:</strong> קושי בגישה לתרופות, חוויית חולה שלילית, חוסר ולידציה מצוות רפואי. <strong>גורמי הגנה:</strong> תמיכה הוליסטית ממשפחה, חברים ומטפלים.</p>
+      <p style="margin-top:12px;"><strong>&#128242; במצב חירום:</strong> ער"ן (סיוע רגשי): <strong>1201</strong> | נט"ל (טראומה): <strong>1-800-363-363</strong> | חובה לבדוק באופן שגרתי מצב נפשי ומחשבות אובדניות.</p>
+      <p style="margin-top:8px;font-size:12px;opacity:0.7;">מקור: Nana et al., Women's Health 2022 (מעל 5,000 משתתפות); PMC9574451</p>
+    </div>
+
+    <h3 style="color:var(--primary);margin:30px 0 15px;">&#128156; ההשפעה הרחבה: בידוד, זהות, משפחה, ועתיד</h3>
+    <div class="cards-grid">
+      <div class="card" style="border-right:4px solid #9b59b6;">
+        <div class="card-icon">&#128566;</div>
+        <h3>בידוד חברתי ובדידות</h3>
+        <p>HG כופה בידוד חברתי מוחלט. נשים מרותקות למיטה במשך חודשים, לא מסוגלות לעבוד, להשתתף באירועים, או אפילו לנהל שיחה. ההרגשה של "החיים ממשיכים בלעדיי" מעמיקה דיכאון. גרוע מכך: גישות מזלזלות של צוות רפואי תורמות לסטיגמה עצמית שמובילה לבידוד עמוק יותר. מחקרים מראים שדיכאון וחרדה שכיחים יותר בנשים עם HG שיש להן מערכות יחסים משפחתיות וחברתיות חלשות.</p>
+        <p style="margin-top:8px;font-size:12px;opacity:0.7;">מקור: ScienceDirect 2025 ("Deprived of my autonomy"); PMC5780564; Taylor & Francis 2023</p>
+      </div>
+      <div class="card" style="border-right:4px solid #e67e22;">
+        <div class="card-icon">&#128557;</div>
+        <h3>אבל ואבדן זהות</h3>
+        <p>HG גורם לאבדנים מרובים שלעיתים רחוקות מוכרים: אבדן ה"הריון המאושר" שדמיינת, אבדן תאוצה מקצועית ואפילו מקום עבודה, אבדן היכולת להורות לילדים קיימים, אבדן עצמאות כלכלית, אבדן חברויות וקשרים חברתיים. מחקר איכותני מ2025 (שבדיה) תיאר נשים ש"צפו בעצמן נעלמות מתפקידי החיים שלהן: אם, בת זוג, איש מקצוע." אבדן הזהות הזה מקשה על ההיקשרות לתינוק ומשנה את דינמיקת מערכות היחסים. חלק מהנשים מחליטות לוותר על ילדים נוספים, ומתאבלות על המשפחה שתכננו.</p>
+        <p style="margin-top:8px;font-size:12px;opacity:0.7;">מקור: ScienceDirect 2025 (PubMed 40088682); Bloom Psychotherapy; Psychiatric Times</p>
+      </div>
+      <div class="card" style="border-right:4px solid #3498db;">
+        <div class="card-icon">&#128104;&#8205;&#128105;&#8205;&#128103;</div>
+        <h3>השפעה על בני זוג ומשפחה</h3>
+        <p>HG לא קורה בחלל ריק. בני זוג מדווחים על כעס, בדידות, שחיקה וטראומה משנית. מעל 80% מהנשים דיווחו שה-HG גרם להשפעה פסיכו חברתית שלילית, כולל אבדן תעסוקה, מתח כלכלי ובעיות זוגיות. PTSD מ-HG קשור ספציפית לבעיות זוגיות כתוצאה מתועדת. ילדים קיימים במשפחה מושפעים כשאמא מרותקת למיטה במשך חודשים. מאמר ב-Psychology Today (דצמבר 2025) הגדיר את בני הזוג כבעלי "תפקיד חיוני בהשבת תחושת מציאות, כבוד וטיפול."</p>
+        <p style="margin-top:8px;font-size:12px;opacity:0.7;">מקור: Psychology Today 2025; HER Foundation; PMC5056484; Taylor & Francis 2023</p>
+      </div>
+      <div class="card" style="border-right:4px solid #e74c3c;">
+        <div class="card-icon">&#128552;</div>
+        <h3>פחד מהריון עתידי</h3>
+        <p>40% מנשים שעברו HG דוחות הריון נוסף. 52% לא נכנסו להריון נוסף בכלל, ושני שלישים ציינו HG כסיבה. 23% שקלו או ביצעו הפסקת הריון בהריונות הבאים בגלל פחד מחזרה. חשוב להבין: <strong>זו לא החלטה רציונלית אלא תגובת הימנעות טראומטית</strong>. נשים מתארות התקפי חרדה בעצם המחשבה על הריון נוסף. שיעור החזרה של HG הוא 15% עד 89% (תלוי בשיטת המחקר). מתח זוגי על תכנון משפחה הוא תוצאה נפוצה.</p>
+        <p style="margin-top:8px;font-size:12px;opacity:0.7;">מקור: PMC8457209 (מעקב אחרי מחקר MOTHER); HER Foundation; StatPearls</p>
+      </div>
+      <div class="card" style="border-right:4px solid #f39c12;">
+        <div class="card-icon">&#128188;</div>
+        <h3>חזרה לעבודה והשפעה מקצועית</h3>
+        <p>82.8% ממטופלות HG מוגבלות בפעילות יומיומית. היעדרות מהעבודה שכיחה, ואשפוזים מובילים לחופשות מחלה ממושכות. נשים מדווחות שהן מרגישות "שמתייחסים אליהן אחרת" במקום העבודה. מעבר למגבלות הפיזיות, הייסורים הפסיכולוגיים מתחושת מחלה במשך שבועות וחודשים מחמירים את הפגיעה בקריירה. חזרה לעבודה אחרי היעדרות ממושכת בגלל HG כרוכה בבושה, חרדה מהצורך להסביר את ההיעדרות, ואבל על עיכוב בקריירה.</p>
+        <p style="margin-top:8px;font-size:12px;opacity:0.7;">מקור: IJGO 2025; Medscape; HER Foundation (מדריך למעסיקים)</p>
+      </div>
+    </div>
+
+    <h3 style="color:var(--primary);margin:30px 0 15px;">&#128154; טיפול ותמיכה פסיכולוגית</h3>
+    <div class="info-box success">
+      <h4>&#128154; גישות טיפוליות מבוססות ראיות</h4>
+      <p><strong>EMDR (עיבוד מחדש דרך תנועות עיניים):</strong> ב4 מתוך 5 נשים עם HG הושגה תגובה מהירה לאחר 1 עד 2 פגישות בלבד. EMDR יכול לעבד זיכרונות טראומטיים וגם לבצע דה סנסיטיזציה לטריגרים לבחילות והקאות. לא נמצאו עדויות לחשש בטיחותי בשימוש ב-EMDR בהריון.</p>
+      <p style="margin-top:10px;"><strong>CBT (טיפול קוגניטיבי התנהגותי):</strong> טכניקות מבוססות ראיות לניהול חרדה, פיתוח מנגנוני התמודדות, ושמירה על חוסן פסיכולוגי. מומלץ לנשים בהריון בסיכון גבוה.</p>
+      <p style="margin-top:10px;"><strong>ACT (טיפול בקבלה ומחויבות):</strong> עוזר להתמודד עם מחשבות ורגשות קשים תוך שמירה על מחויבות לערכים ולפעולה.</p>
+      <p style="margin-top:10px;"><strong>תמיכת עמיתות (Peer Support):</strong> מפחיתה בידוד, מספקת ולידציה מנשים שעברו חוויה דומה. ניתנת גם מרחוק (טלפון, וידאו) לנשים שלא יכולות לצאת מהבית.</p>
+      <p style="margin-top:10px;"><strong>זמן החלמה:</strong> גוף עד שנתיים, נפש לעיתים יותר. מומלץ לפנות למטפל/ת המתמחה בבריאות נפשית פריינטלית.</p>
+      <p style="margin-top:8px;font-size:12px;opacity:0.7;">מקור: Springer Publishing (EMDR); BJPsych Advances; EMDRIA; BMC Psychiatry 2024 (סקירה)</p>
+    </div>
+
+    <div class="info-box" style="border-right:4px solid var(--primary);background:linear-gradient(135deg,#f8f0f4,#fff);">
+      <h4>&#128222; משאבים בישראל ובעולם</h4>
+      <p><strong>קווי סיוע בישראל:</strong><br>
+      &#8226; ער"ן (סיוע רגשי ראשוני): <strong>1201</strong><br>
+      &#8226; נט"ל (קו סיוע לטראומה): <strong>1-800-363-363</strong><br>
+      &#8226; עמותת נפש בריאה: תמיכה בבריאות נפשית פריינטלית<br>
+      &#8226; טיפת חלב: גישה לעובדת סוציאלית בתחנות טיפת חלב<br>
+      &#8226; Infomed.co.il: מידע רפואי בעברית על היפרמזיס</p>
+      <p style="margin-top:12px;"><strong>משאבים בינלאומיים:</strong><br>
+      &#8226; <a href="https://www.hyperemesis.org/" target="_blank" style="color:var(--primary);font-weight:600;">HER Foundation</a> (hyperemesis.org): חינוך, תמיכה, מחקר, אפליקציית "Ready to COPE" חינמית<br>
+      &#8226; <a href="https://pregnancysicknesssupport.org.uk/" target="_blank" style="color:var(--primary);font-weight:600;">Pregnancy Sickness Support</a> (UK): רשת תמיכת עמיתות, ייעוץ מקצועי, תמיכה מרחוק<br>
+      &#8226; קבוצות פייסבוק סגורות לנשים דוברות עברית שעברו HG<br>
+      &#8226; <a href="https://www.cope.org.au/pregnancy/looking-after-yourself-in-pregnancy/hyperemesis-gravidarum-severe-morning-sickness" target="_blank" style="color:var(--primary);font-weight:600;">COPE Australia</a>: מדריך בריאות נפשית ו-HG</p>
+    </div>
+
+    <div class="info-box success">
+      <h4>&#128154; גורמי הגנה מתועדים</h4>
+      <p>&#8226; ולידציה מצוות רפואי: הכרה ש-HG הוא מצב אמיתי, חמור, ומבוסס ביולוגית<br>
+      &#8226; תמיכת בן/בת זוג ומשפחה: שותפות פעילה בטיפול ובניהול היומיום<br>
+      &#8226; גישה לטיפול נפשי מקצועי: מטפל/ת עם התמחות פריינטלית<br>
+      &#8226; תמיכת עמיתות שעברו HG: קבוצות תמיכה, קהילות מקוונות<br>
+      &#8226; טיפול רפואי הולם בתסמינים: כולל גישה מוקדמת לתרופות<br>
+      &#8226; סינון ומעקב נפשי שגרתי: בדיקה יזומה של מצב נפשי ומחשבות אובדניות<br>
+      &#8226; התאמות תעסוקתיות: גמישות מהמעסיק בזמן ההריון ובחזרה לעבודה</p>
+    </div>
+  </section>
+
+  <!-- SECTION: FUTURE PREGNANCIES -->
+  <section class="section fade-in" id="future">
+    <div class="section-header">
+      <span class="sec-icon">&#128337;</span>
+      <div>
+        <h2>הריונות עתידיים</h2>
+        <p>שיעורי חזרה, מניעה, ותכנון מראש</p>
+      </div>
+    </div>
+
+    <div class="info-box warning">
+      <h4>&#128202; שיעורי חזרה</h4>
+      <p>HG חוזר ב15% עד 89% מההריונות הבאים (תלוי בשיטת המחקר). היסטוריה של HG היא גורם הסיכון החזק ביותר (RR 8.92). 40% מהנשים דוחות הריון נוסף. 52% לא נכנסו להריון נוסף, ושני שלישים ציינו HG כסיבה.</p>
+    </div>
+
+    <h3 style="color:var(--primary);margin:30px 0 20px;">7 אסטרטגיות מניעה</h3>
+    <div class="cards-grid">
+      <div class="card green">
+        <div class="card-icon">1&#65039;&#8419;</div>
+        <h3>ייעוץ לפני הריון</h3>
+        <p>סקירת היסטוריה רפואית ופיתוח תוכנית התערבות מוקדמת עם צוות רפואי.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">2&#65039;&#8419;</div>
+        <h3>נוגדי הקאה מונעים</h3>
+        <p>התחלת Doxylamine/Pyridoxine מיד עם גילוי ההריון (לפני הופעת תסמינים). מחקר RCT הוכיח שזה מפחית חומרה ומשך.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">3&#65039;&#8419;</div>
+        <h3>מולטיויטמין לפני הריון</h3>
+        <p>התחלת מולטיויטמין עם תחילת ההריון עשויה להפחית סיכון לבחילות חמורות.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">4&#65039;&#8419;</div>
+        <h3>מטפורמין (חדש!)</h3>
+        <p>6 חודשים ומעלה של מטפורמין לפני ההריון נקשר לירידה של מעל 70% בסיכון. מחקרים תצפיתיים מבטיחים, ניסויים פרוספקטיביים נדרשים.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">5&#65039;&#8419;</div>
+        <h3>מצב תזונתי מיטבי</h3>
+        <p>אופטימיזציה של תזונה ומצב גופני לפני ההריון.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">6&#65039;&#8419;</div>
+        <h3>מעקב מוקדם</h3>
+        <p>סידור מעקב רפואי מוקדם בהריון להתערבות מהירה.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">7&#65039;&#8419;</div>
+        <h3>הכנה נפשית</h3>
+        <p>סידור רשתות תמיכה מראש: בן/בת זוג, משפחה, מטפל/ת נפשי/ת, קבוצת תמיכה.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: LIFESTYLE -->
+  <section class="section fade-in" id="lifestyle">
+    <div class="section-header">
+      <span class="sec-icon">&#127807;</span>
+      <div>
+        <h2>אורח חיים וניהול</h2>
+        <p>טיפולים משלימים, מנוחה, וניהול יומיומי</p>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card green">
+        <div class="card-icon">&#127854;</div>
+        <h3>ג'ינג'ר</h3>
+        <p>סקירה שיטתית ומטא אנליזה מאשרות שג'ינג'ר הוא טיפול לא תרופתי יעיל. חומרים פעילים: ג'ינג'רולים ושוגאולים. מינון מומלץ: 250 מ"ג כמוסות 4 פעמים ביום, או תה ג'ינג'ר. משלים ולא מחליף טיפול תרופתי במקרים חמורים.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#129306;</div>
+        <h3>דיקור לחץ (Acupressure)</h3>
+        <p>נקודת PC6 (Neiguan) בצד הפנימי של האמה מעל פרק כף היד. דיקור בנקודת PC6: 90% יעילות במחקר אחד. לחיצה בנקודה: 63% יעילות (לעומת פלצבו). צמידי SeaBands זמינים בחנויות ומפעילים לחץ על הנקודה.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#128164;</div>
+        <h3>מנוחה והפחתת מתח</h3>
+        <p>מנוחה ושינה מספקות. צמצום עומס עבודה ומתח. שכיבה במקרים חמורים. הימנעות מטריגרים חזותיים וריחניים.</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>&#128161; טיפים יומיומיים</h4>
+      <p>&#8226; הימנעו מריחות חזקים ומזון בעל ריח<br>
+      &#8226; פתחו חלונות לאוורור<br>
+      &#8226; בקשו עזרה עם בישול וניקיון<br>
+      &#8226; שתו בלגימות קטנות לאורך כל היום<br>
+      &#8226; העדיפו אוכל קר (פחות ריח)<br>
+      &#8226; שמרו נשנושים יבשים בכל חדר</p>
+    </div>
+  </section>
+
+  <!-- SECTION: STORIES & SUPPORT -->
+  <section class="section fade-in" id="stories">
+    <div class="section-header">
+      <span class="sec-icon">&#11088;</span>
+      <div>
+        <h2>סיפורים ותמיכה</h2>
+        <p>ארגונים, קהילות, וקבוצות תמיכה</p>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card green">
+        <div class="card-icon">&#127760;</div>
+        <h3>HER Foundation</h3>
+        <p>הרשת הגדולה בעולם ל-HG. קהילה מקוונת, 7 קבוצות פייסבוק, מפגשי Zoom חודשיים, שיוך תמיכה אישית, קו חם (833-2ChatHG-1), אפליקציית HG Care, טפסי הערכת HELP Score, פרוטוקולי טיפול למטפלים.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#127468;&#127463;</div>
+        <h3>Pregnancy Sickness Support (UK)</h3>
+        <p>העמותה היחידה בבריטניה שמוקדשת ל-HG. רשת תמיכת עמיתות ארצית, ייעוץ מומחה, ערכת כלים לרופאים, קו חם: 024 7638 2020.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#127462;&#127482;</div>
+        <h3>Hyperemesis Australia</h3>
+        <p>מנוהלת על ידי נשים שעברו HG. תמיכת מתנדבות, קהילות פייסבוק סגורות, פודקאסט "You, Me &amp; HG", כרטיסי אישור הריון, אפליקציית "Ready to COPE" חינמית לבריאות נפשית.</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>&#128218; ספרים</h4>
+      <p>&#8226; "Hyperemesis Gravidarum &mdash; The Definitive Guide" (כולל חלק לבני זוג)<br>
+      &#8226; "The Chronicles of Nausea" מאת Ashli McCall</p>
+    </div>
+
+    <div class="info-box success">
+      <h4>&#128172; קהילות מקוונות</h4>
+      <p>&#8226; קהילת HER Foundation (ללא רשתות חברתיות)<br>
+      &#8226; Reddit: r/HyperemesisGravidarum<br>
+      &#8226; קבוצות פייסבוק (של HER ועצמאיות)<br>
+      &#8226; קבוצת פייסבוק ישראלית לתמיכה ב-HG</p>
+    </div>
+  </section>
+
+  <!-- SECTION: RESOURCES -->
+  <section class="section fade-in" id="resources">
+    <div class="section-header">
+      <span class="sec-icon">&#128279;</span>
+      <div>
+        <h2>קישורים ומשאבים</h2>
+        <p>בתי חולים בישראל, ארגונים, מידע נוסף</p>
+      </div>
+    </div>
+
+    <h3 style="color:var(--primary);margin-bottom:20px;">&#127470;&#127473; בתי חולים בישראל</h3>
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>בית חולים</th>
+          <th>עיר</th>
+          <th>פרטים</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>הדסה</strong></td>
+          <td>ירושלים</td>
+          <td>טיפול מקיף כולל עירוי, B6, B1, אנטיהיסטמינים, Zofran, הזנה אנטרלית. מציע תוכנית אשפוז בית (homecure)</td>
+        </tr>
+        <tr>
+          <td><strong>שיבא (תל השומר)</strong></td>
+          <td>רמת גן</td>
+          <td>יחידת יולדות עם פרוטוקולי טיפול ב-HG</td>
+        </tr>
+        <tr>
+          <td><strong>סורוקה</strong></td>
+          <td>באר שבע</td>
+          <td>חומרי הדרכה למטופלות, תחת כללית</td>
+        </tr>
+        <tr>
+          <td><strong>המרכז הרפואי לגליל</strong></td>
+          <td>נהריה</td>
+          <td>פרסם מחקר אפידמיולוגי על HG, משרת 570,000 תושבים</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="info-box">
+      <h4>&#127470;&#127473; מערכת הבריאות בישראל</h4>
+      <p>כל תושב/ת זכאי/ת לטיפול ב-HG דרך קופת החולים: <strong>כללית, מכבי, מאוחדת, לאומית</strong>. אשפוז ממומן ע"י משרד הבריאות. תרופות נוגדות הקאה בסיסיות (Metoclopramide, Ondansetron, Promethazine, ויטמין B6) כלולות בסל הבריאות. שירותי אשפוז בית (homecure) זמינים דרך הקופות להמשך טיפול IV בבית.</p>
+    </div>
+
+    <h3 style="color:var(--primary);margin:30px 0 20px;">&#127760; ארגונים בינלאומיים</h3>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:30px;">
+      <a href="https://www.hyperemesis.org/" target="_blank" class="link-btn">HER Foundation</a>
+      <a href="https://pregnancysicknesssupport.org.uk/" target="_blank" class="link-btn green">Pregnancy Sickness Support</a>
+      <a href="https://www.hyperemesisaustralia.org.au/" target="_blank" class="link-btn orange">Hyperemesis Australia</a>
+    </div>
+
+    <h3 style="color:var(--primary);margin:30px 0 20px;">&#127470;&#127473; מידע בעברית</h3>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:30px;">
+      <a href="https://he.hadassah.org.il/patient-information/hyperemesis-gravidarum-patient-info/" target="_blank" class="link-btn">הדסה: מידע למטופלות</a>
+      <a href="https://www.leumit.co.il/pregnancy/during-your-pregnancy/hyperemesis-gravidarum/" target="_blank" class="link-btn green">לאומית: מידע על HG</a>
+      <a href="https://www.wikirefua.org.il/w/index.php/%D7%94%D7%A7%D7%90%D7%95%D7%AA_%D7%99%D7%AA%D7%A8_%D7%91%D7%94%D7%99%D7%A8%D7%99%D7%95%D7%9F_-_Hyperemesis_gravidarum" target="_blank" class="link-btn orange">WikiRefua: היפרמזיס</a>
+      <a href="https://www.infomed.co.il/diseases/hyperemesis-gravidarum/" target="_blank" class="link-btn">Infomed: מידע על HG</a>
+    </div>
+
+    <h3 style="color:var(--primary);margin:30px 0 20px;">&#128300; מאמרים מרכזיים</h3>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:30px;">
+      <a href="https://www.nature.com/articles/s41586-023-06921-9" target="_blank" class="link-btn">Nature: GDF15 ובחילות הריון</a>
+      <a href="https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(25)01454-0/abstract" target="_blank" class="link-btn green">Lancet: סקירה מקיפה 2025</a>
+      <a href="https://clinicaltrials.gov/search?cond=Hyperemesis+Gravidarum" target="_blank" class="link-btn orange">ClinicalTrials.gov</a>
+      <a href="https://www.ima.org.il/main/EditClinicalInstruction.aspx?ClinicalInstructionId=2541" target="_blank" class="link-btn">ההסתדרות הרפואית: הנחיות</a>
+    </div>
+  </section>
+
+  <!-- CAREPEDIA CTA -->
+  <div class="carepedia-cta">
+    <h3>רוצים פורטל מידע רפואי מבוסס מחקר?</h3>
+    <p>אנחנו בונים פורטלים לרופאים, עמותות ומרכזים רפואיים. ספרו לנו על הצורך שלכם.</p>
+    <a href="https://carepedia.org/#contact" class="cta-btn">רוצים פורטל? דברו איתנו</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p style="margin-bottom: 16px;">
+      נבנה על ידי <strong>יובל קשטכר</strong> ועוזריו הרובוטים | <a href="https://carepedia.org" style="color:var(--accent-light);text-decoration:none;">Carepedia</a>
+    </p>
+    <a href="https://carepedia.org/#contact" target="_blank" class="portal-request-btn" style="margin-bottom: 20px;">&#10133; רוצים פורטל למחלה אחרת?</a>
+    <p style="margin-top: 20px; font-size: 15px; opacity: 0.85;">כל המידע באתר הוא למטרות לימוד בלבד ואינו מהווה תחליף לייעוץ רפואי מקצועי.</p>
+    <p style="margin-top: 8px; font-size: 13px; opacity: 0.7;"><a href="/disclaimer" style="color:var(--accent-light);text-decoration:underline;">Legal Disclaimer</a> | <a href="https://wa.me/+972526414555" target="_blank" rel="noopener" style="color:var(--accent-light);text-decoration:underline;">Report an Error</a></p>
+    <p style="margin-top: 10px; font-size: 14px; opacity: 0.7;">עודכן לאחרונה: פברואר 2026 | כולל ציטוטים ממאמרים מדעיים</p>
+  </footer>
+
+</div>
+
+<!-- SCROLL TO TOP -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#11014;</button>
+
+<script>
+function toggleMenu() {
+  const sidebar = document.getElementById('sidebar');
+  const toggle = document.getElementById('menuToggle');
+  const overlay = document.getElementById('sidebarOverlay');
+  sidebar.classList.toggle('open');
+  toggle.classList.toggle('open');
+  overlay.classList.toggle('active');
+  toggle.textContent = sidebar.classList.contains('open') ? '\u2715' : '\u2630';
+  document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '';
+}
+
+function closeMenu() {
+  const sidebar = document.getElementById('sidebar');
+  const toggle = document.getElementById('menuToggle');
+  const overlay = document.getElementById('sidebarOverlay');
+  sidebar.classList.remove('open');
+  toggle.classList.remove('open');
+  overlay.classList.remove('active');
+  toggle.textContent = '\u2630';
+  document.body.style.overflow = '';
+}
+
+function navigate(el) {
+  document.querySelectorAll('.sidebar nav a').forEach(a => a.classList.remove('active'));
+  el.classList.add('active');
+  closeMenu();
+}
+
+function navigateTo(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+  document.querySelectorAll('.sidebar nav a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+  });
+}
+
+function toggleAccordion(header) {
+  const body = header.nextElementSibling;
+  const isOpen = header.classList.contains('open');
+  header.classList.toggle('open');
+  body.style.maxHeight = isOpen ? '0' : body.scrollHeight + 'px';
+}
+
+function switchTab(tabGroup, tabName) {
+  document.querySelectorAll('[data-tab-group="' + tabGroup + '"] .tab-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.tab === tabName);
+  });
+  document.querySelectorAll('[data-tab-content="' + tabGroup + '"]').forEach(c => {
+    c.classList.toggle('active', c.dataset.tab === tabName);
+  });
+}
+
+// Scroll progress bar + scroll spy
+window.addEventListener('scroll', () => {
+  const scrollTop = document.getElementById('scrollTop');
+  const progressBar = document.getElementById('progressBar');
+  const scrolled = window.scrollY;
+  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = maxScroll > 0 ? (scrolled / maxScroll) * 100 : 0;
+  progressBar.style.width = pct + '%';
+  scrollTop.classList.toggle('visible', scrolled > 500);
+
+  const sections = document.querySelectorAll('.section[id], .hero[id]');
+  let current = '';
+  sections.forEach(s => {
+    if (scrolled >= s.offsetTop - 100) current = s.id;
+  });
+  if (current) {
+    document.querySelectorAll('.sidebar nav a').forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  }
+});
+
+// Fade-in on scroll
+const fadeEls = document.querySelectorAll('.fade-in');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+fadeEls.forEach(el => observer.observe(el));
+
+// Portal search with highlight, clear button, and debounce
+let searchTimeout;
+function searchPortal(query) {
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(() => _doSearch(query), 150);
+}
+
+function _doSearch(query) {
+  const resultsDiv = document.getElementById('searchResults');
+  const clearBtn = document.getElementById('searchClear');
+
+  clearBtn.style.display = query && query.length > 0 ? 'block' : 'none';
+
+  if (!query || query.length < 2) {
+    resultsDiv.style.display = 'none';
+    document.querySelectorAll('.section').forEach(s => {
+      s.style.display = '';
+      s.querySelectorAll('mark.search-hl').forEach(m => {
+        m.replaceWith(document.createTextNode(m.textContent));
+      });
+    });
+    return;
+  }
+  const q = query.toLowerCase();
+  const sections = document.querySelectorAll('.section[id]');
+  const matches = [];
+  sections.forEach(s => {
+    const text = s.textContent.toLowerCase();
+    const title = s.querySelector('h2') ? s.querySelector('h2').textContent : '';
+    const subtitle = s.querySelector('.section-header p') ? s.querySelector('.section-header p').textContent : '';
+    if (text.includes(q)) {
+      const count = (text.match(new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')) || []).length;
+      matches.push({ id: s.id, title: title, subtitle: subtitle, count: count, el: s });
+      s.style.display = '';
+    } else {
+      s.style.display = 'none';
+    }
+  });
+  matches.sort((a, b) => b.count - a.count);
+
+  if (matches.length > 0 && matches.length < sections.length) {
+    resultsDiv.innerHTML = '<div style="background:var(--card);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);">' +
+      '<p style="font-size:14px;color:var(--text-light);margin-bottom:8px;">' + matches.length + ' \u05ea\u05d5\u05e6\u05d0\u05d5\u05ea \u05e0\u05de\u05e6\u05d0\u05d5:</p>' +
+      matches.map(m =>
+        '<a href="#' + m.id + '" onclick="navigateTo(\'' + m.id + '\')" style="display:block;padding:10px 12px;color:var(--primary);text-decoration:none;border-radius:8px;font-weight:600;transition:var(--transition);">' +
+        m.title +
+        (m.count > 1 ? ' <span style="font-size:12px;color:var(--text-light);font-weight:400;">(' + m.count + ' \u05d0\u05d6\u05db\u05d5\u05e8\u05d9\u05dd)</span>' : '') +
+        '</a>'
+      ).join('') +
+      '</div>';
+    resultsDiv.style.display = 'block';
+  } else if (matches.length === sections.length) {
+    resultsDiv.style.display = 'none';
+  } else {
+    resultsDiv.innerHTML = '<div style="background:var(--card);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);"><p style="font-size:14px;color:var(--text-light);">\u05dc\u05d0 \u05e0\u05de\u05e6\u05d0\u05d5 \u05ea\u05d5\u05e6\u05d0\u05d5\u05ea. \u05e0\u05e1\u05d5 \u05de\u05d9\u05dc\u05d4 \u05d0\u05d7\u05e8\u05ea.</p></div>';
+    resultsDiv.style.display = 'block';
+  }
+}
+
+function clearSearch() {
+  const input = document.getElementById('portalSearch');
+  input.value = '';
+  input.focus();
+  searchPortal('');
+}
+</script>
+
+</body>
+</html>

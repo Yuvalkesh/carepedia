@@ -1,0 +1,1313 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Breast Cancer Hub | CarePedia Information Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="alternate" hreflang="he" href="https://carepedia.org/breast-cancer" />
+<link rel="alternate" hreflang="en" href="https://carepedia.org/en/breast-cancer" />
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --primary: #0f4c75;
+  --primary-light: #3282b8;
+  --accent: #00b894;
+  --accent-light: #55efc4;
+  --warm: #fdcb6e;
+  --warm-dark: #e17055;
+  --bg: #f0f4f8;
+  --card: #ffffff;
+  --text: #2c3e50;
+  --text-light: #5d6d7e;
+  --shadow: 0 4px 20px rgba(0,0,0,0.08);
+  --shadow-hover: 0 12px 40px rgba(0,0,0,0.18);
+  --radius: 16px;
+  --transition: all 0.3s cubic-bezier(.4,0,.2,1);
+  --forest: #0f4c75;
+  --forest-mid: #3282b8;
+  --forest-light: rgba(50,130,184,0.12);
+  --amber: #fdcb6e;
+  --amber-light: rgba(253,203,110,0.12);
+  --border: #dde4eb;
+}
+
+body {
+  font-family: 'Rubik', 'Segoe UI', Tahoma, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.8;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background:
+    radial-gradient(ellipse at 10% 20%, rgba(15,76,117,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 80%, rgba(0,184,148,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(253,203,110,0.05) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.scroll-progress {
+  position: fixed;
+  top: 0; right: 0;
+  width: 100%; height: 4px;
+  z-index: 2000;
+  background: transparent;
+}
+.scroll-progress .bar {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--primary-light), var(--warm));
+  border-radius: 0 0 0 4px;
+  transition: width 0.1s linear;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 280px; height: 100vh;
+  background: rgba(15,76,117,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(255,255,255,0.1);
+  z-index: 1000;
+  padding: 30px 20px;
+  overflow-y: auto;
+  transition: transform 0.4s cubic-bezier(.4,0,.2,1);
+}
+.sidebar .logo {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+.sidebar .logo .icon { font-size: 48px; }
+.sidebar .logo h2 { color: #fff; font-size: 18px; margin-top: 8px; font-weight: 600; }
+.sidebar nav a {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 18px; color: rgba(255,255,255,0.8);
+  text-decoration: none; border-radius: 12px;
+  margin-bottom: 4px; font-size: 15px; transition: var(--transition);
+}
+.sidebar nav a:hover, .sidebar nav a.active {
+  background: rgba(255,255,255,0.15); color: #fff; transform: translateX(4px);
+}
+.sidebar nav a .nav-icon { font-size: 22px; min-width: 30px; text-align: center; }
+
+.menu-toggle {
+  display: none;
+  position: fixed;
+  top: 20px; left: 20px;
+  z-index: 1100;
+  background: var(--primary); color: #fff;
+  border: none; border-radius: 12px;
+  width: 50px; height: 50px; font-size: 24px;
+  cursor: pointer; box-shadow: var(--shadow); transition: var(--transition);
+}
+.menu-toggle:hover { transform: scale(1.05); }
+.menu-toggle.open { border-radius: 50%; background: var(--warm-dark); }
+
+.main {
+  margin-left: 280px;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--primary) 0%, #3282b8 40%, var(--accent) 100%);
+  padding: 80px 60px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%);
+  animation: float 20s linear infinite;
+}
+@keyframes float { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+.hero-content { position: relative; z-index: 1; max-width: 900px; }
+.hero h1 { font-size: 52px; font-weight: 800; margin-bottom: 10px; line-height: 1.3; }
+.hero .greeting { font-size: 22px; opacity: 0.95; margin-bottom: 30px; line-height: 1.7; }
+.hero .subtitle { font-size: 18px; opacity: 0.8; max-width: 700px; }
+
+.fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+.section { padding: 60px; max-width: 1100px; margin: 0 auto; }
+.section-header {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 40px; padding-bottom: 20px;
+  border-bottom: 3px solid var(--primary-light);
+}
+.section-header .sec-icon { font-size: 42px; }
+.section-header h2 { font-size: 36px; color: var(--primary); }
+.section-header p { color: var(--text-light); font-size: 16px; margin-top: 4px; }
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px; margin-bottom: 40px;
+}
+.card {
+  background: var(--card); border-radius: var(--radius); padding: 30px;
+  box-shadow: var(--shadow); transition: var(--transition);
+  border-top: 4px solid var(--primary-light);
+  position: relative; overflow: hidden;
+}
+.card:hover { transform: translateY(-6px) scale(1.01); box-shadow: var(--shadow-hover); }
+.card .card-icon { font-size: 40px; margin-bottom: 16px; }
+.card h3 { font-size: 20px; color: var(--primary); margin-bottom: 12px; }
+.card p { color: var(--text-light); font-size: 15px; line-height: 1.8; }
+.card.green { border-top-color: var(--accent); }
+.card.orange { border-top-color: var(--warm); }
+.card.blue { border-top-color: var(--primary-light); }
+
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px; margin-top: 40px;
+}
+.cat-card {
+  background: var(--card); border-radius: var(--radius); padding: 30px 24px;
+  text-align: center; cursor: pointer; transition: var(--transition);
+  box-shadow: var(--shadow); text-decoration: none; color: var(--text);
+}
+.cat-card:hover { transform: translateY(-6px) scale(1.02); box-shadow: var(--shadow-hover); }
+.cat-card .cat-icon { font-size: 48px; margin-bottom: 14px; }
+.cat-card h3 { font-size: 18px; color: var(--primary); margin-bottom: 8px; }
+.cat-card p { font-size: 13px; color: var(--text-light); }
+
+.accordion { margin-bottom: 16px; }
+.accordion-header {
+  background: var(--card); padding: 20px 24px; border-radius: var(--radius);
+  cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+  box-shadow: var(--shadow); transition: var(--transition);
+  font-size: 17px; font-weight: 600; color: var(--primary);
+}
+.accordion-header:hover { background: #eef4fb; }
+.accordion-header .arrow { transition: transform 0.3s ease; font-size: 20px; }
+.accordion-header.open .arrow { transform: rotate(180deg); }
+.accordion-body {
+  max-height: 0; overflow: clip; transition: max-height 0.4s ease;
+  background: var(--card); border-radius: 0 0 var(--radius) var(--radius); margin-top: -8px;
+}
+.accordion-body .inner { padding: 20px 24px 24px; color: var(--text-light); line-height: 2; }
+
+.tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+.tab-btn {
+  padding: 12px 24px; background: var(--card);
+  border: 2px solid #dde4eb; border-radius: 30px;
+  cursor: pointer; font-size: 15px; font-family: inherit;
+  color: var(--text-light); transition: var(--transition);
+}
+.tab-btn:hover { border-color: var(--primary-light); color: var(--primary); }
+.tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.tab-content { display: none; animation: fadeIn 0.4s ease; }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.info-box {
+  background: linear-gradient(135deg, #eaf4fb 0%, #e8f8f0 100%);
+  border-radius: var(--radius); padding: 24px 28px; margin: 24px 0;
+  border-left: 5px solid var(--primary-light);
+}
+.info-box.warning { background: linear-gradient(135deg, #fef9e7 0%, #fdebd0 100%); border-left-color: var(--warm); }
+.info-box.success { background: linear-gradient(135deg, #e8f8f0 0%, #d5f5e3 100%); border-left-color: var(--accent); }
+.info-box h4 { color: var(--primary); margin-bottom: 8px; font-size: 17px; }
+.info-box p { color: var(--text-light); font-size: 15px; }
+
+.link-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 24px; background: var(--primary);
+  color: #fff; text-decoration: none; border-radius: 30px;
+  font-size: 15px; transition: var(--transition); margin: 6px;
+}
+.link-btn:hover { background: var(--primary-light); transform: translateY(-2px); }
+.link-btn.green { background: var(--accent); }
+.link-btn.green:hover { background: var(--accent-light); color: var(--text); }
+.link-btn.orange { background: var(--warm-dark); }
+.link-btn.orange:hover { background: var(--warm); color: var(--text); }
+
+.styled-table {
+  width: 100%; border-collapse: collapse; margin: 20px 0;
+  background: var(--card); border-radius: var(--radius);
+  overflow: hidden; box-shadow: var(--shadow);
+}
+.styled-table thead { background: var(--primary); color: #fff; }
+.styled-table th { padding: 16px 20px; text-align: left; font-weight: 600; }
+.styled-table td { padding: 14px 20px; border-bottom: 1px solid #eee; }
+.styled-table tbody tr:hover { background: #f7fafc; }
+
+.timeline { position: relative; padding-left: 40px; margin: 30px 0; }
+.timeline::before {
+  content: '';
+  position: absolute; left: 12px; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--primary-light), var(--accent));
+  border-radius: 3px;
+}
+.timeline-item {
+  position: relative; margin-bottom: 30px; padding: 24px;
+  background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);
+}
+.timeline-item::before {
+  content: ''; position: absolute;
+  left: -34px; top: 30px;
+  width: 16px; height: 16px;
+  background: var(--accent); border-radius: 50%; border: 3px solid var(--bg);
+}
+.timeline-item h4 { color: var(--primary); font-size: 18px; margin-bottom: 8px; }
+.timeline-item p { color: var(--text-light); }
+.timeline-item .time-label {
+  display: inline-block; background: var(--primary); color: #fff;
+  padding: 4px 14px; border-radius: 20px; font-size: 13px; margin-bottom: 10px;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px; margin: 30px 0;
+}
+.stat-box {
+  background: linear-gradient(135deg, var(--card) 0%, #f7fafc 100%);
+  border-radius: var(--radius); padding: 24px; text-align: center;
+  box-shadow: var(--shadow); border-bottom: 3px solid var(--primary-light);
+  transition: var(--transition);
+}
+.stat-box:nth-child(2) { border-bottom-color: var(--accent); }
+.stat-box:nth-child(3) { border-bottom-color: var(--warm); }
+.stat-box:nth-child(4) { border-bottom-color: var(--warm-dark); }
+.stat-box:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+.stat-box .stat-num {
+  font-size: 36px; font-weight: 800;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.stat-box .stat-label { color: var(--text-light); font-size: 14px; margin-top: 6px; }
+
+.credit-bar {
+  display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap;
+  padding: 14px 20px; font-size: 14px; color: rgba(255,255,255,0.85); position: relative; z-index: 1;
+}
+.credit-bar span { opacity: 0.9; }
+.portal-request-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 22px; background: var(--primary-light); color: #fff;
+  text-decoration: none; border-radius: 30px; font-size: 14px;
+  font-family: inherit; font-weight: 600; transition: var(--transition);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+.portal-request-btn:hover { background: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+
+.footer {
+  background: var(--primary); color: rgba(255,255,255,0.8);
+  text-align: center; padding: 40px; font-size: 14px;
+}
+
+.scroll-top {
+  position: fixed; bottom: 30px; left: 30px;
+  width: 50px; height: 50px; background: var(--primary);
+  color: #fff; border: none; border-radius: 50%;
+  font-size: 22px; cursor: pointer; box-shadow: var(--shadow);
+  transition: var(--transition); opacity: 0; pointer-events: none; z-index: 999;
+}
+.scroll-top.visible { opacity: 1; pointer-events: auto; }
+.scroll-top:hover { background: var(--primary-light); transform: translateY(-3px); }
+
+.search-box { position: relative; margin: 0 auto; }
+.search-box input {
+  width: 100%; padding: 14px 20px 14px 50px;
+  border: 2px solid rgba(15,76,117,0.15); border-radius: 30px;
+  font-size: 16px; font-family: 'Rubik', sans-serif;
+  background: var(--card); color: var(--text); transition: var(--transition);
+  box-sizing: border-box;
+}
+.search-box input:focus { outline: none; border-color: var(--primary-light); box-shadow: 0 0 0 4px rgba(50,130,184,0.1); }
+.search-box .search-icon {
+  position: absolute; left: 18px; top: 50%;
+  transform: translateY(-50%); font-size: 20px; pointer-events: none;
+}
+
+.sidebar-overlay {
+  display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5); z-index: 999; opacity: 0; transition: opacity 0.3s ease;
+}
+.sidebar-overlay.active { display: block; opacity: 1; }
+
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); width: 270px; }
+  .sidebar.open { transform: translateX(0); }
+  .menu-toggle { display: block; }
+  .main { margin-left: 0; }
+  .hero { padding: 60px 30px; }
+  .section { padding: 40px 24px; }
+}
+
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); width: 260px; }
+  .sidebar.open { transform: translateX(0); }
+  .menu-toggle { display: block; }
+  .main { margin-left: 0; }
+  .hero { padding: 40px 20px 36px; }
+  .hero h1 { font-size: 28px; line-height: 1.3; }
+  .hero .greeting { font-size: 16px; line-height: 1.7; }
+  .hero .subtitle { font-size: 14px; }
+  .section { padding: 28px 16px; }
+  .section-header { flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 24px; padding-bottom: 14px; }
+  .section-header .sec-icon { font-size: 32px; }
+  .section-header h2 { font-size: 24px; }
+  .section-header p { font-size: 14px; }
+  .cards-grid { grid-template-columns: 1fr; gap: 16px; margin-bottom: 24px; }
+  .card { padding: 20px; }
+  .card:hover { transform: none; }
+  .cat-card:hover { transform: none; }
+  .stat-box:hover { transform: none; }
+  .link-btn:hover { transform: none; }
+  .portal-request-btn:hover { transform: none; }
+  .scroll-top:hover { transform: none; }
+  .sidebar nav a:hover { transform: none; }
+  .card .card-icon { font-size: 32px; margin-bottom: 10px; }
+  .card h3 { font-size: 17px; }
+  .card p { font-size: 14px; }
+  .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 24px; }
+  .cat-card { padding: 18px 12px; }
+  .cat-card .cat-icon { font-size: 32px; margin-bottom: 8px; }
+  .cat-card h3 { font-size: 14px; }
+  .cat-card p { font-size: 11px; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 20px 0; }
+  .stat-box { padding: 16px 10px; }
+  .stat-box .stat-num { font-size: 26px; }
+  .stat-box .stat-label { font-size: 12px; }
+  .tabs { gap: 6px; margin-bottom: 16px; }
+  .tab-btn { padding: 8px 14px; font-size: 13px; border-radius: 20px; }
+  .styled-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 13px; }
+  .styled-table th { padding: 10px 12px; font-size: 13px; white-space: nowrap; }
+  .styled-table td { padding: 10px 12px; font-size: 13px; min-width: 100px; }
+  .info-box { padding: 16px 18px; margin: 16px 0; }
+  .info-box h4 { font-size: 15px; }
+  .info-box p { font-size: 13px; }
+  .accordion-header { padding: 14px 16px; font-size: 15px; }
+  .accordion-body .inner { padding: 14px 16px 18px; font-size: 14px; line-height: 1.9; }
+  .timeline { padding-left: 30px; margin: 20px 0; }
+  .timeline-item { padding: 16px; margin-bottom: 20px; }
+  .timeline-item::before { left: -24px; width: 12px; height: 12px; top: 22px; }
+  .timeline-item h4 { font-size: 16px; }
+  .timeline-item p { font-size: 13px; }
+  .link-btn { padding: 10px 16px; font-size: 13px; margin: 4px 2px; }
+  .search-box input { padding: 12px 18px 12px 40px; font-size: 14px; }
+  .footer { padding: 28px 16px; font-size: 13px; }
+  .scroll-top { width: 42px; height: 42px; font-size: 18px; bottom: 20px; left: 16px; }
+}
+
+@media (max-width: 380px) {
+  .hero h1 { font-size: 24px; }
+  .hero .greeting { font-size: 15px; }
+  .cat-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .cat-card { padding: 14px 8px; }
+  .cat-card .cat-icon { font-size: 26px; }
+  .cat-card h3 { font-size: 13px; }
+  .cat-card p { display: none; }
+  .stats-row { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .stat-box .stat-num { font-size: 22px; }
+  .section { padding: 20px 12px; }
+  .tab-btn { padding: 7px 10px; font-size: 12px; }
+}
+
+.disclaimer-banner {
+  background: linear-gradient(135deg, #FFF3E0, #FFF8E1);
+  border-bottom: 2px solid #FFB74D;
+  padding: 10px 20px; text-align: center; font-size: 13px; color: #5D4037;
+  position: relative; z-index: 1500;
+  display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;
+}
+.disclaimer-banner strong { color: #E65100; }
+.disclaimer-banner a { color: #1A73E8; text-decoration: underline; font-weight: 600; }
+.disclaimer-banner a:hover { color: #0D47A1; }
+@media (max-width: 768px) { .disclaimer-banner { font-size: 12px; padding: 8px 12px; } }
+</style>
+<script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js" defer></script>
+</head>
+<body>
+
+<!-- DISCLAIMER BANNER -->
+<div class="disclaimer-banner">
+  <iconify-icon icon="solar:danger-bold" style="font-size:16px;color:var(--forest);"></iconify-icon>
+  <span><strong>This is not medical advice.</strong> Always consult your doctor. <a href="/disclaimer">Full legal disclaimer &rarr;</a></span>
+</div>
+
+<!-- SCROLL PROGRESS BAR -->
+<div class="scroll-progress"><div class="bar" id="progressBar"></div></div>
+
+<!-- MOBILE OVERLAY -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeMenu()"></div>
+
+<!-- MOBILE MENU TOGGLE -->
+<button class="menu-toggle" id="menuToggle" onclick="toggleMenu()"><iconify-icon icon="solar:hamburger-menu-bold"></iconify-icon></button>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="logo">
+    <div class="icon"><iconify-icon icon="solar:heart-bold-duotone" style="font-size:44px;color:var(--amber);display:block;"></iconify-icon></div>
+    <h2>Breast Cancer Hub</h2>
+  </div>
+  <nav>
+    <a href="#home" class="active" onclick="navigate(this)"><iconify-icon icon="solar:home-bold" class="nav-icon" style="font-size:20px;"></iconify-icon>Home</a>
+    <a href="#about" onclick="navigate(this)"><iconify-icon icon="solar:book-2-bold" class="nav-icon" style="font-size:20px;"></iconify-icon>What is Breast Cancer?</a>
+    <a href="#screening" onclick="navigate(this)"><iconify-icon icon="solar:magnifier-zoom-bold" class="nav-icon" style="font-size:20px;"></iconify-icon>Early Detection</a>
+    <a href="#treatments" onclick="navigate(this)"><iconify-icon icon="solar:pill-bold" class="nav-icon" style="font-size:20px;"></iconify-icon>Treatments &amp; Medications</a>
+    <a href="#trials" onclick="navigate(this)"><iconify-icon icon="solar:test-tube-bold" class="nav-icon" style="font-size:20px;"></iconify-icon>Clinical Trials</a>
+    <a href="#research" onclick="navigate(this)"><iconify-icon icon="solar:dna-bold" class="nav-icon" style="font-size:20px;"></iconify-icon>New Research</a>
+    <a href="#brca" onclick="navigate(this)"><iconify-icon icon="solar:atom-bold" class="nav-icon" style="font-size:20px;"></iconify-icon>BRCA &amp; Genetics</a>
+    <a href="#fertility" onclick="navigate(this)"><iconify-icon icon="solar:health-bold" class="nav-icon" style="font-size:20px;"></iconify-icon>Fertility &amp; Pregnancy</a>
+    <a href="#life" onclick="navigate(this)"><iconify-icon icon="solar:dumbbell-bold" class="nav-icon" style="font-size:20px;"></iconify-icon>Living with Breast Cancer</a>
+    <a href="#stories" onclick="navigate(this)"><iconify-icon icon="solar:star-bold" class="nav-icon" style="font-size:20px;"></iconify-icon>Success Stories</a>
+    <a href="#resources" onclick="navigate(this)"><iconify-icon icon="solar:link-bold" class="nav-icon" style="font-size:20px;"></iconify-icon>Links &amp; Resources</a>
+  </nav>
+</aside>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="credit-bar">
+      <span>Built by <strong>Yuval Kashtker</strong> and his robot assistants</span>
+      <a href="https://carepedia.org/en/#contact" target="_blank" class="portal-request-btn">
+        ➕ Want a portal for another disease?
+      </a>
+    </div>
+    <div class="hero-content">
+      <h1>Breast Cancer Information Center</h1>
+      <p class="greeting">
+        One place with in-depth information, up-to-date research, and practical tools<br>
+        for women facing breast cancer and their families.
+      </p>
+      <p class="subtitle">
+        Survival rates improve every year. Here you will find information on treatments, clinical trials, genetic testing, and international resources.
+      </p>
+      <div class="search-box" style="margin-top: 30px; max-width: 600px;">
+        <span class="search-icon"><iconify-icon icon="solar:magnifier-bold" style="font-size:18px;color:rgba(255,255,255,0.6);"></iconify-icon></span>
+        <input type="text" id="portalSearch" placeholder="Search the portal..." oninput="searchPortal(this.value)">
+      </div>
+      <div id="searchResults" style="display:none; margin-top: 16px; max-width: 600px;"></div>
+    </div>
+  </section>
+
+  <!-- QUICK NAVIGATION -->
+  <section class="section fade-in" style="padding-bottom: 20px;">
+    <div class="cat-grid">
+      <a class="cat-card" href="#about" onclick="navigateTo('about')">
+        <div class="cat-icon"><iconify-icon icon="solar:book-2-bold" style="font-size:40px;color:var(--forest);"></iconify-icon></div>
+        <h3>What is Breast Cancer?</h3>
+        <p>Types, symptoms and diagnosis</p>
+      </a>
+      <a class="cat-card" href="#screening" onclick="navigateTo('screening')">
+        <div class="cat-icon"><iconify-icon icon="solar:magnifier-zoom-bold" style="font-size:40px;color:var(--forest);"></iconify-icon></div>
+        <h3>Early Detection</h3>
+        <p>Mammography, self-exam and screening</p>
+      </a>
+      <a class="cat-card" href="#treatments" onclick="navigateTo('treatments')">
+        <div class="cat-icon"><iconify-icon icon="solar:pill-bold" style="font-size:40px;color:var(--forest);"></iconify-icon></div>
+        <h3>Treatments &amp; Medications</h3>
+        <p>Chemotherapy, hormone, biological</p>
+      </a>
+      <a class="cat-card" href="#trials" onclick="navigateTo('trials')">
+        <div class="cat-icon"><iconify-icon icon="solar:test-tube-bold" style="font-size:40px;color:var(--forest);"></iconify-icon></div>
+        <h3>Clinical Trials</h3>
+        <p>Active research worldwide</p>
+      </a>
+      <a class="cat-card" href="#research" onclick="navigateTo('research')">
+        <div class="cat-icon"><iconify-icon icon="solar:dna-bold" style="font-size:40px;color:var(--forest);"></iconify-icon></div>
+        <h3>New Research</h3>
+        <p>Breakthroughs and discoveries 2025</p>
+      </a>
+      <a class="cat-card" href="#brca" onclick="navigateTo('brca')">
+        <div class="cat-icon"><iconify-icon icon="solar:atom-bold" style="font-size:40px;color:var(--forest);"></iconify-icon></div>
+        <h3>BRCA &amp; Genetics</h3>
+        <p>Mutations, testing and prevention</p>
+      </a>
+      <a class="cat-card" href="#fertility" onclick="navigateTo('fertility')">
+        <div class="cat-icon"><iconify-icon icon="solar:health-bold" style="font-size:40px;color:var(--forest);"></iconify-icon></div>
+        <h3>Fertility &amp; Pregnancy</h3>
+        <p>Fertility preservation and treatment during pregnancy</p>
+      </a>
+      <a class="cat-card" href="#life" onclick="navigateTo('life')">
+        <div class="cat-icon"><iconify-icon icon="solar:dumbbell-bold" style="font-size:40px;color:var(--forest);"></iconify-icon></div>
+        <h3>Living with Breast Cancer</h3>
+        <p>Rehabilitation, mental support and nutrition</p>
+      </a>
+      <a class="cat-card" href="#stories" onclick="navigateTo('stories')">
+        <div class="cat-icon"><iconify-icon icon="solar:star-bold" style="font-size:40px;color:var(--forest);"></iconify-icon></div>
+        <h3>Success Stories</h3>
+        <p>Women who have triumphed and inspire</p>
+      </a>
+      <a class="cat-card" href="#resources" onclick="navigateTo('resources')">
+        <div class="cat-icon"><iconify-icon icon="solar:link-bold" style="font-size:40px;color:var(--forest);"></iconify-icon></div>
+        <h3>Links &amp; Resources</h3>
+        <p>Organizations, centers and rights</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- SECTION: ABOUT -->
+  <section class="section fade-in" id="about">
+    <div class="section-header">
+      <span class="sec-icon"><iconify-icon icon="solar:book-2-bold" style="font-size:40px;color:var(--forest);"></iconify-icon></span>
+      <div>
+        <h2>What is Breast Cancer?</h2>
+        <p>Types, risk factors, symptoms and diagnosis</p>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-num">2.3M</div>
+        <div class="stat-label">New cases worldwide each year</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">1 in 8</div>
+        <div class="stat-label">Women affected over a lifetime</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">91%</div>
+        <div class="stat-label">5-year survival rate (stage I–II)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">685K</div>
+        <div class="stat-label">Deaths globally per year (WHO 2022)</div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>What happens in the body?</h4>
+      <p>Breast cancer begins when cells in the breast grow out of control, forming a tumor. Most breast cancers start in the ducts (ductal carcinoma) or lobules (lobular carcinoma). Cancers can be <strong>in situ</strong> (confined, such as DCIS) or <strong>invasive</strong>, meaning they have spread into surrounding tissue. With early detection and modern treatment, the prognosis is excellent for most types. Breast cancer is the most common cancer in women worldwide (WHO, 2022).</p>
+    </div>
+
+    <h3 style="font-size: 24px; color: var(--primary); margin: 30px 0 20px;">Main Types of Breast Cancer</h3>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon"><iconify-icon icon="solar:drop-bold" style="font-size:36px;color:var(--forest);"></iconify-icon></div>
+        <h3>Invasive Ductal Carcinoma (IDC)</h3>
+        <p>The most common type, accounting for about 80% of invasive breast cancers. Starts in the milk ducts and grows into surrounding breast tissue. Treatment depends on receptor status (ER, PR, HER2).</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon"><iconify-icon icon="solar:circle-bold" style="font-size:36px;color:var(--forest);"></iconify-icon></div>
+        <h3>Invasive Lobular Carcinoma (ILC)</h3>
+        <p>The second most common type (10–15%). Starts in the lobules that produce milk. Often harder to detect on mammography. Associated with bilateral disease in some cases.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon"><iconify-icon icon="solar:shield-bold" style="font-size:36px;color:var(--forest);"></iconify-icon></div>
+        <h3>DCIS (Ductal Carcinoma In Situ)</h3>
+        <p>Non-invasive, stage 0. Cancer cells are confined within the ducts. Highly treatable. Represents about 20% of newly diagnosed breast cancers. Treatment prevents progression to invasive disease.</p>
+      </div>
+      <div class="card blue">
+        <div class="card-icon"><iconify-icon icon="solar:alarm-bold" style="font-size:36px;color:var(--forest);"></iconify-icon></div>
+        <h3>Triple-Negative Breast Cancer (TNBC)</h3>
+        <p>About 15% of cases. Lacks ER, PR and HER2 receptors. More aggressive, more common in younger women and those with BRCA1 mutations. Immunotherapy and PARP inhibitors are now important treatment options.</p>
+      </div>
+    </div>
+
+    <h3 style="font-size: 24px; color: var(--primary); margin: 30px 0 20px;">Risk Factors and Symptoms</h3>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">⚠️</div>
+        <h3>Key Risk Factors</h3>
+        <p>Female sex and increasing age are the greatest risk factors. Others include: BRCA1/2 mutations, family history, dense breast tissue, hormone replacement therapy, alcohol consumption, obesity, and late first pregnancy. About 5–10% of cases are hereditary.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">🩺</div>
+        <h3>Warning Signs</h3>
+        <p>A new lump in the breast or armpit; change in breast size, shape or appearance; skin dimpling or puckering; nipple discharge (not breast milk); inverted nipple; redness, scaling or flaking of the nipple or breast skin. Many early cancers cause no symptoms — this is why screening is essential.</p>
+      </div>
+    </div>
+
+    <div class="info-box success">
+      <h4>Survival Rates Are Rising</h4>
+      <p>Global 5-year survival rates for breast cancer have improved dramatically over the past three decades thanks to early detection programs and advances in treatment. Localized (stage I) breast cancer has a 5-year survival rate approaching 99% in high-income countries. Even for stage IV (metastatic) disease, new targeted therapies are extending lives significantly. Research is moving faster than ever.</p>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>How is breast cancer diagnosed?</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <div class="inner">
+          <p>Diagnosis involves a combination of imaging and tissue sampling:</p>
+          <ul style="padding-left: 20px; margin-top: 10px;">
+            <li><strong>Mammography:</strong> The standard screening tool. Digital and 3D (tomosynthesis) mammography detect cancers missed by traditional methods.</li>
+            <li><strong>Ultrasound:</strong> Used to evaluate lumps, especially in younger women or those with dense breast tissue.</li>
+            <li><strong>MRI:</strong> Recommended for high-risk women (BRCA carriers), staging, and evaluating extent of disease.</li>
+            <li><strong>Biopsy:</strong> Core needle biopsy provides tissue for pathological analysis — the definitive way to diagnose breast cancer and determine receptor status.</li>
+            <li><strong>Genomic testing:</strong> Tests like Oncotype DX, MammaPrint, and Prosigna predict recurrence risk and guide chemotherapy decisions.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: SCREENING -->
+  <section class="section fade-in" id="screening">
+    <div class="section-header">
+      <span class="sec-icon"><iconify-icon icon="solar:magnifier-zoom-bold" style="font-size:40px;color:var(--forest);"></iconify-icon></span>
+      <div>
+        <h2>Early Detection &amp; Screening</h2>
+        <p>Mammography, self-examination and guidelines</p>
+      </div>
+    </div>
+
+    <div class="info-box success">
+      <h4>Early Detection Saves Lives</h4>
+      <p>When breast cancer is detected at an early stage, survival rates are dramatically better. Mammography screening programs have been shown to reduce breast cancer mortality by 20–40%. Regular screening is the single most effective tool for catching breast cancer while it is still highly treatable.</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon"><iconify-icon icon="solar:document-bold" style="font-size:36px;color:var(--forest);"></iconify-icon></div>
+        <h3>Mammography Screening Guidelines</h3>
+        <p>Most international guidelines recommend annual or biennial mammography screening for average-risk women starting at age 40–50. The WHO recommends mammography screening every 2 years for women aged 50–69. Women at high risk (BRCA carriers, strong family history) should begin screening earlier and may also have annual MRI.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon"><iconify-icon icon="solar:hand-heart-bold" style="font-size:36px;color:var(--forest);"></iconify-icon></div>
+        <h3>Breast Self-Examination (BSE)</h3>
+        <p>Monthly self-examination helps women become familiar with the normal look and feel of their breasts so they can notice changes quickly. While BSE alone is not sufficient for screening, it is an important complement to regular clinical examinations and mammography.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon"><iconify-icon icon="solar:stethoscope-bold" style="font-size:36px;color:var(--forest);"></iconify-icon></div>
+        <h3>Clinical Breast Exam</h3>
+        <p>A physical examination by a healthcare provider who checks for lumps and other changes. Recommended every 1–3 years for women in their 20s and 30s, and annually from age 40 onwards. Important in regions where mammography access is limited.</p>
+      </div>
+      <div class="card blue">
+        <div class="card-icon"><iconify-icon icon="solar:atom-bold" style="font-size:36px;color:var(--forest);"></iconify-icon></div>
+        <h3>Dense Breast Tissue</h3>
+        <p>About 40% of women have dense breasts, which makes cancers harder to see on mammography and increases breast cancer risk. Supplemental screening with ultrasound or MRI may be recommended. Ask your doctor about your breast density classification after mammography.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: TREATMENTS -->
+  <section class="section fade-in" id="treatments">
+    <div class="section-header">
+      <span class="sec-icon"><iconify-icon icon="solar:pill-bold" style="font-size:40px;color:var(--forest);"></iconify-icon></span>
+      <div>
+        <h2>Treatments &amp; Medications</h2>
+        <p>Approved therapies, new treatments and what to ask your oncologist</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>Multidisciplinary Approach</h4>
+      <p>Modern breast cancer treatment involves a team of specialists: surgeon, medical oncologist, radiation oncologist, pathologist, radiologist, and specialist nurses. Treatment is tailored to the individual based on tumor type, stage, receptor status, and the patient's overall health and preferences. The goal is to maximize cure while minimizing side effects.</p>
+    </div>
+
+    <div class="tabs" data-tab-group="treatments">
+      <button class="tab-btn active" data-tab="surgery" onclick="switchTab('treatments','surgery')">Surgery</button>
+      <button class="tab-btn" data-tab="systemic" onclick="switchTab('treatments','systemic')">Systemic Therapy</button>
+      <button class="tab-btn" data-tab="targeted" onclick="switchTab('treatments','targeted')">Targeted Therapy</button>
+      <button class="tab-btn" data-tab="immunotherapy" onclick="switchTab('treatments','immunotherapy')">Immunotherapy</button>
+    </div>
+
+    <!-- Tab: Surgery -->
+    <div class="tab-content active" data-tab-content="treatments" data-tab="surgery">
+      <div class="cards-grid">
+        <div class="card green">
+          <div class="card-icon"><iconify-icon icon="solar:shield-bold" style="font-size:36px;color:var(--forest);"></iconify-icon></div>
+          <h3>Lumpectomy (Breast-Conserving Surgery)</h3>
+          <p>Removes the tumor and a margin of surrounding tissue while preserving the breast. Combined with radiation therapy. Outcomes are equivalent to mastectomy for most early-stage cancers. Preferred by many women for quality of life reasons.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🏥</div>
+          <h3>Mastectomy</h3>
+          <p>Complete removal of the breast. Options include simple mastectomy (breast tissue only), modified radical mastectomy (breast + axillary lymph nodes), and nipple-sparing mastectomy. Reconstruction can be performed immediately or delayed. May be chosen for larger tumors, BRCA carriers, or patient preference.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon"><iconify-icon icon="solar:magnifier-zoom-bold" style="font-size:36px;color:var(--forest);"></iconify-icon></div>
+          <h3>Sentinel Lymph Node Biopsy</h3>
+          <p>Maps and removes the first lymph node(s) draining the tumor. If the sentinel node is cancer-free, further lymph node removal may be avoided, reducing the risk of lymphedema. Standard of care for clinically node-negative early breast cancer.</p>
+        </div>
+        <div class="card blue">
+          <div class="card-icon"><iconify-icon icon="solar:health-bold" style="font-size:36px;color:var(--forest);"></iconify-icon></div>
+          <h3>Breast Reconstruction</h3>
+          <p>Options include implant-based reconstruction, tissue flap reconstruction (TRAM, DIEP, latissimus dorsi), and oncoplastic surgery techniques. Reconstruction is a deeply personal decision. Discuss all options with a plastic surgeon before any breast surgery.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: Systemic Therapy -->
+    <div class="tab-content" data-tab-content="treatments" data-tab="systemic">
+      <table class="styled-table">
+        <thead>
+          <tr><th>Therapy</th><th>When Used</th><th>Key Drugs</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Hormone Therapy</strong></td>
+            <td>ER+ and/or PR+ cancers (~70% of cases)</td>
+            <td>Tamoxifen, Letrozole, Anastrozole, Exemestane, Fulvestrant</td>
+            <td>Taken for 5–10 years. Dramatically reduces recurrence risk. CDK4/6 inhibitors (Palbociclib, Ribociclib, Abemaciclib) are added for metastatic or high-risk disease.</td>
+          </tr>
+          <tr>
+            <td><strong>Chemotherapy</strong></td>
+            <td>Triple-negative, HER2+, high-risk, or locally advanced</td>
+            <td>AC, Taxanes (Paclitaxel, Docetaxel), Carboplatin, Capecitabine</td>
+            <td>Often given before surgery (neoadjuvant) to shrink tumors. Genomic tests (Oncotype DX, MammaPrint) can identify patients who can safely skip chemotherapy.</td>
+          </tr>
+          <tr>
+            <td><strong>PARP Inhibitors</strong></td>
+            <td>BRCA1/2 mutation, HER2-, metastatic</td>
+            <td>Olaparib (Lynparza), Talazoparib (Talzenna)</td>
+            <td>Approved for BRCA-mutated metastatic breast cancer. Oral tablets. Significantly improves progression-free survival.</td>
+          </tr>
+          <tr>
+            <td><strong>Antibody-Drug Conjugates</strong></td>
+            <td>HER2+, HER2-low, TNBC</td>
+            <td>T-DM1 (Kadcyla), T-DXd (Enhertu), Sacituzumab govitecan (Trodelvy)</td>
+            <td>Deliver chemotherapy directly to cancer cells via a targeted antibody. Revolutionary results in HER2-low disease. Changing treatment for metastatic TNBC.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Tab: Targeted Therapy -->
+    <div class="tab-content" data-tab-content="treatments" data-tab="targeted">
+      <div class="cards-grid">
+        <div class="card green">
+          <div class="card-icon"><iconify-icon icon="solar:dna-bold" style="font-size:36px;color:var(--forest);"></iconify-icon></div>
+          <h3>HER2-Targeted Therapy</h3>
+          <p>HER2+ cancers (~20% of cases) are treated with: <strong>Trastuzumab (Herceptin)</strong> — monoclonal antibody, backbone of HER2+ treatment; <strong>Pertuzumab (Perjeta)</strong> — added for HER2+ neoadjuvant/metastatic; <strong>Lapatinib, Neratinib, Tucatinib</strong> — small molecule HER2 inhibitors. Dual HER2 blockade (pertuzumab + trastuzumab) has transformed outcomes.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon"><iconify-icon icon="solar:pill-bold" style="font-size:36px;color:var(--forest);"></iconify-icon></div>
+          <h3>CDK4/6 Inhibitors</h3>
+          <p>Game-changing for HR+/HER2- metastatic breast cancer. <strong>Palbociclib (Ibrance)</strong>, <strong>Ribociclib (Kisqali)</strong>, <strong>Abemaciclib (Verzenio)</strong> — added to hormone therapy. Also approved as adjuvant therapy (Abemaciclib: Monarch E trial) for high-risk early breast cancer. Have significantly extended progression-free and overall survival.</p>
+        </div>
+        <div class="card blue">
+          <div class="card-icon">🎯</div>
+          <h3>PI3K/AKT/mTOR Pathway</h3>
+          <p><strong>Alpelisib (Piqray)</strong>: PI3K inhibitor for PIK3CA-mutated HR+/HER2- metastatic breast cancer (SOLAR-1 trial). <strong>Capivasertib (Truqap)</strong>: AKT inhibitor, FDA-approved 2023 for HR+/HER2- with PIK3CA/AKT/PTEN alterations. <strong>Everolimus (Afinitor)</strong>: mTOR inhibitor combined with exemestane.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: Immunotherapy -->
+    <div class="tab-content" data-tab-content="treatments" data-tab="immunotherapy">
+      <div class="info-box success">
+        <h4>Immunotherapy for Triple-Negative Breast Cancer</h4>
+        <p>Triple-negative breast cancer (TNBC) has historically been the most difficult subtype to treat. Immunotherapy has now changed this for PD-L1 positive tumors and high-risk early TNBC.</p>
+      </div>
+      <div class="cards-grid">
+        <div class="card green">
+          <div class="card-icon"><iconify-icon icon="solar:shield-user-bold" style="font-size:36px;color:var(--forest);"></iconify-icon></div>
+          <h3>Pembrolizumab (Keytruda)</h3>
+          <p>FDA-approved for early high-risk TNBC (KEYNOTE-522: in combination with chemotherapy, then as monotherapy after surgery) and metastatic PD-L1+ TNBC (KEYNOTE-355). A landmark advance for TNBC that was previously untreatable with targeted therapy.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon"><iconify-icon icon="solar:atom-bold" style="font-size:36px;color:var(--forest);"></iconify-icon></div>
+          <h3>Atezolizumab (Tecentriq)</h3>
+          <p>PD-L1 inhibitor, initially approved for TNBC but withdrawn from the US market following confirmatory trial results. Still used in some countries. Research into optimal patient selection for PD-L1 inhibitors in breast cancer continues.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon">🔬</div>
+          <h3>Future Directions</h3>
+          <p>Combination strategies, cancer vaccines, adoptive cell therapy (TIL therapy), and bispecific antibodies are in clinical trials. The IMpassion130 and KEYNOTE-522 trials established the proof-of-concept that immune checkpoint inhibitors can benefit breast cancer patients.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: CLINICAL TRIALS -->
+  <section class="section fade-in" id="trials">
+    <div class="section-header">
+      <span class="sec-icon"><iconify-icon icon="solar:test-tube-bold" style="font-size:40px;color:var(--forest);"></iconify-icon></span>
+      <div>
+        <h2>Clinical Trials</h2>
+        <p>Active research worldwide — participation opportunities</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>Why Join a Clinical Trial?</h4>
+      <p>Clinical trials offer access to cutting-edge treatments before they are available to the general public. Every trial is reviewed by an ethics committee, includes close medical monitoring, and contributes to research that helps everyone. Many of the most effective current breast cancer treatments were discovered through clinical trials.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="time-label">HER2-Low</div>
+        <h4>DESTINY-Breast Trials (T-DXd)</h4>
+        <p>Trastuzumab deruxtecan (Enhertu) has revolutionized treatment for HER2-low metastatic breast cancer. DESTINY-Breast04 showed a 50% reduction in disease progression vs. chemotherapy. Ongoing trials explore earlier lines of therapy and combination strategies.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="time-label">Metastatic</div>
+        <h4>TROPICS-02 — Sacituzumab Govitecan</h4>
+        <p>Trodelvy showed significant benefit vs. chemotherapy in HR+/HER2- metastatic breast cancer previously treated with endocrine therapy and CDK4/6 inhibitors. FDA-approved 2023. Confirms the value of ADCs in endocrine-resistant disease.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="time-label">Early Breast Cancer</div>
+        <h4>OlympiA — Olaparib Adjuvant</h4>
+        <p>Phase 3 trial showed adjuvant Olaparib improved overall survival in BRCA-mutated HER2-negative high-risk early breast cancer. FDA-approved 2022. Demonstrates the importance of BRCA testing for all eligible patients.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="time-label">Prevention</div>
+        <h4>BRCA Carrier Prevention Trials</h4>
+        <p>Multiple trials evaluate risk-reducing strategies for BRCA1/2 carriers, including chemoprevention (Tamoxifen, Raloxifene), prophylactic surgery outcomes, and emerging targeted prevention agents.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="time-label">TNBC</div>
+        <h4>KEYNOTE-522 — Long-Term Follow-Up</h4>
+        <p>Pembrolizumab + chemotherapy (neoadjuvant) followed by pembrolizumab (adjuvant) continues to show improved event-free survival and overall survival in early TNBC. Changing the standard of care globally for high-risk TNBC.</p>
+      </div>
+    </div>
+
+    <div style="margin-top: 12px;">
+      <a href="https://clinicaltrials.gov/search?cond=Breast+Cancer&status=RECRUITING" target="_blank" class="link-btn">ClinicalTrials.gov — Breast Cancer</a>
+      <a href="https://www.breastcancertrials.org/" target="_blank" class="link-btn green">Breast Cancer Trials</a>
+      <a href="https://www.komen.org/breast-cancer/treatment/clinical-trials/" target="_blank" class="link-btn orange">Susan G. Komen — Trials</a>
+    </div>
+  </section>
+
+  <!-- SECTION: RESEARCH -->
+  <section class="section fade-in" id="research">
+    <div class="section-header">
+      <span class="sec-icon"><iconify-icon icon="solar:dna-bold" style="font-size:40px;color:var(--forest);"></iconify-icon></span>
+      <div>
+        <h2>New Research</h2>
+        <p>Breakthroughs and discoveries in 2024–2025</p>
+      </div>
+    </div>
+
+    <div class="info-box success">
+      <h4>A Golden Era for Breast Cancer Research</h4>
+      <p>2022–2025 have brought unprecedented advances in breast cancer treatment. Antibody-drug conjugates, CDK4/6 inhibitors, PARP inhibitors, immunotherapy, and liquid biopsies are collectively transforming outcomes for every subtype of breast cancer.</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card green">
+        <div class="card-icon"><iconify-icon icon="solar:dna-bold" style="font-size:36px;color:var(--forest);"></iconify-icon></div>
+        <h3>HER2-Low: A New Classification</h3>
+        <p>DESTINY-Breast04 established "HER2-low" as a clinically actionable category, covering ~60% of metastatic breast cancers previously considered HER2-negative. T-DXd (Enhertu) is now approved for this group — one of the most significant advances in years. Liquid biopsy tools are improving HER2-low detection.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon"><iconify-icon icon="solar:pill-bold" style="font-size:36px;color:var(--forest);"></iconify-icon></div>
+        <h3>Oral SERD: Elacestrant</h3>
+        <p>Elacestrant (Orserdu), the first oral selective estrogen receptor degrader (SERD), was FDA-approved in 2023 for ESR1-mutated HR+/HER2- metastatic breast cancer after progression on CDK4/6 inhibitors (EMERALD trial). Oral SERDs represent the next generation of endocrine therapy.</p>
+      </div>
+      <div class="card blue">
+        <div class="card-icon"><iconify-icon icon="solar:drop-bold" style="font-size:36px;color:var(--forest);"></iconify-icon></div>
+        <h3>Liquid Biopsy</h3>
+        <p>Circulating tumor DNA (ctDNA) can now detect minimal residual disease, predict recurrence, identify resistance mutations, and guide treatment changes — all from a blood draw. Multiple platforms are gaining regulatory approval and moving into clinical practice. A transformative advance in monitoring.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🤖</div>
+        <h3>AI in Mammography and Pathology</h3>
+        <p>AI-assisted mammography reading has shown sensitivity comparable to or exceeding radiologists, with fewer false positives. AI tools in digital pathology can predict molecular subtypes, recurrence risk, and treatment response from H&amp;E slides. Large-scale trials of AI-guided screening are underway in Europe and the US.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon"><iconify-icon icon="solar:refresh-circle-bold" style="font-size:36px;color:var(--forest);"></iconify-icon></div>
+        <h3>Cancer Vaccines</h3>
+        <p>mRNA vaccine technology (the platform behind COVID-19 vaccines) is being applied to breast cancer. Personalized neoantigen vaccines, HER2 vaccines, and TNBC vaccines are in Phase 1–2 trials. Early results show immune responses in triple-negative and HER2+ breast cancer.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon"><iconify-icon icon="solar:magnifier-zoom-bold" style="font-size:36px;color:var(--forest);"></iconify-icon></div>
+        <h3>Genomic De-escalation</h3>
+        <p>Trials like MINDACT (MammaPrint), TAILORx (Oncotype DX) and RxPONDER have established that thousands of women per year can safely skip chemotherapy based on genomic test results. De-escalation of treatment reduces toxicity while maintaining excellent outcomes.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: BRCA -->
+  <section class="section fade-in" id="brca">
+    <div class="section-header">
+      <span class="sec-icon"><iconify-icon icon="solar:atom-bold" style="font-size:40px;color:var(--forest);"></iconify-icon></span>
+      <div>
+        <h2>BRCA &amp; Genetics</h2>
+        <p>Mutations, hereditary risk, testing and risk reduction</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>Who Should Consider BRCA Testing?</h4>
+      <p>About 5–10% of breast cancers are hereditary. BRCA1 and BRCA2 are the most well-known high-risk genes. Women with a BRCA1 mutation have a lifetime breast cancer risk of 55–72%; BRCA2 confers a 45–69% lifetime risk. Testing guidelines vary by country; generally recommended if: breast cancer diagnosed under age 50, bilateral breast cancer, triple-negative breast cancer, male breast cancer, ovarian cancer, or strong family history (two or more close relatives with breast or ovarian cancer).</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon"><iconify-icon icon="solar:dna-bold" style="font-size:36px;color:var(--forest);"></iconify-icon></div>
+        <h3>Other High-Risk Genes</h3>
+        <p>Beyond BRCA1/2, other genes confer elevated breast cancer risk: <strong>PALB2</strong> (lifetime risk ~35%); <strong>CHEK2</strong> (moderate risk, ~25%); <strong>ATM</strong> (moderate risk); <strong>CDH1</strong> (lobular cancer); <strong>PTEN</strong> (Cowden syndrome). Multi-gene panel testing is now standard.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon"><iconify-icon icon="solar:shield-user-bold" style="font-size:36px;color:var(--forest);"></iconify-icon></div>
+        <h3>Risk Reduction Options</h3>
+        <p>For BRCA1/2 carriers: <strong>Intensified surveillance</strong> (annual MRI + mammography from age 25–30); <strong>Risk-reducing mastectomy</strong> (reduces risk by ~95%); <strong>Risk-reducing salpingo-oophorectomy</strong> (reduces breast cancer risk by ~50% and ovarian cancer risk substantially); <strong>Chemoprevention</strong> (Tamoxifen, Raloxifene — moderate risk reduction).</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon"><iconify-icon icon="solar:users-group-two-rounded-bold" style="font-size:36px;color:var(--forest);"></iconify-icon></div>
+        <h3>Genetic Counseling</h3>
+        <p>Genetic testing should ideally be accompanied by pre- and post-test genetic counseling. A genetic counselor helps interpret results, explains implications for the patient and family members, and discusses risk-reduction options. Many cancer centers offer hereditary breast and ovarian cancer programs.</p>
+      </div>
+      <div class="card blue">
+        <div class="card-icon">💡</div>
+        <h3>BRCA and Treatment Decisions</h3>
+        <p>BRCA status influences treatment: BRCA1/2-mutated breast cancer may be more responsive to platinum chemotherapy and PARP inhibitors. Adjuvant Olaparib (OlympiA trial) is now standard for high-risk early BRCA-mutated breast cancer. BRCA testing should be offered to all eligible patients before treatment decisions.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: FERTILITY -->
+  <section class="section fade-in" id="fertility">
+    <div class="section-header">
+      <span class="sec-icon"><iconify-icon icon="solar:health-bold" style="font-size:40px;color:var(--forest);"></iconify-icon></span>
+      <div>
+        <h2>Fertility &amp; Pregnancy</h2>
+        <p>Fertility preservation, pregnancy after cancer and treatment during pregnancy</p>
+      </div>
+    </div>
+
+    <div class="info-box warning">
+      <h4>Act Early — Discuss Fertility Before Treatment Begins</h4>
+      <p>Chemotherapy and some targeted therapies can affect fertility. All premenopausal women should be offered fertility counseling and preservation options before starting treatment. This is especially urgent as some treatments should begin promptly. Delaying cancer treatment by 2–4 weeks for egg/embryo freezing is generally considered safe for most early-stage breast cancers.</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card green">
+        <div class="card-icon"><iconify-icon icon="solar:dna-bold" style="font-size:36px;color:var(--forest);"></iconify-icon></div>
+        <h3>Embryo and Egg Freezing</h3>
+        <p>The most established methods for fertility preservation. Eggs are stimulated, retrieved and fertilized (embryo freezing) or stored unfertilized (egg freezing). Can be done safely before chemotherapy using tamoxifen or letrozole-based stimulation protocols that minimize estrogen exposure. Success rates have improved significantly.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🩺</div>
+        <h3>Ovarian Suppression with GnRH Analogues</h3>
+        <p>Medications like Goserelin (Zoladex) given during chemotherapy may help protect the ovaries. The POEMS trial showed reduced premature ovarian insufficiency with Goserelin. Also used as part of adjuvant hormone therapy in premenopausal HR+ breast cancer (SOFT/TEXT trials).</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">🤰</div>
+        <h3>Pregnancy After Breast Cancer</h3>
+        <p>Pregnancy after breast cancer treatment does not worsen prognosis — even for hormone receptor-positive cancers. The POSITIVE trial demonstrated that temporarily pausing hormone therapy for 2 years to allow pregnancy did not increase recurrence risk at short-term follow-up. Most guidelines recommend waiting 2 years after completing treatment before attempting pregnancy.</p>
+      </div>
+      <div class="card blue">
+        <div class="card-icon"><iconify-icon icon="solar:heart-bold" style="font-size:36px;color:var(--forest);"></iconify-icon></div>
+        <h3>Breast Cancer Diagnosed During Pregnancy</h3>
+        <p>Occurs in approximately 1 in 3,000 pregnancies. Chemotherapy (after the first trimester) is generally safe. Surgery can be performed in all trimesters. Radiation and most targeted therapies are avoided during pregnancy. A multidisciplinary team including a maternal-fetal medicine specialist is essential.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: LIFE -->
+  <section class="section fade-in" id="life">
+    <div class="section-header">
+      <span class="sec-icon"><iconify-icon icon="solar:dumbbell-bold" style="font-size:40px;color:var(--forest);"></iconify-icon></span>
+      <div>
+        <h2>Living with Breast Cancer</h2>
+        <p>Rehabilitation, psychological support, nutrition and exercise</p>
+      </div>
+    </div>
+
+    <div class="info-box success">
+      <h4>Quality of Life Matters</h4>
+      <p>Modern breast cancer treatment aims to preserve and enhance quality of life, not just extend it. Exercise, good nutrition, psychological support and management of side effects are all essential components of comprehensive cancer care. Survivorship planning — which addresses long-term health after treatment — is now recognized as a crucial part of cancer care.</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card green">
+        <div class="card-icon">🏃</div>
+        <h3>Exercise During and After Treatment</h3>
+        <p>Regular aerobic exercise reduces fatigue, improves mood, and may reduce breast cancer recurrence risk by 30–40%. Current guidelines recommend at least 150 minutes of moderate-intensity exercise per week for cancer survivors. Exercise is safe and beneficial during chemotherapy and radiotherapy. Consult a physical therapist familiar with oncology.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🥗</div>
+        <h3>Nutrition</h3>
+        <p>A Mediterranean-style diet rich in fruits, vegetables, whole grains, and healthy fats is associated with improved outcomes. Maintaining a healthy weight is important — obesity is a risk factor for recurrence. Avoid alcohol (increases recurrence risk). Soy products are safe for most breast cancer survivors. Discuss specific supplements with your oncologist.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon"><iconify-icon icon="solar:brain-bold" style="font-size:36px;color:var(--forest);"></iconify-icon></div>
+        <h3>Psychological Support</h3>
+        <p>Anxiety and depression are common during and after breast cancer treatment. Psychological distress should be routinely screened and treated. Effective interventions include: Cognitive Behavioral Therapy (CBT), mindfulness-based stress reduction (MBSR), support groups, and peer support programs. The impact of breast cancer on body image, sexuality and relationships deserves open discussion with your care team.</p>
+      </div>
+      <div class="card blue">
+        <div class="card-icon"><iconify-icon icon="solar:health-bold" style="font-size:36px;color:var(--forest);"></iconify-icon></div>
+        <h3>Managing Side Effects</h3>
+        <p>Common side effects requiring proactive management: lymphedema (arm swelling after lymph node surgery — managed with physiotherapy and compression garments); peripheral neuropathy (from taxanes — managed with exercise, supplements); chemotherapy-induced menopause; cognitive effects ("chemo brain"); bone density loss from aromatase inhibitors (managed with calcium, vitamin D, weight-bearing exercise, bisphosphonates if needed).</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">💬</div>
+        <h3>Talking to Children and Family</h3>
+        <p>Open, age-appropriate communication with children and family reduces distress for everyone. Most children cope better when given honest, simple explanations. Many cancer centers offer resources and counseling for families. Support groups for partners and family members are available through organizations like Breast Cancer Now and Susan G. Komen.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon"><iconify-icon icon="solar:document-bold" style="font-size:36px;color:var(--forest);"></iconify-icon></div>
+        <h3>Survivorship Planning</h3>
+        <p>A survivorship care plan documents your treatments, potential long-term effects, follow-up schedule, and healthy lifestyle recommendations. Ask your oncologist for a survivorship plan when you complete active treatment. Regular follow-up typically includes mammography, clinical exam, and monitoring for specific long-term effects of your treatment.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: STORIES -->
+  <section class="section fade-in" id="stories">
+    <div class="section-header">
+      <span class="sec-icon"><iconify-icon icon="solar:star-bold" style="font-size:40px;color:var(--forest);"></iconify-icon></span>
+      <div>
+        <h2>Success Stories</h2>
+        <p>Women who have triumphed and are an inspiration</p>
+      </div>
+    </div>
+
+    <div class="info-box success">
+      <h4>Living Proof That Treatment Works</h4>
+      <p>Today, millions of women worldwide are breast cancer survivors living full and active lives. The combination of early detection, genomics-guided treatment, and modern therapies means that for most women, a breast cancer diagnosis is no longer a death sentence — it is the start of a journey that many navigate successfully.</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card green" style="border-top-width: 6px;">
+        <div class="card-icon">🎀</div>
+        <h3>Global Advocacy That Changed Medicine</h3>
+        <p>The breast cancer advocacy movement — led by organizations like Susan G. Komen, Breast Cancer Now and IBCPC — transformed how cancer research is funded and conducted. Patient advocates are now members of scientific review panels, clinical trial design committees, and regulatory bodies. This advocacy has directly accelerated approval of life-saving treatments.</p>
+      </div>
+      <div class="card orange" style="border-top-width: 6px;">
+        <div class="card-icon">🌍</div>
+        <h3>The POSITIVE Trial: Proof That Life Goes On</h3>
+        <p>Published in NEJM in 2023, the POSITIVE trial showed that premenopausal women with HR+ early breast cancer who temporarily paused hormone therapy to have a baby did not have worse short-term cancer outcomes than those who continued treatment. A landmark result giving hope to young women who want to start a family after breast cancer.</p>
+      </div>
+      <div class="card blue" style="border-top-width: 6px;">
+        <div class="card-icon">💪</div>
+        <h3>Metastatic Doesn't Mean Terminal</h3>
+        <p>With modern treatment, many women with stage IV (metastatic) breast cancer live 5, 10 or even more years while maintaining good quality of life. The addition of CDK4/6 inhibitors, antibody-drug conjugates and immunotherapy has transformed the metastatic landscape. Many women with MBC describe living "with" cancer rather than dying "from" it.</p>
+      </div>
+      <div class="card" style="border-top-width: 6px;">
+        <div class="card-icon">🏅</div>
+        <h3>From Patient to Researcher</h3>
+        <p>Many breast cancer survivors have become patient advocates and researchers who have driven important advances in the field. Organizations like Breast Cancer Now and the IBCPC (International Breast Cancer Paddlers Commission) have turned survivorship into community, sport and activism — with dragon boat racing becoming a global symbol of thriving after breast cancer.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: RESOURCES -->
+  <section class="section fade-in" id="resources">
+    <div class="section-header">
+      <span class="sec-icon"><iconify-icon icon="solar:link-bold" style="font-size:40px;color:var(--forest);"></iconify-icon></span>
+      <div>
+        <h2>Links &amp; Resources</h2>
+        <p>Organizations, websites, tools and support</p>
+      </div>
+    </div>
+
+    <h3 style="color: var(--primary); margin-bottom: 20px;">Leading International Organizations</h3>
+    <div class="cards-grid">
+      <div class="card green">
+        <h3>Susan G. Komen</h3>
+        <p>The world's largest breast cancer organization. Research funding, patient support, clinical trial finder, and helpline.</p>
+        <a href="https://www.komen.org" target="_blank" class="link-btn green" style="margin-top: 10px;">komen.org</a>
+      </div>
+      <div class="card blue">
+        <h3>Breast Cancer Now</h3>
+        <p>UK-based organization funding research and providing support. Helpline, online community, and information resources.</p>
+        <a href="https://breastcancernow.org" target="_blank" class="link-btn" style="margin-top: 10px;">breastcancernow.org</a>
+      </div>
+      <div class="card orange">
+        <h3>IBCPC</h3>
+        <p>International Breast Cancer Paddlers Commission — uniting breast cancer survivors through dragon boat paddling worldwide.</p>
+        <a href="https://ibcpc.com" target="_blank" class="link-btn orange" style="margin-top: 10px;">ibcpc.com</a>
+      </div>
+      <div class="card">
+        <h3>WHO Breast Cancer Programme</h3>
+        <p>World Health Organization guidelines, global statistics, and policy resources on breast cancer.</p>
+        <a href="https://www.who.int/activities/controlling-breast-cancer" target="_blank" class="link-btn" style="margin-top: 10px;">WHO Breast Cancer</a>
+      </div>
+    </div>
+
+    <h3 style="color: var(--primary); margin: 40px 0 20px;">Additional Resources</h3>
+    <div class="cards-grid">
+      <div class="card green">
+        <h3>National Cancer Institute (NCI)</h3>
+        <p>Comprehensive information on breast cancer, clinical trials, and treatment guidelines. US government resource.</p>
+        <a href="https://www.cancer.gov/types/breast" target="_blank" class="link-btn green" style="margin-top: 10px;">cancer.gov/breast</a>
+      </div>
+      <div class="card blue">
+        <h3>Breastcancer.org</h3>
+        <p>Non-profit organization providing reliable information, community forums, and support for those affected by breast cancer.</p>
+        <a href="https://www.breastcancer.org" target="_blank" class="link-btn" style="margin-top: 10px;">breastcancer.org</a>
+      </div>
+      <div class="card orange">
+        <h3>ASCO Patient Information</h3>
+        <p>American Society of Clinical Oncology's patient information resource with evidence-based treatment information.</p>
+        <a href="https://www.cancer.net/cancer-types/breast-cancer" target="_blank" class="link-btn orange" style="margin-top: 10px;">cancer.net</a>
+      </div>
+    </div>
+
+    <h3 style="color: var(--primary); margin: 40px 0 20px;">Key Research Articles</h3>
+    <div class="cards-grid">
+      <div class="card">
+        <h3>Targeted Therapy Trials</h3>
+        <ul style="padding-left: 16px; font-size: 14px; color: var(--text-light);">
+          <li>Modi et al. (2022) NEJM: DESTINY-Breast04 (T-DXd)</li>
+          <li>Cortes et al. (2022) NEJM: KEYNOTE-522 (pembrolizumab)</li>
+          <li>Tutt et al. (2021) NEJM: OlympiA (olaparib)</li>
+        </ul>
+      </div>
+      <div class="card green">
+        <h3>Endocrine Therapy</h3>
+        <ul style="padding-left: 16px; font-size: 14px; color: var(--text-light);">
+          <li>Rugo et al. (2022) NEJM: TROPICS-02 (sacituzumab)</li>
+          <li>Jhaveri et al. (2023): Capivasertib (AKT inhibitor)</li>
+          <li>Sledge et al. (2017) NEJM: MONARCH 2 (abemaciclib)</li>
+        </ul>
+      </div>
+      <div class="card orange">
+        <h3>Genetics and Survivorship</h3>
+        <ul style="padding-left: 16px; font-size: 14px; color: var(--text-light);">
+          <li>Lambertini et al. (2023) NEJM: POSITIVE trial</li>
+          <li>Domchek et al. (2010) JAMA: Risk reduction in BRCA carriers</li>
+          <li>Pierce et al. (2023): Exercise and recurrence risk</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p style="margin-bottom: 16px;">
+      Built by <strong>Yuval Kashtker</strong> and his robot assistants
+    </p>
+    <a href="https://carepedia.org/en/#contact" target="_blank" class="portal-request-btn" style="margin-bottom: 20px;">➕ Want a portal for another disease?</a>
+    <p style="margin-top: 20px; font-size: 15px; opacity: 0.85;">All information on this site is for educational purposes only and does not constitute a substitute for professional medical advice.</p>
+    <p style="margin-top: 8px; font-size: 13px; opacity: 0.7;"><a href="/disclaimer" style="color:var(--accent-light);text-decoration:underline;">Legal Disclaimer</a> | <a href="https://wa.me/+972526414555" target="_blank" rel="noopener" style="color:var(--accent-light);text-decoration:underline;">Report an Error</a></p>
+    <p style="margin-top: 10px; font-size: 14px; opacity: 0.7;">Last updated: February 2026 | Includes citations from peer-reviewed articles</p>
+  </footer>
+
+</div>
+
+<!-- SCROLL TO TOP -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})"><iconify-icon icon="solar:arrow-up-bold"></iconify-icon></button>
+
+<script>
+function toggleMenu() {
+  const sidebar = document.getElementById('sidebar');
+  const toggle = document.getElementById('menuToggle');
+  const overlay = document.getElementById('sidebarOverlay');
+  sidebar.classList.toggle('open');
+  toggle.classList.toggle('open');
+  overlay.classList.toggle('active');
+  document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '';
+}
+
+function closeMenu() {
+  const sidebar = document.getElementById('sidebar');
+  const toggle = document.getElementById('menuToggle');
+  const overlay = document.getElementById('sidebarOverlay');
+  sidebar.classList.remove('open');
+  toggle.classList.remove('open');
+  overlay.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function navigate(el) {
+  document.querySelectorAll('.sidebar nav a').forEach(a => a.classList.remove('active'));
+  el.classList.add('active');
+  closeMenu();
+}
+
+function navigateTo(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+  document.querySelectorAll('.sidebar nav a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+  });
+}
+
+function toggleAccordion(header) {
+  const body = header.nextElementSibling;
+  const isOpen = header.classList.contains('open');
+  header.classList.toggle('open');
+  body.style.maxHeight = isOpen ? '0' : body.scrollHeight + 'px';
+}
+
+function switchTab(tabGroup, tabName) {
+  document.querySelectorAll('[data-tab-group="' + tabGroup + '"] .tab-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.tab === tabName);
+  });
+  document.querySelectorAll('[data-tab-content="' + tabGroup + '"]').forEach(c => {
+    c.classList.toggle('active', c.dataset.tab === tabName);
+  });
+}
+
+window.addEventListener('scroll', () => {
+  const scrollTop = document.getElementById('scrollTop');
+  const progressBar = document.getElementById('progressBar');
+  const scrolled = window.scrollY;
+  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = maxScroll > 0 ? (scrolled / maxScroll) * 100 : 0;
+  progressBar.style.width = pct + '%';
+  scrollTop.classList.toggle('visible', scrolled > 500);
+
+  const sections = document.querySelectorAll('.section[id], .hero[id]');
+  let current = '';
+  sections.forEach(s => {
+    if (scrolled >= s.offsetTop - 100) current = s.id;
+  });
+  if (current) {
+    document.querySelectorAll('.sidebar nav a').forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  }
+});
+
+const fadeEls = document.querySelectorAll('.fade-in');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+fadeEls.forEach(el => observer.observe(el));
+
+function searchPortal(query) {
+  const resultsDiv = document.getElementById('searchResults');
+  if (!query || query.length < 2) {
+    resultsDiv.style.display = 'none';
+    document.querySelectorAll('.section').forEach(s => s.style.display = '');
+    return;
+  }
+  const q = query.toLowerCase();
+  const sections = document.querySelectorAll('.section[id]');
+  const matches = [];
+  sections.forEach(s => {
+    const text = s.textContent.toLowerCase();
+    const title = s.querySelector('h2') ? s.querySelector('h2').textContent : '';
+    if (text.includes(q)) {
+      matches.push({ id: s.id, title: title, el: s });
+      s.style.display = '';
+    } else {
+      s.style.display = 'none';
+    }
+  });
+  if (matches.length > 0 && matches.length < sections.length) {
+    resultsDiv.innerHTML = '<div style="background:var(--card);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);">' +
+      '<p style="font-size:14px;color:var(--text-light);margin-bottom:8px;">' + matches.length + ' results found:</p>' +
+      matches.map(m => '<a href="#' + m.id + '" onclick="navigateTo(\'' + m.id + '\')" style="display:block;padding:8px 12px;color:var(--primary);text-decoration:none;border-radius:8px;font-weight:600;transition:var(--transition);" onmouseover="this.style.background=\'var(--bg)\'" onmouseout="this.style.background=\'transparent\'">' + m.title + '</a>').join('') +
+      '</div>';
+    resultsDiv.style.display = 'block';
+  } else if (matches.length === sections.length) {
+    resultsDiv.style.display = 'none';
+  } else {
+    resultsDiv.innerHTML = '<div style="background:var(--card);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);"><p style="font-size:14px;color:var(--text-light);">No results found. Try a different word.</p></div>';
+    resultsDiv.style.display = 'block';
+  }
+}
+</script>
+
+</body>
+</html>

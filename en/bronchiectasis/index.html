@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bronchiectasis Hub | CarePedia Information Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="alternate" hreflang="he" href="https://carepedia.org/bronchiectasis" />
+<link rel="alternate" hreflang="en" href="https://carepedia.org/en/bronchiectasis" />
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --primary: #0f4c75;
+  --primary-light: #3282b8;
+  --accent: #00b894;
+  --accent-light: #55efc4;
+  --warm: #fdcb6e;
+  --warm-dark: #e17055;
+  --bg: #f0f4f8;
+  --card: #ffffff;
+  --text: #2c3e50;
+  --text-light: #5d6d7e;
+  --shadow: 0 4px 20px rgba(0,0,0,0.08);
+  --shadow-hover: 0 12px 40px rgba(0,0,0,0.18);
+  --radius: 16px;
+  --transition: all 0.3s cubic-bezier(.4,0,.2,1);
+  /* Aliases for Iconify icons */
+  --forest: #0f4c75;
+  --forest-mid: #3282b8;
+  --forest-light: rgba(50,130,184,0.12);
+  --amber: #fdcb6e;
+  --amber-light: rgba(253,203,110,0.12);
+  --border: #dde4eb;
+}
+
+body {
+  font-family: 'Rubik', 'Segoe UI', Tahoma, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.8;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background:
+    radial-gradient(ellipse at 10% 20%, rgba(15,76,117,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 80%, rgba(0,184,148,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(253,203,110,0.05) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.scroll-progress {
+  position: fixed;
+  top: 0; right: 0;
+  width: 100%; height: 4px;
+  z-index: 2000;
+  background: transparent;
+}
+.scroll-progress .bar {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--primary-light), var(--warm));
+  border-radius: 0 0 0 4px;
+  transition: width 0.1s linear;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 280px; height: 100vh;
+  background: rgba(15,76,117,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(255,255,255,0.1);
+  z-index: 1000;
+  padding: 30px 20px;
+  overflow-y: auto;
+  transition: transform 0.4s cubic-bezier(.4,0,.2,1);
+}
+.sidebar .logo {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+.sidebar .logo .icon { font-size: 48px; }
+.sidebar .logo h2 { color: #fff; font-size: 18px; margin-top: 8px; font-weight: 600; }
+.sidebar nav a {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 18px; color: rgba(255,255,255,0.8);
+  text-decoration: none; border-radius: 12px;
+  margin-bottom: 4px; font-size: 15px; transition: var(--transition);
+}
+.sidebar nav a:hover, .sidebar nav a.active {
+  background: rgba(255,255,255,0.15); color: #fff; transform: translateX(4px);
+}
+.sidebar nav a .nav-icon { font-size: 22px; min-width: 30px; text-align: center; }
+
+.menu-toggle {
+  display: none;
+  position: fixed;
+  top: 20px; left: 20px;
+  z-index: 1100;
+  background: var(--primary); color: #fff;
+  border: none; border-radius: 12px;
+  width: 50px; height: 50px; font-size: 24px;
+  cursor: pointer; box-shadow: var(--shadow); transition: var(--transition);
+}
+.menu-toggle:hover { transform: scale(1.05); }
+.menu-toggle.open { border-radius: 50%; background: var(--warm-dark); }
+
+.main {
+  margin-left: 280px;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--primary) 0%, #3282b8 40%, var(--accent) 100%);
+  padding: 80px 60px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%);
+  animation: float 20s linear infinite;
+}
+@keyframes float { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+.hero-content { position: relative; z-index: 1; max-width: 900px; }
+.hero h1 { font-size: 52px; font-weight: 800; margin-bottom: 10px; line-height: 1.3; }
+.hero .greeting { font-size: 22px; opacity: 0.95; margin-bottom: 30px; line-height: 1.7; }
+.hero .subtitle { font-size: 18px; opacity: 0.8; max-width: 700px; }
+
+.fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+.section { padding: 60px; max-width: 1100px; margin: 0 auto; }
+.section-header {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 40px; padding-bottom: 20px;
+  border-bottom: 3px solid var(--primary-light);
+}
+.section-header .sec-icon { font-size: 42px; }
+.section-header h2 { font-size: 36px; color: var(--primary); }
+.section-header p { color: var(--text-light); font-size: 16px; margin-top: 4px; }
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px; margin-bottom: 40px;
+}
+.card {
+  background: var(--card); border-radius: var(--radius); padding: 30px;
+  box-shadow: var(--shadow); transition: var(--transition);
+  border-top: 4px solid var(--primary-light);
+  position: relative; overflow: hidden;
+}
+.card:hover { transform: translateY(-6px) scale(1.01); box-shadow: var(--shadow-hover); }
+.card .card-icon { font-size: 40px; margin-bottom: 16px; }
+.card h3 { font-size: 20px; color: var(--primary); margin-bottom: 12px; }
+.card p { color: var(--text-light); font-size: 15px; line-height: 1.8; }
+.card.green { border-top-color: var(--accent); }
+.card.orange { border-top-color: var(--warm); }
+.card.blue { border-top-color: var(--primary-light); }
+
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px; margin-top: 40px;
+}
+.cat-card {
+  background: var(--card); border-radius: var(--radius); padding: 30px 24px;
+  text-align: center; cursor: pointer; transition: var(--transition);
+  box-shadow: var(--shadow); text-decoration: none; color: var(--text);
+}
+.cat-card:hover { transform: translateY(-6px) scale(1.02); box-shadow: var(--shadow-hover); }
+.cat-card .cat-icon { font-size: 48px; margin-bottom: 14px; }
+.cat-card h3 { font-size: 18px; color: var(--primary); margin-bottom: 8px; }
+.cat-card p { font-size: 13px; color: var(--text-light); }
+
+.accordion { margin-bottom: 16px; }
+.accordion-header {
+  background: var(--card); padding: 20px 24px; border-radius: var(--radius);
+  cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+  box-shadow: var(--shadow); transition: var(--transition);
+  font-size: 17px; font-weight: 600; color: var(--primary);
+}
+.accordion-header:hover { background: #eef4fb; }
+.accordion-header .arrow { transition: transform 0.3s ease; font-size: 20px; }
+.accordion-header.open .arrow { transform: rotate(180deg); }
+.accordion-body {
+  max-height: 0; overflow: clip; transition: max-height 0.4s ease;
+  background: var(--card); border-radius: 0 0 var(--radius) var(--radius); margin-top: -8px;
+}
+.accordion-body .inner { padding: 20px 24px 24px; color: var(--text-light); line-height: 2; }
+
+.tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+.tab-btn {
+  padding: 12px 24px; background: var(--card);
+  border: 2px solid #dde4eb; border-radius: 30px;
+  cursor: pointer; font-size: 15px; font-family: inherit;
+  color: var(--text-light); transition: var(--transition);
+}
+.tab-btn:hover { border-color: var(--primary-light); color: var(--primary); }
+.tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.tab-content { display: none; animation: fadeIn 0.4s ease; }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.info-box {
+  background: linear-gradient(135deg, #eaf4fb 0%, #e8f8f0 100%);
+  border-radius: var(--radius); padding: 24px 28px; margin: 24px 0;
+  border-left: 5px solid var(--primary-light);
+}
+.info-box.warning { background: linear-gradient(135deg, #fef9e7 0%, #fdebd0 100%); border-left-color: var(--warm); }
+.info-box.success { background: linear-gradient(135deg, #e8f8f0 0%, #d5f5e3 100%); border-left-color: var(--accent); }
+.info-box h4 { color: var(--primary); margin-bottom: 8px; font-size: 17px; }
+.info-box p { color: var(--text-light); font-size: 15px; }
+
+.link-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 24px; background: var(--primary);
+  color: #fff; text-decoration: none; border-radius: 30px;
+  font-size: 15px; transition: var(--transition); margin: 6px;
+}
+.link-btn:hover { background: var(--primary-light); transform: translateY(-2px); }
+.link-btn.green { background: var(--accent); }
+.link-btn.green:hover { background: var(--accent-light); color: var(--text); }
+.link-btn.orange { background: var(--warm-dark); }
+.link-btn.orange:hover { background: var(--warm); color: var(--text); }
+
+.styled-table {
+  width: 100%; border-collapse: collapse; margin: 20px 0;
+  background: var(--card); border-radius: var(--radius);
+  overflow: hidden; box-shadow: var(--shadow);
+}
+.styled-table thead { background: var(--primary); color: #fff; }
+.styled-table th { padding: 16px 20px; text-align: left; font-weight: 600; }
+.styled-table td { padding: 14px 20px; border-bottom: 1px solid #eee; }
+.styled-table tbody tr:hover { background: #f7fafc; }
+
+.timeline { position: relative; padding-left: 40px; margin: 30px 0; }
+.timeline::before {
+  content: '';
+  position: absolute; left: 12px; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--primary-light), var(--accent));
+  border-radius: 3px;
+}
+.timeline-item {
+  position: relative; margin-bottom: 30px; padding: 24px;
+  background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);
+}
+.timeline-item::before {
+  content: ''; position: absolute;
+  left: -34px; top: 30px;
+  width: 16px; height: 16px;
+  background: var(--accent); border-radius: 50%; border: 3px solid var(--bg);
+}
+.timeline-item h4 { color: var(--primary); font-size: 18px; margin-bottom: 8px; }
+.timeline-item p { color: var(--text-light); }
+.timeline-item .time-label {
+  display: inline-block; background: var(--primary); color: #fff;
+  padding: 4px 14px; border-radius: 20px; font-size: 13px; margin-bottom: 10px;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px; margin: 30px 0;
+}
+.stat-box {
+  background: linear-gradient(135deg, var(--card) 0%, #f7fafc 100%);
+  border-radius: var(--radius); padding: 24px; text-align: center;
+  box-shadow: var(--shadow); border-bottom: 3px solid var(--primary-light);
+  transition: var(--transition);
+}
+.stat-box:nth-child(2) { border-bottom-color: var(--accent); }
+.stat-box:nth-child(3) { border-bottom-color: var(--warm); }
+.stat-box:nth-child(4) { border-bottom-color: var(--warm-dark); }
+.stat-box:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+.stat-box .stat-num {
+  font-size: 36px; font-weight: 800;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.stat-box .stat-label { color: var(--text-light); font-size: 14px; margin-top: 6px; }
+
+.carepedia-cta {
+  background: linear-gradient(135deg, #1A73E8, #00C9A7);
+  padding: 48px 24px; text-align: center; color: #fff;
+}
+.carepedia-cta h3 { font-size: 24px; font-weight: 700; margin-bottom: 12px; }
+.carepedia-cta p { font-size: 16px; opacity: 0.9; margin-bottom: 24px; max-width: 500px; margin-left: auto; margin-right: auto; }
+.carepedia-cta .cta-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 32px; background: #fff; color: #1A73E8;
+  text-decoration: none; border-radius: 30px; font-size: 16px; font-weight: 700;
+  font-family: inherit; transition: all 0.3s ease; box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+.carepedia-cta .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+
+.credit-bar {
+  display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap;
+  padding: 14px 20px; font-size: 14px; color: rgba(255,255,255,0.85); position: relative; z-index: 1;
+}
+.credit-bar span { opacity: 0.9; }
+.portal-request-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 22px; background: var(--primary-light); color: #fff;
+  text-decoration: none; border-radius: 30px; font-size: 14px;
+  font-family: inherit; font-weight: 600; transition: var(--transition);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+.portal-request-btn:hover { background: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+
+.footer {
+  background: var(--primary); color: rgba(255,255,255,0.8);
+  text-align: center; padding: 40px; font-size: 14px;
+}
+
+.scroll-top {
+  position: fixed; bottom: 30px; left: 30px;
+  width: 50px; height: 50px; background: var(--primary);
+  color: #fff; border: none; border-radius: 50%;
+  font-size: 22px; cursor: pointer; box-shadow: var(--shadow);
+  transition: var(--transition); opacity: 0; pointer-events: none; z-index: 999;
+}
+.scroll-top.visible { opacity: 1; pointer-events: auto; }
+.scroll-top:hover { background: var(--primary-light); transform: translateY(-3px); }
+
+.search-box { position: relative; margin: 0 auto; }
+.search-box input {
+  width: 100%; padding: 14px 20px 14px 50px;
+  border: 2px solid rgba(15,76,117,0.15); border-radius: 30px;
+  font-size: 16px; font-family: 'Rubik', sans-serif;
+  background: var(--card); color: var(--text); transition: var(--transition);
+  box-sizing: border-box;
+}
+.search-box input:focus { outline: none; border-color: var(--primary-light); box-shadow: 0 0 0 4px rgba(50,130,184,0.1); }
+.search-box .search-icon {
+  position: absolute; left: 18px; top: 50%;
+  transform: translateY(-50%); font-size: 20px; pointer-events: none;
+}
+
+.sidebar-overlay {
+  display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5); z-index: 999; opacity: 0; transition: opacity 0.3s ease;
+}
+.sidebar-overlay.active { display: block; opacity: 1; }
+
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); width: 270px; }
+  .sidebar.open { transform: translateX(0); }
+  .menu-toggle { display: block; }
+  .main { margin-left: 0; }
+  .hero { padding: 60px 30px; }
+  .section { padding: 40px 24px; }
+}
+
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); width: 260px; }
+  .sidebar.open { transform: translateX(0); }
+  .menu-toggle { display: block; }
+  .main { margin-left: 0; }
+  .hero { padding: 40px 20px 36px; }
+  .hero h1 { font-size: 28px; line-height: 1.3; }
+  .hero .greeting { font-size: 16px; line-height: 1.7; }
+  .hero .subtitle { font-size: 14px; }
+  .section { padding: 28px 16px; }
+  .section-header { flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 24px; padding-bottom: 14px; }
+  .section-header .sec-icon { font-size: 32px; }
+  .section-header h2 { font-size: 24px; }
+  .section-header p { font-size: 14px; }
+  .cards-grid { grid-template-columns: 1fr; gap: 16px; margin-bottom: 24px; }
+  .card { padding: 20px; }
+  .card:hover { transform: none; }
+  .cat-card:hover { transform: none; }
+  .stat-box:hover { transform: none; }
+  .link-btn:hover { transform: none; }
+  .portal-request-btn:hover { transform: none; }
+  .scroll-top:hover { transform: none; }
+  .sidebar nav a:hover { transform: none; }
+  .card .card-icon { font-size: 32px; margin-bottom: 10px; }
+  .card h3 { font-size: 17px; }
+  .card p { font-size: 14px; }
+  .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 24px; }
+  .cat-card { padding: 18px 12px; }
+  .cat-card .cat-icon { font-size: 32px; margin-bottom: 8px; }
+  .cat-card h3 { font-size: 14px; }
+  .cat-card p { font-size: 11px; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 20px 0; }
+  .stat-box { padding: 16px 10px; }
+  .stat-box .stat-num { font-size: 26px; }
+  .stat-box .stat-label { font-size: 12px; }
+  .tabs { gap: 6px; margin-bottom: 16px; }
+  .tab-btn { padding: 8px 14px; font-size: 13px; border-radius: 20px; }
+  .styled-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 13px; }
+  .styled-table th { padding: 10px 12px; font-size: 13px; white-space: nowrap; }
+  .styled-table td { padding: 10px 12px; font-size: 13px; min-width: 100px; }
+  .info-box { padding: 16px 18px; margin: 16px 0; }
+  .info-box h4 { font-size: 15px; }
+  .info-box p { font-size: 13px; }
+  .accordion-header { padding: 14px 16px; font-size: 15px; }
+  .accordion-body .inner { padding: 14px 16px 18px; font-size: 14px; line-height: 1.9; }
+  .timeline { padding-left: 30px; margin: 20px 0; }
+  .timeline-item { padding: 16px; margin-bottom: 20px; }
+  .timeline-item::before { left: -24px; width: 12px; height: 12px; top: 22px; }
+  .timeline-item h4 { font-size: 16px; }
+  .timeline-item p { font-size: 13px; }
+  .link-btn { padding: 10px 16px; font-size: 13px; margin: 4px 2px; }
+  .search-box input { padding: 12px 18px 12px 40px; font-size: 14px; }
+  .footer { padding: 28px 16px; font-size: 13px; }
+  .scroll-top { width: 42px; height: 42px; font-size: 18px; bottom: 20px; left: 16px; }
+}
+
+@media (max-width: 380px) {
+  .hero h1 { font-size: 24px; }
+  .hero .greeting { font-size: 15px; }
+  .cat-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .cat-card { padding: 14px 8px; }
+  .cat-card .cat-icon { font-size: 26px; }
+  .cat-card h3 { font-size: 13px; }
+  .cat-card p { display: none; }
+  .stats-row { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .stat-box .stat-num { font-size: 22px; }
+  .section { padding: 20px 12px; }
+  .tab-btn { padding: 7px 10px; font-size: 12px; }
+}
+
+.disclaimer-banner {
+  background: linear-gradient(135deg, #FFF3E0, #FFF8E1);
+  border-bottom: 2px solid #FFB74D;
+  padding: 10px 20px; text-align: center; font-size: 13px; color: #5D4037;
+  position: relative; z-index: 1500;
+  display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;
+}
+.disclaimer-banner strong { color: #E65100; }
+.disclaimer-banner a { color: #1A73E8; text-decoration: underline; font-weight: 600; }
+.disclaimer-banner a:hover { color: #0D47A1; }
+@media (max-width: 768px) { .disclaimer-banner { font-size: 12px; padding: 8px 12px; } }
+</style>
+<script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js" defer></script>
+</head>
+<body>
+
+<!-- DISCLAIMER BANNER -->
+<div class="disclaimer-banner">
+  <span>&#9888;&#65039;</span>
+  <span><strong>This is not medical advice.</strong> Always consult your doctor. <a href="/disclaimer">Full legal disclaimer &rarr;</a></span>
+</div>
+
+<!-- SCROLL PROGRESS BAR -->
+<div class="scroll-progress"><div class="bar" id="progressBar"></div></div>
+
+<!-- MOBILE OVERLAY -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeMenu()"></div>
+
+<!-- MOBILE MENU TOGGLE -->
+<button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">&#9776;</button>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="logo">
+    <iconify-icon icon="solar:lungs-bold-duotone" style="font-size:48px;color:#fff;" width="48" height="48"></iconify-icon>
+    <h2>Bronchiectasis Hub</h2>
+  </div>
+  <nav>
+    <a href="#home" class="active" onclick="navigate(this)">
+      <iconify-icon icon="solar:home-bold-duotone" class="nav-icon" width="22" height="22"></iconify-icon>Home
+    </a>
+    <a href="#about" onclick="navigate(this)">
+      <iconify-icon icon="solar:book-bold-duotone" class="nav-icon" width="22" height="22"></iconify-icon>What is Bronchiectasis?
+    </a>
+    <a href="#treatments" onclick="navigate(this)">
+      <iconify-icon icon="solar:pills-bold-duotone" class="nav-icon" width="22" height="22"></iconify-icon>Treatments &amp; Medications
+    </a>
+    <a href="#trials" onclick="navigate(this)">
+      <iconify-icon icon="solar:test-tube-bold-duotone" class="nav-icon" width="22" height="22"></iconify-icon>Clinical Trials
+    </a>
+    <a href="#research" onclick="navigate(this)">
+      <iconify-icon icon="solar:dna-bold-duotone" class="nav-icon" width="22" height="22"></iconify-icon>Latest Research
+    </a>
+    <a href="#physio" onclick="navigate(this)">
+      <iconify-icon icon="solar:running-bold-duotone" class="nav-icon" width="22" height="22"></iconify-icon>Airway Clearance &amp; Physio
+    </a>
+    <a href="#infections" onclick="navigate(this)">
+      <iconify-icon icon="solar:virus-bold-duotone" class="nav-icon" width="22" height="22"></iconify-icon>Infections &amp; Exacerbations
+    </a>
+    <a href="#nutrition" onclick="navigate(this)">
+      <iconify-icon icon="solar:bowl-spoon-bold-duotone" class="nav-icon" width="22" height="22"></iconify-icon>Nutrition for Lung Health
+    </a>
+    <a href="#daily" onclick="navigate(this)">
+      <iconify-icon icon="solar:sun-bold-duotone" class="nav-icon" width="22" height="22"></iconify-icon>Living with Bronchiectasis
+    </a>
+    <a href="#stories" onclick="navigate(this)">
+      <iconify-icon icon="solar:users-group-rounded-bold-duotone" class="nav-icon" width="22" height="22"></iconify-icon>Support Organizations
+    </a>
+    <a href="#resources" onclick="navigate(this)">
+      <iconify-icon icon="solar:link-bold-duotone" class="nav-icon" width="22" height="22"></iconify-icon>Resources &amp; Links
+    </a>
+  </nav>
+</aside>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="credit-bar">
+      <span>Built by <strong>Yuval Keshtcher</strong> and his robot helpers</span>
+      <a href="https://carepedia.org/#contact" target="_blank" class="portal-request-btn">
+        &#43; Request a portal for another condition
+      </a>
+    </div>
+    <div class="hero-content">
+      <h1>Bronchiectasis Learning Hub</h1>
+      <p class="greeting">
+        One place for in-depth information, up-to-date research, and practical tools<br>
+        for people living with bronchiectasis and their families.
+      </p>
+      <p class="subtitle">
+        In 2025, the first-ever dedicated drug for this condition was approved. Here you will find citations from peer-reviewed articles, links to studies, and information to help you stay one step ahead.
+      </p>
+      <div class="search-box" style="margin-top: 30px; max-width: 600px;">
+        <span class="search-icon">&#128269;</span>
+        <input type="text" id="portalSearch" placeholder="Search the portal..." oninput="searchPortal(this.value)">
+        <button class="search-clear" id="searchClear" onclick="clearSearch()" style="display:none; position:absolute; right:16px; top:50%; transform:translateY(-50%); background:none; border:none; font-size:18px; cursor:pointer; color:var(--text-light);">&#10005;</button>
+      </div>
+      <div id="searchResults" style="display:none; margin-top: 16px; max-width: 600px;"></div>
+    </div>
+  </section>
+
+  <!-- QUICK NAVIGATION -->
+  <section class="section fade-in" style="padding-bottom: 20px;">
+    <div class="cat-grid">
+      <a class="cat-card" href="#about" onclick="navigateTo('about')">
+        <div class="cat-icon">&#128214;</div>
+        <h3>What is Bronchiectasis?</h3>
+        <p>Basic understanding of the disease</p>
+      </a>
+      <a class="cat-card" href="#treatments" onclick="navigateTo('treatments')">
+        <div class="cat-icon">&#128138;</div>
+        <h3>Treatments &amp; Medications</h3>
+        <p>Approved drugs and emerging therapies</p>
+      </a>
+      <a class="cat-card" href="#trials" onclick="navigateTo('trials')">
+        <div class="cat-icon">&#128300;</div>
+        <h3>Clinical Trials</h3>
+        <p>Active research studies worldwide</p>
+      </a>
+      <a class="cat-card" href="#research" onclick="navigateTo('research')">
+        <div class="cat-icon">&#129516;</div>
+        <h3>Latest Research</h3>
+        <p>Breakthroughs and recent discoveries</p>
+      </a>
+      <a class="cat-card" href="#physio" onclick="navigateTo('physio')">
+        <div class="cat-icon">&#127939;</div>
+        <h3>Airway Clearance</h3>
+        <p>Physiotherapy techniques and devices</p>
+      </a>
+      <a class="cat-card" href="#infections" onclick="navigateTo('infections')">
+        <div class="cat-icon">&#129440;</div>
+        <h3>Infections &amp; Exacerbations</h3>
+        <p>Prevention and management of flare-ups</p>
+      </a>
+      <a class="cat-card" href="#nutrition" onclick="navigateTo('nutrition')">
+        <div class="cat-icon">&#129367;</div>
+        <h3>Nutrition</h3>
+        <p>Foods and supplements for lung health</p>
+      </a>
+      <a class="cat-card" href="#daily" onclick="navigateTo('daily')">
+        <div class="cat-icon">&#127749;</div>
+        <h3>Living with the Condition</h3>
+        <p>Daily routine, exercise, and mental health</p>
+      </a>
+      <a class="cat-card" href="#stories" onclick="navigateTo('stories')">
+        <div class="cat-icon">&#11088;</div>
+        <h3>Support Organizations</h3>
+        <p>Patient groups and communities</p>
+      </a>
+      <a class="cat-card" href="#resources" onclick="navigateTo('resources')">
+        <div class="cat-icon">&#128279;</div>
+        <h3>Resources &amp; Links</h3>
+        <p>Organizations, apps, and reading</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- ABOUT SECTION -->
+  <section class="section fade-in" id="about">
+    <div class="section-header">
+      <iconify-icon icon="solar:book-bold-duotone" class="sec-icon" style="color:var(--primary);" width="42" height="42"></iconify-icon>
+      <div>
+        <h2>What is Bronchiectasis?</h2>
+        <p>A deep understanding of the disease, its types, causes, and diagnosis</p>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-box"><div class="stat-num">680</div><div class="stat-label">cases per 100,000 (global prevalence)</div></div>
+      <div class="stat-box"><div class="stat-num">61%</div><div class="stat-label">of patients are women</div></div>
+      <div class="stat-box"><div class="stat-num">67</div><div class="stat-label">median age at diagnosis</div></div>
+      <div class="stat-box"><div class="stat-num">3</div><div class="stat-label">morphological types</div></div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">&#129978;</div>
+        <h3>What is Bronchiectasis?</h3>
+        <p>A chronic lung disease characterized by permanent, irreversible widening of the walls of the bronchi. The structural damage to the airways leads to impaired mucus clearance, chronic bacterial infections, and progressive lung injury. The name derives from the Greek: <em>bronkhia</em> (airways) + <em>ektasis</em> (widening).</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">&#128260;</div>
+        <h3>Cole's Vicious Cycle</h3>
+        <p>The central model explaining the disease is Cole's "Vicious Cycle" (1986): initial injury &rarr; mucus accumulation &rarr; chronic bacterial infection &rarr; neutrophilic inflammation &rarr; structural airway damage &rarr; further impairment of clearance, and the cycle repeats.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#128200;</div>
+        <h3>Rising Global Prevalence</h3>
+        <p>The prevalence of bronchiectasis has been rising in recent decades worldwide. A 2024 meta-analysis of 15 studies found 680 cases per 100,000 people. In the UK, prevalence rose 20% between 2008 and 2012. Reasons include improved imaging (HRCT), greater clinical awareness, and an aging population.</p>
+      </div>
+    </div>
+
+    <h3 style="color: var(--primary); font-size: 22px; margin-bottom: 20px;">The Three Morphological Types</h3>
+    <table class="styled-table">
+      <thead>
+        <tr><th>Type</th><th>Description</th><th>Severity</th><th>HRCT appearance</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Cylindrical</strong></td><td>Uniformly dilated bronchi with straight walls. The most common type.</td><td>Mild</td><td>"Tram-track" sign and "signet ring" sign</td></tr>
+        <tr><td><strong>Varicose</strong></td><td>Bronchi with alternating areas of dilation and constriction, resembling varicose veins.</td><td>Moderate</td><td>Irregular, beaded bronchial contour</td></tr>
+        <tr><td><strong>Cystic / Saccular</strong></td><td>Bronchi forming clusters of large cysts, sometimes with fluid levels.</td><td>Severe</td><td>Thin-walled cyst clusters with air-fluid levels</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="color: var(--primary); font-size: 22px; margin: 30px 0 20px;">Major Causes</h3>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">&#129440;</div>
+        <h3>Post-Infectious (30.5%)</h3>
+        <p>The most common cause worldwide. Includes childhood pneumonia, whooping cough, measles, and tuberculosis. TB alone accounts for 14.1% of cases.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">&#10067;</div>
+        <h3>Idiopathic (28.7%)</h3>
+        <p>No identifiable cause despite thorough investigation. In the European EMBARC registry, 38.1% of cases are idiopathic.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#129516;</div>
+        <h3>Cystic Fibrosis (12.5%)</h3>
+        <p>An autosomal recessive genetic disease and the best-known hereditary cause in Western countries.</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>Additional Causes</h4>
+      <p>Immunodeficiency (9.4%), COPD (7%), asthma (5.2%), primary ciliary dyskinesia (PCD, 2.9%), allergic bronchopulmonary aspergillosis (ABPA, up to 8%), autoimmune diseases (1.4%), alpha-1 antitrypsin deficiency, gastroesophageal reflux (GERD), and congenital malformations.</p>
+    </div>
+
+    <h3 style="color: var(--primary); font-size: 22px; margin: 30px 0 20px;">Frequently Asked Questions</h3>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>How is bronchiectasis diagnosed?</span>
+        <span class="arrow">&#9660;</span>
+      </div>
+      <div class="accordion-body">
+        <div class="inner">
+          The gold standard for diagnosis is <strong>high-resolution CT (HRCT)</strong> with a sensitivity of 84&#8211;97% and specificity of 82&#8211;99%. Diagnostic criteria include: the signet-ring sign (bronchial diameter greater than the adjacent artery), lack of normal tapering of the bronchi toward the periphery, and bronchi visible within 1 cm of the pleural surface. Additional tests include spirometry (not diagnostic but essential for severity assessment), sputum cultures, immunological blood tests, and in some cases a sweat test (to rule out CF) and genetic testing.
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>What are the main symptoms?</span>
+        <span class="arrow">&#9660;</span>
+      </div>
+      <div class="accordion-body">
+        <div class="inner">
+          <strong>Chronic productive cough</strong> is the most common symptom, often worse in the morning. <strong>Daily sputum production</strong> (purulent during infection), <strong>progressive breathlessness</strong>, <strong>recurrent respiratory infections</strong> (median of approximately 2 exacerbations per year), <strong>haemoptysis (coughing blood)</strong> in 23&#8211;52% of patients, chronic fatigue, chest pain, wheezing, and weight loss in advanced disease.
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>What is the life expectancy?</span>
+        <span class="arrow">&#9660;</span>
+      </div>
+      <div class="accordion-body">
+        <div class="inner">
+          With <strong>mild disease and adequate treatment</strong>, most patients can expect normal or near-normal life expectancy. With severe disease, life expectancy is reduced. A 13-year study found that 29.7% of bronchiectasis patients died, compared with 14.7% (men) and 8.9% (women) in the general population. Key risk factors include age, chronic <em>Pseudomonas aeruginosa</em> colonization (2.95-fold increase in mortality), low FEV1, low BMI, and frequency of hospitalizations.
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>How is disease severity graded?</span>
+        <span class="arrow">&#9660;</span>
+      </div>
+      <div class="accordion-body">
+        <div class="inner">
+          Two major scoring systems: <strong>BSI (Bronchiectasis Severity Index)</strong>, range 0&#8211;26, divided into mild (0&#8211;4), moderate (5&#8211;8), and severe (9+). Four-year mortality: mild 0&#8211;5.3%, moderate 4&#8211;11.3%, severe 9&#8211;29.2%. <strong>FACED Score</strong>, range 0&#8211;7, predicts 5-year mortality: mild (0&#8211;2) 4.3%, moderate (3&#8211;4) 24.7%, severe (5&#8211;7) 55.9%. The two scores complement each other &#8212; BSI is better at predicting hospitalization, FACED at predicting mortality.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TREATMENTS SECTION -->
+  <section class="section fade-in" id="treatments">
+    <div class="section-header">
+      <iconify-icon icon="solar:pills-bold-duotone" class="sec-icon" style="color:var(--primary);" width="42" height="42"></iconify-icon>
+      <div>
+        <h2>Treatments &amp; Medications</h2>
+        <p>Approved therapies, new drugs, and antibiotics</p>
+      </div>
+    </div>
+
+    <div class="info-box success">
+      <h4>Historic Breakthrough: Brensocatib (BRINSUPRI)</h4>
+      <p>In August 2025 the FDA approved the first-ever drug specifically for non-CF bronchiectasis. Brensocatib is a DPP1 (Dipeptidyl Peptidase 1) inhibitor that reduces the activity of neutrophil enzymes responsible for airway damage. In the ASPEN trial (1,721 participants, NEJM 2025) it produced a 21% reduction in the annual exacerbation rate.</p>
+    </div>
+
+    <div class="tabs" data-tab-group="treatments">
+      <button class="tab-btn active" data-tab="main" onclick="switchTab('treatments','main')">Core Medications</button>
+      <button class="tab-btn" data-tab="antibiotics" onclick="switchTab('treatments','antibiotics')">Antibiotics</button>
+      <button class="tab-btn" data-tab="emerging" onclick="switchTab('treatments','emerging')">Emerging Therapies</button>
+      <button class="tab-btn" data-tab="questions" onclick="switchTab('treatments','questions')">Questions for Your Doctor</button>
+    </div>
+
+    <!-- TAB: Core Medications -->
+    <div class="tab-content active" data-tab-content="treatments" data-tab="main">
+      <h3 style="color: var(--primary); font-size: 20px; margin-bottom: 20px;">Key Treatments per ERS 2025 Guidelines</h3>
+
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">&#128138;</div>
+          <h3>Brensocatib (BRINSUPRI)</h3>
+          <p><strong>Mechanism:</strong> DPP1 inhibitor reducing neutrophil enzymes (elastase, cathepsin G, proteinase 3).<br><strong>Dose:</strong> 10 mg or 25 mg tablet once daily.<br><strong>Manufacturer:</strong> Insmed. FDA approval: August 2025; EU approval: October 2025.<br><strong>Side effects:</strong> Upper respiratory tract infection, headache, rash, dry skin, hypertension.</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon">&#129514;</div>
+          <h3>Macrolides (Azithromycin)</h3>
+          <p><strong>Strong recommendation</strong> for high-risk patients (2+ exacerbations/year). Three major trials: EMBRACE (62% reduction), BAT (34%), BLESS (43%). <strong>Dual mechanism:</strong> anti-inflammatory and antimicrobial. Inhibits biofilm, reduces cytokines.<br><strong>Dose:</strong> 250 mg daily or 500 mg three times per week.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon">&#128168;</div>
+          <h3>Bronchodilators</h3>
+          <p><strong>Salbutamol (SABA):</strong> 100&#8211;200 mcg before airway clearance therapy and hypertonic saline inhalation.<br><strong>Formoterol / Tiotropium (LABA/LAMA):</strong> when reversible airflow obstruction or co-existing COPD is present.<br><strong>Note:</strong> These do not alter disease course, but relieve symptoms and facilitate clearance.</p>
+        </div>
+      </div>
+
+      <div class="cards-grid">
+        <div class="card blue">
+          <div class="card-icon">&#127754;</div>
+          <h3>Hypertonic Saline (Inhaled)</h3>
+          <p><strong>Mechanism:</strong> Raises airway osmolarity, improves mucociliary clearance, and reduces mucus viscosity.<br><strong>Dose:</strong> 4 ml of 6&#8211;7% NaCl, inhaled 1&#8211;2 times per day.<br><strong>Important:</strong> Inhale a bronchodilator first to prevent bronchospasm.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">&#9888;&#65039;</div>
+          <h3>Dornase Alfa (Pulmozyme)</h3>
+          <p><strong style="color: var(--warm-dark);">Contraindicated in non-CF bronchiectasis!</strong> A randomised trial of 349 adults showed that the drug caused <strong>more exacerbations and a greater decline in FEV1</strong> compared with placebo. It is recommended only in cystic fibrosis.</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon">&#128683;</div>
+          <h3>Inhaled Corticosteroids (ICS)</h3>
+          <p>ERS 2025 guidelines recommend <strong>against routine use</strong> of inhaled corticosteroids in bronchiectasis. Appropriate only in patients with co-existing asthma or eosinophilic COPD. No evidence of benefit in bronchiectasis alone, and increased risk of infection.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: Antibiotics -->
+    <div class="tab-content" data-tab-content="treatments" data-tab="antibiotics">
+      <h3 style="color: var(--primary); font-size: 20px; margin-bottom: 20px;">Antibiotics for Exacerbations and Long-Term Suppression</h3>
+
+      <div class="info-box">
+        <h4>Acute Exacerbations (14-day treatment course)</h4>
+        <p><strong>First line:</strong> Amoxicillin 500 mg three times daily or amoxicillin-clavulanate 875/125 mg twice daily.<br><strong>Suspected Pseudomonas:</strong> Ciprofloxacin 500&#8211;750 mg twice daily.<br><strong>IV therapy (severe cases):</strong> Piperacillin-tazobactam, ceftazidime, meropenem, or IV tobramycin.</p>
+      </div>
+
+      <h3 style="color: var(--primary); font-size: 20px; margin: 20px 0;">Long-Term Inhaled Antibiotics (for chronic Pseudomonas)</h3>
+      <p style="color: var(--text-light); margin-bottom: 16px;">Strong recommendation in ERS 2025 guidelines for patients with chronic <em>Pseudomonas aeruginosa</em> infection at high risk of exacerbations.</p>
+
+      <table class="styled-table">
+        <thead>
+          <tr><th>Drug</th><th>Route</th><th>Dose</th><th>Notes</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Tobramycin (TOBI)</strong></td><td>Inhaled (solution)</td><td>300 mg twice daily, 28 days on/28 off</td><td>High microbiological efficacy</td></tr>
+          <tr><td><strong>Tobramycin powder (TIP)</strong></td><td>Inhaled (DPI)</td><td>112 mg twice daily, 28 on/off</td><td>Most microbiologically effective (2025 meta-analysis)</td></tr>
+          <tr><td><strong>Colistin (Promixin)</strong></td><td>Inhaled (nebuliser)</td><td>1&#8211;2 ml twice daily</td><td>Strong observational evidence</td></tr>
+          <tr><td><strong>Gentamicin</strong></td><td>Inhaled (nebuliser)</td><td>80 mg twice daily</td><td>Excellent long-term microbiological efficacy</td></tr>
+        </tbody>
+      </table>
+
+      <div class="info-box success">
+        <h4>2024 Meta-Analysis (CHEST)</h4>
+        <p>A systematic review found that inhaled antibiotics significantly reduce exacerbation frequency (Rate Ratio 0.79; 95% CI 0.68&#8211;0.91; P = 0.0009).</p>
+      </div>
+    </div>
+
+    <!-- TAB: Emerging -->
+    <div class="tab-content" data-tab-content="treatments" data-tab="emerging">
+      <h3 style="color: var(--primary); font-size: 20px; margin-bottom: 20px;">Therapies in Development</h3>
+
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">&#129516;</div>
+          <h3>BI 1291583 (Verducatib)</h3>
+          <p><strong>Phase 3</strong> | Boehringer Ingelheim<br><strong>Mechanism:</strong> Cathepsin C (DPP1) inhibitor &#8212; same target as brensocatib but a different molecule.<br><strong>AIRTIVITY trial:</strong> ~1,200 adults, 52&#8211;76 weeks. Enrollment began in 2025, building on positive Phase 2 AIRLEAF results.</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon">&#129516;</div>
+          <h3>HSK31858</h3>
+          <p><strong>Phase 2 (China)</strong> | Haisco Pharmaceutical<br>A third DPP1 inhibitor. SAVE-BE trial (226 patients): <strong>48&#8211;59% reduction</strong> in exacerbation rate. Stronger Phase 2 results than brensocatib, though cross-trial comparisons require caution.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon">&#128137;</div>
+          <h3>Benralizumab (Fasenra)</h3>
+          <p><strong>Phase 3</strong> | AstraZeneca<br>Monoclonal antibody against IL-5R&#945;. MAHALE trial (NCT05006573): targeting <strong>the eosinophilic endotype</strong> of bronchiectasis specifically. Already approved for severe eosinophilic asthma.</p>
+        </div>
+      </div>
+
+      <div class="cards-grid">
+        <div class="card blue">
+          <div class="card-icon">&#129440;</div>
+          <h3>AP-PA02 (Bacteriophages)</h3>
+          <p><strong>Phase 2</strong> | Armata Pharmaceuticals<br>Inhaled bacteriophage cocktail against <em>Pseudomonas aeruginosa</em>. TAILWIND trial (2024): durable reduction in bacterial lung burden. A novel approach with potential to address antibiotic-resistant strains.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">&#128167;</div>
+          <h3>ARINA-1 (RVN-301)</h3>
+          <p><strong>Phase 2 completed</strong> | Renovion<br>Inhaled mucoactive and anti-inflammatory agent. CLIMB trial: quality-of-life improvement more than 2&#215; the MCID, reduced mucus viscosity and neutrophil elastase activity. Phase 3 in preparation.</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon">&#127919;</div>
+          <h3>Itepekimab</h3>
+          <p><strong>Phase 2 completed</strong> | Sanofi/Regeneron<br>Monoclonal antibody against IL-33. Blocks alarmin signalling in type 2 and non-type 2 inflammation. Results expected in 2026 (NCT06280391).</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: Questions for Doctor -->
+    <div class="tab-content" data-tab-content="treatments" data-tab="questions">
+      <h3 style="color: var(--primary); font-size: 20px; margin-bottom: 20px;">Important Questions to Ask Your Doctor</h3>
+
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">&#129657;</div>
+          <h3>About Your Diagnosis</h3>
+          <p>&#8226; What is my morphological type (cylindrical, varicose, cystic)?<br>&#8226; What is the underlying cause? Have all possible causes been investigated?<br>&#8226; What are my BSI and FACED scores?<br>&#8226; How many lung lobes are involved?</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon">&#128138;</div>
+          <h3>About Your Treatment</h3>
+          <p>&#8226; Am I a candidate for long-term macrolide therapy?<br>&#8226; Is Brensocatib (BRINSUPRI) appropriate for me?<br>&#8226; Do I need inhaled antibiotics?<br>&#8226; Which airway clearance technique is right for me?<br>&#8226; Should I be using hypertonic saline inhalation?</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon">&#128203;</div>
+          <h3>About Follow-Up</h3>
+          <p>&#8226; How often should I have sputum cultures?<br>&#8226; Do I have <em>Pseudomonas</em> colonization?<br>&#8226; What are the warning signs of an exacerbation?<br>&#8226; When should I go to the emergency department?<br>&#8226; Should I be referred for pulmonary rehabilitation?</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLINICAL TRIALS SECTION -->
+  <section class="section fade-in" id="trials">
+    <div class="section-header">
+      <iconify-icon icon="solar:test-tube-bold-duotone" class="sec-icon" style="color:var(--primary);" width="42" height="42"></iconify-icon>
+      <div>
+        <h2>Clinical Trials</h2>
+        <p>Active and recently completed studies 2024&#8211;2026</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>A New Era in Bronchiectasis Treatment</h4>
+      <p>In 2025, the first dedicated drug was approved. Three additional DPP1 inhibitors are now in development, alongside biologics targeting specific endotypes and novel approaches such as bacteriophage therapy. This is the most active research period in the history of bronchiectasis.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <span class="time-label">2025 | Phase 3 completed &rarr; FDA approval</span>
+        <h4>ASPEN &#8212; Brensocatib (NCT04594369)</h4>
+        <p>1,721 participants | Insmed | The largest bronchiectasis trial in history. Led to FDA approval (August 2025) and EU approval (October 2025). 21% reduction in annual exacerbation rate. Published in NEJM, April 2025.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">2025 | Phase 3 enrolling</span>
+        <h4>AIRTIVITY &#8212; BI 1291583 / Verducatib (NCT06872892)</h4>
+        <p>~1,200 adults | Boehringer Ingelheim | Second DPP1 inhibitor. 52&#8211;76 weeks of treatment. Building on positive results from the AIRLEAF Phase 2 trial.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">Active | Phase 3</span>
+        <h4>MAHALE &#8212; Benralizumab (NCT05006573)</h4>
+        <p>AstraZeneca | Anti-IL-5R&#945; monoclonal antibody for eosinophilic bronchiectasis. 28&#8211;52 weeks of treatment plus a 32-week open-label extension.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">2025 | Phase 2 published</span>
+        <h4>SAVE-BE &#8212; HSK31858 (China)</h4>
+        <p>226 patients at 25 centres | Haisco | 48&#8211;59% reduction in exacerbations. Published in Lancet Respiratory Medicine 2025.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">2026 | Phase 2 completed</span>
+        <h4>Itepekimab (NCT06280391)</h4>
+        <p>Sanofi/Regeneron | Anti-IL-33 monoclonal antibody. Results expected in 2026.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">2024 | Phase 2 completed</span>
+        <h4>TAILWIND &#8212; AP-PA02 (NCT05616221)</h4>
+        <p>Armata Pharmaceuticals | Inhaled bacteriophages against Pseudomonas. Durable bacterial burden reduction. Good safety profile.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">Completed | Phase 2a</span>
+        <h4>CLIMB &#8212; ARINA-1 / RVN-301 (NCT05495243)</h4>
+        <p>Renovion | Inhaled mucoactive agent. Significant quality-of-life improvement, reduced mucus viscosity. Phase 3 in preparation.</p>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 30px; display: flex; flex-wrap: wrap; justify-content: center; gap: 8px;">
+      <a href="https://clinicaltrials.gov/search?cond=Bronchiectasis&aggFilters=status:rec%20act" target="_blank" rel="noopener" class="link-btn">&#128279; Search active trials on ClinicalTrials.gov</a>
+      <a href="https://www.europeanlungfoundation.org/lung-disease-and-research/lung-diseases/bronchiectasis/" target="_blank" rel="noopener" class="link-btn green">&#128279; European Lung Foundation</a>
+    </div>
+  </section>
+
+  <!-- RESEARCH SECTION -->
+  <section class="section fade-in" id="research">
+    <div class="section-header">
+      <iconify-icon icon="solar:dna-bold-duotone" class="sec-icon" style="color:var(--primary);" width="42" height="42"></iconify-icon>
+      <div>
+        <h2>Latest Research</h2>
+        <p>Breakthroughs and key findings from 2025 and 2026</p>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">&#128220;</div>
+        <h3>The Lancet Commission (2026)</h3>
+        <p><strong>The Lancet Respiratory Medicine Commission on Bronchiectasis</strong><br>Chalmers JD et al. | A landmark paper redefining bronchiectasis as primarily a <strong>chronic inflammatory disease</strong>. Introduces the concept of "disease activity" with direct clinical implications. Calls for early identification of at-risk individuals and repurposing of anti-inflammatory drugs from other conditions.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">&#127942;</div>
+        <h3>ASPEN Trial (2025)</h3>
+        <p><strong>New England Journal of Medicine, 392(16):1569&#8211;1581</strong><br>Chalmers JD, Burgel PR, Daley CL et al. | 1,721 participants. Proof that DPP1 inhibitors are an effective treatment &#8212; leading directly to the first-ever FDA approval for the disease. A milestone in respiratory medicine.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#127919;</div>
+        <h3>Precision Medicine (2024&#8211;2025)</h3>
+        <p>Moving from "one treatment for all" to endotype-based therapy: Pseudomonas (neutrophilic), Haemophilus, eosinophilic, and mucus hypersecretion. New biomarkers: sputum neutrophil elastase (NEATstik), blood eosinophils, sputum procalcitonin. Neutrophilic patients benefit from DPP1 inhibitors; eosinophilic patients from biologics.</p>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card blue">
+        <div class="card-icon">&#128202;</div>
+        <h3>DPP1 Inhibitor Meta-Analysis (2025)</h3>
+        <p><strong>Respiratory Research (Springer Nature)</strong><br>A GRADE analysis of all DPP1 inhibitor trials confirms a <strong>class effect</strong>: consistent exacerbation reduction across brensocatib, BI 1291583, and HSK31858. Three different molecules, one mechanism, the same outcome.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128203;</div>
+        <h3>ERS 2025 Guidelines</h3>
+        <p><strong>European Respiratory Journal, 66(6):2501126</strong><br>The first guidelines to incorporate brensocatib as a recommended treatment. Strong recommendations for macrolides + brensocatib in patients with 2+ exacerbations/year. Expanded ACT recommendations including patients without productive cough who show mucus plugging on CT. Earlier referral for lung transplantation.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">&#129514;</div>
+        <h3>Predicting Macrolide Response (2025)</h3>
+        <p><strong>The Lancet Respiratory Medicine</strong><br>Observational study characterising which patient profiles respond best to long-term macrolide therapy. An important further step toward personalised medicine in bronchiectasis.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PHYSIO SECTION -->
+  <section class="section fade-in" id="physio">
+    <div class="section-header">
+      <iconify-icon icon="solar:running-bold-duotone" class="sec-icon" style="color:var(--primary);" width="42" height="42"></iconify-icon>
+      <div>
+        <h2>Airway Clearance &amp; Physiotherapy</h2>
+        <p>Techniques, devices, and pulmonary rehabilitation per ERS 2025 guidelines</p>
+      </div>
+    </div>
+
+    <div class="info-box success">
+      <h4>Strong Recommendation in ERS 2025 Guidelines</h4>
+      <p>Airway clearance techniques (ACTs) are now recommended for <strong>most patients</strong> with bronchiectasis, including patients with a dry cough who show mucus plugging on CT. This is a significant change from previous guidelines that restricted ACT to patients with chronic productive cough only.</p>
+    </div>
+
+    <h3 style="color: var(--primary); font-size: 22px; margin-bottom: 20px;">Main Techniques</h3>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">&#127784;&#65039;</div>
+        <h3>ACBT (Active Cycle of Breathing Technique)</h3>
+        <p>Breathing control, thoracic expansion exercises, and the forced expiration technique (huffing). <strong>The most widely used technique.</strong> Key advantage: can be performed independently without any device.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">&#128295;</div>
+        <h3>Oscillating PEP Devices</h3>
+        <p><strong>Aerobika, Acapella, Flutter</strong> &#8212; combine vibrations with positive expiratory pressure. <strong>The devices most preferred by patients</strong> for their portability and convenience. Conditional recommendation in ERS 2025 guidelines.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#129446;</div>
+        <h3>HFCWO Vest</h3>
+        <p>An inflatable vest delivering rapid chest wall compressions (SmartVest, The Vest). <strong>Conditional recommendation.</strong> Useful when manual techniques are not practical.</p>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card blue">
+        <div class="card-icon">&#128080;</div>
+        <h3>Manual Chest Physiotherapy (CPT)</h3>
+        <p>Percussion, postural drainage, and vibration. The traditional approach. Requires a skilled therapist or trained family member.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#129472;</div>
+        <h3>Autogenic Drainage</h3>
+        <p>Controlled breathing at different lung volumes. Requires training but no device. ELTGOL (slow expiration with open glottis in lateral position) has been shown to reduce the risk of exacerbations and improve quality of life.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">&#127939;</div>
+        <h3>Pulmonary Rehabilitation</h3>
+        <p><strong>Strong recommendation</strong> for patients with reduced exercise capacity. Includes supervised exercise training, education, and counselling. Available at specialist respiratory centres worldwide.</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>Guiding Principles</h4>
+      <p>&#8226; No single technique is superior to another. Treatment should be <strong>individualised</strong>.<br>&#8226; Session duration: <strong>10&#8211;30 minutes</strong>, once or twice daily.<br>&#8226; During exacerbations: <strong>daily</strong> physiotherapy until clearance is optimal.<br>&#8226; It is strongly recommended to learn proper technique from a respiratory physiotherapist.</p>
+    </div>
+  </section>
+
+  <!-- INFECTIONS SECTION -->
+  <section class="section fade-in" id="infections">
+    <div class="section-header">
+      <iconify-icon icon="solar:virus-bold-duotone" class="sec-icon" style="color:var(--primary);" width="42" height="42"></iconify-icon>
+      <div>
+        <h2>Infections &amp; Exacerbations</h2>
+        <p>Recognition, prevention, and management of flare-ups</p>
+      </div>
+    </div>
+
+    <div class="info-box warning">
+      <h4>What is an Exacerbation?</h4>
+      <p>A worsening of key symptoms (increased cough, sputum volume, increased sputum purulence, breathlessness, fatigue, fever, haemoptysis) lasting <strong>at least 48 hours</strong> that requires a change in treatment (usually antibiotics). The median number of exacerbations is approximately 2 per year. More than 33% of patients experience 3 or more per year.</p>
+    </div>
+
+    <h3 style="color: var(--primary); font-size: 22px; margin-bottom: 20px;">Chronic Airway Pathogens</h3>
+
+    <table class="styled-table">
+      <thead>
+        <tr><th>Pathogen</th><th>Prevalence</th><th>Clinical significance</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Haemophilus influenzae</strong></td><td>47%</td><td>Most common at initial diagnosis. Associated with less severe disease.</td></tr>
+        <tr><td><strong>Pseudomonas aeruginosa</strong></td><td>12&#8211;37%</td><td>Associated with a <strong>2.95-fold increase in mortality</strong>. Marker of severe disease.</td></tr>
+        <tr><td><strong>Moraxella catarrhalis</strong></td><td>Variable</td><td>Common coloniser.</td></tr>
+        <tr><td><strong>Staphylococcus aureus</strong></td><td>~7%</td><td>Primarily associated with CF-related bronchiectasis.</td></tr>
+        <tr><td><strong>Aspergillus fumigatus</strong></td><td>~6%</td><td>Important: screen for ABPA.</td></tr>
+        <tr><td><strong>Klebsiella pneumoniae</strong></td><td>~11.5%</td><td>More prevalent in Asian populations.</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="color: var(--primary); font-size: 22px; margin: 30px 0 20px;">Exacerbation Warning Signs</h3>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">&#128308;</div>
+        <h3>Signs Requiring a Doctor Visit</h3>
+        <p>&#8226; Significantly increased cough<br>&#8226; Change in sputum colour (green/yellow)<br>&#8226; Increased sputum volume<br>&#8226; Fever above 38&deg;C / 100.4&deg;F<br>&#8226; Breathlessness worse than usual<br>&#8226; Unusual fatigue</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">&#128680;</div>
+        <h3>Signs Requiring Emergency Care</h3>
+        <p>&#8226; Significant haemoptysis (massive coughing of blood)<br>&#8226; Severe breathlessness at rest<br>&#8226; High fever that does not resolve<br>&#8226; Confusion or excessive drowsiness<br>&#8226; Blue lips or fingertips (cyanosis)</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#128737;&#65039;</div>
+        <h3>Preventing Exacerbations</h3>
+        <p>&#8226; Regular airway clearance therapy<br>&#8226; Long-term macrolide therapy (if recommended)<br>&#8226; Annual influenza and pneumococcal vaccination<br>&#8226; Hypertonic saline inhalation (if recommended)<br>&#8226; Avoid smoking and air pollutants<br>&#8226; Balanced diet and regular exercise</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>Pseudomonas aeruginosa &#8212; the Key Threat</h4>
+      <p>Chronic <em>Pseudomonas</em> colonisation is associated with a <strong>2.95-fold increase in mortality</strong> (OR 2.95, 95% CI 1.98&#8211;4.40, P&lt;0.0001). At first detection of <em>Pseudomonas</em>, eradication should be attempted with ciprofloxacin plus inhaled antibiotics. If colonisation becomes chronic: long-term inhaled antibiotics (tobramycin, colistin, or gentamicin).</p>
+    </div>
+  </section>
+
+  <!-- NUTRITION SECTION -->
+  <section class="section fade-in" id="nutrition">
+    <div class="section-header">
+      <iconify-icon icon="solar:bowl-spoon-bold-duotone" class="sec-icon" style="color:var(--primary);" width="42" height="42"></iconify-icon>
+      <div>
+        <h2>Nutrition for Lung Health</h2>
+        <p>Foods, supplements, and eating habits that support respiratory health</p>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">&#128031;</div>
+        <h3>Anti-Inflammatory Foods</h3>
+        <p><strong>Oily fish</strong> (salmon, mackerel, sardines) &#8212; rich in omega-3 fatty acids that reduce inflammation.<br><strong>Dark leafy vegetables</strong> (spinach, kale, broccoli) &#8212; rich in antioxidants and vitamin C.<br><strong>Berries</strong> (blueberries, raspberries) &#8212; anthocyanins with anti-inflammatory properties.<br><strong>Turmeric</strong> &#8212; curcumin with well-documented anti-inflammatory effects.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">&#128170;</div>
+        <h3>Adequate Protein</h3>
+        <p>People with bronchiectasis, especially during exacerbations, <strong>need more protein</strong> to preserve muscle mass and support the immune system. Recommended sources: chicken, fish, eggs, legumes, tofu, yoghurt. <strong>Low BMI is a risk factor</strong> in the BSI scoring index.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#128167;</div>
+        <h3>Staying Well Hydrated</h3>
+        <p>Adequate hydration is essential for <strong>thinning mucus</strong> and facilitating airway clearance. Aim to drink at least <strong>8 glasses of water per day</strong>, more in hot weather or during exercise. Limit excessive caffeine intake as it can contribute to dehydration.</p>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card blue">
+        <div class="card-icon">&#127818;</div>
+        <h3>Key Vitamins &amp; Minerals</h3>
+        <p><strong>Vitamin D:</strong> Supports immune function and reduces susceptibility to infection. Testing levels is recommended.<br><strong>Vitamin C:</strong> Antioxidant, supports tissue repair.<br><strong>Zinc:</strong> Essential for normal immune function.<br><strong>Iron:</strong> Particularly important in patients with recurrent haemoptysis.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128683;</div>
+        <h3>Foods to Limit</h3>
+        <p><strong>Processed foods</strong> &#8212; high in salt and saturated fats that increase inflammation.<br><strong>Added sugar</strong> &#8212; weakens the immune system.<br><strong>Dairy products</strong> &#8212; in some patients can increase mucus production (not scientifically proven; worth testing individually).<br><strong>Alcohol</strong> &#8212; weakens the lung's defence mechanisms.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">&#128208;</div>
+        <h3>Maintaining a Healthy Weight</h3>
+        <p>Low BMI (below 18.5) adds <strong>2 points to the BSI score</strong> and is a risk factor for poor outcomes. Conversely, excess weight burdens breathing. The target is a <strong>BMI of 20&#8211;25</strong>. Dietitian referral is especially recommended for patients with unexplained weight loss.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- DAILY LIVING SECTION -->
+  <section class="section fade-in" id="daily">
+    <div class="section-header">
+      <iconify-icon icon="solar:sun-bold-duotone" class="sec-icon" style="color:var(--primary);" width="42" height="42"></iconify-icon>
+      <div>
+        <h2>Living with Bronchiectasis</h2>
+        <p>Daily routine, exercise, mental health, and travel</p>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">&#9728;&#65039;</div>
+        <h3>Recommended Morning Routine</h3>
+        <p>1. <strong>Airway clearance technique</strong> (10&#8211;30 minutes)<br>2. Inhale bronchodilator (if prescribed)<br>3. Inhale hypertonic saline (if prescribed)<br>4. Take medications (Brensocatib, macrolides)<br>5. High-protein breakfast<br>6. Drink plenty of fluids</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">&#127939;</div>
+        <h3>Exercise</h3>
+        <p>Regular physical activity is <strong>strongly encouraged</strong> and improves exercise capacity, quality of life, and mucus clearance. Recommended activities: <strong>walking, swimming, cycling</strong>. Start gradually. Exercise at an intensity that allows you to talk. Stop if you feel dizzy or severely short of breath.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#129504;</div>
+        <h3>Mental Health</h3>
+        <p>Bronchiectasis affects <strong>anxiety, depression, and chronic fatigue</strong>. The treatment burden (physiotherapy, inhalations, medications) can take hours every day. It is normal to feel frustrated. Recommended: support groups, psychotherapy, mindfulness, and open communication with those around you.</p>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card blue">
+        <div class="card-icon">&#9992;&#65039;</div>
+        <h3>Travel and Flying</h3>
+        <p>Most people with bronchiectasis <strong>can fly</strong> and travel. Tips: carry double your medication supply, obtain a medical letter in English, familiarise yourself with the healthcare system at your destination. On long flights: drink plenty of fluids, do breathing exercises, and do not forget your PEP device. <strong>Consult your doctor before long trips.</strong></p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128106;</div>
+        <h3>Family and Caregivers</h3>
+        <p>Family and caregivers play a critical role. It is important to learn about the disease, recognise signs of exacerbation, and support the treatment routine. <strong>Help with manual chest physiotherapy</strong> (percussion, postural drainage) can make a real difference. Do not neglect your own wellbeing &#8212; caregivers also need rest and support.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">&#127968;</div>
+        <h3>Home Environment</h3>
+        <p>&#8226; Keep indoor air clean; use an air purifier<br>&#8226; Avoid smoking and secondhand smoke<br>&#8226; Reduce exposure to dust and mould<br>&#8226; Clean nebulisers and PEP devices regularly<br>&#8226; Ventilate rooms regularly<br>&#8226; Stay up to date with annual influenza and pneumococcal vaccines</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORIES / SUPPORT ORGS SECTION -->
+  <section class="section fade-in" id="stories">
+    <div class="section-header">
+      <iconify-icon icon="solar:users-group-rounded-bold-duotone" class="sec-icon" style="color:var(--primary);" width="42" height="42"></iconify-icon>
+      <div>
+        <h2>Support Organizations &amp; Communities</h2>
+        <p>Patient groups, online communities, and support resources</p>
+      </div>
+    </div>
+
+    <h3 style="color: var(--primary); font-size: 22px; margin-bottom: 20px;">International Organizations</h3>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">&#127758;</div>
+        <h3>European Lung Foundation</h3>
+        <p>Dedicated bronchiectasis page with information sheets, self-management guides, and videos. Patient-friendly summary of ERS 2025 guidelines. Resources available <strong>in many languages</strong>.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">&#128752;</div>
+        <h3>Bronchiectasis News Today</h3>
+        <p>Up-to-date news on treatments, clinical trials, and research. Patient stories, expert columns, and a <strong>weekly newsletter</strong>. A trusted hub for the global bronchiectasis community.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#128202;</div>
+        <h3>EMBARC</h3>
+        <p>The European Multicentre Bronchiectasis Audit and Research Collaboration &#8212; the world's largest bronchiectasis patient registry. Drives the development of international guidelines and precision medicine research. Partners with patient organisations worldwide.</p>
+      </div>
+    </div>
+
+    <h3 style="color: var(--primary); font-size: 22px; margin: 30px 0 20px;">Additional Global Resources</h3>
+
+    <div class="cards-grid">
+      <div class="card blue">
+        <div class="card-icon">&#127482;&#127480;</div>
+        <h3>American Lung Association</h3>
+        <p>Comprehensive bronchiectasis education. <strong>Lung HelpLine:</strong> 1-800-LUNGUSA. Better Breathers Club: local support groups. Hosts <strong>World Bronchiectasis Day</strong> (1 July).</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#129309;</div>
+        <h3>COPD Foundation / Bronchiectasis &amp; NTM</h3>
+        <p>"All About Bronchiectasis" booklet, monthly virtual support groups, dedicated information line, Bronchiectasis &amp; NTM Care Center Network (from 2024), and the <strong>BronchandNTM360social</strong> platform.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">&#127468;&#127463;</div>
+        <h3>Asthma + Lung UK</h3>
+        <p>Detailed bronchiectasis information pages, free monthly BEHappy Zoom meetings for patients, and a telephone helpline. Resources include self-management plans and guidance on managing exacerbations at home.</p>
+      </div>
+    </div>
+
+    <h3 style="color: var(--primary); font-size: 22px; margin: 30px 0 20px;">Online Patient Communities</h3>
+
+    <div class="info-box success">
+      <h4>Online Support Communities</h4>
+      <p>&#8226; <strong>BronchandNTM360social</strong> &#8212; platform for patients, caregivers, and healthcare professionals<br>&#8226; <strong>Smart Patients NCFB</strong> &#8212; peer support community for bronchiectasis<br>&#8226; <strong>Mayo Clinic MAC &amp; Bronchiectasis Group</strong> &#8212; connect with fellow patients<br>&#8226; <strong>Living with Lung Disease</strong> (Inspire) &#8212; American Lung Association community<br>&#8226; <strong>BEHappy</strong> &#8212; free monthly Zoom meetings (Asthma + Lung UK)<br>&#8226; <strong>Health Unlocked</strong> &#8212; community forums for lung conditions</p>
+    </div>
+  </section>
+
+  <!-- RESOURCES SECTION -->
+  <section class="section fade-in" id="resources">
+    <div class="section-header">
+      <iconify-icon icon="solar:link-bold-duotone" class="sec-icon" style="color:var(--primary);" width="42" height="42"></iconify-icon>
+      <div>
+        <h2>Resources &amp; Links</h2>
+        <p>Leading centres, apps, and recommended reading</p>
+      </div>
+    </div>
+
+    <h3 style="color: var(--primary); font-size: 22px; margin-bottom: 20px;">Leading International Centres</h3>
+
+    <table class="styled-table">
+      <thead>
+        <tr><th>Centre</th><th>Location</th><th>Speciality / Notable</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>University of Dundee &#8212; Prof. James Chalmers</strong></td><td>Dundee, UK</td><td>World-leading bronchiectasis research. ASPEN trial chief investigator. EMBARC founder. 500+ publications.</td></tr>
+        <tr><td><strong>Hospital Vall d&#39;Hebron &#8212; Dr. Miguel Angel Martinez-Garcia</strong></td><td>Barcelona, Spain</td><td>Co-led ERS 2025 guidelines. Major contributions to FACED score and exacerbation prediction.</td></tr>
+        <tr><td><strong>University of British Columbia</strong></td><td>Vancouver, Canada</td><td>Dr. Christopher Daley &#8212; NTM and bronchiectasis specialist. Co-author ASPEN trial.</td></tr>
+        <tr><td><strong>National Jewish Health</strong></td><td>Denver, USA</td><td>World-renowned respiratory centre. Bronchiectasis &amp; NTM Care Center. Specialised multidisciplinary clinics.</td></tr>
+        <tr><td><strong>Royal Brompton Hospital</strong></td><td>London, UK</td><td>Major CF and bronchiectasis centre. Specialised physiotherapy and long-term airway clearance programmes.</td></tr>
+        <tr><td><strong>Hannover Medical School (MHH)</strong></td><td>Hannover, Germany</td><td>EMBARC member. Active bronchiectasis clinical trial site. Lung transplant centre.</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="color: var(--primary); font-size: 22px; margin: 30px 0 20px;">Recommended Apps</h3>
+
+    <div class="cards-grid">
+      <div class="card blue">
+        <div class="card-icon">&#128241;</div>
+        <h3>MyTherapy</h3>
+        <p>Medication reminders, symptom tracking, health diary, and appointment reminders.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128241;</div>
+        <h3>Breathefree</h3>
+        <p>Inhaler tracking, lung capacity monitoring, breathing exercises, and medication reminders.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">&#128241;</div>
+        <h3>Aluna</h3>
+        <p>FDA-cleared portable spirometer. Tracks FEV1%, symptoms, medications, and environmental triggers.</p>
+      </div>
+    </div>
+
+    <h3 style="color: var(--primary); font-size: 22px; margin: 30px 0 20px;">Books &amp; Guides</h3>
+
+    <div class="info-box">
+      <h4>Recommended Reading</h4>
+      <p>&#8226; <strong>"The BE CLEAR Method to Living with Bronchiectasis"</strong> &#8212; Linda Cooper Esposito, MPH. Practical tips for day-to-day self-management.<br>&#8226; <strong>"Living with Bronchiectasis"</strong> &#8212; CHSS (Chest Heart &amp; Stroke Scotland). Information booklet on breathlessness, oxygen, exercise, and pulmonary rehabilitation.<br>&#8226; <strong>ATS Patient Education Series</strong> &#8212; free downloadable information sheets on causes, symptoms, and treatments.</p>
+    </div>
+
+    <h3 style="color: var(--primary); font-size: 22px; margin: 30px 0 20px;">Essential Links</h3>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 8px;">
+      <a href="https://www.europeanlungfoundation.org/lung-disease-and-research/lung-diseases/bronchiectasis/" target="_blank" rel="noopener" class="link-btn">&#127758; European Lung Foundation</a>
+      <a href="https://www.bronchiectasisnewstoday.com/" target="_blank" rel="noopener" class="link-btn green">&#128752; Bronchiectasis News Today</a>
+      <a href="https://www.embarc.eu/" target="_blank" rel="noopener" class="link-btn orange">&#128202; EMBARC Registry</a>
+      <a href="https://clinicaltrials.gov/search?cond=Bronchiectasis" target="_blank" rel="noopener" class="link-btn">&#128300; ClinicalTrials.gov</a>
+      <a href="https://publications.ersnet.org/content/erj/66/6/2501126" target="_blank" rel="noopener" class="link-btn green">&#128203; ERS 2025 Guidelines</a>
+      <a href="https://www.asthmaandlung.org.uk/conditions/bronchiectasis" target="_blank" rel="noopener" class="link-btn orange">&#127468;&#127463; Asthma + Lung UK</a>
+      <a href="https://www.lung.org/lung-health-diseases/lung-disease-lookup/bronchiectasis" target="_blank" rel="noopener" class="link-btn">&#127482;&#127480; American Lung Association</a>
+    </div>
+  </section>
+
+  <!-- CAREPEDIA CTA -->
+  <div class="carepedia-cta">
+    <h3>Want a portal for another condition?</h3>
+    <p>CarePedia builds research-based medical information portals. If you know someone who could benefit, let us know.</p>
+    <a href="https://carepedia.org/#contact" class="cta-btn">Request a portal</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p style="margin-bottom: 16px;">
+      Built by <strong>Yuval Keshtcher</strong> and his robot helpers | <a href="https://carepedia.org" style="color:var(--accent-light);text-decoration:none;">Carepedia</a>
+    </p>
+    <a href="https://carepedia.org/#contact" target="_blank" class="portal-request-btn" style="margin-bottom: 20px;">&#43; Request a portal for another condition</a>
+    <p style="margin-top: 20px; font-size: 15px; opacity: 0.85;">All information on this site is for educational purposes only and does not constitute a substitute for professional medical advice.</p>
+    <p style="margin-top: 8px; font-size: 13px; opacity: 0.7;"><a href="/disclaimer" style="color:var(--accent-light);text-decoration:underline;">Legal Disclaimer</a> | <a href="https://carepedia.org/#contact" target="_blank" rel="noopener" style="color:var(--accent-light);text-decoration:underline;">Report an Error</a></p>
+    <p style="margin-top: 10px; font-size: 14px; opacity: 0.7;">Last updated: February 2026 | Includes citations from peer-reviewed articles</p>
+  </footer>
+
+</div>
+
+<!-- SCROLL TO TOP -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#11014;</button>
+
+<script>
+function toggleMenu() {
+  const sidebar = document.getElementById('sidebar');
+  const toggle = document.getElementById('menuToggle');
+  const overlay = document.getElementById('sidebarOverlay');
+  sidebar.classList.toggle('open');
+  toggle.classList.toggle('open');
+  overlay.classList.toggle('active');
+  toggle.textContent = sidebar.classList.contains('open') ? '\u2715' : '\u2630';
+  document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '';
+}
+
+function closeMenu() {
+  const sidebar = document.getElementById('sidebar');
+  const toggle = document.getElementById('menuToggle');
+  const overlay = document.getElementById('sidebarOverlay');
+  sidebar.classList.remove('open');
+  toggle.classList.remove('open');
+  overlay.classList.remove('active');
+  toggle.textContent = '\u2630';
+  document.body.style.overflow = '';
+}
+
+function navigate(el) {
+  document.querySelectorAll('.sidebar nav a').forEach(a => a.classList.remove('active'));
+  el.classList.add('active');
+  closeMenu();
+}
+
+function navigateTo(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+  document.querySelectorAll('.sidebar nav a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+  });
+}
+
+function toggleAccordion(header) {
+  const body = header.nextElementSibling;
+  const isOpen = header.classList.contains('open');
+  header.classList.toggle('open');
+  body.style.maxHeight = isOpen ? '0' : body.scrollHeight + 'px';
+}
+
+function switchTab(tabGroup, tabName) {
+  document.querySelectorAll('[data-tab-group="' + tabGroup + '"] .tab-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.tab === tabName);
+  });
+  document.querySelectorAll('[data-tab-content="' + tabGroup + '"]').forEach(c => {
+    c.classList.toggle('active', c.dataset.tab === tabName);
+  });
+}
+
+// Scroll progress bar + scroll spy
+window.addEventListener('scroll', () => {
+  const scrollTop = document.getElementById('scrollTop');
+  const progressBar = document.getElementById('progressBar');
+  const scrolled = window.scrollY;
+  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = maxScroll > 0 ? (scrolled / maxScroll) * 100 : 0;
+  progressBar.style.width = pct + '%';
+  scrollTop.classList.toggle('visible', scrolled > 500);
+
+  const sections = document.querySelectorAll('.section[id], .hero[id]');
+  let current = '';
+  sections.forEach(s => {
+    if (scrolled >= s.offsetTop - 100) current = s.id;
+  });
+  if (current) {
+    document.querySelectorAll('.sidebar nav a').forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  }
+});
+
+// Fade-in on scroll
+const fadeEls = document.querySelectorAll('.fade-in');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+fadeEls.forEach(el => observer.observe(el));
+
+// Portal search with clear button and debounce
+let searchTimeout;
+function searchPortal(query) {
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(() => _doSearch(query), 150);
+}
+
+function _doSearch(query) {
+  const resultsDiv = document.getElementById('searchResults');
+  const clearBtn = document.getElementById('searchClear');
+
+  clearBtn.style.display = query && query.length > 0 ? 'block' : 'none';
+
+  if (!query || query.length < 2) {
+    resultsDiv.style.display = 'none';
+    document.querySelectorAll('.section').forEach(s => {
+      s.style.display = '';
+      s.querySelectorAll('mark.search-hl').forEach(m => {
+        m.replaceWith(document.createTextNode(m.textContent));
+      });
+    });
+    return;
+  }
+  const q = query.toLowerCase();
+  const sections = document.querySelectorAll('.section[id]');
+  const matches = [];
+  sections.forEach(s => {
+    const text = s.textContent.toLowerCase();
+    const title = s.querySelector('h2') ? s.querySelector('h2').textContent : '';
+    if (text.includes(q)) {
+      const count = (text.match(new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')) || []).length;
+      matches.push({ id: s.id, title: title, count: count, el: s });
+      s.style.display = '';
+    } else {
+      s.style.display = 'none';
+    }
+  });
+  matches.sort((a, b) => b.count - a.count);
+
+  if (matches.length > 0 && matches.length < sections.length) {
+    resultsDiv.innerHTML = '<div style="background:var(--card);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);">' +
+      '<p style="font-size:14px;color:var(--text-light);margin-bottom:8px;">' + matches.length + ' results found:</p>' +
+      matches.map(m =>
+        '<a href="#' + m.id + '" onclick="navigateTo(\'' + m.id + '\')" style="display:block;padding:10px 12px;color:var(--primary);text-decoration:none;border-radius:8px;font-weight:600;transition:var(--transition);">' +
+        m.title +
+        (m.count > 1 ? ' <span style="font-size:12px;color:var(--text-light);font-weight:400;">(' + m.count + ' mentions)</span>' : '') +
+        '</a>'
+      ).join('') +
+      '</div>';
+    resultsDiv.style.display = 'block';
+  } else if (matches.length === sections.length) {
+    resultsDiv.style.display = 'none';
+  } else {
+    resultsDiv.innerHTML = '<div style="background:var(--card);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);"><p style="font-size:14px;color:var(--text-light);">No results found. Try a different word.</p></div>';
+    resultsDiv.style.display = 'block';
+  }
+}
+
+function clearSearch() {
+  const input = document.getElementById('portalSearch');
+  input.value = '';
+  input.focus();
+  searchPortal('');
+}
+</script>
+
+</body>
+</html>

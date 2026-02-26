@@ -1,0 +1,1895 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>המופיליה Hub | מרכז מידע ומחקר</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --primary: #8B0000;
+  --primary-light: #C41E3A;
+  --accent: #E63946;
+  --accent-light: #FF6B6B;
+  --warm: #fdcb6e;
+  --warm-dark: #e17055;
+  --bg: #f0f4f8;
+  --card: #ffffff;
+  --text: #2c3e50;
+  --text-light: #5d6d7e;
+  --shadow: 0 4px 20px rgba(0,0,0,0.08);
+  --shadow-hover: 0 12px 40px rgba(0,0,0,0.18);
+  --radius: 16px;
+  --transition: all 0.3s cubic-bezier(.4,0,.2,1);
+}
+
+body {
+  font-family: 'Rubik', 'Segoe UI', Tahoma, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.8;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background:
+    radial-gradient(ellipse at 10% 20%, rgba(139,0,0,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 80%, rgba(230,57,70,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(253,203,110,0.05) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* SCROLL PROGRESS BAR */
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 4px;
+  z-index: 2000;
+  background: transparent;
+}
+.scroll-progress .bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--primary-light), var(--warm));
+  border-radius: 0 0 0 4px;
+  transition: width 0.1s linear;
+}
+
+/* SIDEBAR NAV */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 280px;
+  height: 100vh;
+  background: rgba(139,0,0,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-left: 1px solid rgba(255,255,255,0.1);
+  z-index: 1000;
+  padding: 30px 20px;
+  overflow-y: auto;
+  transition: transform 0.4s cubic-bezier(.4,0,.2,1);
+}
+
+.sidebar .logo {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+.sidebar .logo .icon { font-size: 48px; }
+
+.sidebar .logo h2 {
+  color: #fff;
+  font-size: 18px;
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+.sidebar nav a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  color: rgba(255,255,255,0.8);
+  text-decoration: none;
+  border-radius: 12px;
+  margin-bottom: 4px;
+  font-size: 15px;
+  transition: var(--transition);
+}
+
+.sidebar nav a:hover, .sidebar nav a.active {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  transform: translateX(-4px);
+}
+
+.sidebar nav a .nav-icon { font-size: 22px; min-width: 30px; text-align: center; }
+
+/* MOBILE MENU */
+.menu-toggle {
+  display: none;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1100;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+.menu-toggle:hover { transform: scale(1.05); }
+.menu-toggle.open { border-radius: 50%; background: var(--warm-dark); }
+
+/* MAIN CONTENT */
+.main {
+  margin-right: 280px;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+/* HERO SECTION */
+.hero {
+  background: linear-gradient(135deg, var(--primary) 0%, #C41E3A 40%, var(--accent) 100%);
+  padding: 80px 60px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%);
+  animation: float 20s linear infinite;
+}
+
+@keyframes float {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.hero-content { position: relative; z-index: 1; max-width: 900px; }
+
+.hero h1 {
+  font-size: 52px;
+  font-weight: 800;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.hero .greeting {
+  font-size: 22px;
+  opacity: 0.95;
+  margin-bottom: 30px;
+  line-height: 1.7;
+}
+
+.hero .subtitle {
+  font-size: 18px;
+  opacity: 0.8;
+  max-width: 700px;
+}
+
+/* FADE IN ANIMATION */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* SECTION STYLES */
+.section {
+  padding: 60px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 3px solid var(--primary-light);
+}
+
+.section-header .sec-icon { font-size: 42px; }
+
+.section-header h2 {
+  font-size: 36px;
+  color: var(--primary);
+}
+
+.section-header p {
+  color: var(--text-light);
+  font-size: 16px;
+  margin-top: 4px;
+}
+
+/* CARDS */
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 30px;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  border-top: 4px solid var(--primary-light);
+  position: relative;
+  overflow: hidden;
+}
+
+.card:hover {
+  transform: translateY(-6px) scale(1.01);
+  box-shadow: var(--shadow-hover);
+}
+
+.card .card-icon { font-size: 40px; margin-bottom: 16px; }
+
+.card h3 {
+  font-size: 20px;
+  color: var(--primary);
+  margin-bottom: 12px;
+}
+
+.card p {
+  color: var(--text-light);
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+.card.green { border-top-color: var(--accent); }
+.card.orange { border-top-color: var(--warm); }
+.card.blue { border-top-color: var(--primary-light); }
+
+/* CATEGORY NAV CARDS */
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.cat-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 30px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: var(--shadow);
+  text-decoration: none;
+  color: var(--text);
+}
+
+.cat-card:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: var(--shadow-hover);
+}
+
+.cat-card .cat-icon { font-size: 48px; margin-bottom: 14px; }
+
+.cat-card h3 { font-size: 18px; color: var(--primary); margin-bottom: 8px; }
+.cat-card p { font-size: 13px; color: var(--text-light); }
+
+/* ACCORDION */
+.accordion { margin-bottom: 16px; }
+
+.accordion-header {
+  background: var(--card);
+  padding: 20px 24px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.accordion-header:hover { background: #fdf2f2; }
+
+.accordion-header .arrow {
+  transition: transform 0.3s ease;
+  font-size: 20px;
+}
+
+.accordion-header.open .arrow { transform: rotate(180deg); }
+
+.accordion-body {
+  max-height: 0;
+  overflow: clip;
+  transition: max-height 0.4s ease;
+  background: var(--card);
+  border-radius: 0 0 var(--radius) var(--radius);
+  margin-top: -8px;
+}
+
+.accordion-body .inner {
+  padding: 20px 24px 24px;
+  color: var(--text-light);
+  line-height: 2;
+}
+
+/* TABS */
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.tab-btn {
+  padding: 12px 24px;
+  background: var(--card);
+  border: 2px solid #dde4eb;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--text-light);
+  transition: var(--transition);
+}
+
+.tab-btn:hover { border-color: var(--primary-light); color: var(--primary); }
+
+.tab-btn.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+.tab-content { display: none; animation: fadeIn 0.4s ease; }
+.tab-content.active { display: block; }
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* INFO BOX */
+.info-box {
+  background: linear-gradient(135deg, #fdf2f2 0%, #fce4e4 100%);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  margin: 24px 0;
+  border-right: 5px solid var(--primary-light);
+}
+
+.info-box.warning {
+  background: linear-gradient(135deg, #fef9e7 0%, #fdebd0 100%);
+  border-right-color: var(--warm);
+}
+
+.info-box.success {
+  background: linear-gradient(135deg, #e8f8f0 0%, #d5f5e3 100%);
+  border-right-color: var(--accent);
+}
+
+.info-box h4 { color: var(--primary); margin-bottom: 8px; font-size: 17px; }
+.info-box p { color: var(--text-light); font-size: 15px; }
+
+/* LINK BUTTON */
+.link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: var(--primary);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 30px;
+  font-size: 15px;
+  transition: var(--transition);
+  margin: 6px;
+}
+
+.link-btn:hover { background: var(--primary-light); transform: translateY(-2px); }
+.link-btn.green { background: var(--accent); }
+.link-btn.green:hover { background: var(--accent-light); color: var(--text); }
+.link-btn.orange { background: var(--warm-dark); }
+.link-btn.orange:hover { background: var(--warm); color: var(--text); }
+
+/* TABLE */
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  background: var(--card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.styled-table thead { background: var(--primary); color: #fff; }
+.styled-table th { padding: 16px 20px; text-align: right; font-weight: 600; }
+.styled-table td { padding: 14px 20px; border-bottom: 1px solid #eee; }
+.styled-table tbody tr:hover { background: #f7fafc; }
+
+/* TIMELINE */
+.timeline { position: relative; padding-right: 40px; margin: 30px 0; }
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  right: 12px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--primary-light), var(--accent));
+  border-radius: 3px;
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 30px;
+  padding: 24px;
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  right: -34px;
+  top: 30px;
+  width: 16px;
+  height: 16px;
+  background: var(--accent);
+  border-radius: 50%;
+  border: 3px solid var(--bg);
+}
+
+.timeline-item h4 { color: var(--primary); font-size: 18px; margin-bottom: 8px; }
+.timeline-item p { color: var(--text-light); }
+.timeline-item .time-label {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+/* STAT BOXES */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  margin: 30px 0;
+}
+
+.stat-box {
+  background: linear-gradient(135deg, var(--card) 0%, #f7fafc 100%);
+  border-radius: var(--radius);
+  padding: 24px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  border-bottom: 3px solid var(--primary-light);
+  transition: var(--transition);
+}
+
+.stat-box:nth-child(2) { border-bottom-color: var(--accent); }
+.stat-box:nth-child(3) { border-bottom-color: var(--warm); }
+.stat-box:nth-child(4) { border-bottom-color: var(--warm-dark); }
+
+.stat-box:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+
+.stat-box .stat-num {
+  font-size: 36px;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.stat-box .stat-label { color: var(--text-light); font-size: 14px; margin-top: 6px; }
+
+/* CREDIT BAR */
+.credit-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 14px 20px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.85);
+  position: relative;
+  z-index: 1;
+}
+.credit-bar span { opacity: 0.9; }
+
+/* PORTAL REQUEST BUTTON */
+.portal-request-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  background: var(--primary-light);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 30px;
+  font-size: 14px;
+  font-family: inherit;
+  font-weight: 600;
+  transition: var(--transition);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+.portal-request-btn:hover { background: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+
+/* FOOTER */
+.footer {
+  background: var(--primary);
+  color: rgba(255,255,255,0.8);
+  text-align: center;
+  padding: 40px;
+  font-size: 14px;
+}
+
+/* SCROLL TO TOP */
+.scroll-top {
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+  width: 50px;
+  height: 50px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 999;
+}
+
+.scroll-top.visible { opacity: 1; pointer-events: auto; }
+.scroll-top:hover { background: var(--primary-light); transform: translateY(-3px); }
+
+/* SEARCH */
+.search-box {
+  position: relative;
+  margin: 0 auto;
+}
+.search-box input {
+  width: 100%;
+  padding: 14px 20px 14px 50px;
+  border: 2px solid rgba(139,0,0,0.15);
+  border-radius: 30px;
+  font-size: 16px;
+  font-family: 'Rubik', sans-serif;
+  background: var(--card);
+  color: var(--text);
+  transition: var(--transition);
+  box-sizing: border-box;
+}
+.search-box input:focus {
+  outline: none;
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 4px rgba(196,30,58,0.1);
+}
+.search-box .search-icon {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  pointer-events: none;
+}
+
+/* MOBILE OVERLAY */
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.sidebar-overlay.active {
+  display: block;
+  opacity: 1;
+}
+
+/* RESPONSIVE — TABLETS */
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(100%); width: 270px; }
+  .sidebar.open { transform: translateX(0); }
+  .menu-toggle { display: block; }
+  .main { margin-right: 0; }
+  .hero { padding: 60px 30px; }
+  .section { padding: 40px 24px; }
+}
+
+/* RESPONSIVE — PHONES */
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(100%); width: 260px; }
+  .sidebar.open { transform: translateX(0); }
+  .menu-toggle { display: block; }
+  .main { margin-right: 0; }
+
+  /* Hero */
+  .hero { padding: 40px 20px 36px; }
+  .hero h1 { font-size: 28px; line-height: 1.3; }
+  .hero .greeting { font-size: 16px; line-height: 1.7; }
+  .hero .subtitle { font-size: 14px; }
+
+  /* Sections */
+  .section { padding: 28px 16px; }
+  .section-header { flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 24px; padding-bottom: 14px; }
+  .section-header .sec-icon { font-size: 32px; }
+  .section-header h2 { font-size: 24px; }
+  .section-header p { font-size: 14px; }
+
+  /* Cards */
+  .cards-grid { grid-template-columns: 1fr; gap: 16px; margin-bottom: 24px; }
+  .card { padding: 20px; }
+  .card:hover { transform: none; } /* disable hover jank on touch */
+  .cat-card:hover { transform: none; }
+  .stat-box:hover { transform: none; }
+  .link-btn:hover { transform: none; }
+  .portal-request-btn:hover { transform: none; }
+  .scroll-top:hover { transform: none; }
+  .sidebar nav a:hover { transform: none; }
+  .card .card-icon { font-size: 32px; margin-bottom: 10px; }
+  .card h3 { font-size: 17px; }
+  .card p { font-size: 14px; }
+
+  /* Category nav cards */
+  .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 24px; }
+  .cat-card { padding: 18px 12px; }
+  .cat-card .cat-icon { font-size: 32px; margin-bottom: 8px; }
+  .cat-card h3 { font-size: 14px; }
+  .cat-card p { font-size: 11px; }
+
+  /* Stats */
+  .stats-row { grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 20px 0; }
+  .stat-box { padding: 16px 10px; }
+  .stat-box .stat-num { font-size: 26px; }
+  .stat-box .stat-label { font-size: 12px; }
+
+  /* Tabs */
+  .tabs { gap: 6px; margin-bottom: 16px; }
+  .tab-btn { padding: 8px 14px; font-size: 13px; border-radius: 20px; }
+
+  /* Tables — horizontal scroll */
+  .styled-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 13px; }
+  .styled-table th { padding: 10px 12px; font-size: 13px; white-space: nowrap; }
+  .styled-table td { padding: 10px 12px; font-size: 13px; min-width: 100px; }
+
+  /* Info boxes */
+  .info-box { padding: 16px 18px; margin: 16px 0; }
+  .info-box h4 { font-size: 15px; }
+  .info-box p { font-size: 13px; }
+
+  /* Accordions */
+  .accordion-header { padding: 14px 16px; font-size: 15px; }
+  .accordion-body .inner { padding: 14px 16px 18px; font-size: 14px; line-height: 1.9; }
+
+  /* Timeline */
+  .timeline { padding-right: 30px; margin: 20px 0; }
+  .timeline-item { padding: 16px; margin-bottom: 20px; }
+  .timeline-item::before { right: -24px; width: 12px; height: 12px; top: 22px; }
+  .timeline-item h4 { font-size: 16px; }
+  .timeline-item p { font-size: 13px; }
+
+  /* Link buttons */
+  .link-btn { padding: 10px 16px; font-size: 13px; margin: 4px 2px; }
+
+  /* Search box */
+  .search-box input { padding: 12px 18px 12px 40px; font-size: 14px; }
+
+  /* Footer */
+  .footer { padding: 28px 16px; font-size: 13px; }
+
+  /* Scroll to top */
+  .scroll-top { width: 42px; height: 42px; font-size: 18px; bottom: 20px; left: 16px; }
+}
+
+/* RESPONSIVE — SMALL PHONES */
+@media (max-width: 380px) {
+  .hero h1 { font-size: 24px; }
+  .hero .greeting { font-size: 15px; }
+  .cat-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .cat-card { padding: 14px 8px; }
+  .cat-card .cat-icon { font-size: 26px; }
+  .cat-card h3 { font-size: 13px; }
+  .cat-card p { display: none; }
+  .stats-row { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .stat-box .stat-num { font-size: 22px; }
+  .section { padding: 20px 12px; }
+  .tab-btn { padding: 7px 10px; font-size: 12px; }
+}
+/* DISCLAIMER BANNER */
+.disclaimer-banner {
+  background: linear-gradient(135deg, #FFF3E0, #FFF8E1);
+  border-bottom: 2px solid #FFB74D;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 13px;
+  color: #5D4037;
+  position: relative;
+  z-index: 1500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.disclaimer-banner strong { color: #E65100; }
+.disclaimer-banner a {
+  color: #1A73E8;
+  text-decoration: underline;
+  font-weight: 600;
+}
+.disclaimer-banner a:hover { color: #0D47A1; }
+@media (max-width: 768px) {
+  .disclaimer-banner { font-size: 12px; padding: 8px 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- DISCLAIMER BANNER -->
+<div class="disclaimer-banner">
+  <span>⚠️</span>
+  <span><strong>This is not medical advice.</strong> Always consult your doctor. <a href="/disclaimer">Full legal disclaimer &rarr;</a></span>
+</div>
+
+<!-- SCROLL PROGRESS BAR -->
+<div class="scroll-progress"><div class="bar" id="progressBar"></div></div>
+
+<!-- MOBILE OVERLAY -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeMenu()"></div>
+
+<!-- MOBILE MENU TOGGLE -->
+<button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">☰</button>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="logo">
+    <div class="icon">🩸</div>
+    <h2>המופיליה Hub</h2>
+  </div>
+  <nav>
+    <a href="#home" class="active" onclick="navigate(this)"><span class="nav-icon">🏠</span>דף הבית</a>
+    <a href="#about" onclick="navigate(this)"><span class="nav-icon">📖</span>מה זה המופיליה?</a>
+    <a href="#treatments" onclick="navigate(this)"><span class="nav-icon">💊</span>טיפולים ותרופות</a>
+    <a href="#trials" onclick="navigate(this)"><span class="nav-icon">🔬</span>ניסויים קליניים</a>
+    <a href="#research" onclick="navigate(this)"><span class="nav-icon">🧬</span>מחקרים חדשים</a>
+    <a href="#children" onclick="navigate(this)"><span class="nav-icon">👶</span>ילדים והמופיליה</a>
+    <a href="#lifestyle" onclick="navigate(this)"><span class="nav-icon">🏃</span>אורח חיים בריא</a>
+    <a href="#physio" onclick="navigate(this)"><span class="nav-icon">🏋️</span>פיזיותרפיה וספורט</a>
+    <a href="#women" onclick="navigate(this)"><span class="nav-icon">👩</span>נשים והמופיליה</a>
+    <a href="#emergency" onclick="navigate(this)"><span class="nav-icon">🚨</span>פרוטוקול חירום</a>
+    <a href="#psychological-approach" onclick="navigate(this)"><span class="nav-icon">🧠</span>גישה פסיכולוגית</a>
+    <a href="#stories" onclick="navigate(this)"><span class="nav-icon">⭐</span>סיפורי הצלחה</a>
+    <a href="#resources" onclick="navigate(this)"><span class="nav-icon">🔗</span>קישורים ומשאבים</a>
+  </nav>
+</aside>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h1>מרכז למידה על המופיליה</h1>
+      <p class="greeting">
+        מקום אחד עם מידע מעמיק, מחקרים עדכניים, וכלים מעשיים<br>
+        לאנשים החיים עם המופיליה ולמשפחותיהם.
+      </p>
+      <p class="subtitle">
+        יש התקדמות דרמטית בטיפול. טיפול גנטי, תרופות חדשניות, ופרופילקסיס מודרני משנים את החיים. כאן ניתן למצוא מידע מבוסס מחקר.
+      </p>
+      <div class="search-box" style="margin-top: 30px; max-width: 600px;">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="portalSearch" placeholder="חיפוש בפורטל..." oninput="searchPortal(this.value)">
+      </div>
+      <div id="searchResults" style="display:none; margin-top: 16px; max-width: 600px;"></div>
+    </div>
+    <div class="credit-bar">
+      <span>נבנה על ידי <strong>יובל קשטכר</strong> ועוזריו הרובוטים</span>
+      <a href="https://carepedia.org/#contact" target="_blank" class="portal-request-btn">
+        ➕ רוצים פורטל למחלה אחרת?
+      </a>
+    </div>
+  </section>
+
+  <!-- QUICK NAVIGATION -->
+  <section class="section fade-in" style="padding-bottom: 20px;">
+    <div class="cat-grid">
+      <a class="cat-card" href="#about" onclick="navigateTo('about')">
+        <div class="cat-icon">📖</div>
+        <h3>מה זה המופיליה?</h3>
+        <p>הבנה בסיסית של המחלה</p>
+      </a>
+      <a class="cat-card" href="#treatments" onclick="navigateTo('treatments')">
+        <div class="cat-icon">💊</div>
+        <h3>טיפולים ותרופות</h3>
+        <p>תרופות מאושרות וטיפולים חדשים</p>
+      </a>
+      <a class="cat-card" href="#trials" onclick="navigateTo('trials')">
+        <div class="cat-icon">🔬</div>
+        <h3>ניסויים קליניים</h3>
+        <p>מחקרים פעילים בארה"ב וישראל</p>
+      </a>
+      <a class="cat-card" href="#research" onclick="navigateTo('research')">
+        <div class="cat-icon">🧬</div>
+        <h3>מחקרים חדשים</h3>
+        <p>פריצות דרך ותגליות אחרונות</p>
+      </a>
+      <a class="cat-card" href="#children" onclick="navigateTo('children')">
+        <div class="cat-icon">👶</div>
+        <h3>ילדים והמופיליה</h3>
+        <p>מדריך להורים ומשפחות</p>
+      </a>
+      <a class="cat-card" href="#lifestyle" onclick="navigateTo('lifestyle')">
+        <div class="cat-icon">🏃</div>
+        <h3>אורח חיים בריא</h3>
+        <p>תזונה, ספורט וטיפולים משלימים</p>
+      </a>
+      <a class="cat-card" href="#physio" onclick="navigateTo('physio')">
+        <div class="cat-icon">🏋️</div>
+        <h3>פיזיותרפיה וספורט</h3>
+        <p>שימור מפרקים ופעילות גופנית</p>
+      </a>
+      <a class="cat-card" href="#women" onclick="navigateTo('women')">
+        <div class="cat-icon">👩</div>
+        <h3>נשים והמופיליה</h3>
+        <p>נשאות, תסמינים והריון</p>
+      </a>
+      <a class="cat-card" href="#emergency" onclick="navigateTo('emergency')">
+        <div class="cat-icon">🚨</div>
+        <h3>פרוטוקול חירום</h3>
+        <p>מה לעשות במצב חירום</p>
+      </a>
+      <a class="cat-card" href="#psychological-approach" onclick="navigateTo('psychological-approach')">
+        <div class="cat-icon">🧠</div>
+        <h3>גישה פסיכולוגית</h3>
+        <p>בריאות נפשית והתמודדות רגשית</p>
+      </a>
+      <a class="cat-card" href="#stories" onclick="navigateTo('stories')">
+        <div class="cat-icon">⭐</div>
+        <h3>סיפורי הצלחה</h3>
+        <p>אנשים שחיים חיים מלאים</p>
+      </a>
+      <a class="cat-card" href="#resources" onclick="navigateTo('resources')">
+        <div class="cat-icon">🔗</div>
+        <h3>קישורים ומשאבים</h3>
+        <p>אתרים, ארגונים וכלים</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- SECTION: ABOUT HEMOPHILIA -->
+  <section class="section fade-in" id="about">
+    <div class="section-header">
+      <span class="sec-icon">📖</span>
+      <div>
+        <h2>מה זה המופיליה?</h2>
+        <p>הבנה בסיסית של המחלה, הסוגים והתסמינים</p>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-num">1.2M+</div>
+        <div class="stat-label">אנשים חיים עם המופיליה בעולם</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">400,000+</div>
+        <div class="stat-label">עם המופיליה A קשה</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">80-85%</div>
+        <div class="stat-label">מהמקרים הם המופיליה A</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">~1,000</div>
+        <div class="stat-label">מטופלים בישראל</div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>מה קורה בגוף?</h4>
+      <p>המופיליה היא מחלת דימום תורשתית שבה הדם אינו נקרש כראוי בגלל חוסר בגורמי קרישה ספציפיים. בהמופיליה A חסר פקטור VIII ובהמופיליה B חסר פקטור IX. הגנים לשני הפקטורים נמצאים על כרומוזום X, ולכן המחלה פוגעת בעיקר בגברים. נשים הן בדרך כלל נשאיות, אך חלקן סובלות מתסמינים. בישראל, המופיליה C (חוסר בפקטור XI) שכיחה במיוחד באוכלוסייה האשכנזית (עד 8% נשאים).</p>
+    </div>
+
+    <h3 style="font-size: 24px; color: var(--primary); margin: 30px 0 20px;">סוגי המופיליה</h3>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🅰️</div>
+        <h3>המופיליה A (קלאסית)</h3>
+        <p>חוסר בפקטור VIII. 80-85% מהמקרים. חומרה נקבעת לפי רמת הפקטור: קלה (5-40%), בינונית (1-5%), קשה (מתחת ל1%).</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">🅱️</div>
+        <h3>המופיליה B (כריסמס)</h3>
+        <p>חוסר בפקטור IX. 15-20% מהמקרים. טיפול דומה אך בפקטור שונה. Alprolix ו-Idelvion מאפשרים הזרקה כל שבוע עד שבועיים.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">🆎</div>
+        <h3>המופיליה C (רוזנטל)</h3>
+        <p>חוסר בפקטור XI. שכיחה במיוחד ביהודים אשכנזים. תורשה אוטוזומלית רצסיבית, פוגעת בשני המינים. בדרך כלל קלה יותר.</p>
+      </div>
+      <div class="card blue">
+        <div class="card-icon">⚠️</div>
+        <h3>המופיליה נרכשת</h3>
+        <p>לא תורשתית. נגרמת מנוגדנים עצמיים נגד פקטור VIII. נדירה: 1-4 למיליון בשנה. שכיחה יותר בגיל מבוגר.</p>
+      </div>
+    </div>
+
+    <h3 style="font-size: 24px; color: var(--primary); margin: 30px 0 20px;">תסמינים עיקריים</h3>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🩸</div>
+        <h3>דימומים במפרקים (Hemarthrosis)</h3>
+        <p>דימום חוזר בעיקר בברכיים, מרפקים וקרסוליים. גורם לכאב, נפיחות, חום מקומי ונזק מצטבר למפרקים (ארתרופתיה המופילית).</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">💪</div>
+        <h3>דימומים בשרירים</h3>
+        <p>דימום עמוק בשרירים שיכול לגרום ללחץ על עצבים וכלי דם. דימום בשריר ה-iliopsoas (בטן/ירך) הוא מצב חירום.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">🔴</div>
+        <h3>חבורות מוגזמות</h3>
+        <p>חבורות גדולות ותכופות, לפעמים ללא סיבה ברורה. אחד הסימנים הראשונים בילדים קטנים.</p>
+      </div>
+      <div class="card blue">
+        <div class="card-icon">🦷</div>
+        <h3>דימום ממושך</h3>
+        <p>דימום שלא נעצר אחרי חתכים, ניתוחים, עקירות שיניים או פציעות. גם דימום פנימי ספונטני בהמופיליה קשה.</p>
+      </div>
+    </div>
+
+    <div class="info-box success">
+      <h4>החדשות הטובות</h4>
+      <p>בעשורים האחרונים חל מהפך דרמטי בטיפול בהמופיליה. תוחלת החיים עלתה מ30 שנה בשנות ה60 לתוחלת חיים כמעט תקינה היום. טיפול מניעתי (פרופילקסיס) מונע עד 95% מדימומים ספונטניים. ובשנים 2022-2024 אושרו טיפולים גנטיים שמבטיחים שינוי מהותי: Hemgenix להמופיליה B ו-Roctavian להמופיליה A.</p>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>איך מאבחנים המופיליה?</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <div class="inner">
+          <p>בדיקות דם: PT (תקין), aPTT (מוארך), רמות פקטורים ספציפיים (VIII, IX, XI). בדיקות גנטיות לזיהוי המוטציה המדויקת ולאבחון נשאיות. אבחון טרום לידתי אפשרי בשבוע 11-14 (דגימת סיסי שליה) או 15-20 (אמניוצנטזה). PGD (אבחון גנטי טרום השרשה) גם אפשרי. בישראל: סל הבריאות כולל בדיקות גנטיות לנשאיות עם היסטוריה משפחתית.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: TREATMENTS -->
+  <section class="section fade-in" id="treatments">
+    <div class="section-header">
+      <span class="sec-icon">💊</span>
+      <div>
+        <h2>טיפולים ותרופות</h2>
+        <p>התרופות העיקריות, טיפולים חדשניים, ומה לשאול את הרופא</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>עקרון הטיפול</h4>
+      <p>עקרון הטיפול בהמופיליה הוא מניעה (פרופילקסיס) ולא רק טיפול בדימומים. מחקרים גדולים הוכיחו שטיפול מניעתי קבוע מפחית דימומים ב95%, מונע נזק מפרקי, ומשפר משמעותית את איכות החיים. WHO, WFH ו-ISTH ממליצים על פרופילקסיס כסטנדרט טיפול.</p>
+    </div>
+
+    <!-- Tabs for treatments -->
+    <div class="tabs" data-tab-group="treatments">
+      <button class="tab-btn active" data-tab="main-meds" onclick="switchTab('treatments','main-meds')">תרופות עיקריות</button>
+      <button class="tab-btn" data-tab="new-treatments" onclick="switchTab('treatments','new-treatments')">טיפולים חדשניים</button>
+      <button class="tab-btn" data-tab="inhibitors" onclick="switchTab('treatments','inhibitors')">מעכבים (Inhibitors)</button>
+      <button class="tab-btn" data-tab="ask-doctor" onclick="switchTab('treatments','ask-doctor')">שאלות לרופא</button>
+    </div>
+
+    <!-- Tab: Main Medications -->
+    <div class="tab-content active" data-tab-content="treatments" data-tab="main-meds">
+      <table class="styled-table">
+        <thead>
+          <tr><th>תרופה</th><th>סוג</th><th>מה היא עושה</th><th>הערות</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>פקטור VIII רקומביננטי</strong><br>(Advate, Kovaltry, Eloctate)</td>
+            <td>החלפת פקטור</td>
+            <td>מחליף את הפקטור החסר בהמופיליה A</td>
+            <td>הטיפול הסטנדרטי. הזרקה לווריד 2-3 פעמים בשבוע. Eloctate: זמן מחצית חיים ארוך</td>
+          </tr>
+          <tr>
+            <td><strong>פקטור IX רקומביננטי</strong><br>(BeneFIX, Alprolix, Idelvion)</td>
+            <td>החלפת פקטור</td>
+            <td>מחליף את הפקטור החסר בהמופיליה B</td>
+            <td>Alprolix ו-Idelvion: הזרקה פעם בשבוע עד שבועיים בלבד</td>
+          </tr>
+          <tr>
+            <td><strong>Emicizumab</strong><br>(Hemlibra)</td>
+            <td>נוגדן דו-ספציפי</td>
+            <td>מחקה את פעולת פקטור VIII. מהפכני: הזרקה תת-עורית</td>
+            <td>אושר ב2017. מפחית דימומים ב87%. מתאים גם למטופלים עם מעכבים</td>
+          </tr>
+          <tr>
+            <td><strong>DDAVP</strong><br>(Desmopressin)</td>
+            <td>משחרר פקטור</td>
+            <td>משחרר פקטור VIII מהאגור הטבעי בגוף</td>
+            <td>יעיל בהמופיליה A קלה בלבד. ניתן בזריקה, עירוי או תרסיס לאף</td>
+          </tr>
+          <tr>
+            <td><strong>חומצה טרנקסמית</strong><br>(Cyklokapron)</td>
+            <td>אנטי-פיברינוליטי</td>
+            <td>מונע פירוק קריש קיים</td>
+            <td>מצוין לדימום בחלל הפה, אחרי טיפולי שיניים. כדורים או שטיפת פה</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Tab: New Treatments -->
+    <div class="tab-content" data-tab-content="treatments" data-tab="new-treatments">
+      <div class="cards-grid">
+        <div class="card green">
+          <div class="card-icon">🧬</div>
+          <h3>טיפול גנטי: Hemgenix</h3>
+          <p>אושר FDA בנובמבר 2022 להמופיליה B. וקטור AAV5 מביא עותק תקין של גן FIX לכבד. במחקר HOPE-B: 94% מהמטופלים הפסיקו פרופילקסיס שגרתי. רמות FIX עלו ל36.2% בממוצע ונשארו יציבות גם 3 שנים אחרי. מחיר: 3.5 מיליון דולר לטיפול חד פעמי.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon">🧬</div>
+          <h3>טיפול גנטי: Roctavian</h3>
+          <p>אושר EMA ב2022 ו-FDA ב2023 להמופיליה A קשה. וקטור AAV5 עם גן FVIII מקוצר. 87% מהמטופלים הפסיקו פרופילקסיס בשנה הראשונה. אך: רמות FVIII יורדות בהדרגה עם הזמן. נדרש מעקב ארוך טווח.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">💉</div>
+          <h3>Fitusiran — Alhemo</h3>
+          <p>נוגדן נגד antithrombin. הזרקה תת-עורית פעם בחודש בלבד. מפחית דימומים ב90%+. מתאים להמופיליה A ו-B, עם ובלי מעכבים. אושר באירופה ויפן, בתהליך אישור FDA.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔬</div>
+          <h3>Concizumab</h3>
+          <p>נוגדן נגד TFPI (Tissue Factor Pathway Inhibitor). הזרקה תת-עורית יומית. הפחתת דימומים של 85%+. בשלבי אישור מתקדמים (Phase 3: explorer7, explorer8).</p>
+        </div>
+        <div class="card blue">
+          <div class="card-icon">🎯</div>
+          <h3>Mim8 — נובו נורדיסק</h3>
+          <p>נוגדן דו-ספציפי חדש (הדור הבא אחרי Emicizumab). תוצאות Phase 3 מבטיחות (FRONTIER). הזרקה תת-עורית פעם בשבוע או חודש. צפוי להגיש לאישור FDA ב2025-2026.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: Inhibitors -->
+    <div class="tab-content" data-tab-content="treatments" data-tab="inhibitors">
+      <div class="info-box warning">
+        <h4>האתגר הגדול ביותר</h4>
+        <p>כ30% מחולי המופיליה A קשה ו3-5% מחולי המופיליה B מפתחים מעכבים (נוגדנים נגד הפקטור המוזרק). זהו האתגר הגדול ביותר בטיפול בהמופיליה כיום.</p>
+      </div>
+
+      <div class="cards-grid" style="margin-top: 20px;">
+        <div class="card">
+          <h3>Bypassing Agents</h3>
+          <p>FEIBA (aPCC) ו-NovoSeven (rFVIIa). עוקפים את הצורך בפקטור VIII/IX. יעילים ב80-90% מאירועי הדימום. משמשים לטיפול חריף ולמניעה.</p>
+        </div>
+        <div class="card green">
+          <h3>ITI — סבילות חיסונית</h3>
+          <p>הזרקות תכופות של פקטור במינון גבוה למשך חודשים עד שנים. המטרה: "ללמד" את מערכת החיסון לקבל את הפקטור. שיעור הצלחה: 60-80% בהמופיליה A. טיפול יקר ומורכב אך שווה את ההשקעה.</p>
+        </div>
+        <div class="card orange">
+          <h3>Emicizumab למעכבים</h3>
+          <p>שינה לחלוטין את הטיפול במטופלים עם מעכבים. לא מושפע מנוגדנים כי פועל בדרך שונה. הפחית דימומים ב87% במחקר HAVEN 1 (NEJM 2017).</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: Ask Doctor -->
+    <div class="tab-content" data-tab-content="treatments" data-tab="ask-doctor">
+      <div class="cards-grid" style="margin-top: 20px;">
+        <div class="card">
+          <h3>שאלות על טיפול מניעתי</h3>
+          <ul style="padding-right: 16px; color: var(--text-light);">
+            <li>האם אני מקבל את הפרופילקסיס האופטימלי?</li>
+            <li>האם יש טיפול עם הזרקות פחות תכופות?</li>
+            <li>מה לגבי Emicizumab?</li>
+            <li>האם אני מועמד לטיפול גנטי?</li>
+          </ul>
+        </div>
+        <div class="card green">
+          <h3>שאלות על מעכבים</h3>
+          <ul style="padding-right: 16px; color: var(--text-light);">
+            <li>מהי הסבירות שאפתח מעכבים?</li>
+            <li>אילו בדיקות צריך לעשות?</li>
+            <li>מתי כדאי לשקול ITI?</li>
+            <li>האם Emicizumab מתאים לי?</li>
+          </ul>
+        </div>
+        <div class="card orange">
+          <h3>שאלות על מפרקים</h3>
+          <ul style="padding-right: 16px; color: var(--text-light);">
+            <li>מה מצב המפרקים שלי (MRI/אולטרסאונד)?</li>
+            <li>האם יש נזק מפרקי שמתחיל?</li>
+            <li>איזו פיזיותרפיה מומלצת?</li>
+            <li>מתי לשקול ניתוח אורתופדי?</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: CLINICAL TRIALS -->
+  <section class="section fade-in" id="trials">
+    <div class="section-header">
+      <span class="sec-icon">🔬</span>
+      <div>
+        <h2>ניסויים קליניים</h2>
+        <p>מחקרים פעילים בעולם ובישראל</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>ניסויים קליניים בהמופיליה</h4>
+      <p>מעל 300 ניסויים קליניים פעילים בהמופיליה ברחבי העולם. ישראל משתתפת במספר מחקרים חשובים, בעיקר במרכזים הרפואיים שיבא, הדסה ורמב"ם.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="time-label">טיפול גנטי</div>
+        <h4>Hemgenix: מעקב ארוך טווח</h4>
+        <p>מחקר HOPE-B ממשיך לעקוב אחרי מטופלי המופיליה B שקיבלו את הטיפול הגנטי. נתוני 3 שנים: רמות FIX יציבות, 94% הפסיקו פרופילקסיס. CSL Behring ממשיכה מעקב.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="time-label">טיפול גנטי</div>
+        <h4>Roctavian: מעקב והרחבה</h4>
+        <p>BioMarin ממשיכה מעקב אחרי מטופלי המופיליה A. שאלה מרכזית: כמה זמן ההשפעה נמשכת? נתונים מראים ירידה הדרגתית ברמות FVIII אצל חלק מהמטופלים.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="time-label">טיפול גנטי</div>
+        <h4>Pfizer: giroctocogene fitelparvovec</h4>
+        <p>ניסוי Phase 3 להמופיליה A. גישה שונה: וקטור AAV6 במקום AAV5. תוצאות מוקדמות מבטיחות. צפוי הגשה לFDA ב2025.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="time-label">Non-Factor</div>
+        <h4>Fitusiran: תוכנית ATLAS</h4>
+        <p>מספר ניסויי Phase 3 (ATLAS-A/B/INH/PPX). הזרקה תת-עורית פעם בחודש. תוצאות: הפחתת דימומים מעל 90%. Sanofi מקדמת אישור.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="time-label">Non-Factor</div>
+        <h4>Concizumab: תוכנית explorer</h4>
+        <p>Novo Nordisk: ניסויי Phase 3 (explorer7, explorer8). נוגדן נגד TFPI. הפחתת דימומים 85%+. הזרקה תת-עורית יומית.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="time-label">Non-Factor</div>
+        <h4>Mim8: תוכנית FRONTIER</h4>
+        <p>Novo Nordisk: נוגדן דו-ספציפי מהדור הבא. Phase 3. הזרקה תת-עורית שבועית או חודשית. תוצאות מוקדמות מצוינות.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="time-label">ישראל</div>
+        <h4>ניסויים בישראל</h4>
+        <p>מרכז ההמופיליה בשיבא (תל השומר), הדסה עין כרם ורמב"ם חיפה משתתפים בניסויים בינלאומיים. ליצירת קשר: פנו למרכז ההמופיליה שלכם.</p>
+      </div>
+    </div>
+
+    <div style="margin-top: 12px;">
+      <a href="https://clinicaltrials.gov/search?cond=Hemophilia&status=RECRUITING" target="_blank" class="link-btn">ClinicalTrials.gov — המופיליה</a>
+      <a href="https://clinicaltrials.wfh.org/" target="_blank" class="link-btn green">WFH Clinical Trials Registry</a>
+    </div>
+  </section>
+
+  <!-- SECTION: RESEARCH -->
+  <section class="section fade-in" id="research">
+    <div class="section-header">
+      <span class="sec-icon">🧬</span>
+      <div>
+        <h2>מחקרים חדשים</h2>
+        <p>פריצות דרך ותגליות אחרונות</p>
+      </div>
+    </div>
+
+    <div class="info-box success">
+      <h4>עידן חדש בהמופיליה</h4>
+      <p>2022-2025 הן שנות מהפכה בהמופיליה. טיפול גנטי, תרופות non-factor חדשות, וטכנולוגיות מעקב מתקדמות משנים את פני המחלה. הנה הפריצות המשמעותיות ביותר.</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card green">
+        <div class="card-icon">🧬</div>
+        <h3>טיפול גנטי: הדור הבא</h3>
+        <p>אחרי אישור Hemgenix ו-Roctavian, החוקרים מתמקדים בשיפור: וקטורים יעילים יותר, מינון נמוך יותר, עמידות ארוכה יותר. Spark Therapeutics עובדת על SPK-8011 עם שילוב אימונוסופרסיה. פוטנציאל לריפוי אמיתי של המחלה.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">💉</div>
+        <h3>מהפכת ה-Non-Factor Therapies</h3>
+        <p>Emicizumab שינה את כללי המשחק ב2017. עכשיו Fitusiran, Concizumab ו-Mim8 מרחיבים את האפשרויות. כולם בהזרקה תת-עורית, כולם מתאימים גם למטופלים עם מעכבים. העתיד: טיפול אישי מותאם לכל מטופל.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔬</div>
+        <h3>בריאות מפרקים: מחקרי MRI</h3>
+        <p>מחקרים חדשים בMRI מראים שפרופילקסיס מוקדם מונע נזק מפרקי כמעט לחלוטין. HEAD2HEAD study (2024): השוואה בין Emicizumab לפקטור VIII מראה יתרון קטן ל-Emicizumab בהגנה על מפרקים.</p>
+      </div>
+      <div class="card blue">
+        <div class="card-icon">🎯</div>
+        <h3>טיפול מותאם אישית (PK-guided)</h3>
+        <p>מודלים פרמקוקינטיים (PK) מאפשרים לכייל את מינון הפקטור לכל מטופל באופן אישי. אפליקציות כמו myPKFiT חוזות רמות פקטור בכל רגע. תוצאה: פחות הזרקות, יותר הגנה.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">📊</div>
+        <h3>ביומרקרים חדשים</h3>
+        <p>חוקרים מפתחים כלים לחזות דימומים לפני שקורים. ביומרקרים של דלקת מפרקית, סמני קרישה חדשים, ומעקב דיגיטלי מאפשרים התערבות מוקדמת ומניעת נזק.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: CHILDREN -->
+  <section class="section fade-in" id="children">
+    <div class="section-header">
+      <span class="sec-icon">👶</span>
+      <div>
+        <h2>ילדים והמופיליה</h2>
+        <p>מדריך להורים ומשפחות</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>המופיליה בילדות</h4>
+      <p>רוב המקרים הקשים של המופיליה מאובחנים בשנה הראשונה לחיים. אבחון מוקדם וטיפול מניעתי מאפשרים לילדים לגדול ולהתפתח כמו כל ילד אחר. הנה מה שחשוב לדעת.</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🍼</div>
+        <h3>אבחון מוקדם</h3>
+        <p>רוב המקרים הקשים מאובחנים בשנה הראשונה: חבורות בלתי מוסברות, דימום ממושך אחרי ברית מילה, דימום במפרקים כשמתחילים לזחול. בדיקת דם פשוטה (aPTT + רמת פקטור) מאשרת את האבחנה. בישראל: מומלץ לבדוק תינוקות ממשפחות עם היסטוריה.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">🏫</div>
+        <h3>בית ספר ומשחק</h3>
+        <p>חשוב ליידע את הצוות החינוכי. הכינו תוכנית פעולה כתובה למקרה חירום. רוב הפעילויות הגופניות מותרות: שחייה, ריצה, אופניים, כדורסל. להימנע מספורט מגע מלא (אגרוף, רוגבי). אל תעטפו את הילד בצמר גפן.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">💉</div>
+        <h3>טיפול עצמי</h3>
+        <p>מגיל 8-12 ניתן להתחיל ללמד הזרקה עצמית לווריד. תהליך הדרגתי: צפייה, עזרה, ביצוע בפיקוח, ביצוע עצמאי. משפר עצמאות, ביטחון ואיכות חיים. מרפאות המופיליה מציעות הדרכה מקצועית.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🧸</div>
+        <h3>תמיכה רגשית</h3>
+        <p>ילדים עם המופיליה עלולים לחוות תסכול, פחד ובידוד. תמיכה פסיכולוגית חשובה. קבוצות תמיכה לילדים ומחנות קיץ מיוחדים (WFH ו-NHF מארגנים) עוזרים מאוד. דברו עם הילד בגובה העיניים על המחלה.</p>
+      </div>
+      <div class="card blue">
+        <div class="card-icon">🦷</div>
+        <h3>טיפולי שיניים</h3>
+        <p>תחזוקה מונעת אגרסיבית: צחצוח עם משחה בפלואוריד, חוט דנטלי, ביקור כל 6 חודשים. לפני כל טיפול פולשני: תיאום עם המטולוג. חומצה טרנקסמית סביב טיפולים. מרפאות שיניים בבתי חולים מכירות המופיליה.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">🎒</div>
+        <h3>מעבר לבגרות</h3>
+        <p>Transition clinics מגיל 16-18. העברת אחריות הדרגתית מהורים לנער/נערה. הכרות עם מרפאת מבוגרים. נושאי תכנון משפחה, ייעוץ גנטי, בחירת מקצוע. WFH מציעה תוכניות transition ייעודיות.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: LIFESTYLE -->
+  <section class="section fade-in" id="lifestyle">
+    <div class="section-header">
+      <span class="sec-icon">🏃</span>
+      <div>
+        <h2>אורח חיים בריא</h2>
+        <p>תזונה, ספורט וטיפים יומיומיים</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>חיים מלאים עם המופיליה</h4>
+      <p>חיים עם המופיליה לא אומרים לוותר על דברים. עם טיפול מניעתי נכון ותכנון, אפשר לנסוע, לעבוד, לעשות ספורט, ולחיות חיים מלאים. הנה מה שכדאי לדעת.</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🥗</div>
+        <h3>תזונה</h3>
+        <p>שמירה על משקל תקין חשובה להגנה על מפרקים. ויטמין D וסידן למניעת אוסטאופורוזיס (שכיחה בהמופיליה). ברזל אם יש דימומים תכופים. להימנע מתוספי אומגה 3 במינונים גבוהים (עלולים להשפיע על קרישה). דיאטה ים-תיכונית מומלצת.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">🚴</div>
+        <h3>פעילות גופנית</h3>
+        <p>שחייה, הליכה, רכיבה על אופניים, פילאטיס ויוגה מצוינים. לחזק שרירים סביב מפרקים. להימנע מספורט מגע מלא (אגרוף, רוגבי, הוקי קרח). תמיד לתאם עם המטולוג והפיזיותרפיסט. פעילות גופנית מפחיתה דימומים.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">🦷</div>
+        <h3>טיפולי שיניים</h3>
+        <p>ניקוי שיניים קפדני יומי. ביקור כל 6 חודשים. תיאום עם המטולוג לפני כל טיפול פולשני. חומצה טרנקסמית לפני ואחרי טיפולים. העדיפו מרפאות שיניים בבתי חולים שמכירים המופיליה.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">✈️</div>
+        <h3>נסיעות</h3>
+        <p>לקחת מלאי תרופות כפול. מכתב רפואי באנגלית מהמטולוג. רשימת מרכזי המופיליה ביעד (WFH Global Treatment Centre Directory). ביטוח נסיעות שמכסה מצבים קיימים. לשמור תרופות בנשיאת יד (לא במזוודה).</p>
+      </div>
+      <div class="card blue">
+        <div class="card-icon">🆘</div>
+        <h3>מוכנות לחירום</h3>
+        <p>צמיד/שרשרת זיהוי רפואי תמיד. ערכת חירום בבית וברכב (תרופות, מספרי חירום, מכתב רפואי). מספרי חירום של מרכז ההמופיליה נגישים בטלפון. אפליקציית HemMobile למעקב דימומים והזרקות.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">💊</div>
+        <h3>תרופות להימנע מהן</h3>
+        <p>אספירין ותרופות NSAID (כמו נורופן, וולטרן) מגבירות דימומים. אקמול (פרצטמול) בטוח. תמיד לספר לכל רופא ורוקח שיש לכם המופיליה. להיזהר עם תרופות צמחיות שמשפיעות על קרישה (ג'ינקו, שום, ג'ינסנג).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: PHYSIO -->
+  <section class="section fade-in" id="physio">
+    <div class="section-header">
+      <span class="sec-icon">🏋️</span>
+      <div>
+        <h2>פיזיותרפיה וספורט</h2>
+        <p>שימור מפרקים ופעילות גופנית</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>פעילות גופנית כחלק מהטיפול</h4>
+      <p>פעילות גופנית סדירה היא חלק קריטי מהטיפול בהמופיליה. שרירים חזקים מגנים על מפרקים, מפחיתים דימומים, ומשפרים איכות חיים. מחקרים מ2024 הראו שתוכנית פיזיותרפיה מותאמת מפחיתה דימומי מפרקים ב40%.</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🏊</div>
+        <h3>שחייה והידרותרפיה</h3>
+        <p>הפעילות הכי מומלצת להמופיליה. אפס עומס על מפרקים. מחזקת שרירים. מתאימה גם אחרי דימום מפרקי ובשלבי שיקום. Souza et al., 2024: שחייה שיפרה טווח תנועה ב30% בחולי המופיליה.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">🚴</div>
+        <h3>רכיבה על אופניים</h3>
+        <p>עומס נמוך על מפרקים. מחזקת רגליים. אופני כושר עדיפות (בטוח יותר מרכיבה בחוץ). 30 דקות 3 פעמים בשבוע. מחזקת שרירי ירך שמגנים על הברכיים.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">🧘</div>
+        <h3>יוגה ופילאטיס</h3>
+        <p>משפרת גמישות, כוח וקואורדינציה. מפחיתה כאב כרוני. מחזקת ליבה (core). Cakmak et al., 2022: יוגה שיפרה איכות חיים ב40% בחולי המופיליה. בחרו מורה שיודע/ת לבצע התאמות.</p>
+      </div>
+      <div class="card blue">
+        <div class="card-icon">🏋️</div>
+        <h3>אימוני כוח</h3>
+        <p>חיזוק שרירים סביב מפרקים פגיעים הוא קריטי. משקולות קלות עד בינוניות, 2-3 סטים של 12-15 חזרות. הדרכה של פיזיותרפיסט חיונית בהתחלה. להימנע ממשקולות כבדות מאוד ומתנועות אקספלוסיביות.</p>
+      </div>
+    </div>
+
+    <div class="info-box warning">
+      <h4>ספורט שכדאי להימנע ממנו</h4>
+      <p>ספורט מגע מלא (אגרוף, קראטה, רוגבי, הוקי), ספורט עם סיכון נפילה גבוה (סקי, סקייטבורד, רכיבה על סוסים), הרמת משקולות כבדות מאוד. תמיד להתייעץ עם המטולוג והפיזיותרפיסט לפני התחלת פעילות חדשה.</p>
+    </div>
+
+    <div class="info-box success">
+      <h4>טיפ: קטגוריות סיכון בספורט</h4>
+      <p>הWFH ממליצה על Risk Categories לספורט. קטגוריה 1 (בטוח): שחייה, הליכה, רכיבה על אופניים. קטגוריה 2 (בינוני): כדורסל, כדורגל, טניס. קטגוריה 3 (סיכון גבוה): אגרוף, רוגבי, הוקי קרח. בחרו מקטגוריה 1-2 עם פרופילקסיס.</p>
+    </div>
+  </section>
+
+  <!-- SECTION: WOMEN -->
+  <section class="section fade-in" id="women">
+    <div class="section-header">
+      <span class="sec-icon">👩</span>
+      <div>
+        <h2>נשים והמופיליה</h2>
+        <p>נשאות, תסמינים, הריון ולידה</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>לא רק גברים</h4>
+      <p>המופיליה לא פוגעת רק בגברים. נשים נשאיות יכולות לסבול מתסמינים משמעותיים, וכ30% מהנשאיות חוות דימומים מוגברים. חשוב לבדוק רמות פקטור גם אצל נשאיות.</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🧬</div>
+        <h3>נשאות</h3>
+        <p>נשים עם מוטציה בגן F8 או F9 על כרומוזום X אחד. רמות פקטור יכולות לנוע בין 10-100% (בגלל inactivation אקראית של X). בדיקות גנטיות מומלצות למשפחות עם היסטוריה. בישראל: סל הבריאות מכסה.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">🩸</div>
+        <h3>דימום וסתי מוגזם</h3>
+        <p>כ60% מהנשאיות סובלות מדימום וסתי כבד (menorrhagia). טיפולים: חומצה טרנקסמית, גלולות למניעת הריון, התקן תוך רחמי (IUD עם לבונורגסטרל), DDAVP. חשוב להיבדק אם יש מחזורים כבדים במשפחה עם המופיליה.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">🤰</div>
+        <h3>הריון ולידה</h3>
+        <p>הריון בנשאית המופיליה דורש מעקב צמוד של המטולוג, מיילדת ורופא הרדמה. רמות פקטור VIII עולות טבעית בהריון (הגנה חלקית), אבל רמות FIX לא עולות. אפידורל אפשרי רק אם רמות פקטור מעל 50%. תכנון מראש של הלידה חיוני.</p>
+      </div>
+      <div class="card blue">
+        <div class="card-icon">👶</div>
+        <h3>אבחון טרום לידתי</h3>
+        <p>דגימת סיסי שליה (CVS) בשבוע 11-14, אמניוצנטזה בשבוע 15-20. PGD (אבחון גנטי טרום השרשה) מאפשר לבחור עוברים ללא המוטציה. NIPT (בדיקת דם לא פולשנית) יכולה לקבוע מין העובר. בישראל: סל הבריאות מכסה בדיקות גנטיות.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: EMERGENCY -->
+  <section class="section fade-in" id="emergency">
+    <div class="section-header">
+      <span class="sec-icon">🚨</span>
+      <div>
+        <h2>פרוטוקול חירום</h2>
+        <p>מה לעשות במצב דימום חירום</p>
+      </div>
+    </div>
+
+    <div class="info-box warning">
+      <h4>הכלל: טפל קודם, שאל שאלות אחר כך</h4>
+      <p>דימום פעיל בהמופיליה דורש טיפול מהיר. אם יש ספק, תן פקטור. דימום מוחי הוא הסיבה מספר 1 לתמותה בהמופיליה ודורש פקטור מיידי + חדר מיון.</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card" style="border-top-color: #E63946; border-top-width: 5px;">
+        <div class="card-icon">🧠</div>
+        <h3>דימום במוח (מצב חירום מוחלט)</h3>
+        <p>סימנים: כאב ראש חד ופתאומי, הקאות, בלבול, אובדן הכרה, חולשה בצד אחד. פעולה: תנו פקטור מיד, אל תחכו לבדיקות. חדר מיון מיד. גם חבלת ראש ללא תסמינים דורשת פקטור מיידי ומעקב 24 שעות.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">🦵</div>
+        <h3>דימום במפרק</h3>
+        <p>סימנים: כאב, נפיחות, חום מקומי, קושי בתנועה. פעולה: RICE (מנוחה, קרח 15 דקות, תחבושת אלסטית, הגבהה) + פקטור. אם זה דימום ראשון במפרק חדש: לרופא תוך 24 שעות.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">💪</div>
+        <h3>דימום בשריר</h3>
+        <p>סימנים: כאב עמוק, נפיחות, קושי בתנועה. דימום ב-iliopsoas (שריר הבטן/ירך): כאב בבטן או ירך, קושי ביישור הרגל. זהו מצב חירום. פעולה: פקטור + מנוחה. פיזיותרפיה רק אחרי שהדימום נפסק.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🩸</div>
+        <h3>דימום חיצוני שלא נעצר</h3>
+        <p>לחץ ישיר על הפצע 15-20 דקות ברציפות (אל תרימו את התחבושת לבדוק). אם לא נעצר: פקטור + חדר מיון. חומצה טרנקסמית לדימום בפה.</p>
+      </div>
+      <div class="card blue">
+        <div class="card-icon">🦷</div>
+        <h3>אחרי טיפול שיניים</h3>
+        <p>חומצה טרנקסמית 3 פעמים ביום, 5-7 ימים. מזון רך וקר ב48 השעות הראשונות. אל תשטפו את הפה בכוח. אם דימום חוזר: חומצה טרנקסמית + פקטור.</p>
+      </div>
+    </div>
+
+    <h3 style="margin: 40px 0 20px; color: var(--primary); font-size: 22px;">מתי לרוץ לחדר מיון?</h3>
+    <table class="styled-table">
+      <thead>
+        <tr><th>מצב</th><th>פעולה</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>כאב ראש חד + הקאות</td><td><strong>מיון מיידי + פקטור</strong></td></tr>
+        <tr><td>דימום שלא נעצר אחרי 20 דקות לחץ</td><td><strong>מיון</strong></td></tr>
+        <tr><td>דימום בצוואר/גרון (סכנת חנק)</td><td><strong>מיון מיידי + פקטור</strong></td></tr>
+        <tr><td>דימום בבטן (כאב + נפיחות)</td><td><strong>מיון + פקטור</strong></td></tr>
+        <tr><td>חבלת ראש (גם ללא תסמינים)</td><td><strong>פקטור מיידי + מעקב 24 שעות</strong></td></tr>
+        <tr><td>דימום בעין (כאב + שינוי ראייה)</td><td><strong>מיון + פקטור</strong></td></tr>
+        <tr><td>דם בשתן או בצואה</td><td><strong>פנייה לרופא באותו יום</strong></td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- SECTION: PSYCHOLOGICAL APPROACH -->
+  <section class="section fade-in" id="psychological-approach">
+    <div class="section-header">
+      <span class="sec-icon">🧠</span>
+      <div>
+        <h2>גישה פסיכולוגית</h2>
+        <p>בריאות נפשית, התמודדות רגשית וחיים עם המופיליה</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>הנפש היא חלק מהטיפול</h4>
+      <p>מחקרים עדכניים מראים שיותר מ40% מהחולים בהמופיליה חווים תסמיני דיכאון, ו55% מדווחים על חרדה (Frontiers in Public Health, 2024). הנחיות ארגון ההמופיליה העולמי (WFH) קובעות שתמיכה פסיכולוגית היא חלק בלתי נפרד מטיפול רב תחומי מקיף. בריאות נפשית אינה "בונוס", היא חלק מהותי מניהול המחלה.</p>
+    </div>
+
+    <h3 style="font-size: 24px; color: var(--primary); margin: 30px 0 20px;">אתגרים פסיכולוגיים מרכזיים</h3>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">😰</div>
+        <h3>פחד מדימום והימנעות מפעילות</h3>
+        <p>84% מהמטופלים מדווחים שהם נמנעים מפעילות גופנית, ו73.7% מתקשים להשתתף בספורט ותחביבים. הפחד מדימום יוצר מעגל שלילי: הימנעות מפעילות מובילה להיחלשות שרירים, שמגבירה את הפגיעות לדימומים. תופעה זו נקראת קינזיופוביה (פחד מתנועה) והיא מתועדת במחקרים רבים. שבירת המעגל דורשת תמיכה מקצועית משולבת של פסיכולוג ופיזיותרפיסט.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">💔</div>
+        <h3>כאב כרוני והשפעה נפשית</h3>
+        <p>40% עד 70% מהחולים בהמופיליה סובלים מכאב כרוני כתוצאה מארתרופתיה המופילית (נזק מצטבר למפרקים). מחקר PFiQ האמריקאי מצא ש62% מדווחים על כאב נוכחי ו85% חוו כאב בארבעת השבועות האחרונים. כאב, דיכאון וחרדה יוצרים מעגל שמזין את עצמו: כאב מגביר דיכאון, דיכאון מפחית התמודדות עם כאב, וחרדה מגבירה את תחושת הכאב.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">🫥</div>
+        <h3>סטיגמה ובידוד חברתי</h3>
+        <p>רבים מהחולים מסתירים את האבחנה מפחד לדחייה וסטיגמה. תפיסות שגויות עדיין קיימות, כולל הבלבול שהמופיליה מדבקת. ילדים נפגעים במיוחד ומתקשים לבנות חברויות קרובות. מחקר מ2025 (Frontiers in Psychiatry) מתעד שהסטיגמה פוגעת ביחסים בין אישיים ומובילה לבידוד חברתי. התערבויות מומלצות: חינוך משפחתי מובנה, קבוצות תמיכה בהובלת עמיתים, והעלאת מודעות בצוותים רפואיים.</p>
+      </div>
+      <div class="card blue">
+        <div class="card-icon">🚫</div>
+        <h3>חסמים פסיכולוגיים בהיענות לטיפול</h3>
+        <p>57% מהמטופלים בגילאי 25 עד 40 מתקשים בהיענות לטיפול מניעתי (פרופילקסיס). חסמים פסיכולוגיים כוללים: הכחשה (שכיחה במיוחד בגיל ההתבגרות), פחד ממחטים, אמונות בריאותיות לא מדויקות, דיכאון שמפחית מוטיבציה, והתנגשות עם אורח החיים. דיכאון, חרדה וכאב כל אחד מהם מנבא באופן עצמאי היענות נמוכה יותר לטיפול.</p>
+      </div>
+    </div>
+
+    <h3 style="font-size: 24px; color: var(--primary); margin: 30px 0 20px;">לפי גיל: אתגרים ייחודיים</h3>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">👶</div>
+        <h3>ילדים: פחד מחטים והגבלות</h3>
+        <p>פחד ממחטים הוא מקור מצוקה מרכזי בילדים עם המופיליה. חרדה גורמת לכיווץ ורידים, מה שמקשה על העירוי ויוצר מעגל שלילי. גישות מבוססות מחקר: משחק רפואי עם ציוד אמיתי על בובות, משחת הרדמה (EMLA), מכשיר Buzzy (רטט וקירור), הסחת דעת (בועות סבון, מסכים, משחקים), חשיפה הדרגתית מצפייה עד הזרקה עצמית, ומתן שליטה לילד (בחירת יד, תנוחה, תזמון). מעבר לזריקות, ילדים מתמודדים גם עם הגבלות בפעילות, תחושת שונות מחברים, וקשיים בבית הספר.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">🧑‍🎓</div>
+        <h3>מתבגרים: מעבר, זהות וניהול עצמי</h3>
+        <p>תקופת ההתבגרות מאתגרת במיוחד. הזרקה עצמית מתחילה בממוצע בגיל 12.3, אבל ניהול עצמי מלא מושג רק בגיל 22.6 בממוצע. היענות לטיפול בגיל ההתבגרות היא הנמוכה ביותר, מה שמוביל לדימומים חוזרים ונזק מצטבר. הכחשת המחלה היא מנגנון שכיח בגיל זה. מתבגרים מתמודדים גם עם החלטות חשיפה (למי לספר?), בניית זהות חברתית, לחץ חברתי, ומעבר ממרפאת ילדים למרפאת מבוגרים. חינוך מרחוק (טלהלת') הראה שיפור משמעותי במוכנות למעבר ותחושת מסוגלות עצמית.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">👨‍👩‍👧‍👦</div>
+        <h3>הורים ומטפלים: עומס רגשי</h3>
+        <p>65.4% מההורים מדווחים על השפעה רגשית של המופיליה, ו92.3% חשים עומס כלכלי. אמהות מתמודדות לעיתים עם רגשות אשמה (בגלל התורשה דרך כרומוזום X). הקונפליקט המרכזי: הרצון שהילד יגדל כרגיל לעומת הצורך להגן מדימומים. אחים "בריאים" עלולים להידחק לשוליים כשדרישות הטיפול שולטות בחיי המשפחה. הורים מפסידים בממוצע 8.35 ימי עבודה בשנה. חשוב שגם ההורים יקבלו תמיכה נפשית, לא רק הילד.</p>
+      </div>
+    </div>
+
+    <div class="info-box success">
+      <h4>החדשות הטובות: יש כלים שעובדים</h4>
+      <p>מחקרים מראים שהתערבויות פסיכולוגיות בהמופיליה יעילות. טיפול קוגניטיבי התנהגותי (CBT), מיינדפולנס, קבוצות תמיכה ותוכניות העצמה הוכחו כמשפרים איכות חיים, ויסות רגשי, והתמודדות עם כאב. אתם לא צריכים להתמודד לבד.</p>
+    </div>
+
+    <h3 style="font-size: 24px; color: var(--primary); margin: 30px 0 20px;">כלים והתערבויות מבוססי מחקר</h3>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🧩</div>
+        <h3>טיפול קוגניטיבי התנהגותי (CBT)</h3>
+        <p>CBT הוכח כיעיל ספציפית בהמופיליה לשיפור ויסות רגשי ואיכות חיים (Cochrane, 2020). שילוב CBT עם פיזיותרפיה הפחית כאב כרוני וקינזיופוביה בו זמנית. הטיפול עוזר בעצירת מחשבות שליליות ("הדימום לעולם לא ייעצר"), ניהול כעס, והתמודדות טובה יותר במצבים חברתיים. מומלץ לכל מטופל שמתמודד עם כאב כרוני, חרדה או דיכאון.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">🧘</div>
+        <h3>מיינדפולנס וניהול כאב</h3>
+        <p>גישה רב מודלית לניהול כאב היא הסטנדרט המקצועי (המלצות מומחים, PMC 2021). מעבר לתרופות, ההמלצות כוללות: הפחתת מתח מבוססת מיינדפולנס (MBSR), דמיון מודרך, ביופידבק, היפנוזה, הידרותרפיה, וגירוי חשמלי (TENS). הגישה המשולבת כוללת: טיפול בגורם הקרישה, תרופות משככות כאבים, פיזיותרפיה, טיפול פסיכולוגי, וטיפולים משלימים כמו דיקור סיני.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">🤝</div>
+        <h3>קבוצות תמיכה וקהילה</h3>
+        <p>מפגש עם אנשים שחיים אותו דבר מפחית בידוד ומעניק תחושת שייכות. האגודה הישראלית להמופיליה (אל"ה, הוקמה 1974) מפעילה: קבוצות תמיכה למטופלים ולמשפחות, מחנות קיץ לילדים, אירועים ומפגשים, סיוע ברכישת עזרים אורתופדיים, והסעות לטיפולים. קהילות מקוונות ותוכניות טלהלת' מציעות גישה נוספת. ארגונים בינלאומיים כמו WFH ו-NHF מנהלים גם קבוצות תמיכה גלובליות.</p>
+      </div>
+      <div class="card blue">
+        <div class="card-icon">🏥</div>
+        <h3>משאבים בישראל</h3>
+        <p>מרכזי ההמופיליה בישראל מפעילים צוותים רב תחומיים הכוללים פסיכולוגים ועובדים סוציאליים: שיבא (תל השומר), הדסה עין כרם, רמב"ם (חיפה), ומרכז שניידר לילדים. האגודה הישראלית להמופיליה (אל"ה): טלפון 03-903-1444, דוא"ל idit@hemophilia.org.il. בקופות החולים ניתן לקבל הפניה לפסיכולוג או עובד סוציאלי דרך הרופא המטפל. אל תהססו לבקש.</p>
+      </div>
+    </div>
+
+    <div class="info-box warning">
+      <h4>מתי לפנות לעזרה מקצועית?</h4>
+      <p>אם אתם חווים עצבות מתמשכת, שינויים בשינה או בתיאבון, נסיגה מפעילויות חברתיות, הימנעות מטיפול, או תחושת חוסר תקווה, פנו לצוות מרכז ההמופיליה שלכם. הצוותים כוללים פסיכולוגים ועובדים סוציאליים שמכירים את האתגרים הייחודיים של חיים עם המופיליה. בקשה לעזרה היא סימן של חוזק, לא חולשה. אתם לא לבד.</p>
+    </div>
+  </section>
+
+  <!-- SECTION: STORIES -->
+  <section class="section fade-in" id="stories">
+    <div class="section-header">
+      <span class="sec-icon">⭐</span>
+      <div>
+        <h2>סיפורי הצלחה</h2>
+        <p>אנשים שחיים חיים מלאים עם המופיליה</p>
+      </div>
+    </div>
+
+    <div class="info-box success">
+      <h4>חיים מלאים עם המופיליה</h4>
+      <p>היום, ילד שנולד עם המופיליה בארץ מפותחת יכול לצפות לחיים ארוכים, פעילים ומלאים. טיפול מניעתי מודרני מאפשר ספורט, עבודה, נסיעות וחיי משפחה. הנה כמה דוגמאות מעוררות השראה.</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card green" style="border-top-width: 6px;">
+        <div class="card-icon">🚴</div>
+        <h3>Alex Dowsett</h3>
+        <p>רוכב אופניים מקצועי בריטי עם המופיליה A קשה. שבר שיא עולמי בשעת הרכיבה ב2015 (52.937 ק"מ). הוכיח שגם עם המופיליה אפשר להגיע לפסגת הספורט. מייסד קרן Little Bleeders לילדים עם המופיליה.</p>
+      </div>
+      <div class="card orange" style="border-top-width: 6px;">
+        <div class="card-icon">🏃</div>
+        <h3>Ryan White</h3>
+        <p>נולד עם המופיליה ב1971. נדבק בHIV מתרופות דם מזוהמות. הפך לסמל מאבק בסטיגמה. שינה חקיקה אמריקאית (Ryan White CARE Act 1990). סיפורו שינה את בטיחות מוצרי הדם לעד.</p>
+      </div>
+      <div class="card blue" style="border-top-width: 6px;">
+        <div class="card-icon">🌍</div>
+        <h3>הקהילה הישראלית</h3>
+        <p>האגודה הישראלית להמופיליה מארגנת פעילויות, מחנות קיץ, ומפגשים למשפחות. כ1,000 מטופלים בישראל נהנים ממערכת בריאות מתקדמת עם גישה לכל הטיפולים החדשניים כולל Emicizumab וטיפולים גנטיים.</p>
+      </div>
+      <div class="card" style="border-top-width: 6px;">
+        <div class="card-icon">🎬</div>
+        <h3>המחלה שינתה את רפואת הדם</h3>
+        <p>בזכות קהילת ההמופיליה, חלו התקדמויות ענקיות ברפואת הדם: טכנולוגיה רקומביננטית, בטיחות מוצרי דם, טיפול גנטי. הצלחות שמשנות את החיים של מיליוני אנשים עם הפרעות דימום שונות.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: RESOURCES -->
+  <section class="section fade-in" id="resources">
+    <div class="section-header">
+      <span class="sec-icon">🔗</span>
+      <div>
+        <h2>קישורים ומשאבים</h2>
+        <p>אתרים, ארגונים, כלים ואפליקציות שימושיים</p>
+      </div>
+    </div>
+
+    <h3 style="color: var(--primary); margin-bottom: 20px;">ארגונים מובילים</h3>
+    <div class="cards-grid">
+      <div class="card green">
+        <h3>World Federation of Hemophilia</h3>
+        <p>הארגון הבינלאומי המוביל. מידע, הנחיות, חיפוש מרכזי טיפול.</p>
+        <a href="https://wfh.org" target="_blank" class="link-btn green" style="margin-top: 10px;">wfh.org</a>
+      </div>
+      <div class="card blue">
+        <h3>National Hemophilia Foundation</h3>
+        <p>הארגון האמריקאי. מידע מקיף, מחקר, קהילה.</p>
+        <a href="https://www.hemophilia.org" target="_blank" class="link-btn" style="margin-top: 10px;">hemophilia.org</a>
+      </div>
+      <div class="card orange">
+        <h3>European Haemophilia Consortium</h3>
+        <p>הארגון האירופי. הנחיות, advocacy, מחקר.</p>
+        <a href="https://www.ehc.eu" target="_blank" class="link-btn orange" style="margin-top: 10px;">ehc.eu</a>
+      </div>
+      <div class="card">
+        <h3>האגודה הישראלית להמופיליה</h3>
+        <p>הארגון הישראלי. מידע בעברית, קבוצות תמיכה, אירועים.</p>
+      </div>
+    </div>
+
+    <h3 style="color: var(--primary); margin: 40px 0 20px;">מרכזי טיפול בישראל</h3>
+    <div class="cards-grid">
+      <div class="card green">
+        <h3>מרכז ההמופיליה, שיבא (תל השומר)</h3>
+        <p>מרכז ההמופיליה הגדול בישראל. מטפל ברוב חולי ההמופיליה במרכז הארץ. צוות רב תחומי: המטולוגים, אורתופדים, פיזיותרפיסטים.</p>
+      </div>
+      <div class="card blue">
+        <h3>הדסה עין כרם, ירושלים</h3>
+        <p>מרכז המופיליה לאזור ירושלים. מומחיות בטיפול גנטי ובמחקר קליני.</p>
+      </div>
+      <div class="card orange">
+        <h3>רמב"ם, חיפה</h3>
+        <p>מרכז המופיליה לאזור הצפון. משתתף בניסויים קליניים בינלאומיים.</p>
+      </div>
+      <div class="card">
+        <h3>מרכז שניידר לרפואת ילדים</h3>
+        <p>מרכז ההמופיליה לילדים המוביל בישראל. מומחיות בטיפול מוקדם ובמעבר לבגרות.</p>
+      </div>
+    </div>
+
+    <h3 style="color: var(--primary); margin: 40px 0 20px;">אפליקציות מומלצות</h3>
+    <table class="styled-table">
+      <thead><tr><th>אפליקציה</th><th>מה היא עושה</th><th>עלות</th></tr></thead>
+      <tbody>
+        <tr><td><strong>HemMobile</strong></td><td>מעקב דימומים, הזרקות ותרופות</td><td>חינם</td></tr>
+        <tr><td><strong>myPKFiT</strong></td><td>חיזוי רמות פקטור אישי</td><td>חינם</td></tr>
+        <tr><td><strong>Haemophilia Physio</strong></td><td>תרגילי פיזיותרפיה מותאמים להמופיליה</td><td>חינם</td></tr>
+        <tr><td><strong>HemDiary</strong></td><td>יומן דימומים ומעקב מפרקים</td><td>חינם</td></tr>
+      </tbody>
+    </table>
+
+    <h3 style="color: var(--primary); margin: 40px 0 20px;">מאמרים מרכזיים (ציטוטים)</h3>
+    <div class="cards-grid">
+      <div class="card">
+        <h3>טיפול גנטי</h3>
+        <ul style="padding-right: 16px; font-size: 14px; color: var(--text-light);">
+          <li>Pipe et al. (2023) NEJM: Hemgenix 3 שנות מעקב</li>
+          <li>Mahlangu et al. (2023) NEJM: Roctavian Phase 3</li>
+          <li>Ozelo et al. (2022) NEJM: Hemgenix HOPE-B results</li>
+        </ul>
+      </div>
+      <div class="card green">
+        <h3>טיפולים Non-Factor</h3>
+        <ul style="padding-right: 16px; font-size: 14px; color: var(--text-light);">
+          <li>Oldenburg et al. (2017) NEJM: Emicizumab HAVEN 1</li>
+          <li>Young et al. (2023): Fitusiran ATLAS results</li>
+          <li>Shapiro et al. (2023): Concizumab explorer5</li>
+        </ul>
+      </div>
+      <div class="card orange">
+        <h3>הנחיות וסקירות</h3>
+        <ul style="padding-right: 16px; font-size: 14px; color: var(--text-light);">
+          <li>Srivastava et al. (2020): WFH Guidelines 3rd edition</li>
+          <li>Mannucci (2020) Haematologica: 50 years of treatment</li>
+          <li>Manco-Johnson et al. (2007) NEJM: Joint Outcome Study</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3 style="color: var(--primary); margin: 40px 0 20px;">ספרים מומלצים</h3>
+    <div class="cards-grid">
+      <div class="card">
+        <h3>Raising a Child with Hemophilia</h3>
+        <p>Laurie Kelley. מדריך מקיף להורים. מכסה את כל ההיבטים: טיפול, בית ספר, ספורט, רגש.</p>
+      </div>
+      <div class="card green">
+        <h3>My Blood Doesn't Clot</h3>
+        <p>ספר ילדים שמסביר המופיליה בשפה פשוטה. מצוין לילדים בגיל 4-8.</p>
+      </div>
+      <div class="card orange">
+        <h3>Guidelines for the Management of Hemophilia</h3>
+        <p>WFH, 2020. ההנחיות הרשמיות. חינם להורדה מאתר WFH.</p>
+        <a href="https://doi.org/10.1111/hae.14046" target="_blank" class="link-btn orange" style="margin-top: 10px;">הורדה</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p style="margin-bottom: 16px;">
+      נבנה על ידי <strong>יובל קשטכר</strong> ועוזריו הרובוטים
+    </p>
+    <a href="https://carepedia.org/#contact" target="_blank" class="portal-request-btn" style="margin-bottom: 20px;">➕ רוצים פורטל למחלה אחרת?</a>
+    <p style="margin-top: 20px; font-size: 15px; opacity: 0.85;">כל המידע באתר הוא למטרות לימוד בלבד ואינו מהווה תחליף לייעוץ רפואי מקצועי.</p>
+    <p style="margin-top: 8px; font-size: 13px; opacity: 0.7;"><a href="/disclaimer" style="color:var(--accent-light);text-decoration:underline;">Legal Disclaimer</a> | <a href="https://wa.me/+972526414555" target="_blank" rel="noopener" style="color:var(--accent-light);text-decoration:underline;">Report an Error</a></p>
+    <p style="margin-top: 10px; font-size: 14px; opacity: 0.7;">עודכן לאחרונה: פברואר 2026 | כולל ציטוטים ממאמרים מדעיים</p>
+  </footer>
+
+</div>
+
+<!-- SCROLL TO TOP -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</button>
+
+<script>
+function toggleMenu() {
+  const sidebar = document.getElementById('sidebar');
+  const toggle = document.getElementById('menuToggle');
+  const overlay = document.getElementById('sidebarOverlay');
+  sidebar.classList.toggle('open');
+  toggle.classList.toggle('open');
+  overlay.classList.toggle('active');
+  toggle.textContent = sidebar.classList.contains('open') ? '✕' : '☰';
+  document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '';
+}
+
+function closeMenu() {
+  const sidebar = document.getElementById('sidebar');
+  const toggle = document.getElementById('menuToggle');
+  const overlay = document.getElementById('sidebarOverlay');
+  sidebar.classList.remove('open');
+  toggle.classList.remove('open');
+  overlay.classList.remove('active');
+  toggle.textContent = '☰';
+  document.body.style.overflow = '';
+}
+
+function navigate(el) {
+  document.querySelectorAll('.sidebar nav a').forEach(a => a.classList.remove('active'));
+  el.classList.add('active');
+  closeMenu();
+}
+
+function navigateTo(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+  document.querySelectorAll('.sidebar nav a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+  });
+}
+
+function toggleAccordion(header) {
+  const body = header.nextElementSibling;
+  const isOpen = header.classList.contains('open');
+  header.classList.toggle('open');
+  body.style.maxHeight = isOpen ? '0' : body.scrollHeight + 'px';
+}
+
+function switchTab(tabGroup, tabName) {
+  document.querySelectorAll('[data-tab-group="' + tabGroup + '"] .tab-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.tab === tabName);
+  });
+  document.querySelectorAll('[data-tab-content="' + tabGroup + '"]').forEach(c => {
+    c.classList.toggle('active', c.dataset.tab === tabName);
+  });
+}
+
+// Scroll progress bar
+window.addEventListener('scroll', () => {
+  const scrollTop = document.getElementById('scrollTop');
+  const progressBar = document.getElementById('progressBar');
+  const scrolled = window.scrollY;
+  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = maxScroll > 0 ? (scrolled / maxScroll) * 100 : 0;
+  progressBar.style.width = pct + '%';
+  scrollTop.classList.toggle('visible', scrolled > 500);
+
+  // Scroll spy
+  const sections = document.querySelectorAll('.section[id], .hero[id]');
+  let current = '';
+  sections.forEach(s => {
+    if (scrolled >= s.offsetTop - 100) current = s.id;
+  });
+  if (current) {
+    document.querySelectorAll('.sidebar nav a').forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  }
+});
+
+// Fade-in on scroll (IntersectionObserver)
+const fadeEls = document.querySelectorAll('.fade-in');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+fadeEls.forEach(el => observer.observe(el));
+
+// Portal search
+function searchPortal(query) {
+  const resultsDiv = document.getElementById('searchResults');
+  if (!query || query.length < 2) {
+    resultsDiv.style.display = 'none';
+    document.querySelectorAll('.section').forEach(s => s.style.display = '');
+    return;
+  }
+  const q = query.toLowerCase();
+  const sections = document.querySelectorAll('.section[id]');
+  const matches = [];
+  sections.forEach(s => {
+    const text = s.textContent.toLowerCase();
+    const title = s.querySelector('h2') ? s.querySelector('h2').textContent : '';
+    if (text.includes(q)) {
+      matches.push({ id: s.id, title: title, el: s });
+      s.style.display = '';
+    } else {
+      s.style.display = 'none';
+    }
+  });
+  if (matches.length > 0 && matches.length < sections.length) {
+    resultsDiv.innerHTML = '<div style="background:var(--card);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);">' +
+      '<p style="font-size:14px;color:var(--text-light);margin-bottom:8px;">' + matches.length + ' תוצאות נמצאו:</p>' +
+      matches.map(m => '<a href="#' + m.id + '" onclick="navigateTo(\'' + m.id + '\')" style="display:block;padding:8px 12px;color:var(--primary);text-decoration:none;border-radius:8px;font-weight:600;transition:var(--transition);" onmouseover="this.style.background=\'var(--bg)\'" onmouseout="this.style.background=\'transparent\'">' + m.title + '</a>').join('') +
+      '</div>';
+    resultsDiv.style.display = 'block';
+  } else if (matches.length === sections.length) {
+    resultsDiv.style.display = 'none';
+  } else {
+    resultsDiv.innerHTML = '<div style="background:var(--card);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);"><p style="font-size:14px;color:var(--text-light);">לא נמצאו תוצאות. נסו מילה אחרת.</p></div>';
+    resultsDiv.style.display = 'block';
+  }
+}
+</script>
+
+</body>
+</html>

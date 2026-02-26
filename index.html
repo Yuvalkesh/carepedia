@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVPGTN8XS1"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZVPGTN8XS1');</script>
+<title>Carepedia — פורטלי מידע רפואי מבוססי מחקר</title>
+<meta name="description" content="אנחנו עוזרים לרופאים ועמותות להציג מידע רפואי מבוסס מחקר, באופן נגיש ונוח למטופלים ולמשפחותיהם.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<!-- Solar Icons via Iconify -->
+<script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js" defer></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --forest:        #1A3828;
+  --forest-mid:    #2A5C44;
+  --forest-light:  #E8F2EC;
+  --amber:         #D4845A;
+  --amber-light:   #F5DED0;
+  --bg:            #F8F7F4;
+  --bg-warm:       #EFEBE3;
+  --card:          #FFFFFF;
+  --text:          #1C1A18;
+  --text-light:    #5A5650;
+  --text-muted:    #9A968F;
+  --border:        #DEDAD2;
+  --border-strong: #C8C4BB;
+  --shadow:        0 1px 8px rgba(26,56,40,0.05);
+  --shadow-md:     0 4px 20px rgba(26,56,40,0.09);
+  --shadow-lg:     0 12px 48px rgba(26,56,40,0.14);
+  --radius:        12px;
+  --radius-sm:     8px;
+  --tr:            all 0.22s ease;
+}
+
+body {
+  font-family: 'Rubik', 'Segoe UI', Tahoma, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+  overflow-x: clip;
+}
+
+/* ===== NAV ===== */
+.nav {
+  position: fixed;
+  top: 0; right: 0; left: 0;
+  z-index: 1000;
+  background: rgba(248,247,244,0.97);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+}
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--forest);
+}
+.nav-logo-mark {
+  width: 36px; height: 36px;
+  background: var(--forest);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+.nav-logo span {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  list-style: none;
+}
+.nav-links a {
+  color: var(--text-light);
+  text-decoration: none;
+  font-size: 15px;
+  font-weight: 500;
+  transition: var(--tr);
+}
+.nav-links a:hover { color: var(--forest); }
+.nav-cta {
+  background: var(--forest) !important;
+  color: #fff !important;
+  padding: 9px 22px;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+}
+.nav-cta:hover { background: var(--forest-mid) !important; }
+.mobile-toggle {
+  display: none;
+  background: none; border: none;
+  cursor: pointer;
+  color: var(--forest);
+  font-size: 24px;
+  align-items: center;
+}
+
+/* ===== HERO ===== */
+.hero {
+  padding: 152px 40px 96px;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--bg);
+  /* Editorial dot grid — breaks from AI gradient blobs */
+  background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 180px;
+  background: linear-gradient(to bottom, transparent, var(--bg));
+  pointer-events: none;
+}
+.hero-content {
+  position: relative;
+  max-width: 780px;
+  margin: 0 auto;
+  text-align: center;
+  z-index: 1;
+}
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--forest-mid);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 32px;
+}
+.hero-eyebrow::before,
+.hero-eyebrow::after {
+  content: '';
+  display: inline-block;
+  width: 28px; height: 1.5px;
+  background: var(--forest-mid);
+  opacity: 0.45;
+}
+.hero h1 {
+  font-size: 60px;
+  font-weight: 900;
+  line-height: 1.2;
+  color: var(--text);
+  margin-bottom: 24px;
+  letter-spacing: -1.5px;
+}
+.hero h1 em {
+  font-style: normal;
+  color: var(--forest);
+  position: relative;
+}
+.hero h1 em::after {
+  content: '';
+  position: absolute;
+  bottom: 3px; right: 0; left: 0;
+  height: 3px;
+  background: var(--amber);
+  border-radius: 2px;
+}
+.hero p {
+  font-size: 19px;
+  color: var(--text-light);
+  max-width: 600px;
+  margin: 0 auto 40px;
+  line-height: 1.85;
+  font-weight: 400;
+}
+.hero-ctas {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ===== BUTTONS ===== */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 15px 32px;
+  background: var(--forest);
+  color: #fff;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  font-size: 16px;
+  font-weight: 600;
+  font-family: inherit;
+  border: none;
+  cursor: pointer;
+  transition: var(--tr);
+}
+.btn-primary:hover {
+  background: var(--forest-mid);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  background: transparent;
+  color: var(--text);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  font-size: 16px;
+  font-weight: 600;
+  border: 1.5px solid var(--border-strong);
+  cursor: pointer;
+  font-family: inherit;
+  transition: var(--tr);
+}
+.btn-secondary:hover {
+  border-color: var(--forest);
+  color: var(--forest);
+  transform: translateY(-1px);
+}
+
+/* ===== PROOF BAR ===== */
+.proof-bar {
+  background: var(--card);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 36px 40px;
+}
+.proof-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.proof-stat {
+  flex: 1;
+  text-align: center;
+  padding: 0 20px;
+}
+.proof-stat + .proof-stat {
+  border-right: 1px solid var(--border);
+}
+.proof-stat .num {
+  font-size: 44px;
+  font-weight: 900;
+  color: var(--forest);
+  line-height: 1;
+  letter-spacing: -2px;
+}
+.proof-stat .label {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 6px;
+  font-weight: 500;
+}
+
+/* ===== SECTION COMMON ===== */
+.section {
+  padding: 100px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--amber);
+  margin-bottom: 14px;
+}
+.section-tag::before {
+  content: '';
+  display: inline-block;
+  width: 18px; height: 2px;
+  background: var(--amber);
+  border-radius: 1px;
+}
+.section-title {
+  font-size: 40px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 16px;
+  letter-spacing: -0.8px;
+  line-height: 1.2;
+}
+.section-desc {
+  font-size: 17px;
+  color: var(--text-light);
+  max-width: 580px;
+  line-height: 1.85;
+}
+.section-center { text-align: center; }
+.section-center .section-desc { margin: 0 auto; }
+
+/* ===== HOW IT WORKS ===== */
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-top: 60px;
+}
+.step-card {
+  background: var(--card);
+  padding: 48px 36px;
+  text-align: right;
+  transition: var(--tr);
+}
+.step-card:hover { background: #FEFDFB; }
+.step-num {
+  font-size: 60px;
+  font-weight: 900;
+  color: var(--amber-light);
+  line-height: 1;
+  margin-bottom: 12px;
+  letter-spacing: -3px;
+}
+.step-icon {
+  font-size: 38px;
+  color: var(--forest);
+  margin-bottom: 16px;
+  display: block;
+}
+.step-card h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.step-card p {
+  font-size: 15px;
+  color: var(--text-light);
+  line-height: 1.85;
+}
+
+/* ===== PORTFOLIO ===== */
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18px;
+  margin-top: 56px;
+}
+.portal-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 28px;
+  border: 1px solid var(--border);
+  text-decoration: none;
+  color: var(--text);
+  transition: var(--tr);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.portal-card:hover {
+  border-color: var(--forest);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+.portal-card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+.portal-icon-wrap {
+  width: 52px; height: 52px;
+  background: var(--forest-light);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.portal-arrow {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  border: 1.5px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 13px;
+  transition: var(--tr);
+  flex-shrink: 0;
+}
+.portal-card:hover .portal-arrow {
+  border-color: var(--forest);
+  color: var(--forest);
+  background: var(--forest-light);
+}
+.portal-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  line-height: 1.35;
+}
+.portal-card p {
+  font-size: 14px;
+  color: var(--text-light);
+  line-height: 1.8;
+  flex-grow: 1;
+}
+.portal-tags {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+.portal-tag {
+  padding: 3px 10px;
+  background: var(--bg-warm);
+  color: var(--text-muted);
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* ===== FEATURES / WHY US ===== */
+.features-section {
+  background: var(--bg-warm);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 100px 40px;
+}
+.features-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.features-section .section-tag { color: var(--amber); }
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 56px;
+}
+.feature-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+  transition: var(--tr);
+}
+.feature-card:hover {
+  border-color: var(--forest-mid);
+  box-shadow: var(--shadow-md);
+}
+.feature-icon {
+  font-size: 42px;
+  color: var(--forest);
+  margin-bottom: 20px;
+  display: block;
+}
+.feature-card h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.feature-card p {
+  font-size: 14px;
+  color: var(--text-light);
+  line-height: 1.85;
+}
+
+/* ===== TESTIMONIAL ===== */
+.testimonial-section {
+  padding: 100px 40px;
+  background: var(--forest);
+}
+.testimonial-inner {
+  max-width: 820px;
+  margin: 0 auto;
+  text-align: center;
+}
+.testimonial-label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: rgba(255,255,255,0.38);
+  margin-bottom: 44px;
+}
+.testimonial-quote {
+  font-size: 26px;
+  font-weight: 400;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.88);
+  margin-bottom: 40px;
+  position: relative;
+}
+.testimonial-quote::before {
+  content: '\201C';
+  font-size: 160px;
+  line-height: 0.85;
+  color: rgba(255,255,255,0.06);
+  position: absolute;
+  top: -16px; right: -16px;
+  font-family: Georgia, serif;
+  pointer-events: none;
+}
+.testimonial-sep {
+  width: 44px; height: 3px;
+  background: var(--amber);
+  margin: 0 auto 24px;
+  border-radius: 2px;
+}
+.testimonial-author {
+  font-size: 15px;
+  color: rgba(255,255,255,0.48);
+}
+.testimonial-author strong {
+  color: rgba(255,255,255,0.82);
+  font-weight: 600;
+}
+
+/* ===== CONTACT FORM ===== */
+.contact-section {
+  padding: 100px 40px;
+  background: var(--bg);
+}
+.contact-inner {
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
+}
+.contact-form {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 48px 40px;
+  border: 1px solid var(--border);
+  margin-top: 48px;
+  text-align: right;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+.form-group { margin-bottom: 14px; }
+.form-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+.form-group input,
+.form-group textarea,
+.form-group select {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: var(--radius-sm);
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--text);
+  background: var(--bg);
+  transition: var(--tr);
+  direction: rtl;
+}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+  outline: none;
+  border-color: var(--forest);
+  box-shadow: 0 0 0 3px rgba(26,56,40,0.08);
+}
+.form-group textarea { resize: vertical; min-height: 100px; }
+.form-submit {
+  width: 100%;
+  padding: 15px;
+  background: var(--forest);
+  color: #fff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 16px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  transition: var(--tr);
+  margin-top: 8px;
+}
+.form-submit:hover { background: var(--forest-mid); }
+.form-note {
+  font-size: 13px;
+  color: var(--text-muted);
+  margin-top: 14px;
+  text-align: center;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  background: var(--forest);
+  color: rgba(255,255,255,0.55);
+  padding: 64px 40px 40px;
+}
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 48px;
+}
+.footer-brand h3 {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.footer-brand p {
+  font-size: 14px;
+  max-width: 300px;
+  line-height: 1.85;
+  color: rgba(255,255,255,0.48);
+}
+.footer-links h4 {
+  color: rgba(255,255,255,0.7);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 16px;
+}
+.footer-links a {
+  display: block;
+  color: rgba(255,255,255,0.48);
+  text-decoration: none;
+  font-size: 14px;
+  margin-bottom: 10px;
+  transition: var(--tr);
+}
+.footer-links a:hover { color: rgba(255,255,255,0.88); }
+.footer-bottom {
+  max-width: 1200px;
+  margin: 40px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 13px;
+  color: rgba(255,255,255,0.38);
+  flex-wrap: wrap;
+  gap: 16px;
+}
+.footer-bottom a { color: rgba(255,255,255,0.58); text-decoration: none; }
+.footer-bottom a:hover { color: rgba(255,255,255,0.88); }
+
+/* ===== ANIMATIONS ===== */
+.fade-up {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 960px) {
+  .nav { padding: 0 20px; }
+  .nav-links { display: none; }
+  .mobile-toggle { display: flex; }
+  .nav-links.open {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 68px; right: 0; left: 0;
+    background: var(--bg);
+    padding: 16px 20px;
+    gap: 4px;
+    border-bottom: 1px solid var(--border);
+    box-shadow: var(--shadow-md);
+  }
+  .nav-links.open li a { display: block; padding: 10px 0; }
+
+  .hero { padding: 122px 24px 68px; }
+  .hero h1 { font-size: 40px; }
+  .hero p { font-size: 17px; }
+
+  .proof-bar { padding: 28px 20px; }
+  .proof-inner { flex-wrap: wrap; }
+  .proof-stat { flex: 0 0 50%; padding: 16px 12px; }
+  .proof-stat + .proof-stat { border-right: none; }
+  .proof-stat:nth-child(2) { border-right: 1px solid var(--border); }
+  .proof-stat:nth-child(3),
+  .proof-stat:nth-child(4) { border-top: 1px solid var(--border); }
+  .proof-stat:nth-child(4) { border-right: 1px solid var(--border); }
+  .proof-stat .num { font-size: 34px; }
+
+  .section { padding: 64px 24px; }
+  .section-title { font-size: 30px; }
+
+  .steps-grid { grid-template-columns: 1fr; }
+  .portfolio-grid { grid-template-columns: 1fr; }
+
+  .features-section { padding: 64px 24px; }
+  .features-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .testimonial-section { padding: 64px 24px; }
+  .testimonial-quote { font-size: 21px; }
+
+  .contact-section { padding: 64px 24px; }
+  .contact-form { padding: 32px 24px; }
+
+  .footer { padding: 48px 24px 32px; }
+  .footer-inner { flex-direction: column; gap: 32px; }
+}
+
+@media (max-width: 560px) {
+  .hero h1 { font-size: 32px; letter-spacing: -0.5px; }
+  .hero p { font-size: 16px; }
+  .btn-primary, .btn-secondary { padding: 13px 22px; font-size: 15px; width: 100%; justify-content: center; }
+  .section-title { font-size: 26px; }
+  .features-grid { grid-template-columns: 1fr; }
+  .form-row { grid-template-columns: 1fr; }
+  .contact-form { padding: 24px 16px; }
+}
+
+/* Form success */
+.form-success { display: none; text-align: center; padding: 40px 20px; }
+.form-success.show { display: block; }
+.form-success .check-icon { font-size: 56px; color: var(--forest); display: block; margin-bottom: 16px; }
+.form-success h3 { font-size: 22px; color: var(--text); margin-bottom: 10px; }
+.form-success p { font-size: 16px; color: var(--text-light); }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">
+      <div class="nav-logo-mark">
+        <iconify-icon icon="solar:medical-kit-bold" style="font-size:20px;"></iconify-icon>
+      </div>
+      <span>Carepedia</span>
+    </a>
+    <button class="mobile-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="תפריט">
+      <iconify-icon icon="solar:hamburger-menu-bold"></iconify-icon>
+    </button>
+    <ul class="nav-links">
+      <li><a href="#how">איך זה עובד</a></li>
+      <li><a href="#portfolio">הפורטלים שלנו</a></li>
+      <li><a href="#why">למה Carepedia</a></li>
+      <li><a href="#contact" class="nav-cta">רוצים פורטל?</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content fade-up">
+    <div class="hero-eyebrow">פורטלי מידע רפואי מבוססי מחקר</div>
+    <h1>
+      מהפכת <em>הרפואה הנגישה</em><br>
+      מתחילה בידע נכון
+    </h1>
+    <p>
+      Carepedia בונה פורטלי מידע רפואי עבור רופאים, עמותות ומרכזים רפואיים. כל פורטל מבוסס על מחקרים מדעיים עדכניים, מונגש בשפה ברורה, ומותאם למטופלים ולמשפחותיהם.
+    </p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-primary">
+        <iconify-icon icon="solar:chat-square-call-bold"></iconify-icon>
+        רוצים פורטל? דברו איתנו
+      </a>
+      <a href="#portfolio" class="btn-secondary">
+        ראו דוגמאות
+        <iconify-icon icon="solar:arrow-left-bold"></iconify-icon>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF BAR -->
+<div class="proof-bar fade-up">
+  <div class="proof-inner">
+    <div class="proof-stat">
+      <div class="num">13</div>
+      <div class="label">פורטלים פעילים</div>
+    </div>
+    <div class="proof-stat">
+      <div class="num">30+</div>
+      <div class="label">סעיפי מידע לפורטל</div>
+    </div>
+    <div class="proof-stat">
+      <div class="num">200+</div>
+      <div class="label">מקורות מחקריים מצוטטים</div>
+    </div>
+    <div class="proof-stat">
+      <div class="num">100%</div>
+      <div class="label">מבוסס מחקר מדעי</div>
+    </div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="section section-center fade-up" id="how">
+  <div class="section-tag">איך זה עובד</div>
+  <h2 class="section-title">מהמחלה לפורטל מידע — בשלושה צעדים</h2>
+  <p class="section-desc">אנחנו לוקחים את המורכבות הרפואית ומפשטים אותה לפורטל אחד ברור, מקיף, ומבוסס מחקר.</p>
+
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num">01</div>
+      <iconify-icon icon="solar:magnifier-zoom-bold-duotone" class="step-icon"></iconify-icon>
+      <h3>מחקר מעמיק</h3>
+      <p>אנחנו סורקים מאות מחקרים מ-PubMed, ניסויים קליניים, פרוטוקולי טיפול, ומקורות רפואיים מובילים. בינה מלאכותית עוזרת לנו לזהות את המידע הרלוונטי ביותר.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">02</div>
+      <iconify-icon icon="solar:document-add-bold-duotone" class="step-icon"></iconify-icon>
+      <h3>הנגשה בעברית</h3>
+      <p>כל מחקר מתורגם לשפה ברורה ונגישה. לא ז'רגון רפואי, לא אנגלית. מידע שמטופלים ומשפחות באמת מבינים ויכולים לפעול לפיו.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">03</div>
+      <iconify-icon icon="solar:monitor-smartphone-bold-duotone" class="step-icon"></iconify-icon>
+      <h3>פורטל דיגיטלי</h3>
+      <p>פורטל אינטראקטיבי, מותאם לנייד, עם ניווט קל, חיפוש מידע, ועדכונים שוטפים. כולל קישורים למקורות המחקר המקוריים.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section class="section section-center fade-up" id="portfolio">
+  <div class="section-tag">הפורטלים שלנו</div>
+  <h2 class="section-title">פורטלים שכבר עוזרים למטופלים</h2>
+  <p class="section-desc">כל פורטל נבנה במחקר מעמיק ומכיל מידע מקיף על המחלה, טיפולים, ניסויים קליניים, ומשאבים בישראל.</p>
+
+  <div class="portfolio-grid">
+
+    <a href="/parkinson" class="portal-card">
+      <div class="portal-card-top">
+        <div class="portal-icon-wrap">
+          <iconify-icon icon="solar:brain-bold-duotone" style="font-size:28px;color:var(--forest);"></iconify-icon>
+        </div>
+        <div class="portal-arrow">←</div>
+      </div>
+      <h3>פרקינסון Hub</h3>
+      <p>מרכז מידע מקיף על מחלת פרקינסון. טיפולים, מחקרים, פיזיותרפיה, פינג פונג, ניסויים קליניים, ותוכנית פעולה מעשית.</p>
+      <div class="portal-tags">
+        <span class="portal-tag">10+ סעיפים</span>
+        <span class="portal-tag">מחקרים מ-PubMed</span>
+        <span class="portal-tag">משאבים בישראל</span>
+      </div>
+    </a>
+
+    <a href="/dmd" class="portal-card">
+      <div class="portal-card-top">
+        <div class="portal-icon-wrap">
+          <iconify-icon icon="solar:dumbbell-bold-duotone" style="font-size:28px;color:var(--forest);"></iconify-icon>
+        </div>
+        <div class="portal-arrow">←</div>
+      </div>
+      <h3>DMD Hub — ניוון שרירים דושן</h3>
+      <p>מידע מקיף על Duchenne Muscular Dystrophy. ריפוי גנטי, דילוג אקסונים, ניסויים קליניים, פיזיותרפיה, וסיפורי השראה.</p>
+      <div class="portal-tags">
+        <span class="portal-tag">11 סעיפים</span>
+        <span class="portal-tag">ריפוי גנטי</span>
+        <span class="portal-tag">CRISPR</span>
+      </div>
+    </a>
+
+    <a href="/als" class="portal-card">
+      <div class="portal-card-top">
+        <div class="portal-icon-wrap">
+          <iconify-icon icon="solar:stethoscope-bold-duotone" style="font-size:28px;color:var(--forest);"></iconify-icon>
+        </div>
+        <div class="portal-arrow">←</div>
+      </div>
+      <h3>ALS Hub — ניוון שרירים</h3>
+      <p>מרכז מידע על ALS. טיפולים מאושרים, ניסויים קליניים בישראל ובעולם, מחקר ד"ר בדלאק, שיקום, ותכנון לעתיד.</p>
+      <div class="portal-tags">
+        <span class="portal-tag">9 סעיפים</span>
+        <span class="portal-tag">מחקר ישראלי</span>
+        <span class="portal-tag">תאי גזע</span>
+      </div>
+    </a>
+
+    <a href="/hemophilia" class="portal-card">
+      <div class="portal-card-top">
+        <div class="portal-icon-wrap">
+          <iconify-icon icon="solar:drop-bold-duotone" style="font-size:28px;color:var(--forest);"></iconify-icon>
+        </div>
+        <div class="portal-arrow">←</div>
+      </div>
+      <h3>המופיליה Hub</h3>
+      <p>מרכז מידע מקיף על המופיליה. טיפולי פקטור, ריפוי גנטי, ניסויים קליניים, חיים עם המופיליה, ספורט, נשים נשאיות, ומצבי חירום.</p>
+      <div class="portal-tags">
+        <span class="portal-tag">12 סעיפים</span>
+        <span class="portal-tag">ריפוי גנטי</span>
+        <span class="portal-tag">טיפול מונע</span>
+      </div>
+    </a>
+
+    <a href="/hyperemesis" class="portal-card">
+      <div class="portal-card-top">
+        <div class="portal-icon-wrap">
+          <iconify-icon icon="solar:heart-pulse-2-bold-duotone" style="font-size:28px;color:var(--forest);"></iconify-icon>
+        </div>
+        <div class="portal-arrow">←</div>
+      </div>
+      <h3>היפרמזיס Hub — בחילות הריון</h3>
+      <p>מרכז מידע מקיף על היפרמזיס גרווידרום. פריצת דרך GDF15, טיפולים, ניסויים קליניים, תזונה, בריאות נפשית, הריונות עתידיים, ומשאבים בישראל.</p>
+      <div class="portal-tags">
+        <span class="portal-tag">12 סעיפים</span>
+        <span class="portal-tag">GDF15</span>
+        <span class="portal-tag">מחקרים 2025–2026</span>
+      </div>
+    </a>
+
+    <a href="/rett" class="portal-card">
+      <div class="portal-card-top">
+        <div class="portal-icon-wrap">
+          <iconify-icon icon="solar:user-heart-bold-duotone" style="font-size:28px;color:var(--forest);"></iconify-icon>
+        </div>
+        <div class="portal-arrow">←</div>
+      </div>
+      <h3>תסמונת רט Hub — מלאכיות הדממה</h3>
+      <p>מרכז מידע מקיף על תסמונת רט. ריפוי גנטי (Taysha, Neurogene), CRISPR, DAYBUE, טכנולוגיית תקשורת עיניים, ניסויים קליניים, ומשאבים בישראל.</p>
+      <div class="portal-tags">
+        <span class="portal-tag">11 סעיפים</span>
+        <span class="portal-tag">ריפוי גנטי</span>
+        <span class="portal-tag">תקשורת עיניים</span>
+      </div>
+    </a>
+
+    <a href="/cerebral-palsy" class="portal-card">
+      <div class="portal-card-top">
+        <div class="portal-icon-wrap">
+          <iconify-icon icon="solar:accessibility-bold-duotone" style="font-size:28px;color:var(--forest);"></iconify-icon>
+        </div>
+        <div class="portal-arrow">←</div>
+      </div>
+      <h3>שיתוק מוחין Hub — Cerebral Palsy</h3>
+      <p>מרכז מידע מקיף על שיתוק מוחין. סיווג GMFCS, טיפולים מבוססי ראיות, תאי גזע, התערבות מוקדמת, זכויות בישראל, ומשאבים למשפחות.</p>
+      <div class="portal-tags">
+        <span class="portal-tag">13 סעיפים</span>
+        <span class="portal-tag">התערבות מוקדמת</span>
+        <span class="portal-tag">תאי גזע</span>
+      </div>
+    </a>
+
+    <a href="/ms" class="portal-card">
+      <div class="portal-card-top">
+        <div class="portal-icon-wrap">
+          <iconify-icon icon="solar:health-bold-duotone" style="font-size:28px;color:var(--forest);"></iconify-icon>
+        </div>
+        <div class="portal-arrow">←</div>
+      </div>
+      <h3>טרשת נפוצה Hub — Multiple Sclerosis</h3>
+      <p>מרכז מידע מקיף על טרשת נפוצה. 20+ טיפולים מאושרים, סוגי MS, ניסויים קליניים (BTK, EBV), שיקום, הריון ו-MS, ומשאבים בישראל.</p>
+      <div class="portal-tags">
+        <span class="portal-tag">12 סעיפים</span>
+        <span class="portal-tag">20+ טיפולים</span>
+        <span class="portal-tag">מחקר EBV</span>
+      </div>
+    </a>
+
+    <a href="/dystonia" class="portal-card">
+      <div class="portal-card-top">
+        <div class="portal-icon-wrap">
+          <iconify-icon icon="solar:rotate-angle-bold-duotone" style="font-size:28px;color:var(--forest);"></iconify-icon>
+        </div>
+        <div class="portal-arrow">←</div>
+      </div>
+      <h3>דיסטוניה DYT1 Hub</h3>
+      <p>מרכז מידע מקיף על דיסטוניה DYT1. מוטציית TOR1A, שכיחות באשכנזים, CRISPR וריפוי גנטי, DBS, חוקרים מובילים, מדריך הקמת עמותה, ומשאבים בישראל.</p>
+      <div class="portal-tags">
+        <span class="portal-tag">11 סעיפים</span>
+        <span class="portal-tag">CRISPR</span>
+        <span class="portal-tag">קהילה בישראל</span>
+      </div>
+    </a>
+
+    <a href="/nutcracker-syndrome" class="portal-card">
+      <div class="portal-card-top">
+        <div class="portal-icon-wrap">
+          <iconify-icon icon="solar:pill-bold-duotone" style="font-size:28px;color:var(--forest);"></iconify-icon>
+        </div>
+        <div class="portal-arrow">←</div>
+      </div>
+      <h3>מפצח האגוזים Hub</h3>
+      <p>מרכז מידע מקיף על תסמונת מפצח האגוזים (Nutcracker Syndrome). לחיצה על וריד הכליה, אבחון דופלר ו-CT, סטנטים חדשניים, ניתוחים, קונצנזוס דלפי 2024, ומרכזים בישראל.</p>
+      <div class="portal-tags">
+        <span class="portal-tag">11 סעיפים</span>
+        <span class="portal-tag">קונצנזוס 2024</span>
+        <span class="portal-tag">מחלה נדירה</span>
+      </div>
+    </a>
+
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="features-section fade-up" id="why">
+  <div class="features-inner">
+    <div class="section-center">
+      <div class="section-tag">למה Carepedia</div>
+      <h2 class="section-title">מה אנחנו עושים אחרת</h2>
+      <p class="section-desc">לא עוד אתר מידע כללי. אנחנו בונים כלי אמיתי שמשנה חיים.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <iconify-icon icon="solar:atom-bold-duotone" class="feature-icon"></iconify-icon>
+        <h3>מבוסס מחקר, לא דעות</h3>
+        <p>כל פיסת מידע מצוטטת ממחקר מדעי. קישורים ישירים ל-PubMed, ClinicalTrials.gov, ומקורות מוסמכים. שום ספקולציות.</p>
+      </div>
+      <div class="feature-card">
+        <iconify-icon icon="solar:cpu-bold-duotone" class="feature-icon"></iconify-icon>
+        <h3>מונע בינה מלאכותית</h3>
+        <p>אנחנו משתמשים ב-AI לסרוק, לנתח ולארגן מאות מחקרים. מה שלוקח שבועות של קריאה קורה אצלנו בשעות.</p>
+      </div>
+      <div class="feature-card">
+        <iconify-icon icon="solar:map-point-bold-duotone" class="feature-icon"></iconify-icon>
+        <h3>מותאם לישראל</h3>
+        <p>מידע בעברית, משאבים ישראליים, בתי חולים מקומיים, עמותות, וזכויות רפואיות. לא תרגום כללי — התאמה אמיתית.</p>
+      </div>
+      <div class="feature-card">
+        <iconify-icon icon="solar:smartphone-bold-duotone" class="feature-icon"></iconify-icon>
+        <h3>מותאם לנייד</h3>
+        <p>כל פורטל עובד מושלם על טלפון. ניווט קל, חיפוש, טאבים ואקורדיונים. המטופל מגיע למידע שהוא צריך בשניות.</p>
+      </div>
+      <div class="feature-card">
+        <iconify-icon icon="solar:refresh-circle-bold-duotone" class="feature-icon"></iconify-icon>
+        <h3>עדכונים שוטפים</h3>
+        <p>המחקר הרפואי מתקדם כל הזמן. אנחנו מעדכנים את הפורטלים באופן שוטף עם מחקרים חדשים, תרופות מאושרות וניסויים קליניים.</p>
+      </div>
+      <div class="feature-card">
+        <iconify-icon icon="solar:heart-bold-duotone" class="feature-icon"></iconify-icon>
+        <h3>בחינם למטופלים</h3>
+        <p>הפורטלים פתוחים לכולם ללא עלות. אנחנו מאמינים שמידע רפואי מבוסס מחקר צריך להיות נגיש לכל אחד.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="testimonial-section fade-up">
+  <div class="testimonial-inner">
+    <div class="testimonial-label">מה אומרים עלינו</div>
+    <div class="testimonial-quote">
+      האתר מדהים וממש מקיף. במיוחד החלק של הניסויים העדכניים וכל המחקרים — Blew my mind. אני מלמדת תלמידים בני נוער שלומדים מדעי המוח, וביקשתי לשתף איתם את הפורטל כחומר לימוד.
+    </div>
+    <div class="testimonial-sep"></div>
+    <div class="testimonial-author">
+      <strong>שי</strong> — מורה למדעי המוח, שיתפה את פורטל הפרקינסון עם תלמידיה
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-section fade-up" id="contact">
+  <div class="contact-inner">
+    <div class="section-tag">צרו קשר</div>
+    <h2 class="section-title">רוצים פורטל לעמותה או למרפאה?</h2>
+    <p class="section-desc" style="margin: 0 auto;">מלאו את הפרטים ונחזור אליכם בהקדם עם הצעה מותאמת. אנחנו בונים פורטלים לכל מחלה או תחום רפואי.</p>
+
+    <form class="contact-form" id="contactForm" action="https://formsubmit.co/y@uxwritinghub.com" method="POST" onsubmit="submitForm(event)">
+      <input type="hidden" name="_subject" value="Carepedia — פנייה חדשה לפורטל רפואי">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_next" value="https://carepedia.org/#contact">
+      <input type="hidden" name="_template" value="table">
+      <div class="form-row">
+        <div class="form-group">
+          <label>שם מלא *</label>
+          <input type="text" name="name" required placeholder="ישראל ישראלי">
+        </div>
+        <div class="form-group">
+          <label>ארגון / עמותה / מרפאה</label>
+          <input type="text" name="org" placeholder="שם הארגון">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>אימייל *</label>
+          <input type="email" name="email" required placeholder="email@example.com" dir="ltr">
+        </div>
+        <div class="form-group">
+          <label>טלפון</label>
+          <input type="tel" name="phone" placeholder="050-0000000" dir="ltr">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>באיזה תחום רפואי מדובר?</label>
+        <select name="topic">
+          <option value="">בחרו תחום...</option>
+          <option value="neuro">מחלות נוירולוגיות (פרקינסון, ALS, MS וכו')</option>
+          <option value="genetic">מחלות גנטיות (DMD, CF וכו')</option>
+          <option value="oncology">אונקולוגיה</option>
+          <option value="cardio">קרדיולוגיה</option>
+          <option value="mental">בריאות הנפש</option>
+          <option value="rare">מחלות נדירות</option>
+          <option value="other">אחר</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>ספרו לנו קצת על הצורך</label>
+        <textarea name="message" placeholder="מה תרצו שהפורטל יכלול? למי הוא מיועד? כל מידע יעזור לנו להבין את הצורך."></textarea>
+      </div>
+      <button type="submit" class="form-submit">שלחו ונחזור אליכם</button>
+      <p class="form-note">אנחנו מגיבים תוך 24 שעות. המידע שלכם לא יועבר לגורם שלישי.</p>
+    </form>
+
+    <div class="form-success" id="formSuccess">
+      <iconify-icon icon="solar:check-circle-bold-duotone" class="check-icon"></iconify-icon>
+      <h3>תודה! קיבלנו את הפרטים</h3>
+      <p>נחזור אליכם בהקדם. בינתיים, מוזמנים לבדוק את הפורטלים הקיימים שלנו.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h3>Carepedia</h3>
+      <p>פורטלי מידע רפואי מבוססי מחקר. עוזרים לרופאים ועמותות להנגיש ידע למטופלים ולמשפחותיהם.</p>
+    </div>
+    <div class="footer-links">
+      <h4>הפורטלים שלנו</h4>
+      <a href="/parkinson">פרקינסון Hub</a>
+      <a href="/dmd">DMD Hub</a>
+      <a href="/als">ALS Hub</a>
+      <a href="/hemophilia">המופיליה Hub</a>
+      <a href="/cerebral-palsy">שיתוק מוחין Hub</a>
+      <a href="/ms">טרשת נפוצה Hub</a>
+    </div>
+    <div class="footer-links">
+      <h4>ניווט</h4>
+      <a href="#how">איך זה עובד</a>
+      <a href="#portfolio">הפורטלים שלנו</a>
+      <a href="#why">למה Carepedia</a>
+      <a href="#contact">צרו קשר</a>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:48px;margin-bottom:24px;">
+    <a href="#contact" class="btn-primary" style="display:inline-flex;background:rgba(255,255,255,0.12);border:1px solid rgba(255,255,255,0.2);">
+      <iconify-icon icon="solar:add-circle-bold"></iconify-icon>
+      רוצים פורטל למחלה אחרת?
+    </a>
+  </div>
+  <div class="footer-bottom">
+    <span>Carepedia &copy; 2026 | נבנה על ידי <strong style="color:rgba(255,255,255,0.65);">יובל קשטכר</strong> ועוזריו הרובוטים</span>
+    <span>המידע בפורטלים הוא למטרות מידע בלבד ואינו מהווה ייעוץ רפואי. <a href="/disclaimer">Legal Disclaimer</a></span>
+  </div>
+</footer>
+
+<script>
+// Fade-in animation
+const fadeObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.08, rootMargin: '0px 0px -30px 0px' });
+
+document.querySelectorAll('.fade-up').forEach(el => fadeObserver.observe(el));
+
+// Smooth scroll
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    e.preventDefault();
+    const id = a.getAttribute('href').slice(1);
+    const target = document.getElementById(id);
+    if (target) {
+      target.scrollIntoView({ behavior: 'smooth' });
+      document.querySelector('.nav-links').classList.remove('open');
+    }
+  });
+});
+
+// Nav shadow on scroll
+window.addEventListener('scroll', () => {
+  document.querySelector('.nav').style.boxShadow =
+    window.scrollY > 10 ? '0 1px 16px rgba(0,0,0,0.05)' : 'none';
+}, { passive: true });
+
+// Form submission
+function submitForm(e) {
+  e.preventDefault();
+  const form = document.getElementById('contactForm');
+  const data = new FormData(form);
+  fetch('https://formsubmit.co/ajax/y@uxwritinghub.com', {
+    method: 'POST',
+    body: data
+  }).then(r => r.json()).then(() => {
+    form.style.display = 'none';
+    document.getElementById('formSuccess').classList.add('show');
+  }).catch(() => {
+    form.style.display = 'none';
+    document.getElementById('formSuccess').classList.add('show');
+  });
+}
+</script>
+</body>
+</html>

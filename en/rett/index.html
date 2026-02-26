@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rett Syndrome Hub | CarePedia Information Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="alternate" hreflang="he" href="https://carepedia.org/rett" />
+<link rel="alternate" hreflang="en" href="https://carepedia.org/en/rett" />
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --primary: #0f4c75;
+  --primary-light: #3282b8;
+  --accent: #00b894;
+  --accent-light: #55efc4;
+  --warm: #fdcb6e;
+  --warm-dark: #e17055;
+  --bg: #f0f4f8;
+  --card: #ffffff;
+  --text: #2c3e50;
+  --text-light: #5d6d7e;
+  --shadow: 0 4px 20px rgba(0,0,0,0.08);
+  --shadow-hover: 0 12px 40px rgba(0,0,0,0.18);
+  --radius: 16px;
+  --transition: all 0.3s cubic-bezier(.4,0,.2,1);
+  /* Aliases for Iconify icons */
+  --forest: #0f4c75;
+  --forest-mid: #3282b8;
+  --forest-light: rgba(50,130,184,0.12);
+  --amber: #fdcb6e;
+  --amber-light: rgba(253,203,110,0.12);
+  --border: #dde4eb;
+}
+
+body {
+  font-family: 'Rubik', 'Segoe UI', Tahoma, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.8;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background:
+    radial-gradient(ellipse at 10% 20%, rgba(15,76,117,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 80%, rgba(0,184,148,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(253,203,110,0.05) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.scroll-progress {
+  position: fixed;
+  top: 0; right: 0;
+  width: 100%; height: 4px;
+  z-index: 2000;
+  background: transparent;
+}
+.scroll-progress .bar {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--primary-light), var(--warm));
+  border-radius: 0 0 0 4px;
+  transition: width 0.1s linear;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 280px; height: 100vh;
+  background: rgba(15,76,117,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(255,255,255,0.1);
+  z-index: 1000;
+  padding: 30px 20px;
+  overflow-y: auto;
+  transition: transform 0.4s cubic-bezier(.4,0,.2,1);
+}
+.sidebar .logo {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+.sidebar .logo .icon { font-size: 48px; }
+.sidebar .logo h2 { color: #fff; font-size: 18px; margin-top: 8px; font-weight: 600; }
+.sidebar nav a {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 18px; color: rgba(255,255,255,0.8);
+  text-decoration: none; border-radius: 12px;
+  margin-bottom: 4px; font-size: 15px; transition: var(--transition);
+}
+.sidebar nav a:hover, .sidebar nav a.active {
+  background: rgba(255,255,255,0.15); color: #fff; transform: translateX(4px);
+}
+.sidebar nav a .nav-icon { font-size: 22px; min-width: 30px; text-align: center; }
+
+.menu-toggle {
+  display: none;
+  position: fixed;
+  top: 20px; left: 20px;
+  z-index: 1100;
+  background: var(--primary); color: #fff;
+  border: none; border-radius: 12px;
+  width: 50px; height: 50px; font-size: 24px;
+  cursor: pointer; box-shadow: var(--shadow); transition: var(--transition);
+}
+.menu-toggle:hover { transform: scale(1.05); }
+.menu-toggle.open { border-radius: 50%; background: var(--warm-dark); }
+
+.main {
+  margin-left: 280px;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--primary) 0%, #3282b8 40%, var(--accent) 100%);
+  padding: 80px 60px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%);
+  animation: float 20s linear infinite;
+}
+@keyframes float { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+.hero-content { position: relative; z-index: 1; max-width: 900px; }
+.hero h1 { font-size: 52px; font-weight: 800; margin-bottom: 10px; line-height: 1.3; }
+.hero .greeting { font-size: 22px; opacity: 0.95; margin-bottom: 30px; line-height: 1.7; }
+.hero .subtitle { font-size: 18px; opacity: 0.8; max-width: 700px; }
+
+.fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+.section { padding: 60px; max-width: 1100px; margin: 0 auto; }
+.section-header {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 40px; padding-bottom: 20px;
+  border-bottom: 3px solid var(--primary-light);
+}
+.section-header .sec-icon { font-size: 42px; }
+.section-header h2 { font-size: 36px; color: var(--primary); }
+.section-header p { color: var(--text-light); font-size: 16px; margin-top: 4px; }
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px; margin-bottom: 40px;
+}
+.card {
+  background: var(--card); border-radius: var(--radius); padding: 30px;
+  box-shadow: var(--shadow); transition: var(--transition);
+  border-top: 4px solid var(--primary-light);
+  position: relative; overflow: hidden;
+}
+.card:hover { transform: translateY(-6px) scale(1.01); box-shadow: var(--shadow-hover); }
+.card .card-icon { font-size: 40px; margin-bottom: 16px; }
+.card h3 { font-size: 20px; color: var(--primary); margin-bottom: 12px; }
+.card p { color: var(--text-light); font-size: 15px; line-height: 1.8; }
+.card.green { border-top-color: var(--accent); }
+.card.orange { border-top-color: var(--warm); }
+.card.blue { border-top-color: var(--primary-light); }
+
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px; margin-top: 40px;
+}
+.cat-card {
+  background: var(--card); border-radius: var(--radius); padding: 30px 24px;
+  text-align: center; cursor: pointer; transition: var(--transition);
+  box-shadow: var(--shadow); text-decoration: none; color: var(--text);
+}
+.cat-card:hover { transform: translateY(-6px) scale(1.02); box-shadow: var(--shadow-hover); }
+.cat-card .cat-icon { font-size: 48px; margin-bottom: 14px; }
+.cat-card h3 { font-size: 18px; color: var(--primary); margin-bottom: 8px; }
+.cat-card p { font-size: 13px; color: var(--text-light); }
+
+.accordion { margin-bottom: 16px; }
+.accordion-header {
+  background: var(--card); padding: 20px 24px; border-radius: var(--radius);
+  cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+  box-shadow: var(--shadow); transition: var(--transition);
+  font-size: 17px; font-weight: 600; color: var(--primary);
+}
+.accordion-header:hover { background: #eef4fb; }
+.accordion-header .arrow { transition: transform 0.3s ease; font-size: 20px; }
+.accordion-header.open .arrow { transform: rotate(180deg); }
+.accordion-body {
+  max-height: 0; overflow: clip; transition: max-height 0.4s ease;
+  background: var(--card); border-radius: 0 0 var(--radius) var(--radius); margin-top: -8px;
+}
+.accordion-body .inner { padding: 20px 24px 24px; color: var(--text-light); line-height: 2; }
+
+.tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+.tab-btn {
+  padding: 12px 24px; background: var(--card);
+  border: 2px solid #dde4eb; border-radius: 30px;
+  cursor: pointer; font-size: 15px; font-family: inherit;
+  color: var(--text-light); transition: var(--transition);
+}
+.tab-btn:hover { border-color: var(--primary-light); color: var(--primary); }
+.tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.tab-content { display: none; animation: fadeIn 0.4s ease; }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.info-box {
+  background: linear-gradient(135deg, #eaf4fb 0%, #e8f8f0 100%);
+  border-radius: var(--radius); padding: 24px 28px; margin: 24px 0;
+  border-left: 5px solid var(--primary-light);
+}
+.info-box.warning { background: linear-gradient(135deg, #fef9e7 0%, #fdebd0 100%); border-left-color: var(--warm); }
+.info-box.success { background: linear-gradient(135deg, #e8f8f0 0%, #d5f5e3 100%); border-left-color: var(--accent); }
+.info-box h4 { color: var(--primary); margin-bottom: 8px; font-size: 17px; }
+.info-box p { color: var(--text-light); font-size: 15px; }
+
+.link-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 24px; background: var(--primary);
+  color: #fff; text-decoration: none; border-radius: 30px;
+  font-size: 15px; transition: var(--transition); margin: 6px;
+}
+.link-btn:hover { background: var(--primary-light); transform: translateY(-2px); }
+.link-btn.green { background: var(--accent); }
+.link-btn.green:hover { background: var(--accent-light); color: var(--text); }
+.link-btn.orange { background: var(--warm-dark); }
+.link-btn.orange:hover { background: var(--warm); color: var(--text); }
+
+.styled-table {
+  width: 100%; border-collapse: collapse; margin: 20px 0;
+  background: var(--card); border-radius: var(--radius);
+  overflow: hidden; box-shadow: var(--shadow);
+}
+.styled-table thead { background: var(--primary); color: #fff; }
+.styled-table th { padding: 16px 20px; text-align: left; font-weight: 600; }
+.styled-table td { padding: 14px 20px; border-bottom: 1px solid #eee; }
+.styled-table tbody tr:hover { background: #f7fafc; }
+
+.timeline { position: relative; padding-left: 40px; margin: 30px 0; }
+.timeline::before {
+  content: '';
+  position: absolute; left: 12px; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--primary-light), var(--accent));
+  border-radius: 3px;
+}
+.timeline-item {
+  position: relative; margin-bottom: 30px; padding: 24px;
+  background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);
+}
+.timeline-item::before {
+  content: ''; position: absolute;
+  left: -34px; top: 30px;
+  width: 16px; height: 16px;
+  background: var(--accent); border-radius: 50%; border: 3px solid var(--bg);
+}
+.timeline-item h4 { color: var(--primary); font-size: 18px; margin-bottom: 8px; }
+.timeline-item p { color: var(--text-light); }
+.timeline-item .time-label {
+  display: inline-block; background: var(--primary); color: #fff;
+  padding: 4px 14px; border-radius: 20px; font-size: 13px; margin-bottom: 10px;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px; margin: 30px 0;
+}
+.stat-box {
+  background: linear-gradient(135deg, var(--card) 0%, #f7fafc 100%);
+  border-radius: var(--radius); padding: 24px; text-align: center;
+  box-shadow: var(--shadow); border-bottom: 3px solid var(--primary-light);
+  transition: var(--transition);
+}
+.stat-box:nth-child(2) { border-bottom-color: var(--accent); }
+.stat-box:nth-child(3) { border-bottom-color: var(--warm); }
+.stat-box:nth-child(4) { border-bottom-color: var(--warm-dark); }
+.stat-box:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+.stat-box .stat-num {
+  font-size: 36px; font-weight: 800;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.stat-box .stat-label { color: var(--text-light); font-size: 14px; margin-top: 6px; }
+
+.carepedia-cta {
+  background: linear-gradient(135deg, #1A73E8, #00C9A7);
+  padding: 48px 24px; text-align: center; color: #fff;
+}
+.carepedia-cta h3 { font-size: 24px; font-weight: 700; margin-bottom: 12px; }
+.carepedia-cta p { font-size: 16px; opacity: 0.9; margin-bottom: 24px; max-width: 500px; margin-left: auto; margin-right: auto; }
+.carepedia-cta .cta-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 32px; background: #fff; color: #1A73E8;
+  text-decoration: none; border-radius: 30px; font-size: 16px; font-weight: 700;
+  font-family: inherit; transition: all 0.3s ease; box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+.carepedia-cta .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+
+.credit-bar {
+  display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap;
+  padding: 14px 20px; font-size: 14px; color: rgba(255,255,255,0.85); position: relative; z-index: 1;
+}
+.credit-bar span { opacity: 0.9; }
+.portal-request-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 22px; background: var(--primary-light); color: #fff;
+  text-decoration: none; border-radius: 30px; font-size: 14px;
+  font-family: inherit; font-weight: 600; transition: var(--transition);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+.portal-request-btn:hover { background: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+
+.footer {
+  background: var(--primary); color: rgba(255,255,255,0.8);
+  text-align: center; padding: 40px; font-size: 14px;
+}
+
+.scroll-top {
+  position: fixed; bottom: 30px; left: 30px;
+  width: 50px; height: 50px; background: var(--primary);
+  color: #fff; border: none; border-radius: 50%;
+  font-size: 22px; cursor: pointer; box-shadow: var(--shadow);
+  transition: var(--transition); opacity: 0; pointer-events: none; z-index: 999;
+}
+.scroll-top.visible { opacity: 1; pointer-events: auto; }
+.scroll-top:hover { background: var(--primary-light); transform: translateY(-3px); }
+
+.search-box { position: relative; margin: 0 auto; }
+.search-box input {
+  width: 100%; padding: 14px 20px 14px 50px;
+  border: 2px solid rgba(15,76,117,0.15); border-radius: 30px;
+  font-size: 16px; font-family: 'Rubik', sans-serif;
+  background: var(--card); color: var(--text); transition: var(--transition);
+  box-sizing: border-box;
+}
+.search-box input:focus { outline: none; border-color: var(--primary-light); box-shadow: 0 0 0 4px rgba(50,130,184,0.1); }
+.search-box .search-icon {
+  position: absolute; left: 18px; top: 50%;
+  transform: translateY(-50%); font-size: 20px; pointer-events: none;
+}
+
+.sidebar-overlay {
+  display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5); z-index: 999; opacity: 0; transition: opacity 0.3s ease;
+}
+.sidebar-overlay.active { display: block; opacity: 1; }
+
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); width: 270px; }
+  .sidebar.open { transform: translateX(0); }
+  .menu-toggle { display: block; }
+  .main { margin-left: 0; }
+  .hero { padding: 60px 30px; }
+  .section { padding: 40px 24px; }
+}
+
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); width: 260px; }
+  .sidebar.open { transform: translateX(0); }
+  .menu-toggle { display: block; }
+  .main { margin-left: 0; }
+  .hero { padding: 40px 20px 36px; }
+  .hero h1 { font-size: 28px; line-height: 1.3; }
+  .hero .greeting { font-size: 16px; line-height: 1.7; }
+  .hero .subtitle { font-size: 14px; }
+  .section { padding: 28px 16px; }
+  .section-header { flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 24px; padding-bottom: 14px; }
+  .section-header .sec-icon { font-size: 32px; }
+  .section-header h2 { font-size: 24px; }
+  .section-header p { font-size: 14px; }
+  .cards-grid { grid-template-columns: 1fr; gap: 16px; margin-bottom: 24px; }
+  .card { padding: 20px; }
+  .card:hover { transform: none; }
+  .cat-card:hover { transform: none; }
+  .stat-box:hover { transform: none; }
+  .link-btn:hover { transform: none; }
+  .portal-request-btn:hover { transform: none; }
+  .scroll-top:hover { transform: none; }
+  .sidebar nav a:hover { transform: none; }
+  .card .card-icon { font-size: 32px; margin-bottom: 10px; }
+  .card h3 { font-size: 17px; }
+  .card p { font-size: 14px; }
+  .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 24px; }
+  .cat-card { padding: 18px 12px; }
+  .cat-card .cat-icon { font-size: 32px; margin-bottom: 8px; }
+  .cat-card h3 { font-size: 14px; }
+  .cat-card p { font-size: 11px; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 20px 0; }
+  .stat-box { padding: 16px 10px; }
+  .stat-box .stat-num { font-size: 26px; }
+  .stat-box .stat-label { font-size: 12px; }
+  .tabs { gap: 6px; margin-bottom: 16px; }
+  .tab-btn { padding: 8px 14px; font-size: 13px; border-radius: 20px; }
+  .styled-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 13px; }
+  .styled-table th { padding: 10px 12px; font-size: 13px; white-space: nowrap; }
+  .styled-table td { padding: 10px 12px; font-size: 13px; min-width: 100px; }
+  .info-box { padding: 16px 18px; margin: 16px 0; }
+  .info-box h4 { font-size: 15px; }
+  .info-box p { font-size: 13px; }
+  .accordion-header { padding: 14px 16px; font-size: 15px; }
+  .accordion-body .inner { padding: 14px 16px 18px; font-size: 14px; line-height: 1.9; }
+  .timeline { padding-left: 30px; margin: 20px 0; }
+  .timeline-item { padding: 16px; margin-bottom: 20px; }
+  .timeline-item::before { left: -24px; width: 12px; height: 12px; top: 22px; }
+  .timeline-item h4 { font-size: 16px; }
+  .timeline-item p { font-size: 13px; }
+  .link-btn { padding: 10px 16px; font-size: 13px; margin: 4px 2px; }
+  .search-box input { padding: 12px 18px 12px 40px; font-size: 14px; }
+  .footer { padding: 28px 16px; font-size: 13px; }
+  .scroll-top { width: 42px; height: 42px; font-size: 18px; bottom: 20px; left: 16px; }
+}
+
+@media (max-width: 380px) {
+  .hero h1 { font-size: 24px; }
+  .hero .greeting { font-size: 15px; }
+  .cat-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .cat-card { padding: 14px 8px; }
+  .cat-card .cat-icon { font-size: 26px; }
+  .cat-card h3 { font-size: 13px; }
+  .cat-card p { display: none; }
+  .stats-row { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .stat-box .stat-num { font-size: 22px; }
+  .section { padding: 20px 12px; }
+  .tab-btn { padding: 7px 10px; font-size: 12px; }
+}
+
+.disclaimer-banner {
+  background: linear-gradient(135deg, #FFF3E0, #FFF8E1);
+  border-bottom: 2px solid #FFB74D;
+  padding: 10px 20px; text-align: center; font-size: 13px; color: #5D4037;
+  position: relative; z-index: 1500;
+  display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;
+}
+.disclaimer-banner strong { color: #E65100; }
+.disclaimer-banner a { color: #1A73E8; text-decoration: underline; font-weight: 600; }
+.disclaimer-banner a:hover { color: #0D47A1; }
+@media (max-width: 768px) { .disclaimer-banner { font-size: 12px; padding: 8px 12px; } }
+</style>
+<script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js" defer></script>
+</head>
+<body>
+
+<div class="scroll-progress"><div class="bar" id="scrollBar"></div></div>
+<div class="sidebar-overlay" id="overlay" onclick="closeMenu()"></div>
+
+<button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">
+  <iconify-icon icon="mdi:menu"></iconify-icon>
+</button>
+
+<aside class="sidebar" id="sidebar">
+  <div class="logo">
+    <div class="icon"><iconify-icon icon="mdi:brain" style="color:#fff;font-size:48px;"></iconify-icon></div>
+    <h2>Rett Syndrome Hub</h2>
+  </div>
+  <nav>
+    <a href="#home" class="active" onclick="navigateTo('home')"><span class="nav-icon"><iconify-icon icon="mdi:home"></iconify-icon></span> Home</a>
+    <a href="#about" onclick="navigateTo('about')"><span class="nav-icon"><iconify-icon icon="mdi:information"></iconify-icon></span> About Rett</a>
+    <a href="#treatments" onclick="navigateTo('treatments')"><span class="nav-icon"><iconify-icon icon="mdi:pill"></iconify-icon></span> Treatments</a>
+    <a href="#trials" onclick="navigateTo('trials')"><span class="nav-icon"><iconify-icon icon="mdi:flask"></iconify-icon></span> Clinical Trials</a>
+    <a href="#research" onclick="navigateTo('research')"><span class="nav-icon"><iconify-icon icon="mdi:microscope"></iconify-icon></span> Research</a>
+    <a href="#genetherapy" onclick="navigateTo('genetherapy')"><span class="nav-icon"><iconify-icon icon="mdi:dna"></iconify-icon></span> Gene Therapy</a>
+    <a href="#communication" onclick="navigateTo('communication')"><span class="nav-icon"><iconify-icon icon="mdi:message-text"></iconify-icon></span> Communication</a>
+    <a href="#lifestyle" onclick="navigateTo('lifestyle')"><span class="nav-icon"><iconify-icon icon="mdi:heart"></iconify-icon></span> Lifestyle</a>
+    <a href="#psychological" onclick="navigateTo('psychological')"><span class="nav-icon"><iconify-icon icon="mdi:head-heart"></iconify-icon></span> Psychological Support</a>
+    <a href="#stages" onclick="navigateTo('stages')"><span class="nav-icon"><iconify-icon icon="mdi:chart-timeline-variant"></iconify-icon></span> Disease Stages</a>
+    <a href="#stories" onclick="navigateTo('stories')"><span class="nav-icon"><iconify-icon icon="mdi:account-voice"></iconify-icon></span> Stories</a>
+    <a href="#resources" onclick="navigateTo('resources')"><span class="nav-icon"><iconify-icon icon="mdi:link"></iconify-icon></span> Resources</a>
+  </nav>
+</aside>
+
+<main class="main">
+
+  <div class="disclaimer-banner">
+    <iconify-icon icon="mdi:alert-circle-outline" style="font-size:18px;color:#E65100;"></iconify-icon>
+    <strong>Medical Disclaimer:</strong> This portal is for informational purposes only and does not replace professional medical advice.
+    Always consult a qualified physician before making any medical decision.
+  </div>
+
+  <!-- HOME -->
+  <section id="home" class="hero">
+    <div class="hero-content">
+      <h1><iconify-icon icon="mdi:brain" style="vertical-align:middle;margin-right:12px;"></iconify-icon>Rett Syndrome</h1>
+      <p class="greeting">A comprehensive, evidence-based information hub for families, caregivers, and healthcare professionals — treatments, gene therapy trials, communication tools, and global support resources.</p>
+      <p class="subtitle">Rett syndrome affects approximately 1 in 10,000 female births worldwide. The first FDA-approved treatment (DAYBUE) arrived in March 2023, and gene therapy trials are showing remarkable results — a new era of hope for the Rett community.</p>
+    </div>
+  </section>
+
+  <div class="section fade-in">
+    <div class="stats-row">
+      <div class="stat-box"><div class="stat-num">1:10,000</div><div class="stat-label">Prevalence in females</div></div>
+      <div class="stat-box"><div class="stat-num">350,000+</div><div class="stat-label">People affected worldwide</div></div>
+      <div class="stat-box"><div class="stat-num">6–18</div><div class="stat-label">Months — age at regression onset</div></div>
+      <div class="stat-box"><div class="stat-num">2023</div><div class="stat-label">First FDA-approved drug (DAYBUE)</div></div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon"><iconify-icon icon="mdi:dna"></iconify-icon></div>
+        <h3>What is Rett Syndrome?</h3>
+        <p>Rett syndrome is a rare neurological disorder caused by mutations in the MECP2 gene on the X chromosome. It predominantly affects girls. After typical early development, children undergo a period of regression — losing speech and hand use — and develop characteristic hand-wringing movements.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon"><iconify-icon icon="mdi:pill"></iconify-icon></div>
+        <h3>First Approved Treatment</h3>
+        <p>DAYBUE (trofinetide) received FDA approval in March 2023 — the first-ever disease-specific treatment for Rett syndrome. It addresses the core neurological symptoms, not just individual features of the condition.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon"><iconify-icon icon="mdi:flask"></iconify-icon></div>
+        <h3>Gene Therapy — Breakthrough Results</h3>
+        <p>Taysha Gene Therapies' TSHA-102 showed 100% response rate in Phase 1/2 trials. Neurogene's NGN-401 achieved 35 developmental milestones in a single patient. The gene therapy era for Rett has truly begun.</p>
+      </div>
+    </div>
+
+    <div class="cat-grid">
+      <a class="cat-card" onclick="navigateTo('about')"><div class="cat-icon"><iconify-icon icon="mdi:information-outline"></iconify-icon></div><h3>About Rett</h3><p>Genetics &amp; diagnosis</p></a>
+      <a class="cat-card" onclick="navigateTo('treatments')"><div class="cat-icon"><iconify-icon icon="mdi:pill"></iconify-icon></div><h3>Treatments</h3><p>DAYBUE &amp; other therapies</p></a>
+      <a class="cat-card" onclick="navigateTo('trials')"><div class="cat-icon"><iconify-icon icon="mdi:flask"></iconify-icon></div><h3>Clinical Trials</h3><p>Active studies</p></a>
+      <a class="cat-card" onclick="navigateTo('genetherapy')"><div class="cat-icon"><iconify-icon icon="mdi:dna"></iconify-icon></div><h3>Gene Therapy</h3><p>TSHA-102, NGN-401 &amp; more</p></a>
+      <a class="cat-card" onclick="navigateTo('communication')"><div class="cat-icon"><iconify-icon icon="mdi:message-text"></iconify-icon></div><h3>Communication</h3><p>AAC &amp; eye gaze tools</p></a>
+      <a class="cat-card" onclick="navigateTo('lifestyle')"><div class="cat-icon"><iconify-icon icon="mdi:heart"></iconify-icon></div><h3>Lifestyle</h3><p>Sleep, seizures, scoliosis</p></a>
+      <a class="cat-card" onclick="navigateTo('stages')"><div class="cat-icon"><iconify-icon icon="mdi:chart-timeline-variant"></iconify-icon></div><h3>Disease Stages</h3><p>The 4 stages of Rett</p></a>
+      <a class="cat-card" onclick="navigateTo('resources')"><div class="cat-icon"><iconify-icon icon="mdi:link"></iconify-icon></div><h3>Resources</h3><p>Organizations &amp; links</p></a>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <section id="about" class="section fade-in">
+    <div class="section-header">
+      <div class="sec-icon"><iconify-icon icon="mdi:information"></iconify-icon></div>
+      <div><h2>About Rett Syndrome</h2><p>Genetics, causes, and diagnosis</p></div>
+    </div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon"><iconify-icon icon="mdi:dna"></iconify-icon></div>
+        <h3>MECP2 Gene Mutation</h3>
+        <p>Rett syndrome is caused by mutations in the MECP2 gene (methyl-CpG binding protein 2) located on the X chromosome. MECP2 encodes a protein essential for normal brain function and neural circuit maturation. Over 200 known pathogenic variants exist, with 8 mutations accounting for ~80% of classic cases.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon"><iconify-icon icon="mdi:human-female"></iconify-icon></div>
+        <h3>Who Is Affected</h3>
+        <p>Rett syndrome predominantly affects females (1 in 10,000 female births). Males with MECP2 mutations typically have only one X chromosome and are severely affected or do not survive. The vast majority of mutations are de novo (not inherited from parents).</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon"><iconify-icon icon="mdi:alert"></iconify-icon></div>
+        <h3>Classic vs. Atypical Rett</h3>
+        <p>Classic Rett syndrome follows the four-stage pattern and is caused by MECP2 mutations. Atypical forms include CDKL5 deficiency disorder and FOXG1 syndrome (sometimes called "congenital Rett"). These are genetically distinct conditions now considered separate disorders in most classification systems.</p>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">How is Rett syndrome diagnosed? <span class="arrow">&#9660;</span></div>
+      <div class="accordion-body"><div class="inner">
+        <p>Diagnosis is primarily clinical, based on the characteristic developmental history (normal development, followed by regression) and physical features (loss of purposeful hand use, hand stereotypies, gait disturbance, and communication deficits). Genetic testing confirms a pathogenic MECP2 variant in ~95% of classic cases. The Vanderbilt Rett Syndrome Clinic and other specialized centers offer comprehensive diagnostic evaluation.</p>
+      </div></div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">What are the hallmark features? <span class="arrow">&#9660;</span></div>
+      <div class="accordion-body"><div class="inner">
+        <p>Classic Rett syndrome features include: characteristic hand stereotypies (hand-wringing, hand-washing, or hand-mouthing movements), loss of purposeful hand skills, loss of spoken language, gait abnormalities (toe walking, unsteady gait), breathing irregularities (breath-holding, hyperventilation), seizures (in ~80% of patients), scoliosis, and autonomic dysfunction. The syndrome is not degenerative — skills, while limited, tend to be relatively stable after the regression phase.</p>
+      </div></div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">MECP2 and the brain <span class="arrow">&#9660;</span></div>
+      <div class="accordion-body"><div class="inner">
+        <p>MECP2 protein acts as a master regulator of gene expression across many brain cell types. Without functional MECP2, synaptic connections fail to mature properly, and neural circuits are dysregulated. Critically, MECP2 deficiency is reversible in animal models — restoring MECP2 function even in adult mice normalizes brain function. This is the scientific rationale for gene therapy approaches in Rett syndrome.</p>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- TREATMENTS -->
+  <section id="treatments" class="section fade-in">
+    <div class="section-header">
+      <div class="sec-icon"><iconify-icon icon="mdi:pill"></iconify-icon></div>
+      <div><h2>Treatments</h2><p>Approved treatments and symptom management</p></div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab(this,'daybue')">DAYBUE</button>
+      <button class="tab-btn" onclick="switchTab(this,'symptom-meds')">Symptom Medications</button>
+      <button class="tab-btn" onclick="switchTab(this,'therapy')">Therapies</button>
+      <button class="tab-btn" onclick="switchTab(this,'ask-doctor')">Ask Your Doctor</button>
+    </div>
+
+    <div id="daybue" class="tab-content active">
+      <div class="info-box success">
+        <h4>DAYBUE (Trofinetide) — FDA Approved March 2023</h4>
+        <p>DAYBUE is the first and only FDA-approved treatment specifically for Rett syndrome, approved for patients 2 years and older. It is a synthetic analogue of glycine-proline-glutamate (GPE), a breakdown product of insulin-like growth factor 1 (IGF-1), that reduces neuroinflammation and supports synaptic function.</p>
+      </div>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon"><iconify-icon icon="mdi:information"></iconify-icon></div>
+          <h3>Clinical Evidence</h3>
+          <p>The Phase 3 LAVENDER trial (187 patients) showed statistically significant improvements in the Rett Syndrome Behaviour Questionnaire (RSBQ) and Clinician Global Impression of Change (CGI-I) scores. Improvements observed in communication, hand function, breathing, and overall well-being.</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon"><iconify-icon icon="mdi:cup-water"></iconify-icon></div>
+          <h3>Administration</h3>
+          <p>DAYBUE is given twice daily as an oral liquid solution. Dose is calculated by body weight. It is mixed with food or given directly. Gastrointestinal side effects (diarrhea, weight loss) are the most common adverse reactions — up to 80% in trials, though most are manageable.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon"><iconify-icon icon="mdi:currency-usd"></iconify-icon></div>
+          <h3>Access &amp; Cost</h3>
+          <p>Annual list price is approximately $575,000 in the US. Acadia Pharmaceuticals offers a patient assistance program (DAYBUE Access). Coverage depends on insurance and country. As of 2025, DAYBUE is approved in the US; regulatory submissions are ongoing in other countries.</p>
+        </div>
+      </div>
+      <div class="info-box warning">
+        <h4>Important: Not a Cure</h4>
+        <p>DAYBUE addresses symptoms and may improve quality of life — but it does not correct the underlying MECP2 mutation. Families should continue monitoring for other treatable symptoms (seizures, scoliosis, breathing irregularities) alongside DAYBUE treatment.</p>
+      </div>
+    </div>
+
+    <div id="symptom-meds" class="tab-content">
+      <div class="info-box">
+        <h4>Managing Rett Syndrome Symptoms</h4>
+        <p>There is no one-size-fits-all medication protocol. Treatment is highly individualized based on each child's specific symptoms and severity. Regular review by a multidisciplinary team is essential.</p>
+      </div>
+      <table class="styled-table">
+        <thead><tr><th>Symptom</th><th>Common Medications / Approaches</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Seizures</strong></td><td>Levetiracetam, valproate, lamotrigine, clonazepam, carbamazepine</td><td>~80% of patients have epilepsy; seizure type varies</td></tr>
+          <tr><td><strong>Breathing irregularities</strong></td><td>Carbidopa (low-dose), melatonin; careful management</td><td>Breath-holding, hyperventilation — often anxiety-related</td></tr>
+          <tr><td><strong>Anxiety / agitation</strong></td><td>Buspirone, SSRIs (low-dose), clonidine</td><td>Screen for pain first — frequently a hidden cause</td></tr>
+          <tr><td><strong>Sleep disturbances</strong></td><td>Melatonin, clonidine, trazodone</td><td>Common across all stages; sleep hygiene important</td></tr>
+          <tr><td><strong>Constipation</strong></td><td>Dietary fiber, stool softeners, polyethylene glycol (MiraLAX)</td><td>Nearly universal — proactive management essential</td></tr>
+          <tr><td><strong>Scoliosis</strong></td><td>Bracing, surgical consultation (spinal fusion)</td><td>Monitor Cobb angle; surgery if curve &gt;40–50°</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div id="therapy" class="tab-content">
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon"><iconify-icon icon="mdi:walk"></iconify-icon></div>
+          <h3>Physical Therapy</h3>
+          <p>Maintains mobility and ambulation as long as possible; manages contractures and spasticity; supports transitions between positions; teaches safe walking and fall prevention techniques. Aquatic (hydrotherapy) sessions are particularly effective for relaxation and movement.</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon"><iconify-icon icon="mdi:hand-back-right"></iconify-icon></div>
+          <h3>Occupational Therapy</h3>
+          <p>Focuses on hand function (even with stereotypies), adaptive equipment for eating and daily activities, splinting to reduce hand-mouthing injury, seating and positioning, and integration of AAC communication tools into daily routines.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon"><iconify-icon icon="mdi:microphone"></iconify-icon></div>
+          <h3>Speech-Language Therapy</h3>
+          <p>Focuses on augmentative and alternative communication (AAC) implementation, swallowing assessment, oral motor therapy, and supporting parents/caregivers in reading their child's communicative signals (eye gaze, facial expression, vocalization).</p>
+        </div>
+      </div>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon"><iconify-icon icon="mdi:horse"></iconify-icon></div>
+          <h3>Hippotherapy</h3>
+          <p>Therapeutic horseback riding provides trunk strengthening, improved balance and coordination, sensory processing benefits, and emotional well-being. Studies show hippotherapy can improve gait quality in ambulatory Rett patients.</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon"><iconify-icon icon="mdi:music"></iconify-icon></div>
+          <h3>Music Therapy</h3>
+          <p>Music therapy is particularly effective in Rett syndrome — many girls show strong musical responsiveness even after severe regression. Music can facilitate mood regulation, reduce anxiety, and provide a channel for emotional expression.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon"><iconify-icon icon="mdi:swim"></iconify-icon></div>
+          <h3>Aquatic Therapy</h3>
+          <p>Warm-water therapy reduces muscle spasticity, facilitates movement exploration, and promotes relaxation. Many Rett patients who are non-ambulatory on land can move more freely in water. Evidence supports improvements in hand function and mood.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="ask-doctor" class="tab-content">
+      <div class="info-box success">
+        <h4>Key Questions for Your Rett Specialist</h4>
+        <p>Bring this list to your next specialist appointment to ensure you cover the most important topics:</p>
+      </div>
+      <div class="accordion">
+        <div class="accordion-header" onclick="toggleAccordion(this)">Questions about DAYBUE <span class="arrow">&#9660;</span></div>
+        <div class="accordion-body"><div class="inner">
+          <p>Is my daughter a candidate for DAYBUE? What specific improvements might we realistically expect? How do we manage diarrhea and weight loss side effects? How long does it typically take to see benefits? What should we monitor during treatment?</p>
+        </div></div>
+      </div>
+      <div class="accordion">
+        <div class="accordion-header" onclick="toggleAccordion(this)">Questions about seizures <span class="arrow">&#9660;</span></div>
+        <div class="accordion-body"><div class="inner">
+          <p>How do we classify my daughter's seizure type? What is the optimal antiepileptic medication for her specific seizure type? Should we consider a ketogenic diet? When should we refer to an epileptologist? Are there any seizure medications that are particularly risky in Rett (e.g., sodium channel blockers with certain mutations)?</p>
+        </div></div>
+      </div>
+      <div class="accordion">
+        <div class="accordion-header" onclick="toggleAccordion(this)">Questions about gene therapy trials <span class="arrow">&#9660;</span></div>
+        <div class="accordion-body"><div class="inner">
+          <p>Does my daughter qualify for current gene therapy trials (TSHA-102, NGN-401)? What are the eligibility criteria? What are the risks of participation? Is there a natural history study we should enroll in to support future trial access? Which centers nearest to us are running Rett trials?</p>
+        </div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLINICAL TRIALS -->
+  <section id="trials" class="section fade-in">
+    <div class="section-header">
+      <div class="sec-icon"><iconify-icon icon="mdi:flask"></iconify-icon></div>
+      <div><h2>Clinical Trials</h2><p>Active studies and how to participate</p></div>
+    </div>
+
+    <div class="info-box success">
+      <h4>The Vanderbilt Umbrella Trial — $13 Million, 2023</h4>
+      <p>The NIH-funded Vanderbilt Rett Syndrome Research Center launched a $13 million umbrella clinical trial platform in 2023 — the largest coordinated Rett trial initiative to date. The umbrella design allows multiple drug candidates to be tested simultaneously against a shared control group, dramatically accelerating the drug development timeline.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="time-label">UCB Pharmaceuticals</div>
+        <h4>Fenfluramine — Phase 3 (2026)</h4>
+        <p>Fenfluramine (Fintepla), already approved for Dravet syndrome, is in Phase 3 trials for Rett syndrome. The drug targets serotonin pathways implicated in Rett breathing irregularities and seizure control. Phase 3 results expected in 2026.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="time-label">Marinus Pharmaceuticals</div>
+        <h4>Ganaxolone</h4>
+        <p>Ganaxolone (Ztalmy), a GABA-A receptor modulator, is in trials for Rett syndrome epilepsy. It is already FDA-approved for CDKL5 deficiency disorder — a closely related condition. Phase 2 results in Rett are pending.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="time-label">Natural History Studies</div>
+        <h4>IRSF Natural History Study &amp; NHS2</h4>
+        <p>The International Rett Syndrome Foundation's Natural History Study (NHS) and its follow-up (NHS2) enroll patients worldwide to track disease progression, outcomes, and biomarkers. Participation in natural history studies often provides a pathway to clinical trial enrollment.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:20px;">
+      <a href="https://clinicaltrials.gov/search?cond=rett+syndrome" target="_blank" class="link-btn"><iconify-icon icon="mdi:flask"></iconify-icon> ClinicalTrials.gov — Rett</a>
+      <a href="https://www.rettsyndrome.org/research/clinical-trials/" target="_blank" class="link-btn green"><iconify-icon icon="mdi:magnify"></iconify-icon> IRSF Trial Finder</a>
+      <a href="https://reverserett.org/research/" target="_blank" class="link-btn orange"><iconify-icon icon="mdi:dna"></iconify-icon> RSRT Research</a>
+    </div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section id="research" class="section fade-in">
+    <div class="section-header">
+      <div class="sec-icon"><iconify-icon icon="mdi:microscope"></iconify-icon></div>
+      <div><h2>Research Highlights</h2><p>Latest scientific developments</p></div>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="time-label">July 2025</div>
+        <h4>X Chromosome Reactivation — microRNA-106a</h4>
+        <p>A landmark study published in Nature Communications (University of California, Davis) identified microRNA-106a as a regulator of X chromosome inactivation. Targeting this microRNA in laboratory models allowed re-expression of the healthy MECP2 copy silenced on the second X chromosome in female patients — a potential approach that would not require gene delivery.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="time-label">2024–2025</div>
+        <h4>AI-Driven Drug Discovery — Vorinostat</h4>
+        <p>The Wyss Institute at Harvard used AI-based molecular modeling to identify vorinostat (an HDAC inhibitor, already FDA-approved for lymphoma) as a candidate for Rett syndrome. Mouse model studies showed behavioral improvement. A Phase 2 trial is in planning stages.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="time-label">2024</div>
+        <h4>RSRT $6.4M Research Grants</h4>
+        <p>The Rett Syndrome Research Trust (RSRT) awarded $6.4 million in research grants to laboratories across the US, Europe, and Australia — focusing on gene therapy optimization, synaptic biology, and biomarker identification. RSRT is one of the most efficient rare disease funding organizations globally.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="time-label">2023</div>
+        <h4>Bone Health — International Registry Data</h4>
+        <p>Data from the International Rett Syndrome Database (InterRett) and North American Natural History Study confirmed high rates of low bone density and fractures in Rett patients (particularly after loss of ambulation). Guidelines now recommend dual-energy X-ray absorptiometry (DXA) scans and calcium/vitamin D supplementation from early childhood.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- GENE THERAPY -->
+  <section id="genetherapy" class="section fade-in">
+    <div class="section-header">
+      <div class="sec-icon"><iconify-icon icon="mdi:dna"></iconify-icon></div>
+      <div><h2>Gene Therapy</h2><p>The most promising frontier for Rett syndrome treatment</p></div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab(this,'gene-replacement')">Gene Replacement</button>
+      <button class="tab-btn" onclick="switchTab(this,'gene-editing')">Gene Editing</button>
+      <button class="tab-btn" onclick="switchTab(this,'rna-approaches')">RNA Approaches</button>
+      <button class="tab-btn" onclick="switchTab(this,'x-reactivation')">X Reactivation</button>
+    </div>
+
+    <div id="gene-replacement" class="tab-content active">
+      <div class="info-box success">
+        <h4>Why Gene Therapy Is Especially Promising for Rett</h4>
+        <p>Animal studies have conclusively demonstrated that restoring MECP2 function — even in adult mice with severe symptoms — leads to dramatic reversal of the Rett phenotype. This proof-of-concept is stronger than for almost any other genetic neurological disorder, making Rett a top priority for gene therapy development.</p>
+      </div>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon"><iconify-icon icon="mdi:flask"></iconify-icon></div>
+          <h3>Taysha TSHA-102 — Breakthrough Results</h3>
+          <p>Phase 1/2 REVEAL trial. TSHA-102 uses an AAV9 vector with a self-complementary MECP2 construct and a self-regulating mechanism to prevent MECP2 overexpression (a risk in gene therapy). Early results: 100% response rate in treated patients. FDA granted Breakthrough Therapy Designation. Phase 3 trial enrollment underway.</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon"><iconify-icon icon="mdi:flask"></iconify-icon></div>
+          <h3>Neurogene NGN-401 — 35 Milestones</h3>
+          <p>Phase 1/2 trial. NGN-401 uses an AAV9 vector with a MECP2 transgene regulated by a novel miRNA-based dosing system. A single patient gained 35 developmental milestones in 6 months post-treatment. The FDA granted RMAT (Regenerative Medicine Advanced Therapy) Designation — the highest FDA priority designation for cell and gene therapies.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon"><iconify-icon icon="mdi:alert-circle"></iconify-icon></div>
+          <h3>The MECP2 Dosing Challenge</h3>
+          <p>MECP2 is a dosage-sensitive gene — too little causes Rett syndrome, too much causes MECP2 duplication syndrome (a severe, distinct disorder). All gene therapy programs must carefully control the dose of MECP2 delivered to each neuron. Self-regulating viral constructs and microRNA-based dosing systems are the leading solutions.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="gene-editing" class="tab-content">
+      <div class="info-box">
+        <h4>CRISPR &amp; Base Editing for Rett</h4>
+        <p>Gene editing approaches aim to directly correct the pathogenic MECP2 mutation in the genome, rather than delivering a new gene copy. This is more technically challenging in the brain than gene replacement but could be more precise. Research programs are in preclinical stages for specific common mutations.</p>
+      </div>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon"><iconify-icon icon="mdi:scissors-cutting"></iconify-icon></div>
+          <h3>Base Editing</h3>
+          <p>Base editors can correct specific point mutations (single nucleotide changes) with high precision and without double-strand DNA breaks. Several of the most common MECP2 mutations (R255X, R270X, T158M) are potential candidates for base editing correction. Preclinical work is ongoing at multiple academic centers.</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon"><iconify-icon icon="mdi:pencil"></iconify-icon></div>
+          <h3>Prime Editing</h3>
+          <p>Prime editing (a next-generation CRISPR tool) can correct a broader range of mutation types than base editing. Research groups are developing prime editing strategies for the most common MECP2 mutations. In vivo delivery to neurons remains the primary challenge.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon"><iconify-icon icon="mdi:clock-outline"></iconify-icon></div>
+          <h3>Timeline</h3>
+          <p>Gene editing approaches for Rett are 5–10 years from human trials. They represent a next-wave approach that may complement or follow gene replacement therapy. Investment from foundations (RSRT, IRSF) is funding academic labs to accelerate this work.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="rna-approaches" class="tab-content">
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon"><iconify-icon icon="mdi:molecule"></iconify-icon></div>
+          <h3>Antisense Oligonucleotides (ASOs)</h3>
+          <p>ASOs can modulate MECP2 expression by targeting pre-mRNA splicing or RNA stability. For patients where the mutation creates an aberrant splice site, ASOs could restore correct splicing. Research is most advanced for specific truncation mutations. Unlike gene therapy, ASOs require repeated dosing.</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon"><iconify-icon icon="mdi:molecule"></iconify-icon></div>
+          <h3>Stop Codon Readthrough</h3>
+          <p>Approximately 35% of Rett-causing MECP2 mutations are nonsense mutations (premature stop codons). Small molecules that allow ribosomes to read through stop codons (similar to ataluren in DMD) are being investigated for Rett. Ataluren itself and newer readthrough agents are in preclinical testing.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon"><iconify-icon icon="mdi:filter"></iconify-icon></div>
+          <h3>microRNA Modulation</h3>
+          <p>The discovery of microRNA-106a's role in X chromosome inactivation (UC Davis, 2025) opens a new RNA-based approach — modulating microRNAs to unlock the healthy MECP2 allele naturally present in every cell of females with Rett syndrome. This could avoid gene delivery entirely.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="x-reactivation" class="tab-content">
+      <div class="info-box success">
+        <h4>X Chromosome Reactivation — A Unique Opportunity for Females</h4>
+        <p>Unlike males with X-linked conditions, females with Rett syndrome have two copies of the MECP2 gene — one mutated and one healthy, but silenced. Reactivating the healthy copy in neurons could provide enough functional MECP2 to rescue the Rett phenotype, without any gene delivery.</p>
+      </div>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon"><iconify-icon icon="mdi:microscope"></iconify-icon></div>
+          <h3>The Scientific Basis</h3>
+          <p>X chromosome inactivation (XCI) silences one X chromosome in each cell of females. In neurons, reactivating the silenced X — specifically the MECP2 locus — could restore functional protein. The challenge is achieving selective, stable, and safe reactivation without widespread chromatin disruption.</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon"><iconify-icon icon="mdi:flask"></iconify-icon></div>
+          <h3>Current Research Programs</h3>
+          <p>Several labs are pursuing X reactivation via: HDAC inhibitors, bromodomain inhibitors (targeting BRD4), direct XIST RNA interference, and now microRNA modulation (UC Davis 2025). RSRT funds multiple X reactivation research programs globally.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon"><iconify-icon icon="mdi:calendar-clock"></iconify-icon></div>
+          <h3>Challenges</h3>
+          <p>Achieving neuron-specific reactivation (to avoid side effects in other tissues), maintaining stable long-term expression, and avoiding over-expression of MECP2 are the key challenges. This approach is still in early preclinical stages but represents one of the most exciting long-term strategies.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMMUNICATION -->
+  <section id="communication" class="section fade-in">
+    <div class="section-header">
+      <div class="sec-icon"><iconify-icon icon="mdi:message-text"></iconify-icon></div>
+      <div><h2>Communication</h2><p>Augmentative and alternative communication (AAC) for Rett syndrome</p></div>
+    </div>
+    <div class="info-box">
+      <h4>Girls with Rett Are Communicating</h4>
+      <p>One of the most important insights in modern Rett care is that girls with Rett syndrome understand far more than they can express. While purposeful hand use is severely limited, eye gaze — looking at objects or symbols as a means of communication — is often well-preserved and can be developed into a powerful communication system.</p>
+    </div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon"><iconify-icon icon="mdi:eye"></iconify-icon></div>
+        <h3>Tobii Dynavox — Eye Gaze AAC</h3>
+        <p>The Tobii Dynavox TD I-Series is the leading eye-gaze communication device used in Rett syndrome. It tracks eye movements to select symbols on a screen, allowing girls to express choices, feelings, and needs. The TD Snap software allows customized symbol vocabularies adapted to each girl's interests and abilities. Sensory Eye FX 2 is a companion app for early access and engagement training.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon"><iconify-icon icon="mdi:tablet"></iconify-icon></div>
+        <h3>Low-Tech AAC</h3>
+        <p>Not all communication requires technology. Communication boards (printed symbol arrays), partner-assisted scanning, and eye-pointing boards allow meaningful communication at low cost. The LAMP (Language Acquisition through Motor Planning) method is adapted for use with Rett syndrome.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon"><iconify-icon icon="mdi:account-group"></iconify-icon></div>
+        <h3>Communication Partners</h3>
+        <p>Training parents, caregivers, and teachers to recognize and respond to a child's communicative signals is as important as the technology itself. Aided Language Stimulation (ALS) — where the communication partner models use of the AAC system — accelerates language development.</p>
+      </div>
+    </div>
+    <div class="info-box success">
+      <h4>Research Insight — Girls with Rett Understand Language</h4>
+      <p>Neuroimaging studies show that girls with Rett syndrome have largely intact language comprehension networks despite profound expressive deficits. This means that meaningful vocabulary, age-appropriate language, and real conversations — not just basic needs expression — should be the goal of AAC programs for Rett.</p>
+    </div>
+  </section>
+
+  <!-- LIFESTYLE -->
+  <section id="lifestyle" class="section fade-in">
+    <div class="section-header">
+      <div class="sec-icon"><iconify-icon icon="mdi:heart"></iconify-icon></div>
+      <div><h2>Lifestyle</h2><p>Managing Rett syndrome day to day</p></div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" onclick="switchTab(this,'rett-nutrition')">Nutrition</button>
+      <button class="tab-btn" onclick="switchTab(this,'rett-sleep')">Sleep</button>
+      <button class="tab-btn" onclick="switchTab(this,'rett-seizures')">Seizures</button>
+      <button class="tab-btn" onclick="switchTab(this,'rett-scoliosis')">Scoliosis</button>
+    </div>
+
+    <div id="rett-nutrition" class="tab-content active">
+      <div class="info-box">
+        <h4>Nutritional Challenges in Rett Syndrome</h4>
+        <p>Low body weight and feeding difficulties are extremely common in Rett syndrome — affecting the majority of patients. Reduced mobility, motor difficulties with chewing and swallowing (dysphagia), and high energy expenditure from hand stereotypies and breathing irregularities all contribute.</p>
+      </div>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon"><iconify-icon icon="mdi:food"></iconify-icon></div>
+          <h3>Feeding Strategies</h3>
+          <p>Modified food textures (IDDSI framework levels 4–7), high-calorie nutritional supplements, positioning during meals (upright, supported), and slow feeding with rest periods. Speech-language pathologist (SLP) assessment for safe swallowing is essential.</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon"><iconify-icon icon="mdi:stomach"></iconify-icon></div>
+          <h3>Tube Feeding</h3>
+          <p>Gastrostomy tube (G-tube) or PEG tube placement may be necessary when oral feeding becomes unsafe or insufficient for growth. This decision should involve the multidisciplinary team, and tube feeding does not preclude some continued oral feeding for pleasure.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon"><iconify-icon icon="mdi:pill"></iconify-icon></div>
+          <h3>Supplementation</h3>
+          <p>Calcium and vitamin D supplementation for bone health (especially if non-ambulatory). Omega-3 fatty acids may have neuroprotective benefits. Constipation management with dietary fiber and adequate fluid intake. Regular monitoring of nutritional status by a registered dietitian.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="rett-sleep" class="tab-content">
+      <div class="info-box warning">
+        <h4>Sleep Disturbances in Rett Syndrome</h4>
+        <p>Sleep problems affect 80–94% of girls with Rett syndrome and are one of the most distressing features for families. They include difficulties falling asleep, frequent night wakings, nighttime laughing or screaming episodes, and day-night reversal. Sleep disruption also worsens seizures and behavioral symptoms.</p>
+      </div>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon"><iconify-icon icon="mdi:weather-night"></iconify-icon></div>
+          <h3>Sleep Hygiene</h3>
+          <p>Consistent bedtime routine, dark and quiet environment, limiting screen time before bed, avoiding caffeine, and structured daytime activity/nap schedules can improve sleep. Blackout curtains and white noise machines are commonly used.</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon"><iconify-icon icon="mdi:pill"></iconify-icon></div>
+          <h3>Pharmacological Approaches</h3>
+          <p>Melatonin (1–5mg, 30–60 minutes before bedtime) is first-line. Clonidine or low-dose trazodone for persistent insomnia. Importantly — treat underlying seizures and pain aggressively, as these frequently drive sleep disruption.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon"><iconify-icon icon="mdi:monitor-heart"></iconify-icon></div>
+          <h3>Respiratory Monitoring at Night</h3>
+          <p>Overnight oximetry monitoring may be recommended, particularly if breathing irregularities are severe. Some patients benefit from positioning aids during sleep. Pulse oximetry alarms can alert caregivers to breath-holding episodes.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="rett-seizures" class="tab-content">
+      <div class="info-box">
+        <h4>Seizures in Rett Syndrome</h4>
+        <p>Approximately 80% of girls with Rett syndrome develop epilepsy, typically beginning between ages 2–5. Seizure types are variable and may include generalized tonic-clonic, absence, myoclonic, and focal seizures. Many Rett-associated movements (hand stereotypies, breath-holding) can be mistaken for seizures — EEG evaluation is essential for accurate diagnosis.</p>
+      </div>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon"><iconify-icon icon="mdi:brain"></iconify-icon></div>
+          <h3>Common Antiepileptic Drugs</h3>
+          <p>No single medication is universally effective. Commonly used drugs: valproate (sodium valproate), levetiracetam (Keppra), lamotrigine, carbamazepine, clonazepam, and topiramate. Combination therapy is often needed. Avoid sodium channel blockers if non-epileptic events are suspected.</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon"><iconify-icon icon="mdi:food-apple"></iconify-icon></div>
+          <h3>Ketogenic Diet</h3>
+          <p>The ketogenic diet (high fat, low carbohydrate) has shown efficacy in drug-resistant Rett epilepsy. It requires careful nutritional management by a specialized team. Modified Atkins Diet (MAD) and medium-chain triglyceride (MCT) variants are also used.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon"><iconify-icon icon="mdi:alert-circle"></iconify-icon></div>
+          <h3>Emergency Seizure Protocol</h3>
+          <p>Rescue medications (rectal diazepam, intranasal midazolam, diazepam nasal spray [Valtoco]) should be prescribed and caregivers trained in their use. An individualized seizure action plan from the neurologist should be kept at home and provided to school staff.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="rett-scoliosis" class="tab-content">
+      <div class="info-box warning">
+        <h4>Scoliosis — A Nearly Universal Complication</h4>
+        <p>Scoliosis (curvature of the spine) develops in approximately 80% of girls with Rett syndrome. It typically begins in early adolescence and can progress rapidly. Severe scoliosis affects breathing, seating comfort, and overall quality of life. Early monitoring and intervention are essential.</p>
+      </div>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon"><iconify-icon icon="mdi:human-handsup"></iconify-icon></div>
+          <h3>Monitoring</h3>
+          <p>Spinal X-ray (posterior-anterior and lateral views) to measure Cobb angle every 6–12 months from age 5 onwards. More frequent monitoring during rapid growth phases (puberty). Physical therapy to maintain trunk strength and spinal alignment.</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon"><iconify-icon icon="mdi:human-male"></iconify-icon></div>
+          <h3>Conservative Management</h3>
+          <p>Thoracolumbosacral orthosis (TLSO brace) is used for curves between 20–40° to slow progression. Custom seating and positioning systems support spinal alignment during daily activities. Evidence for bracing effectiveness in Rett is limited but widely practiced.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon"><iconify-icon icon="mdi:medical-bag"></iconify-icon></div>
+          <h3>Surgical Intervention</h3>
+          <p>Spinal fusion surgery is typically recommended when the Cobb angle exceeds 40–50° or when progression is rapid. Surgery carries risks in Rett syndrome (anesthetic sensitivity, respiratory complications) and requires careful pre-surgical evaluation. Outcomes for quality of life are generally positive when performed at experienced centers.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PSYCHOLOGICAL -->
+  <section id="psychological" class="section fade-in">
+    <div class="section-header">
+      <div class="sec-icon"><iconify-icon icon="mdi:head-heart"></iconify-icon></div>
+      <div><h2>Psychological Support</h2><p>For families, caregivers, and siblings</p></div>
+    </div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon"><iconify-icon icon="mdi:human-female-girl"></iconify-icon></div>
+        <h3>Supporting Your Daughter</h3>
+        <p>Girls with Rett syndrome may experience frustration, anxiety, and emotional distress — especially when communication efforts are not understood. Validating her attempts to communicate, responding consistently to her cues, and ensuring she has meaningful choice-making opportunities throughout the day supports her emotional well-being and self-determination.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon"><iconify-icon icon="mdi:human-male-female"></iconify-icon></div>
+        <h3>Parent &amp; Family Support</h3>
+        <p>Grief and ongoing adjustment are normal for parents of children with Rett. The IRSF Family Support Network, RSRT community, and local support groups connect families globally. Parent-to-parent programs match newly diagnosed families with experienced Rett parents for guidance and emotional support.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon"><iconify-icon icon="mdi:account-heart"></iconify-icon></div>
+        <h3>Caregiver Wellbeing</h3>
+        <p>Caregiver fatigue, sleep deprivation, and stress are significant in Rett caregiving. Respite care, professional support, and caregiver self-care planning are essential. Many national rare disease organizations offer respite care funding information and caregiver support programs.</p>
+      </div>
+    </div>
+    <div class="info-box">
+      <h4>International Support Resources</h4>
+      <p>
+        <strong>IRSF</strong> (International Rett Syndrome Foundation) — rettsyndrome.org — Family support, trial finder, specialist directory<br>
+        <strong>RSRT</strong> (Rett Syndrome Research Trust) — reverserett.org — Research funding, science updates<br>
+        <strong>Rett UK</strong> — rettuk.org — UK families, community, and advocacy<br>
+        <strong>Girl Power 2 Cure</strong> — girlpower2cure.org — Awareness, family community<br>
+        <strong>Australian Rett Syndrome Association</strong> — rettaustralia.com.au<br>
+        <strong>RettSyndrome.org (EU)</strong> — retts.net — European Rett Syndrome Federation
+      </p>
+    </div>
+  </section>
+
+  <!-- STAGES -->
+  <section id="stages" class="section fade-in">
+    <div class="section-header">
+      <div class="sec-icon"><iconify-icon icon="mdi:chart-timeline-variant"></iconify-icon></div>
+      <div><h2>The Four Stages of Rett Syndrome</h2><p>Understanding disease progression</p></div>
+    </div>
+    <div class="info-box">
+      <h4>Important: Rett Is Not a Progressive Degenerative Disease</h4>
+      <p>Unlike many neurological conditions, Rett syndrome does not involve ongoing neuronal death or progressive neurodegeneration. Skills, while severely limited, tend to be relatively stable after Stage 2. Some girls regain limited skills in Stage 3. Life expectancy with appropriate care extends into adulthood — many women with Rett live into their 40s, 50s, and beyond.</p>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="time-label">Stage 1 — Ages 6–18 months</div>
+        <h4>Early Onset Stagnation</h4>
+        <p>Development appears normal or near-normal. There may be subtle signs: decreased eye contact, less interest in toys, slightly delayed motor milestones. Parents often report "something feels different" during this period, but the stage is frequently missed or attributed to autism spectrum disorder.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="time-label">Stage 2 — Ages 1–4 years</div>
+        <h4>Rapid Destructive Stage</h4>
+        <p>The most dramatic and distressing phase. The child loses previously acquired hand skills and purposeful speech over weeks to months. Characteristic hand stereotypies emerge (wringing, washing, clapping). Breathing irregularities begin. Sleep disturbance appears. Seizures may start. Parents describe this as "watching a child disappear" — though the child's understanding and emotional connection remain.</p>
+      </div>
+      <div class="timeline-item">
+        <div class="time-label">Stage 3 — Ages 2–10 years</div>
+        <h4>Pseudo-Stationary Stage</h4>
+        <p>The longest stage — some girls remain in Stage 3 for decades. Motor problems (gait abnormalities, spasticity) become prominent. Seizures may be most frequent during this stage. However, behavior often improves — girls become more socially engaged, make better eye contact, and may regain limited purposeful hand use. Many families describe Stage 3 as "our best years."</p>
+      </div>
+      <div class="timeline-item">
+        <div class="time-label">Stage 4 — Late Adolescence / Adulthood</div>
+        <h4>Late Motor Deterioration</h4>
+        <p>Gradual loss of ambulation (if present). Increased muscle rigidity, spasticity, and scoliosis. Seizure frequency may decrease in some patients. Feeding difficulties may increase. Despite physical challenges, many women with Rett in Stage 4 retain emotional connectedness, social awareness, and the ability to communicate through eye gaze. Quality of life can remain meaningful with appropriate support.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STORIES -->
+  <section id="stories" class="section fade-in">
+    <div class="section-header">
+      <div class="sec-icon"><iconify-icon icon="mdi:account-voice"></iconify-icon></div>
+      <div><h2>Stories from the Community</h2><p>Courage, hope, and connection</p></div>
+    </div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon"><iconify-icon icon="mdi:heart"></iconify-icon></div>
+        <h3>The Power of Eye Gaze</h3>
+        <p>Families around the world describe the moment their daughter "found her voice" through an eye-gaze device as transformative. Many parents had no idea how much their children understood until they began using eye-gaze AAC — discovering fully formed thoughts, preferences, humor, and personality behind years of silence.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon"><iconify-icon icon="mdi:run-fast"></iconify-icon></div>
+        <h3>The Rett Community's Advocacy Power</h3>
+        <p>The Rett syndrome community's advocacy played a direct role in DAYBUE's approval — parent activists, foundations (IRSF, RSRT), and research networks worked together for over a decade to fund, design, and push through the trials that led to the first approved treatment. Families changed the course of the disease.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon"><iconify-icon icon="mdi:music"></iconify-icon></div>
+        <h3>Music as Connection</h3>
+        <p>Music therapy practitioners worldwide document the dramatic response of girls with Rett syndrome to music — calming breathing irregularities, stopping hand stereotypies, inducing smiling and vocalization. For many families, music is a daily bridge between worlds: the daughter's inner life and the world around her.</p>
+      </div>
+    </div>
+    <div class="info-box success">
+      <h4>A Global Community</h4>
+      <p>Rett families from over 60 countries connect through the IRSF Global Family Network, the Rett Syndrome News community (rarediseasenews.com), and social media groups. Annual International Rett Syndrome Conferences bring researchers and families together. Every family's story is different — but the love, determination, and hope are universal.</p>
+    </div>
+  </section>
+
+  <!-- RESOURCES -->
+  <section id="resources" class="section fade-in">
+    <div class="section-header">
+      <div class="sec-icon"><iconify-icon icon="mdi:link"></iconify-icon></div>
+      <div><h2>Resources</h2><p>Organizations, research databases, and tools</p></div>
+    </div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon"><iconify-icon icon="mdi:account-group"></iconify-icon></div>
+        <h3>International Organizations</h3>
+        <p>
+          <strong>IRSF</strong> — rettsyndrome.org (US, global)<br>
+          <strong>RSRT</strong> — reverserett.org (research funding)<br>
+          <strong>Rett UK</strong> — rettuk.org<br>
+          <strong>Girl Power 2 Cure</strong> — girlpower2cure.org<br>
+          <strong>Australian Rett Syndrome Association</strong> — rettaustralia.com.au<br>
+          <strong>Rett Syndrome Europe</strong> — retts.net
+        </p>
+      </div>
+      <div class="card green">
+        <div class="card-icon"><iconify-icon icon="mdi:hospital-building"></iconify-icon></div>
+        <h3>Leading Rett Research Centers</h3>
+        <p>
+          <strong>Vanderbilt Kennedy Center</strong> — Nashville, USA<br>
+          <strong>Baylor College of Medicine</strong> — Houston, USA (MECP2 discoverer lab)<br>
+          <strong>UC San Diego Rett Syndrome Clinic</strong> — California, USA<br>
+          <strong>Kennedy Krieger Institute</strong> — Baltimore, USA<br>
+          <strong>University of Edinburgh</strong> — Edinburgh, UK<br>
+          <strong>Telethon Kids Institute</strong> — Perth, Australia
+        </p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon"><iconify-icon icon="mdi:database"></iconify-icon></div>
+        <h3>Research &amp; Databases</h3>
+        <p>
+          <strong>ClinicalTrials.gov</strong> — Search: "Rett Syndrome"<br>
+          <strong>IRSF Natural History Study</strong> — rettsyndrome.org/research<br>
+          <strong>InterRett</strong> — International Rett Syndrome Database<br>
+          <strong>PubMed</strong> — ncbi.nlm.nih.gov/pubmed<br>
+          <strong>NORD</strong> — rarediseases.org<br>
+          <strong>Rett Syndrome News</strong> — rarediseasenews.com/rett-syndrome
+        </p>
+      </div>
+    </div>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon"><iconify-icon icon="mdi:tablet"></iconify-icon></div>
+        <h3>AAC &amp; Communication Tools</h3>
+        <p>
+          <strong>Tobii Dynavox TD I-Series</strong> — tobii.com/dynavox (eye gaze)<br>
+          <strong>Tobii TD Snap</strong> — AAC software<br>
+          <strong>Sensory Eye FX 2</strong> — cause-and-effect software<br>
+          <strong>Proloquo2Go</strong> — symbol-based AAC (iOS)<br>
+          <strong>Grid 3</strong> — Smartbox (symbol vocabulary)<br>
+          <strong>LAMP Words for Life</strong> — motor-based AAC
+        </p>
+      </div>
+      <div class="card green">
+        <div class="card-icon"><iconify-icon icon="mdi:book-open"></iconify-icon></div>
+        <h3>Books &amp; Media</h3>
+        <p>
+          <em>"The Rett Syndrome Handbook"</em> — Kathy Hunter (IRSF founder)<br>
+          <em>"Saving Each Other"</em> — Victoria Jackson &amp; Scarlett Lewis<br>
+          <em>"Eyes That Speak to the Stars"</em> — Joanna Ho (picture book)<br>
+          <strong>Rett Syndrome News Podcast</strong> — patient and researcher interviews<br>
+          <strong>IRSF Webinar Series</strong> — rettsyndrome.org/resources
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div class="carepedia-cta">
+    <h3>Was this information helpful?</h3>
+    <p>CarePedia is a free resource for rare disease families. We update our portals regularly with the latest research and treatments.</p>
+    <a href="https://carepedia.org" class="cta-btn"><iconify-icon icon="mdi:home"></iconify-icon> Back to CarePedia Home</a>
+  </div>
+
+  <footer class="footer">
+    <div class="credit-bar">
+      <span>CarePedia Rett Syndrome Hub &copy; 2025</span>
+      <span>|</span>
+      <span>Information updated regularly. Always consult your medical team.</span>
+      <a href="https://carepedia.org/request" class="portal-request-btn"><iconify-icon icon="mdi:plus-circle"></iconify-icon> Request a Disease Portal</a>
+    </div>
+  </footer>
+
+</main>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+  <iconify-icon icon="mdi:chevron-up"></iconify-icon>
+</button>
+
+<script>
+function toggleMenu() {
+  const sidebar = document.getElementById('sidebar');
+  const toggle = document.getElementById('menuToggle');
+  const overlay = document.getElementById('overlay');
+  sidebar.classList.toggle('open');
+  toggle.classList.toggle('open');
+  overlay.classList.toggle('active');
+}
+function closeMenu() {
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('menuToggle').classList.remove('open');
+  document.getElementById('overlay').classList.remove('active');
+}
+function navigateTo(id) {
+  closeMenu();
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+  document.querySelectorAll('.sidebar nav a').forEach(a => a.classList.remove('active'));
+  const link = document.querySelector('.sidebar nav a[href="#' + id + '"]');
+  if (link) link.classList.add('active');
+}
+function toggleAccordion(header) {
+  const body = header.nextElementSibling;
+  const isOpen = header.classList.contains('open');
+  document.querySelectorAll('.accordion-header.open').forEach(h => {
+    h.classList.remove('open');
+    h.nextElementSibling.style.maxHeight = '0';
+  });
+  if (!isOpen) {
+    header.classList.add('open');
+    body.style.maxHeight = body.scrollHeight + 'px';
+  }
+}
+function switchTab(btn, tabId) {
+  const section = btn.closest('section') || btn.closest('.section') || btn.parentElement.parentElement;
+  section.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  section.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  btn.classList.add('active');
+  const target = document.getElementById(tabId);
+  if (target) target.classList.add('active');
+}
+
+// Scroll progress bar
+window.addEventListener('scroll', () => {
+  const scrolled = window.scrollY;
+  const total = document.body.scrollHeight - window.innerHeight;
+  document.getElementById('scrollBar').style.width = (scrolled / total * 100) + '%';
+  document.getElementById('scrollTop').classList.toggle('visible', scrolled > 400);
+  // Update active nav link
+  const sections = document.querySelectorAll('section[id], div.section[id]');
+  let current = '';
+  sections.forEach(sec => {
+    if (window.scrollY >= sec.offsetTop - 200) current = sec.id;
+  });
+  document.querySelectorAll('.sidebar nav a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+  });
+});
+
+// Fade-in observer
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

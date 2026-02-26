@@ -1,0 +1,3245 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>מרכז למידה על ניוון שרירים דושן (DMD)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #6C3483;
+      --primary-light: #8E44AD;
+      --accent: #E74C3C;
+      --accent-light: #F1948A;
+      --warm: #F39C12;
+      --warm-dark: #D35400;
+      --bg: #F5F0F7;
+      --text: #2C2C2C;
+      --text-light: #555;
+      --text-lighter: #888;
+      --white: #FFFFFF;
+      --shadow: 0 4px 24px rgba(108,52,131,0.10);
+      --shadow-lg: 0 8px 40px rgba(108,52,131,0.15);
+      --radius: 16px;
+      --radius-sm: 10px;
+      --sidebar-width: 280px;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Rubik', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+      overflow-x: clip;
+    }
+
+    /* ========== SCROLL PROGRESS BAR ========== */
+    .scroll-progress {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: 100%;
+      height: 4px;
+      z-index: 9999;
+      background: transparent;
+    }
+
+    .scroll-progress .bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--primary), var(--accent), var(--warm));
+      transition: width 0.1s linear;
+    }
+
+    /* ========== SIDEBAR ========== */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: 0;
+      width: var(--sidebar-width);
+      height: 100vh;
+      background: rgba(108,52,131,0.85);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      z-index: 1000;
+      padding: 30px 20px;
+      overflow-y: auto;
+      transition: transform 0.3s ease;
+    }
+
+    .sidebar .logo {
+      color: var(--white);
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sidebar .logo-sub {
+      color: rgba(255,255,255,0.6);
+      font-size: 12px;
+      margin-bottom: 30px;
+      display: block;
+    }
+
+    .sidebar nav a {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      padding: 10px 14px;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 400;
+      transition: all 0.2s ease;
+      margin-bottom: 2px;
+    }
+
+    .sidebar nav a:hover,
+    .sidebar nav a.active {
+      background: rgba(255,255,255,0.15);
+      color: var(--white);
+      font-weight: 500;
+    }
+
+    .sidebar nav a .icon {
+      font-size: 16px;
+      width: 24px;
+      text-align: center;
+      flex-shrink: 0;
+    }
+
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 999;
+    }
+
+    .menu-toggle {
+      display: none;
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      z-index: 1001;
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      border-radius: 12px;
+      width: 48px;
+      height: 48px;
+      font-size: 22px;
+      cursor: pointer;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s;
+    }
+
+    .menu-toggle:hover {
+      transform: scale(1.05);
+    }
+
+    /* ========== MAIN CONTENT ========== */
+    .main {
+      margin-right: var(--sidebar-width);
+      min-height: 100vh;
+    }
+
+    /* ========== CREDIT BAR ========== */
+    .credit-bar {
+      background: rgba(108,52,131,0.08);
+      text-align: center;
+      padding: 10px;
+      font-size: 13px;
+      color: var(--text-light);
+      border-bottom: 1px solid rgba(108,52,131,0.1);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* CAREPEDIA CTA BANNER */
+    .carepedia-cta {
+      background: linear-gradient(135deg, #1A73E8, #00C9A7);
+      padding: 48px 24px;
+      text-align: center;
+      color: #fff;
+    }
+    .carepedia-cta h3 { font-size: 24px; font-weight: 700; margin-bottom: 12px; }
+    .carepedia-cta p { font-size: 16px; opacity: 0.9; margin-bottom: 24px; max-width: 500px; margin-left: auto; margin-right: auto; }
+    .carepedia-cta .cta-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 14px 32px; background: #fff; color: #1A73E8;
+      text-decoration: none; border-radius: 30px; font-size: 16px;
+      font-weight: 700; font-family: inherit; transition: all 0.3s ease;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+    }
+    .carepedia-cta .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+
+    .footer {
+      background: var(--primary);
+      color: rgba(255,255,255,0.8);
+      text-align: center;
+      padding: 40px;
+      font-size: 14px;
+    }
+
+    .credit-bar strong {
+      color: var(--primary);
+    }
+
+    /* ========== HERO ========== */
+    .hero {
+      background: linear-gradient(135deg, var(--primary) 0%, #8E44AD 40%, var(--accent) 100%);
+      padding: 80px 40px 60px;
+      color: var(--white);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(ellipse at 30% 50%, rgba(255,255,255,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      max-width: 900px;
+      margin: 0 auto;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      font-weight: 800;
+      margin-bottom: 16px;
+      line-height: 1.3;
+    }
+
+    .hero .subtitle {
+      font-size: 18px;
+      font-weight: 300;
+      opacity: 0.9;
+      margin-bottom: 30px;
+      line-height: 1.6;
+      max-width: 700px;
+    }
+
+    .portal-request-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 22px;
+      background: var(--primary-light);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 30px;
+      font-size: 14px;
+      font-family: inherit;
+      font-weight: 600;
+      transition: all 0.3s ease;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    }
+    .portal-request-btn:hover { background: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+
+    /* ========== CAT GRID (Quick Nav) ========== */
+    .cat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .cat-grid a {
+      background: rgba(255,255,255,0.12);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: var(--radius-sm);
+      padding: 16px 12px;
+      text-align: center;
+      color: var(--white);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .cat-grid a:hover {
+      background: rgba(255,255,255,0.22);
+      transform: translateY(-2px);
+    }
+
+    .cat-grid a .cat-icon {
+      font-size: 24px;
+    }
+
+    /* ========== SECTIONS ========== */
+    section {
+      padding: 60px 40px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    section h2 {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    section h2 .section-icon {
+      font-size: 28px;
+    }
+
+    section .section-desc {
+      color: var(--text-light);
+      font-size: 16px;
+      margin-bottom: 36px;
+      max-width: 700px;
+      line-height: 1.7;
+    }
+
+    section h3 {
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--primary);
+      margin: 36px 0 16px;
+    }
+
+    /* ========== STATS ROW ========== */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 16px;
+      margin-bottom: 40px;
+    }
+
+    .stat-card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 24px 20px;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: transform 0.2s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-3px);
+    }
+
+    .stat-card .stat-number {
+      font-size: 36px;
+      font-weight: 800;
+      color: var(--primary);
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .stat-card .stat-label {
+      font-size: 14px;
+      color: var(--text-light);
+      font-weight: 400;
+    }
+
+    /* ========== CARDS ========== */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin: 24px 0;
+    }
+
+    .card {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 28px 24px;
+      box-shadow: var(--shadow);
+      border-top: 4px solid var(--primary);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .card.purple { border-top-color: var(--primary); }
+    .card.red { border-top-color: var(--accent); }
+    .card.orange { border-top-color: var(--warm); }
+    .card.green { border-top-color: #27AE60; }
+    .card.blue { border-top-color: #2980B9; }
+
+    .card h3 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--primary);
+      margin: 0 0 10px;
+    }
+
+    .card p {
+      font-size: 14px;
+      color: var(--text-light);
+      line-height: 1.7;
+    }
+
+    .card .card-icon {
+      font-size: 32px;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    /* ========== INFO BOX ========== */
+    .info-box {
+      background: linear-gradient(135deg, rgba(108,52,131,0.06), rgba(142,68,173,0.04));
+      border: 1px solid rgba(108,52,131,0.12);
+      border-right: 4px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 24px 28px;
+      margin: 24px 0;
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--text);
+    }
+
+    .info-box.success {
+      background: linear-gradient(135deg, rgba(39,174,96,0.06), rgba(39,174,96,0.03));
+      border-color: rgba(39,174,96,0.15);
+      border-right-color: #27AE60;
+    }
+
+    .info-box.warning {
+      background: linear-gradient(135deg, rgba(243,156,18,0.08), rgba(243,156,18,0.03));
+      border-color: rgba(243,156,18,0.15);
+      border-right-color: var(--warm);
+    }
+
+    .info-box.danger {
+      background: linear-gradient(135deg, rgba(231,76,60,0.06), rgba(231,76,60,0.03));
+      border-color: rgba(231,76,60,0.12);
+      border-right-color: var(--accent);
+    }
+
+    .info-box strong {
+      color: var(--primary);
+    }
+
+    .info-box.success strong {
+      color: #27AE60;
+    }
+
+    .info-box.warning strong {
+      color: var(--warm-dark);
+    }
+
+    .info-box.danger strong {
+      color: var(--accent);
+    }
+
+    /* ========== LINK BTN ========== */
+    .link-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--primary);
+      color: var(--white);
+      text-decoration: none;
+      padding: 10px 22px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.2s;
+    }
+
+    .link-btn:hover {
+      background: var(--primary-light);
+      transform: translateY(-1px);
+    }
+
+    .link-btn.green {
+      background: #27AE60;
+    }
+
+    .link-btn.green:hover {
+      background: #219A52;
+    }
+
+    .link-btn.orange {
+      background: var(--warm);
+    }
+
+    .link-btn.orange:hover {
+      background: var(--warm-dark);
+    }
+
+    .link-btn.red {
+      background: var(--accent);
+    }
+
+    .link-btn.red:hover {
+      background: #C0392B;
+    }
+
+    /* ========== STYLED TABLE ========== */
+    .styled-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+      background: var(--white);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+
+    .styled-table thead {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: var(--white);
+    }
+
+    .styled-table th {
+      padding: 14px 18px;
+      font-weight: 600;
+      font-size: 14px;
+      text-align: right;
+    }
+
+    .styled-table td {
+      padding: 12px 18px;
+      font-size: 14px;
+      border-bottom: 1px solid rgba(108,52,131,0.08);
+      color: var(--text);
+    }
+
+    .styled-table tbody tr:hover {
+      background: rgba(108,52,131,0.03);
+    }
+
+    .styled-table tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    /* ========== TABS ========== */
+    .tabs {
+      margin: 24px 0;
+    }
+
+    .tab-buttons {
+      display: flex;
+      gap: 4px;
+      flex-wrap: wrap;
+      margin-bottom: 0;
+      border-bottom: 2px solid rgba(108,52,131,0.1);
+      padding-bottom: 0;
+    }
+
+    .tab-btn {
+      padding: 12px 24px;
+      border: none;
+      background: transparent;
+      color: var(--text-light);
+      font-family: 'Rubik', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      margin-bottom: -2px;
+      transition: all 0.2s;
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+    }
+
+    .tab-btn:hover {
+      color: var(--primary);
+      background: rgba(108,52,131,0.04);
+    }
+
+    .tab-btn.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+      font-weight: 600;
+      background: rgba(108,52,131,0.05);
+    }
+
+    .tab-content {
+      display: none;
+      background: var(--white);
+      border-radius: 0 0 var(--radius) var(--radius);
+      padding: 28px;
+      box-shadow: var(--shadow);
+      animation: fadeTab 0.3s ease;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    @keyframes fadeTab {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .tab-content h4 {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--primary);
+      margin: 20px 0 10px;
+    }
+
+    .tab-content h4:first-child {
+      margin-top: 0;
+    }
+
+    .tab-content p {
+      font-size: 14px;
+      color: var(--text-light);
+      line-height: 1.8;
+      margin-bottom: 12px;
+    }
+
+    .tab-content ul {
+      padding-right: 20px;
+      margin: 10px 0 16px;
+    }
+
+    .tab-content li {
+      font-size: 14px;
+      color: var(--text-light);
+      line-height: 1.8;
+      margin-bottom: 6px;
+    }
+
+    .tab-content .drug-block {
+      background: rgba(108,52,131,0.03);
+      border-radius: var(--radius-sm);
+      padding: 18px 20px;
+      margin: 14px 0;
+      border-right: 3px solid var(--primary-light);
+    }
+
+    .tab-content .drug-block h5 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 6px;
+    }
+
+    .tab-content .drug-block p {
+      margin-bottom: 4px;
+    }
+
+    .tab-content .drug-block.warning-block {
+      border-right-color: var(--accent);
+      background: rgba(231,76,60,0.04);
+    }
+
+    .tab-content .drug-block.success-block {
+      border-right-color: #27AE60;
+      background: rgba(39,174,96,0.04);
+    }
+
+    /* ========== ACCORDION ========== */
+    .accordion {
+      margin: 24px 0;
+    }
+
+    .accordion-item {
+      background: var(--white);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+
+    .accordion-header {
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 20px 24px;
+      font-family: 'Rubik', sans-serif;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--primary);
+      cursor: pointer;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background 0.2s;
+      text-align: right;
+    }
+
+    .accordion-header:hover {
+      background: rgba(108,52,131,0.03);
+    }
+
+    .accordion-header::after {
+      content: '+';
+      font-size: 22px;
+      font-weight: 300;
+      color: var(--primary-light);
+      transition: transform 0.3s;
+      flex-shrink: 0;
+      margin-right: auto;
+      margin-left: 0;
+    }
+
+    .accordion-item.open .accordion-header::after {
+      transform: rotate(45deg);
+    }
+
+    .accordion-body {
+      max-height: 0;
+      overflow: clip;
+      transition: max-height 0.3s ease;
+    }
+
+    .accordion-body-inner {
+      padding: 0 24px 24px;
+      font-size: 14px;
+      color: var(--text-light);
+      line-height: 1.8;
+    }
+
+    /* ========== TIMELINE ========== */
+    .timeline {
+      position: relative;
+      padding-right: 30px;
+      margin: 24px 0;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      right: 8px;
+      top: 0;
+      bottom: 0;
+      width: 3px;
+      background: linear-gradient(to bottom, var(--primary), var(--accent));
+      border-radius: 3px;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 28px;
+      padding-right: 20px;
+    }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      right: -26px;
+      top: 6px;
+      width: 14px;
+      height: 14px;
+      background: var(--primary);
+      border-radius: 50%;
+      border: 3px solid var(--bg);
+    }
+
+    .timeline-item .tl-date {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--primary-light);
+      margin-bottom: 4px;
+    }
+
+    .timeline-item .tl-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .timeline-item .tl-desc {
+      font-size: 14px;
+      color: var(--text-light);
+      line-height: 1.7;
+    }
+
+    /* ========== SCROLL TOP BUTTON ========== */
+    .scroll-top {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      width: 48px;
+      height: 48px;
+      background: var(--primary);
+      color: var(--white);
+      border: none;
+      border-radius: 50%;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: var(--shadow-lg);
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s;
+      z-index: 900;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .scroll-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .scroll-top:hover {
+      background: var(--primary-light);
+      transform: translateY(-2px);
+    }
+
+    /* ========== FADE-IN ANIMATION ========== */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ========== BADGE / TAG ========== */
+    .badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .badge.purple { background: rgba(108,52,131,0.1); color: var(--primary); }
+    .badge.green { background: rgba(39,174,96,0.1); color: #27AE60; }
+    .badge.red { background: rgba(231,76,60,0.1); color: var(--accent); }
+    .badge.orange { background: rgba(243,156,18,0.1); color: var(--warm-dark); }
+    .badge.blue { background: rgba(41,128,185,0.1); color: #2980B9; }
+
+    /* ========== SEARCH BOX ========== */
+    .search-box {
+      position: relative;
+      margin: 0 auto;
+    }
+    .search-box input {
+      width: 100%;
+      padding: 14px 20px 14px 50px;
+      border: 2px solid rgba(108,52,131,0.15);
+      border-radius: 30px;
+      font-size: 16px;
+      font-family: 'Rubik', sans-serif;
+      background: var(--white);
+      color: var(--text);
+      transition: all 0.3s ease;
+      box-sizing: border-box;
+    }
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--primary-light);
+      box-shadow: 0 0 0 4px rgba(142,68,173,0.1);
+    }
+    .search-box .search-icon {
+      position: absolute;
+      right: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 20px;
+      pointer-events: none;
+    }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 900px) {
+      .sidebar {
+        transform: translateX(100%);
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .sidebar-overlay.active {
+        display: block;
+      }
+
+      .menu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .main {
+        margin-right: 0;
+      }
+
+      .hero {
+        padding: 60px 24px 40px;
+      }
+
+      .hero h1 {
+        font-size: 30px;
+      }
+
+      section {
+        padding: 40px 24px;
+      }
+
+      section h2 {
+        font-size: 26px;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .stats-row {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cat-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .tab-buttons {
+        gap: 2px;
+      }
+
+      .tab-btn {
+        padding: 10px 14px;
+        font-size: 13px;
+      }
+
+      .tab-content {
+        padding: 20px 16px;
+      }
+
+      .hero h1 {
+        font-size: 26px;
+      }
+
+      .hero .subtitle {
+        font-size: 15px;
+      }
+
+      .styled-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 13px; }
+      .styled-table th { padding: 10px 12px; font-size: 13px; white-space: nowrap; }
+      .styled-table td { padding: 10px 12px; font-size: 13px; min-width: 100px; }
+
+      .card:hover { transform: none; }
+      .stat-card:hover { transform: none; }
+      .cat-grid a:hover { transform: none; }
+      .portal-request-btn:hover { transform: none; }
+      .link-btn:hover { transform: none; }
+      .scroll-top:hover { transform: none; }
+      .menu-toggle:hover { transform: none; }
+
+      .accordion-header { padding: 14px 16px; font-size: 15px; }
+      .accordion-body-inner { padding: 0 16px 18px; font-size: 14px; line-height: 1.9; }
+      .timeline { padding-right: 24px; margin: 20px 0; }
+      .timeline-item { padding: 16px; margin-bottom: 20px; }
+      .timeline-item::before { right: -20px; width: 12px; height: 12px; top: 22px; }
+      .info-box { padding: 16px 18px; margin: 16px 0; }
+      .info-box h4 { font-size: 15px; }
+      .info-box p { font-size: 13px; }
+      .cards-grid { grid-template-columns: 1fr; gap: 16px; }
+      .card { padding: 20px; }
+    }
+
+    @media (max-width: 380px) {
+      .cat-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .stats-row {
+        grid-template-columns: 1fr;
+      }
+
+      .hero {
+        padding: 50px 16px 30px;
+      }
+
+      .hero h1 {
+        font-size: 22px;
+      }
+
+      section {
+        padding: 30px 16px;
+      }
+
+      section h2 {
+        font-size: 22px;
+      }
+
+      .tab-buttons {
+        flex-direction: column;
+      }
+
+      .tab-btn {
+        border-bottom: none;
+        border-right: 3px solid transparent;
+        border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+        margin-bottom: 0;
+      }
+
+      .tab-btn.active {
+        border-right-color: var(--primary);
+        border-bottom-color: transparent;
+      }
+
+      .portal-request-btn {
+        padding: 8px 16px;
+        font-size: 13px;
+      }
+
+      .stat-card .stat-number {
+        font-size: 28px;
+      }
+    }
+/* DISCLAIMER BANNER */
+.disclaimer-banner {
+  background: linear-gradient(135deg, #FFF3E0, #FFF8E1);
+  border-bottom: 2px solid #FFB74D;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 13px;
+  color: #5D4037;
+  position: relative;
+  z-index: 1500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.disclaimer-banner strong { color: #E65100; }
+.disclaimer-banner a {
+  color: #1A73E8;
+  text-decoration: underline;
+  font-weight: 600;
+}
+.disclaimer-banner a:hover { color: #0D47A1; }
+@media (max-width: 768px) {
+  .disclaimer-banner { font-size: 12px; padding: 8px 12px; }
+}
+  </style>
+</head>
+<body>
+
+<!-- DISCLAIMER BANNER -->
+<div class="disclaimer-banner">
+  <span>⚠️</span>
+  <span><strong>This is not medical advice.</strong> Always consult your doctor. <a href="/disclaimer">Full legal disclaimer &rarr;</a></span>
+</div>
+
+  <!-- Scroll Progress Bar -->
+  <div class="scroll-progress">
+    <div class="bar" id="scrollBar"></div>
+  </div>
+
+  <!-- Sidebar Overlay -->
+  <div class="sidebar-overlay" id="sidebarOverlay"></div>
+
+  <!-- Menu Toggle -->
+  <button class="menu-toggle" id="menuToggle" aria-label="תפריט">&#9776;</button>
+
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="logo">&#x1F9EC; DMD Hub</div>
+    <span class="logo-sub">מרכז מידע על ניוון שרירים דושן</span>
+    <nav>
+      <a href="#home" class="active"><span class="icon">&#127968;</span> דף הבית</a>
+      <a href="#about"><span class="icon">&#128214;</span> מה זה DMD?</a>
+      <a href="#treatments"><span class="icon">&#128138;</span> טיפולים ותרופות</a>
+      <a href="#trials"><span class="icon">&#128300;</span> ניסויים קליניים</a>
+      <a href="#research"><span class="icon">&#129516;</span> מחקרים חדשים</a>
+      <a href="#physio"><span class="icon">&#127947;</span> פיזיותרפיה</a>
+      <a href="#lifestyle"><span class="icon">&#127939;</span> אורח חיים</a>
+      <a href="#psychological-approach"><span class="icon">&#129504;</span> גישה פסיכולוגית</a>
+      <a href="#stories"><span class="icon">&#11088;</span> סיפורי השראה</a>
+      <a href="#books"><span class="icon">&#128218;</span> ספרים ומדיה</a>
+      <a href="#action"><span class="icon">&#9989;</span> תוכנית פעולה</a>
+      <a href="#resources"><span class="icon">&#128279;</span> משאבים</a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="main">
+
+    <!-- Credit Bar -->
+    <div class="credit-bar">
+      <span>נבנה על ידי <strong>יובל קשטכר</strong> ועוזריו הרובוטים</span>
+      <a href="https://carepedia.org/#contact" target="_blank" class="portal-request-btn">
+        ➕ רוצים פורטל למחלה אחרת?
+      </a>
+    </div>
+
+    <!-- Hero Section -->
+    <header class="hero" id="home">
+      <div class="hero-content">
+        <h1>מרכז למידה על ניוון שרירים דושן</h1>
+        <p class="subtitle">
+          כל מה שצריך לדעת על DMD במקום אחד: טיפולים מאושרים, ניסויים קליניים,
+          ריפוי גנטי, פיזיותרפיה, אורח חיים, ומשאבים בעברית ובעולם.
+          המידע מעודכן ומבוסס מחקר.
+        </p>
+
+        <div class="search-box" style="margin-top: 30px; max-width: 600px;">
+          <span class="search-icon">🔍</span>
+          <input type="text" id="portalSearch" placeholder="חיפוש בפורטל..." oninput="searchPortal(this.value)">
+        </div>
+        <div id="searchResults" style="display:none; margin-top: 16px; max-width: 600px;"></div>
+
+        <div class="cat-grid">
+          <a href="#about"><span class="cat-icon">&#128214;</span>מה זה DMD?</a>
+          <a href="#treatments"><span class="cat-icon">&#128138;</span>טיפולים ותרופות</a>
+          <a href="#trials"><span class="cat-icon">&#128300;</span>ניסויים קליניים</a>
+          <a href="#research"><span class="cat-icon">&#129516;</span>מחקרים חדשים</a>
+          <a href="#physio"><span class="cat-icon">&#127947;</span>פיזיותרפיה</a>
+          <a href="#lifestyle"><span class="cat-icon">&#127939;</span>אורח חיים</a>
+          <a href="#psychological-approach"><span class="cat-icon">&#129504;</span>גישה פסיכולוגית</a>
+          <a href="#stories"><span class="cat-icon">&#11088;</span>סיפורי השראה</a>
+          <a href="#books"><span class="cat-icon">&#128218;</span>ספרים ומדיה</a>
+          <a href="#action"><span class="cat-icon">&#9989;</span>תוכנית פעולה</a>
+          <a href="#resources"><span class="cat-icon">&#128279;</span>משאבים</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- ==================== SECTION: מה זה DMD? ==================== -->
+    <section id="about" class="fade-in">
+      <h2><span class="section-icon">&#128214;</span> מה זה DMD?</h2>
+      <p class="section-desc">
+        ניוון שרירים דושן (Duchenne Muscular Dystrophy) הוא המחלה הגנטית השכיחה ביותר מסוגה בילדים.
+        הבנת המחלה היא הצעד הראשון לקראת התמודדות יעילה.
+      </p>
+
+      <!-- Stats Row -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <span class="stat-number">1:3,500</span>
+          <span class="stat-label">שכיחות בילדים זכרים</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">300,000</span>
+          <span class="stat-label">חולים בעולם</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">2-5</span>
+          <span class="stat-label">גיל ממוצע לאבחנה</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-number">30+</span>
+          <span class="stat-label">ניסויים קליניים פעילים</span>
+        </div>
+      </div>
+
+      <!-- Info Box: What is DMD -->
+      <div class="info-box">
+        <strong>DMD</strong> נגרם ממוטציה בגן הדיסטרופין (DMD gene) הממוקם על כרומוזום X (Xp21).
+        זהו <strong>הגן הגדול ביותר בגנום האנושי</strong> &mdash; 79 אקסונים ו-2.4 מיליון זוגות בסיסים.
+        המוטציה גורמת להיעדר מוחלט (או כמעט מוחלט) של חלבון הדיסטרופין, שתפקידו לייצב את קרום תא השריר בזמן התכווצות.
+        <br><br>
+        המחלה עוברת בתורשה <strong>רצסיבית צמודת X</strong> &mdash; לכן פוגעת בעיקר בבנים (אמהות הן נשאיות).
+        כשליש מהמקרים נובעים ממוטציה חדשה (de novo) ללא היסטוריה משפחתית.
+        <br><br>
+        היעדר הדיסטרופין גורם לנזק מתמשך בשרירים: שרירי שלד (תנועה), שריר הלב (קרדיומיופתיה) ושרירי הנשימה (ירידה בתפקוד נשימתי).
+        התהליך הוא מתקדם &mdash; תאי שריר נהרסים ומוחלפים ברקמת שומן וצלקת.
+      </div>
+
+      <!-- Symptom Cards -->
+      <h3>תסמינים עיקריים</h3>
+      <div class="cards-grid">
+        <div class="card purple">
+          <span class="card-icon">&#128170;</span>
+          <h3>חולשת שרירים פרוקסימלית</h3>
+          <p>
+            קושי בטיפוס מדרגות, קימה מהרצפה (סימן Gowers), נפילות תכופות.
+            מופיעה בדרך כלל בגילאי 2 עד 5. הילד נראה "מגושם" ביחס לבני גילו
+            ומתקשה לרוץ, לקפוץ ולעלות מדרגות.
+          </p>
+        </div>
+        <div class="card red">
+          <span class="card-icon">&#129462;</span>
+          <h3>הליכה על קצות האצבעות</h3>
+          <p>
+            עיבוי מדומה (pseudohypertrophy) של שרירי השוק בשל החלפת רקמת שריר
+            בשומן ורקמת חיבור. הליכה מתנדנדת (waddling gait) ונטייה ללכת על
+            קצות האצבעות בשל קיצור גיד אכילס.
+          </p>
+        </div>
+        <div class="card orange">
+          <span class="card-icon">&#9855;</span>
+          <h3>ירידה בתפקוד מוטורי</h3>
+          <p>
+            איבוד הליכה עצמאית בדרך כלל בגילאי 10 עד 12.
+            עקמת עמוד שדרה (סקוליוזיס) מתפתחת לאחר המעבר לכיסא גלגלים.
+            קונטרקטורות (קיצורי שרירים) מגבילות את טווח התנועה.
+          </p>
+        </div>
+        <div class="card blue">
+          <span class="card-icon">&#128147;</span>
+          <h3>מעורבות לבבית ונשימתית</h3>
+          <p>
+            קרדיומיופתיה (מחלת שריר הלב) מתפתחת בגיל ההתבגרות ב-100% מהמקרים.
+            ירידה בתפקוד הנשימתי מחייבת מעקב ולעיתים תמיכה נשימתית (BiPAP).
+            זהו הגורם העיקרי למוגבלות ותמותה.
+          </p>
+        </div>
+      </div>
+
+      <!-- Success Info Box: Gene Therapy Breakthroughs -->
+      <div class="info-box success">
+        <strong>&#127775; פריצות דרך בריפוי גנטי:</strong>
+        בשנים האחרונות חלה מהפכה בטיפול ב-DMD. תרופת <strong>Elevidys</strong>
+        קיבלה אישור FDA בהליך מואץ (יוני 2023) &mdash; ריפוי גנטי המחדיר
+        גן דיסטרופין מזעי (micro-dystrophin) לתוך תאי שריר. טכנולוגיות דילוג
+        אקסונים (exon skipping) מאפשרות ייצור דיסטרופין חלקי, וגישות CRISPR
+        מבטיחות תיקון גנטי קבוע. הטיפולים אינם מושלמים עדיין, אך מייצגים קפיצת
+        מדרגה של ממש.
+      </div>
+
+      <!-- Accordion: DMD vs BMD -->
+      <div class="accordion">
+        <div class="accordion-item">
+          <button class="accordion-header">מה ההבדל בין DMD ל-BMD (בקר)?</button>
+          <div class="accordion-body">
+            <div class="accordion-body-inner">
+              <p>
+                <strong>ניוון שרירים דושן (DMD)</strong> ו<strong>ניוון שרירים בקר (BMD)</strong>
+                נגרמים שניהם ממוטציות בגן הדיסטרופין, אך נבדלים בחומרה:
+              </p>
+              <br>
+              <p>
+                <strong>DMD (דושן):</strong> המוטציה גורמת להיעדר כמעט מוחלט של דיסטרופין (בדרך כלל מוטציה "מחוץ למסגרת" / out-of-frame).
+                התסמינים מופיעים בגיל 2 עד 5, איבוד הליכה בגיל 10 עד 12, ומעורבות לבבית ונשימתית בגיל ההתבגרות.
+                ללא טיפול, תוחלת החיים הייתה בעבר סביב 20. עם טיפול מודרני, רבים חיים לשנות ה-30 ומעלה.
+              </p>
+              <br>
+              <p>
+                <strong>BMD (בקר):</strong> המוטציה שומרת על "מסגרת הקריאה" (in-frame) ומאפשרת ייצור דיסטרופין חלקי ומקוצר אך עדיין מתפקד.
+                התסמינים קלים יותר ומופיעים מאוחר יותר (בדרך כלל בגיל ההתבגרות או אחריו).
+                רוב החולים שומרים על הליכה עצמאית עד גיל 16 ומעלה, ולעיתים עד שנות ה-40 וה-50.
+                תוחלת החיים קרובה לנורמלית, אם כי קרדיומיופתיה נפוצה.
+              </p>
+              <br>
+              <p>
+                <strong>כלל האצבע:</strong> "מסגרת הקריאה" (reading frame rule) מנבאת את 90% מהמקרים &mdash;
+                מוטציות out-of-frame = DMD, מוטציות in-frame = BMD.
+                זה גם הבסיס לטיפולי "דילוג אקסונים" &mdash; הרעיון הוא להפוך מוטציית DMD למוטציית BMD.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION: טיפולים ותרופות ==================== -->
+    <section id="treatments" class="fade-in">
+      <h2><span class="section-icon">&#128138;</span> טיפולים ותרופות</h2>
+      <p class="section-desc">
+        נוף הטיפול ב-DMD השתנה מהותית בשנים האחרונות. מסטרואידים שהיו הטיפול היחיד,
+        ועד ריפוי גנטי ועריכת גנום. הנה סקירה של כל הטיפולים המאושרים והמתקדמים.
+      </p>
+
+      <div class="tabs" id="treatmentTabs">
+        <div class="tab-buttons">
+          <button class="tab-btn active" data-tab="steroids">&#128137; סטרואידים</button>
+          <button class="tab-btn" data-tab="exon-skipping">&#129516; דילוג אקסונים</button>
+          <button class="tab-btn" data-tab="gene-therapy">&#129516; ריפוי גנטי</button>
+          <button class="tab-btn" data-tab="other-meds">&#128138; תרופות נוספות</button>
+        </div>
+
+        <!-- Tab: Steroids -->
+        <div class="tab-content active" id="tab-steroids">
+          <h4>טיפול בסטרואידים &mdash; הבסיס</h4>
+          <p>
+            קורטיקוסטרואידים הם עדיין אבן היסוד של הטיפול ב-DMD מאז שנות ה-90. הם מאטים
+            את התקדמות המחלה, מאריכים את תקופת ההליכה בכשנתיים, ודוחים את ירידת תפקוד הלב
+            והנשימה. ההמלצה הבינלאומית היא להתחיל טיפול סטרואידלי ברגע שההתפתחות המוטורית
+            מגיעה לרמה ומתחילה לרדת (בדרך כלל גיל 4 עד 6).
+          </p>
+
+          <div class="drug-block">
+            <h5>Prednisone / Prednisolone (פרדניזון)</h5>
+            <p>הסטרואיד הקלאסי. נמצא בשימוש מאז שנות ה-90. מינון: 0.75 מ"ג/ק"ג ליום.</p>
+            <p><strong>יתרונות:</strong> יעיל, זול, זמין בכל מקום.</p>
+            <p><strong>חסרונות:</strong> עלייה משמעותית במשקל, פגיעה בצפיפות עצם (אוסטאופורוזיס), שינויי מצב רוח, עיכוב גדילה, קטרקט.</p>
+          </div>
+
+          <div class="drug-block">
+            <h5>Deflazacort (Emflaza) &mdash; דפלזקורט</h5>
+            <p>אושר על ידי FDA בפברואר 2017. מינון: 0.9 מ"ג/ק"ג ליום.</p>
+            <p><strong>יתרונות:</strong> פחות עלייה במשקל בהשוואה לפרדניזון. יעילות דומה בשימור הליכה.</p>
+            <p><strong>חסרונות:</strong> יקר יותר. קטרקט שכיח יותר מאשר עם פרדניזון. שאר תופעות הלוואי דומות.</p>
+          </div>
+
+          <div class="drug-block success-block">
+            <h5>Vamorolone (Agamree) &mdash; ומורולון &#127775;</h5>
+            <p>אושר על ידי FDA באוקטובר 2023 ובאירופה בינואר 2024. סטרואיד מהדור הבא.</p>
+            <p><strong>מינון:</strong> 6 מ"ג/ק"ג ליום.</p>
+            <p><strong>יתרונות:</strong> פחות תופעות לוואי מטבוליות ועצם. שומר על צפיפות עצם טובה יותר. פחות עלייה במשקל. פחות שינויי התנהגות.</p>
+            <p><strong>חסרונות:</strong> יקר. ניסיון קליני קצר יחסית. אינו זמין בכל המדינות עדיין.</p>
+            <p>מחקר VBP15 (שלב 3) הראה יעילות דומה לפרדניזון עם פרופיל תופעות לוואי טוב משמעותית.</p>
+          </div>
+
+          <h4>השוואה בין הסטרואידים</h4>
+          <table class="styled-table">
+            <thead>
+              <tr>
+                <th>תרופה</th>
+                <th>אישור FDA</th>
+                <th>מינון</th>
+                <th>עלייה במשקל</th>
+                <th>בריאות עצם</th>
+                <th>עלות</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Prednisone</strong></td>
+                <td>שנות ה-90 (off-label)</td>
+                <td>0.75 מ"ג/ק"ג/יום</td>
+                <td>משמעותית</td>
+                <td>פגיעה</td>
+                <td>נמוכה</td>
+              </tr>
+              <tr>
+                <td><strong>Deflazacort</strong></td>
+                <td>2017</td>
+                <td>0.9 מ"ג/ק"ג/יום</td>
+                <td>בינונית</td>
+                <td>פגיעה</td>
+                <td>גבוהה</td>
+              </tr>
+              <tr>
+                <td><strong>Vamorolone</strong></td>
+                <td>2023</td>
+                <td>6 מ"ג/ק"ג/יום</td>
+                <td>מופחתת</td>
+                <td>שימור טוב יותר</td>
+                <td>גבוהה</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Tab: Exon Skipping -->
+        <div class="tab-content" id="tab-exon-skipping">
+          <h4>דילוג אקסונים (Exon Skipping) &mdash; מה זה?</h4>
+          <p>
+            טכנולוגיית דילוג אקסונים משתמשת באוליגונוקלאוטידים אנטיסנס (ASO) כדי
+            "לדלג" על אקסון פגום בזמן שעתוק ה-mRNA. התוצאה: במקום דיסטרופין לא
+            מתפקד (DMD), הגוף מייצר דיסטרופין מקוצר אך מתפקד חלקית (כמו ב-BMD).
+            זה לא ריפוי מלא, אבל ממתן את חומרת המחלה.
+          </p>
+          <p>
+            כל תרופה מיועדת למוטציה ספציפית ולכן מתאימה רק לאחוז מסוים מהמטופלים.
+            הטיפול ניתן בעירוי תוך-ורידי שבועי ונדרש לכל החיים.
+          </p>
+
+          <div class="drug-block">
+            <h5>Eteplirsen (Exondys 51) &mdash; אטפלירסן</h5>
+            <p><strong>יצרן:</strong> Sarepta Therapeutics</p>
+            <p><strong>מטרה:</strong> דילוג על אקסון 51</p>
+            <p><strong>אחוז מטופלים מתאימים:</strong> כ-13% מחולי DMD</p>
+            <p><strong>אישור FDA:</strong> ספטמבר 2016 (האישור הראשון לדילוג אקסונים)</p>
+            <p>האישור היה שנוי במחלוקת &mdash; הנתונים הראו עלייה צנועה ברמות הדיסטרופין (פחות מ-1%), אך שיפור תפקודי בהשוואה לביקורת היסטורית.</p>
+          </div>
+
+          <div class="drug-block">
+            <h5>Golodirsen (Vyondys 53) &mdash; גולודירסן</h5>
+            <p><strong>יצרן:</strong> Sarepta Therapeutics</p>
+            <p><strong>מטרה:</strong> דילוג על אקסון 53</p>
+            <p><strong>אחוז מטופלים מתאימים:</strong> כ-8% מחולי DMD</p>
+            <p><strong>אישור FDA:</strong> דצמבר 2019</p>
+            <p>נמצא כי מעלה את רמות הדיסטרופין ב-1-2% מהנורמה בביופסיות שריר.</p>
+          </div>
+
+          <div class="drug-block">
+            <h5>Viltolarsen (Viltepso) &mdash; וילטולארסן</h5>
+            <p><strong>יצרן:</strong> NS Pharma (Nippon Shinyaku)</p>
+            <p><strong>מטרה:</strong> דילוג על אקסון 53</p>
+            <p><strong>אחוז מטופלים מתאימים:</strong> כ-8% מחולי DMD</p>
+            <p><strong>אישור FDA:</strong> אוגוסט 2020</p>
+            <p>הראה עלייה גבוהה יותר ברמות דיסטרופין (5-6% מהנורמה) בהשוואה ל-Golodirsen. אושר גם ביפן.</p>
+          </div>
+
+          <div class="drug-block">
+            <h5>Casimersen (Amondys 45) &mdash; קסימרסן</h5>
+            <p><strong>יצרן:</strong> Sarepta Therapeutics</p>
+            <p><strong>מטרה:</strong> דילוג על אקסון 45</p>
+            <p><strong>אחוז מטופלים מתאימים:</strong> כ-8% מחולי DMD</p>
+            <p><strong>אישור FDA:</strong> פברואר 2021</p>
+            <p>העלה רמות דיסטרופין ב-0.8-1.7% מהנורמה. מחקרי המשך בודקים יעילות לטווח ארוך.</p>
+          </div>
+
+          <h4>סיכום תרופות דילוג אקסונים</h4>
+          <table class="styled-table">
+            <thead>
+              <tr>
+                <th>תרופה</th>
+                <th>אקסון</th>
+                <th>% מטופלים מתאימים</th>
+                <th>אישור FDA</th>
+                <th>יצרן</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><strong>Eteplirsen</strong> (Exondys 51)</td>
+                <td>51</td>
+                <td>~13%</td>
+                <td>2016</td>
+                <td>Sarepta</td>
+              </tr>
+              <tr>
+                <td><strong>Golodirsen</strong> (Vyondys 53)</td>
+                <td>53</td>
+                <td>~8%</td>
+                <td>2019</td>
+                <td>Sarepta</td>
+              </tr>
+              <tr>
+                <td><strong>Viltolarsen</strong> (Viltepso)</td>
+                <td>53</td>
+                <td>~8%</td>
+                <td>2020</td>
+                <td>NS Pharma</td>
+              </tr>
+              <tr>
+                <td><strong>Casimersen</strong> (Amondys 45)</td>
+                <td>45</td>
+                <td>~8%</td>
+                <td>2021</td>
+                <td>Sarepta</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <div class="info-box">
+            <strong>&#128161; שימו לב:</strong>
+            כל תרופות דילוג האקסונים ניתנות בעירוי תוך-ורידי שבועי. אושרו בהליך מואץ
+            (accelerated approval) על בסיס עלייה ברמות דיסטרופין כ-surrogate endpoint.
+            מחקרי אישוש (confirmatory studies) עדיין בביצוע. ביחד, ארבע התרופות מכסות
+            כ-30% מכלל מוטציות DMD.
+          </div>
+        </div>
+
+        <!-- Tab: Gene Therapy -->
+        <div class="tab-content" id="tab-gene-therapy">
+          <h4>Elevidys (delandistrogene moxeparvovec) &mdash; ריפוי גנטי</h4>
+          <p>
+            Elevidys היא תרופת ריפוי גנטי פורצת דרך של Sarepta Therapeutics.
+            קיבלה אישור FDA מואץ ביוני 2023 לילדים הולכים בגילאי 4 עד 5 עם DMD.
+            זוהי תרופת הריפוי הגנטי הראשונה ל-DMD.
+          </p>
+
+          <div class="drug-block success-block">
+            <h5>&#129516; איך זה עובד?</h5>
+            <p>
+              וקטור ויראלי מסוג AAVrh74 נושא גן דיסטרופין מזעי (micro-dystrophin) שמקודד
+              לגרסה מקוצרת אך מתפקדת של חלבון הדיסטרופין. הווקטור מוזרק בעירוי תוך-ורידי
+              חד-פעמי ומחדיר את הגן לתאי שריר ברחבי הגוף.
+            </p>
+            <p>
+              הדיסטרופין המזעי קטן מספיק כדי להיכנס לווקטור AAV (שמוגבל ל-5kb), אך שומר
+              על האזורים הקריטיים של החלבון &mdash; הקצה ה-N, 4 חזרות ספקטרין, ואזור הקישור
+              ל-dystroglycan.
+            </p>
+          </div>
+
+          <div class="drug-block warning-block">
+            <h5>&#9888;&#65039; עדכון בטיחות 2025</h5>
+            <p>
+              <strong>דווחו שני מקרי מוות</strong> בניסויים הקליניים של Elevidys. ה-FDA
+              הוסיף אזהרת קופסה שחורה (black box warning) לתרופה ובוחן את נתוני הבטיחות.
+            </p>
+            <p>
+              מקרי המוות קשורים ככל הנראה לתגובה חיסונית חריפה נגד הווקטור הויראלי.
+              הסיכון גבוה יותר בילדים צעירים עם מחלה מתקדמת.
+            </p>
+            <p>
+              <strong>חשוב להבין:</strong> למרות הסיכונים, ה-FDA לא משך את האישור. ההחלטה
+              אם להשתמש בטיפול צריכה להיעשות בשיתוף עם צוות רפואי מומחה תוך שקלול
+              סיכויים מול סיכונים.
+            </p>
+          </div>
+
+          <h4>מי מתאים לטיפול?</h4>
+          <p>
+            האישור הנוכחי הוא לבנים הולכים (ambulatory) בגילאי 4 עד 5 עם אבחנת DMD מאושרת
+            גנטית. אין דרישה למוטציה ספציפית &mdash; הטיפול מתאים לכל סוגי המוטציות כי הוא
+            מחדיר גן חדש ולא מתקן את הקיים.
+          </p>
+          <p>
+            נדרשת בדיקת נוגדנים נגד AAVrh74 &mdash; מטופלים עם נוגדנים גבוהים אינם מתאימים.
+          </p>
+
+          <h4>מחיר</h4>
+          <p>
+            <strong>כ-3.2 מיליון דולר</strong> לטיפול חד-פעמי. Elevidys היא אחת התרופות
+            היקרות ביותר בעולם. Sarepta מציעה תוכניות סיוע וחוזים מבוססי תוצאות עם
+            חברות ביטוח.
+          </p>
+
+          <h4>תוצאות קליניות</h4>
+          <p>
+            במחקר EMBARK (שלב 3), Elevidys לא עמד בנקודת הסיום הראשונית (North Star
+            Ambulatory Assessment בשנה 1), אך הראה שיפור מובהק ב-12 מדדי תוצאה
+            משניים כולל זמן קימה מהרצפה ו-Time to Climb.
+          </p>
+          <p>
+            ביופסיות שריר הראו ביטוי של מיקרו-דיסטרופין ב-50-96% מסיבי השריר לאחר שנה.
+          </p>
+        </div>
+
+        <!-- Tab: Other Medications -->
+        <div class="tab-content" id="tab-other-meds">
+          <h4>תרופות נוספות ל-DMD</h4>
+
+          <div class="drug-block success-block">
+            <h5>Givinostat (Duvyzat) &mdash; גיבינוסטאט &#127775;</h5>
+            <p><strong>יצרן:</strong> Italfarmaco</p>
+            <p><strong>אישור FDA:</strong> מרץ 2024</p>
+            <p><strong>מנגנון:</strong> מעכב היסטון דא-אצטילאז (HDAC inhibitor). מפחית דלקת ופיברוזיס בשרירים.</p>
+            <p>
+              זו תרופת ה-DMD הראשונה שאינה סטרואיד ואינה ממוקדת גנטית. מחקר EPIDYS (שלב 3)
+              הראה האטה מובהקת בירידת התפקוד המוטורי. ניתנת דרך הפה (סירופ) &mdash; נוח בהרבה
+              מעירוי תוך-ורידי.
+            </p>
+            <p>אושרה לילדים בני 6 ומעלה שכבר מטופלים בסטרואידים.</p>
+          </div>
+
+          <div class="drug-block">
+            <h5>&#128147; תרופות לב</h5>
+            <p>
+              קרדיומיופתיה מופיעה ב-100% מחולי DMD. הטיפול הלבבי כולל:
+            </p>
+            <ul>
+              <li><strong>מעכבי ACE</strong> (Enalapril, Lisinopril) &mdash; מתחילים בגיל 10 או מוקדם יותר אם יש סימנים. מגנים על שריר הלב.</li>
+              <li><strong>חוסמי בטא</strong> (Carvedilol, Metoprolol) &mdash; מוסיפים כשיש ירידה בתפקוד (EF מתחת ל-55%).</li>
+              <li><strong>Eplerenone</strong> &mdash; מעכב אלדוסטרון, הראה שימור תפקוד לבבי במחקר שלב 3.</li>
+            </ul>
+            <p>ההמלצה: אקו לב וECG אחת לשנה מגיל 6, ולהתחיל טיפול מונע מוקדם.</p>
+          </div>
+
+          <div class="drug-block">
+            <h5>Ataluren (Translarna) &mdash; אטלורן</h5>
+            <p><strong>יצרן:</strong> PTC Therapeutics</p>
+            <p><strong>מנגנון:</strong> "קריאה דרך" מוטציות נונסנס (stop codons). מאפשר לריבוזום לדלג על קודון העצירה המוקדם ולייצר דיסטרופין מלא.</p>
+            <p><strong>מתאים ל:</strong> כ-10-15% מחולי DMD עם מוטציות נונסנס.</p>
+            <p><strong>סטטוס:</strong> אושר באירופה (EMA) בתנאים. <strong>נדחה על ידי ה-FDA</strong> &mdash; ה-FDA דרש ראיות חזקות יותר. מחקר שלב 3 (Study 041) לא הגיע למובהקות סטטיסטית בנקודת הסיום הראשונית.</p>
+            <p>בישראל: ניתן לקבל במימון סל הבריאות עבור מוטציות נונסנס.</p>
+          </div>
+
+          <div class="drug-block warning-block">
+            <h5>Pamrevlumab &mdash; פמרבלומאב</h5>
+            <p><strong>יצרן:</strong> FibroGen</p>
+            <p><strong>מנגנון:</strong> נוגדן נגד CTGF (Connective Tissue Growth Factor), מפחית פיברוזיס.</p>
+            <p><strong>סטטוס:</strong> <strong>שלב 3 נכשל (2023).</strong> מחקר LELANTOS לא הגיע ליעדים הראשוניים בשתי הזרועות (הולכים ולא-הולכים). FibroGen הודיעה על הפסקת תוכנית הפיתוח ב-DMD.</p>
+          </div>
+
+          <div class="drug-block">
+            <h5>Idebenone &mdash; אידבנון</h5>
+            <p><strong>מנגנון:</strong> אנלוג של CoQ10, תמיכה מיטוכונדריאלית.</p>
+            <p><strong>סטטוס:</strong> תוצאות מעורבות. מחקר DELOS הראה שימור תפקוד נשימתי בחולים שאינם מטופלים בסטרואידים. לא אושר על ידי FDA או EMA. חלק מהרופאים משתמשים בו off-label.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION: ניסויים קליניים ==================== -->
+    <section id="trials" class="fade-in">
+      <h2><span class="section-icon">&#128300;</span> ניסויים קליניים</h2>
+      <p class="section-desc">
+        יותר מ-30 ניסויים קליניים פעילים ברחבי העולם מנסים למצוא טיפולים חדשים ויעילים יותר ל-DMD.
+        הנה הסקירה המקיפה ביותר בעברית.
+      </p>
+
+      <div class="tabs" id="trialTabs">
+        <div class="tab-buttons">
+          <button class="tab-btn active" data-tab="gene-trials">&#129516; ריפוי גנטי מתקדם</button>
+          <button class="tab-btn" data-tab="crispr-trials">&#9986;&#65039; CRISPR ועריכת גנים</button>
+          <button class="tab-btn" data-tab="israel-trials">&#127470;&#127473; ניסויים בישראל</button>
+          <button class="tab-btn" data-tab="novel-trials">&#128161; גישות חדשניות</button>
+        </div>
+
+        <!-- Tab: Advanced Gene Therapy Trials -->
+        <div class="tab-content active" id="tab-gene-trials">
+          <h4>ריפוי גנטי &mdash; הדור הבא</h4>
+          <p>
+            לאחר Elevidys, מספר חברות מפתחות גרסאות משופרות של ריפוי גנטי באמצעות
+            מיקרו-דיסטרופין. כל אחת משתמשת בווקטור AAV שונה או בגרסת מיקרו-דיסטרופין
+            שונה, בניסיון לשפר את הבטיחות והיעילות.
+          </p>
+
+          <div class="drug-block success-block">
+            <h5>SGT-003 (Solid Biosciences)</h5>
+            <p><strong>שלב:</strong> מחקר שלב 1/2 (INSPIRE)</p>
+            <p><strong>מנגנון:</strong> וקטור AAV9 נושא גן מיקרו-דיסטרופין מהדור הבא.</p>
+            <p>
+              <strong>תוצאות מבטיחות:</strong> ביופסיית שריר הראתה ביטוי של 58% מיקרו-דיסטרופין
+              &mdash; מהגבוהים שנמדדו בניסויי DMD. Solid Biosciences מדווחת גם על שיפורים
+              תפקודיים מוקדמים.
+            </p>
+            <p>SGT-003 משתמש בקפסיד AAV שונה מ-Elevidys, שעשוי להפחית את התגובה החיסונית.</p>
+          </div>
+
+          <div class="drug-block">
+            <h5>GNT-0004 (Genethon)</h5>
+            <p><strong>שלב:</strong> מחקר שלב 3 החל ב-2025</p>
+            <p><strong>מנגנון:</strong> וקטור AAV עם קפסיד שונה (AAVrh74 variant) נושא מיקרו-דיסטרופין.</p>
+            <p>
+              Genethon הוא מכון מחקר צרפתי ללא מטרות רווח, מה שעשוי להשפיע על מחיר
+              התרופה אם תאושר. ההתמקדות היא גם בילדים לא-הולכים &mdash; אוכלוסייה שלא
+              נכללה באישור Elevidys.
+            </p>
+          </div>
+
+          <div class="drug-block">
+            <h5>RGX-202 (REGENXBIO)</h5>
+            <p><strong>שלב:</strong> מחקר שלב 1/2</p>
+            <p><strong>מנגנון:</strong> וקטור NAV AAV8 נושא מיקרו-דיסטרופין.</p>
+            <p>
+              טכנולוגיית NAV (Novel AAV) של REGENXBIO מאפשרת ייצור ווקטורים בריכוז גבוה,
+              מה שמוזיל עלויות ומשפר את היכולת לטפל בשרירים רבים.
+            </p>
+          </div>
+
+          <div class="drug-block warning-block">
+            <h5>PF-06939926 (Pfizer) &mdash; fordadistrogene movaparvovec</h5>
+            <p><strong>שלב:</strong> מחקר שלב 3 &mdash; <strong>מושהה</strong></p>
+            <p><strong>מנגנון:</strong> וקטור AAV9 עם מיקרו-דיסטרופין.</p>
+            <p>
+              <strong>בעיות בטיחות:</strong> מקרה מוות אחד בניסוי הקליני. Pfizer השהתה את
+              הגיוס לניסוי בעקבות אירועים חמורים של microangiopathy (פגיעה בכלי דם קטנים).
+            </p>
+            <p>ה-FDA אישר המשך הניסוי עם פרוטוקול בטיחות משופר, אך ההתקדמות אטית.</p>
+          </div>
+        </div>
+
+        <!-- Tab: CRISPR -->
+        <div class="tab-content" id="tab-crispr-trials">
+          <h4>CRISPR ועריכת גנום &mdash; העתיד</h4>
+          <p>
+            טכנולוגיית CRISPR מבטיחה תיקון קבוע של מוטציית ה-DMD ברמת ה-DNA עצמו.
+            בניגוד לריפוי גנטי (שמוסיף גן חדש), CRISPR מתקן את הגן הקיים או מדלג על
+            האקסון הפגום ברמה הגנומית. הגישה עדיין בשלבים מוקדמים אך מראה תוצאות
+            מרשימות במודלים של בעלי חיים.
+          </p>
+
+          <div class="drug-block warning-block">
+            <h5>PBGENE-DMD (Cure Rare Disease / UMass)</h5>
+            <p><strong>סטטוס:</strong> ניסוי קליני ראשון באדם ל-CRISPR ב-DMD</p>
+            <p>
+              <strong>&#9888;&#65039; מקרה טרגי:</strong> Terry Horgan, הנבדק הראשון, נפטר
+              באוקטובר 2022 לאחר קבלת הטיפול. החקירה הראתה תגובה חיסונית חריפה נגד
+              הווקטור הויראלי בנפח גבוה.
+            </p>
+            <p>
+              האירוע האט את כל תחום ה-CRISPR ב-DMD, אך גם הוביל לפיתוח פרוטוקולי
+              בטיחות חדשים ומחמירים. Cure Rare Disease ממשיכה לפתח גישות בטוחות יותר.
+            </p>
+          </div>
+
+          <div class="drug-block">
+            <h5>Exonics Therapeutics / Vertex</h5>
+            <p><strong>גישה:</strong> CRISPR לדילוג אקסונים ברמה הגנומית</p>
+            <p>
+              במקום להשתמש באוליגונוקלאוטידים שצריך להזריק כל שבוע, CRISPR יכול ליצור
+              "דילוג אקסונים" קבוע על ידי עריכת ה-DNA עצמו. Vertex רכשה את Exonics
+              ב-2019 ומפתחת את הגישה לקראת ניסויים קליניים.
+            </p>
+          </div>
+
+          <div class="drug-block success-block">
+            <h5>&#127891; University of Texas Southwestern &mdash; מעבדת Eric Olson</h5>
+            <p><strong>גישה:</strong> CRISPR לתיקון קבוע במודלים של בעלי חיים</p>
+            <p>
+              פרופ' Eric Olson וצוותו הוכיחו שניתן להשתמש ב-CRISPR כדי לתקן מוטציות DMD
+              בעכברים, כלבים (ביגלים) ותאי שריר אנושיים. המחקרים הראו שימור של עד
+              90% מהדיסטרופין ותיקון קבוע שנשמר לאורך זמן.
+            </p>
+            <p>
+              האתגר המרכזי: העברה יעילה של CRISPR לכל שרירי הגוף (כולל הלב) בצורה
+              בטוחה. המעבדה מפתחת שיטות חדשות להקטנת הנפח הויראלי הנדרש.
+            </p>
+          </div>
+        </div>
+
+        <!-- Tab: Israel Trials -->
+        <div class="tab-content" id="tab-israel-trials">
+          <h4>&#127470;&#127473; ניסויים ומחקר ב-DMD בישראל</h4>
+          <p>
+            ישראל, עם מערכת בריאות מתקדמת ומחקר גנטי חזק, מציעה מספר מסגרות
+            לטיפול ומחקר ב-DMD. הנה המרכזים המובילים.
+          </p>
+
+          <div class="drug-block">
+            <h5>&#127975; המרכז הרפואי הדסה, ירושלים</h5>
+            <p>
+              מחלקת הנוירולוגיה והמכון לגנטיקה בהדסה מובילים מחקר במחלות נוירו-שריריות.
+              הדסה משתתפת במחקרים בינלאומיים ומציעה ייעוץ גנטי מקיף למשפחות DMD.
+            </p>
+          </div>
+
+          <div class="drug-block">
+            <h5>&#127975; מרכז שניידר לרפואת ילדים, פתח תקווה</h5>
+            <p>
+              מרפאת ה-DMD בשניידר היא אחת המרפאות המובילות בישראל.
+              צוות רב-תחומי הכולל נוירולוג ילדים, קרדיולוג, רופא ריאות,
+              פיזיותרפיסט, מרפא בעיסוק ודיאטנית. מעקב שוטף ומתואם.
+            </p>
+          </div>
+
+          <div class="drug-block">
+            <h5>&#127975; בית החולים דנה-דואק לילדים, תל אביב</h5>
+            <p>
+              מרפאה ייעודית למחלות נוירו-שריריות במרכז הרפואי סוראסקי (איכילוב).
+              מציעה אבחון גנטי, מעקב רב-תחומי ונגישות לטיפולים חדשניים.
+            </p>
+          </div>
+
+          <h4>&#128269; איך מחפשים ניסויים קליניים בישראל?</h4>
+          <div class="info-box">
+            <p>
+              <strong>ClinicalTrials.gov</strong> הוא המאגר המרכזי לניסויים קליניים בעולם.
+              כדי למצוא ניסויים ב-DMD בישראל:
+            </p>
+            <ul style="padding-right: 20px; margin: 10px 0;">
+              <li>היכנסו ל-<a href="https://clinicaltrials.gov" target="_blank" style="color: var(--primary); font-weight: 600;">clinicaltrials.gov</a></li>
+              <li>בשדה Condition/Disease הקלידו: <strong>Duchenne Muscular Dystrophy</strong></li>
+              <li>בשדה Location הקלידו: <strong>Israel</strong></li>
+              <li>סננו לפי Status: <strong>Recruiting</strong> (מגייסים נבדקים)</li>
+            </ul>
+            <p>
+              בנוסף, ניתן לפנות ישירות למרפאות ה-DMD במרכזים הרפואיים הגדולים בישראל.
+              הרופא המטפל יכול לעזור לבדוק התאמה לניסויים ספציפיים.
+            </p>
+          </div>
+
+          <a href="https://clinicaltrials.gov/search?cond=Duchenne%20Muscular%20Dystrophy&locStr=Israel&country=Israel" target="_blank" class="link-btn" style="margin-top: 10px;">
+            &#128269; חיפוש ניסויים ב-DMD בישראל ב-ClinicalTrials.gov
+          </a>
+        </div>
+
+        <!-- Tab: Novel Approaches -->
+        <div class="tab-content" id="tab-novel-trials">
+          <h4>גישות חדשניות בפיתוח</h4>
+          <p>
+            מעבר לריפוי גנטי ו-CRISPR, מספר גישות חדשניות מראות תוצאות מעודדות
+            בשלבים מוקדמים עד מתקדמים של פיתוח.
+          </p>
+
+          <div class="drug-block success-block">
+            <h5>&#127775; Dyne Therapeutics &mdash; FORCE Platform</h5>
+            <p><strong>שלב:</strong> מחקר שלב 1/2 (DELIVER)</p>
+            <p><strong>מנגנון:</strong> אוליגונוקלאוטידים צמודי נוגדן (Antibody-Conjugated Oligonucleotides). הנוגדן מכוון את התרופה ישירות לתאי שריר דרך קולטן הטרנספרין.</p>
+            <p>
+              <strong>תוצאות מרשימות:</strong> עד 25% שחזור דיסטרופין בביופסיות שריר &mdash;
+              פי 10 יותר מתרופות דילוג אקסונים קיימות. מגיע גם לשריר הלב.
+            </p>
+            <p>אם התוצאות יחזיקו מעמד, זו עשויה להיות קפיצת מדרגה בדילוג אקסונים.</p>
+          </div>
+
+          <div class="drug-block success-block">
+            <h5>&#127775; WVE-N531 (Wave Life Sciences)</h5>
+            <p><strong>שלב:</strong> מחקר שלב 1/2</p>
+            <p><strong>מטרה:</strong> דילוג על אקסון 53</p>
+            <p><strong>מנגנון:</strong> אוליגונוקלאוטיד סטריאו-טהור (stereopure antisense) &mdash; כל מולקולה זהה במבנה התלת-ממדי, מה שמשפר את הדיוק והיעילות.</p>
+            <p>
+              <strong>תוצאה:</strong> 53% דילוג אקסונים ברמת ה-mRNA בביופסיות שריר &mdash;
+              שיעור הגבוה ביותר שנמדד בניסוי קליני לדילוג אקסונים. עלייה ברמות דיסטרופין
+              ב-5.4% מהנורמה (ממוצע).
+            </p>
+          </div>
+
+          <div class="drug-block">
+            <h5>&#129504; גישת Utrophin Upregulation</h5>
+            <p>
+              אוטרופין הוא חלבון דומה מאוד לדיסטרופין שנמצא בגוף בטבעיות (בעיקר בשלבי
+              עובר). הרעיון: אם נוכל "להדליק" מחדש את ייצור האוטרופין בתאי שריר בוגרים,
+              הוא יכול לפצות על היעדר הדיסטרופין.
+            </p>
+            <p><strong>יתרונות:</strong> לא דורש וקטורים ויראליים. מתאים לכל המוטציות. לא מעורר תגובה חיסונית.</p>
+            <p><strong>אתגרים:</strong> קשה להגיע לרמות מספיקות. מחקר עדיין בשלבים מוקדמים.</p>
+          </div>
+
+          <div class="drug-block">
+            <h5>&#129516; טיפולי תאי גזע</h5>
+            <p>
+              מחקרים בוחנים שימוש בתאי גזע מסוגים שונים (mesoangioblasts, iPS cells, CD133+)
+              לשחזור שרירים ב-DMD. התאי גזע אמורים להתמיין לתאי שריר חדשים עם דיסטרופין
+              תקין (אם מתוקנים גנטית) או לסייע בשיקום רקמת שריר פגועה.
+            </p>
+            <p>
+              <strong>סטטוס:</strong> רוב המחקרים עדיין בשלבים פרה-קליניים. ניסוי קליני אחד
+              (Cosmo Bio, יפן) בדק mesoangioblasts והראה בטיחות אך יעילות מוגבלת.
+              האתגר העיקרי: הגעה של התאים לכמות מספיקה של שרירים.
+            </p>
+          </div>
+
+          <div class="info-box">
+            <strong>&#128161; טיפ:</strong>
+            ניתן לחפש ולעקוב אחר כל הניסויים הקליניים ב-DMD באתר
+            <a href="https://clinicaltrials.gov/search?cond=Duchenne%20Muscular%20Dystrophy" target="_blank" style="color: var(--primary); font-weight: 600;">ClinicalTrials.gov</a>.
+            נכון ל-2025, יש למעלה מ-30 ניסויים פעילים ברחבי העולם.
+            שוחחו עם הרופא המטפל לגבי התאמה לניסוי ספציפי.
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ==================== SECTION: מחקרים חדשים ==================== -->
+    <section id="research" class="fade-in">
+      <h2><span class="section-icon">&#129516;</span> מחקרים חדשים</h2>
+      <p class="section-desc">
+        מחקר ה-DMD נמצא בתקופה פורייה במיוחד. גישות חדשות מגיעות מכיוונים שונים &mdash;
+        ריפוי גנטי מתקדם, עריכת גנום, מנגנוני מסירה חדשניים ותרופות שפועלות על הסביבה הסלולרית.
+        הנה סקירה של פריצות הדרך האחרונות.
+      </p>
+
+      <div class="cards-grid">
+        <div class="card green">
+          <span class="card-icon">&#129516;</span>
+          <h3>מיקרו-דיסטרופין דור שני &mdash; SGT-003</h3>
+          <p>
+            <strong>חברה:</strong> Solid Biosciences<br>
+            חלבון מיקרו-דיסטרופין מהדור השני, מותאם לביטוי גבוה יותר בשריר.
+            בניסויים פרה-קליניים הראה <strong>58% ביטוי מיקרו-דיסטרופין</strong> ברקמת שריר &mdash;
+            שיפור משמעותי בהשוואה ל-Elevidys של Sarepta. הקונסטרוקט כולל דומיינים
+            פונקציונליים נוספים (כולל nNOS binding) שעשויים לשפר את ההגנה על השריר.
+            הניסוי הקליני INSPIRE צפוי לספק תוצאות ראשוניות בקרוב.
+          </p>
+          <span class="badge green">ריפוי גנטי דור 2</span>
+        </div>
+
+        <div class="card blue">
+          <span class="card-icon">&#9999;&#65039;</span>
+          <h3>CRISPR לתיקון קבוע &mdash; Eric Olson Lab</h3>
+          <p>
+            <strong>מוסד:</strong> UT Southwestern<br>
+            מעבדת פרופ' Eric Olson הוכיחה תיקון גנטי קבוע במודלים של עכברים ובתאי
+            שריר אנושיים באמצעות CRISPR/Cas9. התוצאות הראו שימור דיסטרופין ארוך טווח.
+            חברת Exonics Therapeutics (שנרכשה על ידי Vertex) מקדמת את הגישה לעבר
+            ניסויים קליניים ראשונים באדם. היתרון הגדול: תיקון חד-פעמי וקבוע ברמת ה-DNA.
+          </p>
+          <span class="badge blue">עריכת גנום</span>
+        </div>
+
+        <div class="card orange">
+          <span class="card-icon">&#128300;</span>
+          <h3>Del-Zota &mdash; Dyne Therapeutics</h3>
+          <p>
+            <strong>פלטפורמה:</strong> FORCE (Antibody-Conjugated Oligonucleotides)<br>
+            גישה חדשנית שמצמידה אוליגונוקלאוטידים לנוגדנים המכוונים ישירות לתאי שריר
+            דרך קולטן הטרנספרין. התוצאות מרשימות: <strong>25% שחזור דיסטרופין</strong>
+            בביופסיות שריר &mdash; פי 10 יותר מתרופות דילוג אקסונים קונבנציונליות.
+            מגיע גם לשריר הלב, שהוא אתגר מרכזי בטיפולים קיימים.
+          </p>
+          <span class="badge orange">מנגנון מסירה חדש</span>
+        </div>
+
+        <div class="card purple">
+          <span class="card-icon">&#129504;</span>
+          <h3>WVE-N531 &mdash; Wave Life Sciences</h3>
+          <p>
+            <strong>גישה:</strong> אוליגונוקלאוטיד סטריאו-טהור (Stereopure Antisense)<br>
+            בניגוד לתרופות דילוג אקסונים קיימות שמכילות תערובת של מולקולות במבנים
+            תלת-ממדיים שונים, WVE-N531 מורכב ממולקולות זהות. התוצאה:
+            <strong>53% דילוג אקסון 53</strong> ברמת ה-mRNA &mdash; השיעור הגבוה ביותר
+            שנמדד בניסוי קליני לדילוג אקסונים. עלייה של 5.4% מהנורמה ברמות דיסטרופין.
+          </p>
+          <span class="badge purple">דילוג אקסונים מתקדם</span>
+        </div>
+
+        <div class="card red">
+          <span class="card-icon">&#128138;</span>
+          <h3>Givinostat (Duvyzat) &mdash; התרופה הלא-סטרואידלית הראשונה</h3>
+          <p>
+            <strong>יצרן:</strong> Italfarmaco<br>
+            Givinostat הוא מעכב HDAC (histone deacetylase inhibitor) שאושר על ידי ה-FDA
+            במרץ 2024. זו <strong>התרופה הראשונה שאינה סטרואידלית</strong> שאושרה לטיפול
+            ב-DMD. פועלת על ידי הפחתת תהליכי דלקת ופיברוזיס (הצטברות רקמת צלקת)
+            בשרירים. ניתנת בשילוב עם סטרואידים. מחקר EPIDYS הראה האטה משמעותית בירידה
+            התפקודית.
+          </p>
+          <span class="badge red">FDA Approved 2024</span>
+        </div>
+
+        <div class="card green">
+          <span class="card-icon">&#128170;</span>
+          <h3>Utrophin Upregulation &mdash; חלבון חלופי</h3>
+          <p>
+            אוטרופין הוא חלבון דומה מאוד לדיסטרופין שקיים בגוף בטבעיות, בעיקר בשלבי
+            עובר. הרעיון: "הדלקה מחדש" של ייצור אוטרופין בתאי שריר בוגרים כדי לפצות
+            על היעדר הדיסטרופין. <strong>יתרון מרכזי:</strong> מתאים לכל סוגי המוטציות,
+            לא דורש וקטורים ויראליים, ולא מעורר תגובה חיסונית. מספר חברות מפתחות
+            מולקולות קטנות שיכולות להעלות את רמות האוטרופין.
+          </p>
+          <span class="badge green">גישה אוניברסלית</span>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <strong>&#128161; למה יש כל כך הרבה גישות?</strong><br><br>
+        DMD היא מחלה מורכבת שפוגעת בשרירים בכמה דרכים במקביל: היעדר חלבון מבני (דיסטרופין),
+        דלקת כרונית, פיברוזיס (הצטברות רקמת צלקת), ונזק חמצוני. לכן נדרשות גישות שונות
+        שמכוונות לאספקטים שונים של המחלה:
+        <ul style="padding-right: 20px; margin: 12px 0;">
+          <li><strong>ריפוי גנטי</strong> &mdash; החלפת הגן הפגום (Elevidys, SGT-003)</li>
+          <li><strong>עריכת גנום</strong> &mdash; תיקון קבוע של המוטציה (CRISPR)</li>
+          <li><strong>דילוג אקסונים</strong> &mdash; ייצור דיסטרופין חלקי (Exondys, Dyne, Wave)</li>
+          <li><strong>ויסות חלבון חלופי</strong> &mdash; הפעלת אוטרופין כתחליף</li>
+          <li><strong>נוגדי פיברוזיס</strong> &mdash; האטת הרס רקמת השריר (Givinostat)</li>
+        </ul>
+        חולים רבים יזדקקו בעתיד ל<strong>שילוב של מספר גישות</strong> &mdash; למשל, ריפוי גנטי
+        יחד עם תרופה נוגדת פיברוזיס. זה גם הסיבה שכל ניסוי קליני חדש חשוב, גם אם הוא
+        לא "מרפא" לבד.
+      </div>
+    </section>
+
+    <!-- ==================== SECTION: פיזיותרפיה ==================== -->
+    <section id="physio" class="fade-in">
+      <h2><span class="section-icon">&#127947;</span> פיזיותרפיה</h2>
+      <p class="section-desc">
+        פיזיותרפיה היא אחד מעמודי התווך של הטיפול ב-DMD. תוכנית פיזיותרפיה נכונה
+        יכולה לדחות התפתחות קונטרקטורות, לשמר תפקוד נשימתי ולשפר את איכות החיים.
+        הטיפול חייב להתחיל מוקדם ולהימשך לכל אורך החיים.
+      </p>
+
+      <div class="accordion">
+        <div class="accordion-item">
+          <button class="accordion-header">&#129336; מתיחות ושמירה על גמישות</button>
+          <div class="accordion-body">
+            <div class="accordion-body-inner">
+              <p>
+                מתיחות יומיות הן המרכיב החשוב ביותר בפיזיותרפיה ל-DMD. ללא מתיחות
+                סדירות, שרירים מתקצרים ונוצרות קונטרקטורות (הגבלות בטווח התנועה) שמזרזות
+                את איבוד ההליכה ומקשות על ישיבה נוחה.
+              </p>
+              <p><strong>פרוטוקול יומי מומלץ (15 עד 30 דקות ביום):</strong></p>
+              <ul style="padding-right: 20px; margin: 10px 0;">
+                <li><strong>גיד אכילס (Achilles):</strong> מתיחה בעמידה או בשכיבה. 30 שניות לכל רגל, 3 חזרות. הקונטרקטורה הנפוצה ביותר ב-DMD.</li>
+                <li><strong>כופפי ירך (Hip Flexors):</strong> מתיחת Thomas או בשכיבה על הבטן. 30 שניות, 3 חזרות. מניעת קיצור שמשנה את דפוס ההליכה.</li>
+                <li><strong>שרירים אחוריים של הירך (Hamstrings):</strong> מתיחה בשכיבה על הגב עם הרמת רגל ישרה. 30 שניות, 3 חזרות.</li>
+                <li><strong>רצועת ITB (Iliotibial Band):</strong> מתיחה בעמידה עם הצלבת רגליים. חשובה למניעת עקמת ברכיים.</li>
+              </ul>
+              <p>
+                <strong>חשוב:</strong> מתיחות צריכות להיות עדינות וסבלניות. לעולם אין להפעיל
+                כוח מוגזם. כל מתיחה צריכה להרגיש כ"משיכה נעימה" ולא כאב. בשלבים מתקדמים,
+                הפיזיותרפיסט עשוי להשתמש בטכניקות PNF (Proprioceptive Neuromuscular Facilitation).
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header">&#127946; טיפול בבריכה (הידרותרפיה)</button>
+          <div class="accordion-body">
+            <div class="accordion-body-inner">
+              <p>
+                הידרותרפיה (טיפול במים) נחשבת לאחת משיטות הטיפול היעילות ביותר ב-DMD.
+                המים מספקים סביבה ייחודית שמאפשרת תנועה חופשית ללא עומס הכבידה.
+              </p>
+              <p><strong>יתרונות המים:</strong></p>
+              <ul style="padding-right: 20px; margin: 10px 0;">
+                <li><strong>הפחתת כוח הכבידה:</strong> המים נושאים את משקל הגוף, מה שמאפשר תנועות שלא ניתן לבצע על היבשה.</li>
+                <li><strong>שימור תפקוד שרירי:</strong> התנגדות עדינה של המים מחזקת שרירים ללא נזק (concentric contraction).</li>
+                <li><strong>שיפור קיבולת נשימתית:</strong> לחץ הידרוסטטי מחזק שרירי נשימה.</li>
+                <li><strong>הנאה ומוטיבציה:</strong> ילדים נהנים מטיפול בבריכה, מה שמשפר את ההיענות.</li>
+              </ul>
+              <p>
+                <strong>טמפרטורה מומלצת:</strong> 30 עד 34 מעלות צלזיוס. מים חמים מדי עלולים
+                לגרום עייפות מוגברת.
+              </p>
+              <p>
+                <strong>מחקר:</strong> Vry et al. (2014), BMC Musculoskeletal Disorders, הראו
+                שהידרותרפיה שיפרה את הציון במדד MFM (Motor Function Measure) ואת קיבולת
+                הנשימה בקרב ילדים עם DMD.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header">&#129534; סדים לילה ואורתוזות</button>
+          <div class="accordion-body">
+            <div class="accordion-body-inner">
+              <p>
+                סדים ואורתוזות הם כלים חיוניים בניהול ה-DMD. הם עוזרים למנוע קיצור
+                שרירים, לשמר יציבה ולהאריך את תקופת ההליכה העצמאית.
+              </p>
+              <p><strong>סוגי סדים עיקריים:</strong></p>
+              <ul style="padding-right: 20px; margin: 10px 0;">
+                <li><strong>AFOs (Ankle-Foot Orthoses):</strong> סדי לילה לקרסול ורגל. מונעים קיצור גיד אכילס. יש להתחיל מוקדם, עוד לפני שנראים סימני קיצור. נלבשים בזמן השינה.</li>
+                <li><strong>KAFOs (Knee-Ankle-Foot Orthoses):</strong> סדים ארוכים שתומכים בברך, קרסול ורגל. משמשים להארכת תקופת העמידה וההליכה. בשלבים מתקדמים יותר.</li>
+                <li><strong>חגורות גב (Spinal Braces):</strong> למניעת החמרה של עקמת (סקוליוזיס). משמשות בעיקר לפני שניתוח הוא אופציה או כגישור עד לניתוח.</li>
+                <li><strong>סדי יד:</strong> בשלבים מתקדמים, למניעת קיצור שרירי היד ולשמירת תפקוד.</li>
+              </ul>
+              <p>
+                <strong>עיקרון מפתח:</strong> סדים צריכים להיות נוחים. סד לא נוח לא יילבש.
+                חשוב להתאים את הסד אצל אורתוטיסט מנוסה ולבצע מעקב תקופתי (ילדים גדלים
+                מהר, והסד צריך להתעדכן).
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header">&#127788;&#65039; טיפול נשימתי</button>
+          <div class="accordion-body">
+            <div class="accordion-body-inner">
+              <p>
+                ירידה בתפקוד הנשימתי היא אחד האתגרים הגדולים ב-DMD ומתחילה להיות
+                משמעותית בדרך כלל בגיל ההתבגרות. ניהול נשימתי פרואקטיבי מאריך חיים
+                ומשפר איכות חיים באופן דרמטי.
+              </p>
+              <p><strong>שלבי הטיפול הנשימתי:</strong></p>
+              <ul style="padding-right: 20px; margin: 10px 0;">
+                <li><strong>מעקב שנתי:</strong> בדיקות תפקודי ריאות (PFTs) אחת לשנה מגיל האבחנה. מעקב אחר FVC (Forced Vital Capacity).</li>
+                <li><strong>גיוס נפח ריאות (LVR):</strong> שימוש בשקית נשימה (Ambu bag) לנפיחה עמוקה של הריאות. שומר על גמישות בית החזה. 10 עד 15 דקות פעמיים ביום.</li>
+                <li><strong>מכשיר סיוע לשיעול (Cough Assist):</strong> מכשיר מכני שעוזר לפנות הפרשות מדרכי הנשימה. חיוני למניעת דלקות ריאה. שימוש יומי או לפי צורך.</li>
+                <li><strong>BiPAP / NIV (הנשמה לא-חודרנית):</strong> נדרשת כשתפקוד הנשימה יורד. בתחילה בלילה בלבד, ובהמשך גם ביום. משפרת את איכות השינה, מפחיתה כאבי ראש בוקר ועייפות.</li>
+              </ul>
+              <p>
+                <strong>מתי להתחיל?</strong> כאשר FVC יורד מתחת ל-80% מהצפוי, יש להתחיל
+                בתרגילי LVR. כש-FVC יורד מתחת ל-50%, יש לשקול BiPAP לילי. ניטור
+                רמות CO2 בדם חשוב לקבלת החלטות לגבי תמיכה נשימתית.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header">&#129468; ניהול עקמת (סקוליוזיס)</button>
+          <div class="accordion-body">
+            <div class="accordion-body-inner">
+              <p>
+                עקמת עמוד השדרה (סקוליוזיס) מתפתחת כמעט בכל חולי DMD לאחר המעבר
+                לכיסא גלגלים, בשל חולשת שרירי הגב שלא מצליחים לתמוך בעמוד השדרה.
+                עקמת לא מטופלת פוגעת בתפקוד הנשימתי, גורמת לכאבים ומקשה על ישיבה.
+              </p>
+              <p><strong>ניהול ומעקב:</strong></p>
+              <ul style="padding-right: 20px; margin: 10px 0;">
+                <li><strong>מדידת זווית Cobb:</strong> צילום רנטגן של עמוד השדרה אחת ל-6 חודשים לאחר המעבר לכיסא. זווית מעל 20 מעלות דורשת מעקב צמוד.</li>
+                <li><strong>מערכות ישיבה מותאמות:</strong> כיסא גלגלים עם תמיכה צדדית לגו, משענת מותאמת ותמיכת אגן. ישיבה נכונה מאטה את התקדמות העקמת.</li>
+                <li><strong>חגורות גב:</strong> יכולות לסייע בשלבים מוקדמים אך לא מונעות התקדמות לחלוטין.</li>
+                <li><strong>ניתוח איחוי חוליות (Spinal Fusion):</strong> מומלץ כשזווית Cobb עוברת 25 עד 30 מעלות. התזמון קריטי &mdash; עדיף לנתח כשתפקוד הנשימה עדיין סביר (FVC מעל 30%).</li>
+              </ul>
+              <p>
+                <strong>חשוב:</strong> טיפול בסטרואידים (במיוחד Deflazacort) יכול לדחות את
+                הופעת העקמת. ילדים שטופלו בסטרואידים מפתחים עקמת מאוחר יותר ולעיתים
+                בחומרה פחותה.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header">&#9855; שימוש בכיסא גלגלים</button>
+          <div class="accordion-body">
+            <div class="accordion-body-inner">
+              <p>
+                המעבר לכיסא גלגלים הוא שלב משמעותי רגשית ותפקודית. עם תכנון נכון,
+                כיסא גלגלים מותאם יכול לשפר את העצמאות, הניידות ואיכות החיים באופן
+                משמעותי.
+              </p>
+              <p><strong>שלבי המעבר:</strong></p>
+              <ul style="padding-right: 20px; margin: 10px 0;">
+                <li><strong>כיסא גלגלים חשמלי:</strong> מומלץ להתחיל להתנסות בכיסא חשמלי עוד בזמן שהילד הולך, כדי שיהיה לו כלי ניידות מוכר כשיצטרך. התאמה אצל מרפא בעיסוק מומחה.</li>
+                <li><strong>עמידנים (Standing Frames):</strong> מכשירים שמאפשרים עמידה נתמכת. חשובים לבריאות העצמות, מניעת קונטרקטורות, תפקוד מעי ורגשית &mdash; להיות בגובה העיניים של אחרים.</li>
+                <li><strong>התאמות ביתיות:</strong> רמפות, הרחבת פתחי דלתות, שירותים נגישים, מעלון או מעלית, גובה משטחי עבודה מותאם.</li>
+                <li><strong>בקרות סביבתיות:</strong> כיסאות גלגלים מתקדמים כוללים בקרות לסביבה (דלתות, אורות, מחשב) המופעלות מהג'ויסטיק.</li>
+              </ul>
+              <p>
+                <strong>התאמת הכיסא:</strong> כיסא גלגלים חשמלי ל-DMD חייב לכלול: הטיית
+                מושב (tilt-in-space), הנפת מושב (seat elevation), תמיכת ראש, תמיכה צדדית
+                לגו, ומשענת רגליים מתכווננת. חשוב שהכיסא יגדל עם הילד.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="accordion-item">
+          <button class="accordion-header">&#127947; תרגילים מומלצים</button>
+          <div class="accordion-body">
+            <div class="accordion-body-inner">
+              <p>
+                פעילות גופנית חשובה ב-DMD, אבל חייבת להיות מותאמת בקפדנות.
+                העיקרון המנחה: פעילות תת-מקסימלית (submaximal) בלבד, ללא מאמץ עד תשישות.
+              </p>
+              <p><strong>סוגי פעילות מומלצים:</strong></p>
+              <ul style="padding-right: 20px; margin: 10px 0;">
+                <li><strong>שחייה:</strong> הפעילות האידיאלית. מפחיתת עומס כבידה, מחזקת שרירים בעדינות, משפרת נשימה ומהנה.</li>
+                <li><strong>רכיבה על אופניים (נייחים):</strong> אירובי עדין שמתאים גם לשלבים מתקדמים יותר. ניתן לכוונן את ההתנגדות.</li>
+                <li><strong>ארגומטר גפיים עליונות:</strong> "אופני ידיים" ששומרים על תפקוד שרירי גפיים עליונות.</li>
+                <li><strong>יוגה מותאמת:</strong> מתיחות, נשימות ורגיעה. מתאימה לכל השלבים.</li>
+                <li><strong>משחק חופשי בבריכה:</strong> ילדים צריכים גם ליהנות, לא רק "לעשות פיזיותרפיה".</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="info-box warning">
+        <strong>&#9888;&#65039; אזהרה חשובה:</strong>
+        יש להימנע מתרגילי כוח אקסצנטריים (הארכת שריר תחת עומס) שעלולים להזיק לשרירים
+        דושניסטיים. תרגילים כמו ריצה במורד, קפיצות, ותרגילי כוח עם משקולות כבדות
+        עלולים לגרום לנזק בלתי הפיך לסיבי שריר חסרי דיסטרופין.
+        <strong>יש לעבוד רק עם פיזיותרפיסט מומחה בניוון שרירים.</strong>
+      </div>
+
+      <h3 style="color: var(--primary); margin: 30px 0 16px;">מחקרים מומלצים לקריאה</h3>
+      <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+        <div class="card blue">
+          <h3>Bushby et al., 2010</h3>
+          <p>"Diagnosis and management of Duchenne muscular dystrophy" &mdash; Lancet Neurology. מדריך הייחוס המרכזי לניהול DMD. מכסה את כל ההיבטים מאבחנה ועד טיפול.</p>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/19945913/" target="_blank" class="link-btn" style="margin-top: 12px;">
+            &#128196; PubMed
+          </a>
+        </div>
+        <div class="card purple">
+          <h3>Birnkrant et al., 2018</h3>
+          <p>"Diagnosis and management of Duchenne muscular dystrophy, part 1-3: DMD care considerations" &mdash; Lancet Neurology. העדכון המקיף ביותר להנחיות הטיפול.</p>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/29395989/" target="_blank" class="link-btn" style="margin-top: 12px;">
+            &#128196; PubMed
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION: אורח חיים ==================== -->
+    <section id="lifestyle" class="fade-in">
+      <h2><span class="section-icon">&#127939;</span> אורח חיים</h2>
+      <p class="section-desc">
+        DMD משפיע על כל היבטי החיים &mdash; לא רק על השרירים. תזונה נכונה, תמיכה
+        נפשית, התאמות לימודיות וטכנולוגיה מסייעת יכולים לשנות את חוויית החיים
+        של הילד וכל המשפחה.
+      </p>
+
+      <div class="tabs" id="lifestyleTabs">
+        <div class="tab-buttons">
+          <button class="tab-btn active" data-tab="lifestyle-nutrition">&#129382; תזונה</button>
+          <button class="tab-btn" data-tab="lifestyle-mental">&#128155; בריאות הנפש</button>
+          <button class="tab-btn" data-tab="lifestyle-education">&#127891; חינוך ולמידה</button>
+          <button class="tab-btn" data-tab="lifestyle-tech">&#129302; טכנולוגיה מסייעת</button>
+        </div>
+
+        <!-- Tab: תזונה -->
+        <div class="tab-content active" id="tab-lifestyle-nutrition">
+          <h4>תזונה ו-DMD &mdash; למה זה כל כך חשוב?</h4>
+          <p>
+            ניהול תזונתי נכון ב-DMD הוא קריטי. משקל עודף מכביד על שרירים חלשים
+            ומזרז את איבוד הניידות. מצד שני, משקל חסר פוגע ברזרבות האנרגיה וברקמת
+            השריר. סטרואידים (הטיפול הבסיסי) מגבירים תיאבון ונטייה להשמנה, מה שהופך
+            את הנושא לאתגר מתמשך.
+          </p>
+
+          <div class="drug-block">
+            <h5>&#9878;&#65039; שמירה על משקל תקין</h5>
+            <p>
+              המטרה: BMI בטווח הנורמלי לגיל. משקל עודף מזרז את המעבר לכיסא גלגלים.
+              מומלץ מעקב תזונתי צמוד עם דיאטנית המכירה DMD. ניטור משקל חודשי.
+            </p>
+          </div>
+
+          <div class="drug-block">
+            <h5>&#129471; סידן וויטמין D</h5>
+            <p>
+              סטרואידים פוגעים בצפיפות העצם (אוסטאופורוזיס) ומגבירים סיכון לשברים.
+              תוספת סידן (1,000 עד 1,500 מ"ג ליום) וויטמין D (1,000 עד 2,000 IU ליום)
+              חיוניים. יש לבדוק רמות ויטמין D בדם אחת ל-6 חודשים. במקרים חמורים,
+              הרופא עשוי לרשום ביספוספונטים (Bisphosphonates).
+            </p>
+          </div>
+
+          <div class="drug-block">
+            <h5>&#129385; חלבון</h5>
+            <p>
+              קיים דיון מקצועי בשאלה האם תוספת חלבון מסייעת ב-DMD.
+              מצד אחד, חלבון חיוני לבניית שריר. מצד שני, שרירים דושניסטיים
+              מתקשים לנצל חלבון ביעילות. ההמלצה הנוכחית: צריכת חלבון נורמלית
+              לגיל (ללא תוספים מיוחדים), אלא אם הדיאטנית ממליצה אחרת.
+            </p>
+          </div>
+
+          <div class="drug-block success-block">
+            <h5>&#129382; מזונות נוגדי דלקת</h5>
+            <p>
+              דלקת כרונית היא חלק מרכזי בתהליך ההרס השרירי ב-DMD.
+              מזונות נוגדי דלקת עשויים לסייע:
+            </p>
+            <ul style="padding-right: 20px; margin: 8px 0;">
+              <li>אומגה-3 (דגי ים, אגוזים, זרעי פשתן)</li>
+              <li>פירות יער (אוכמניות, תותים, פטל)</li>
+              <li>ירקות עליים ירוקים (ברוקולי, תרד, קייל)</li>
+              <li>כורכום (curcumin &mdash; נחקר ספציפית ב-DMD)</li>
+              <li>שמן זית כתית</li>
+            </ul>
+          </div>
+
+          <div class="drug-block">
+            <h5>&#128167; נוזלים ותפקוד מעיים</h5>
+            <p>
+              שתייה מספקת חשובה לתפקוד שרירי תקין. עצירות (constipation) היא
+              בעיה שכיחה מאוד ב-DMD בשל חולשת שרירי הבטן, ישיבה ממושכת
+              ותופעות לוואי של תרופות. מומלץ: 6 עד 8 כוסות מים ביום, סיבים
+              תזונתיים (ירקות, פירות, דגנים מלאים), ובמידת הצורך תוספי סיבים
+              או משלשלים קלים בהנחיית רופא.
+            </p>
+          </div>
+        </div>
+
+        <!-- Tab: בריאות הנפש -->
+        <div class="tab-content" id="tab-lifestyle-mental">
+          <h4>בריאות הנפש ב-DMD</h4>
+          <p>
+            DMD אינו רק מחלת שרירים. ההשפעה הרגשית והנפשית על הילד ועל כל המשפחה
+            היא עצומה. מחקרים מראים ששיעורי דיכאון וחרדה גבוהים יותר באוכלוסיית DMD.
+            תמיכה נפשית היא חלק בלתי נפרד מהטיפול.
+          </p>
+
+          <div class="drug-block">
+            <h5>&#128154; דיכאון וחרדה בנוער עם DMD</h5>
+            <p>
+              מחקרים מצאו שכ-30% מנערים עם DMD סובלים מסימפטומים של דיכאון.
+              גורמים: אובדן תפקודי מתמשך (הליכה, יכולת ידיים), תלות גוברת
+              באחרים, בידוד חברתי, ומודעות למחלה. חרדה נפוצה סביב ניתוחים,
+              הידרדרות נשימתית ותכנון העתיד.
+            </p>
+            <p>
+              <strong>מה עוזר:</strong> טיפול פסיכולוגי (CBT), קשרי חברות משמעותיים,
+              תחביבים ותחומי עניין, תחושת שליטה ובחירה בחיי היומיום.
+            </p>
+          </div>
+
+          <div class="drug-block">
+            <h5>&#127918; חיבורים חברתיים ועולם דיגיטלי</h5>
+            <p>
+              קהילות אונליין ומשחקי מחשב הם ערוצים חשובים לחיבור חברתי
+              עבור בני נוער עם DMD שמוגבלים בניידות. גיימינג, פורומים, דיסקורד
+              וקבוצות ברשתות חברתיות מאפשרים קשרים עמוקים ללא מגבלות פיזיות.
+              סיפורו של מאטס סטין (Ibelin) מדגים כיצד חיים דיגיטליים יכולים
+              להיות חיים עשירים ומלאים.
+            </p>
+          </div>
+
+          <div class="drug-block warning-block">
+            <h5>&#128106; תמיכה למשפחה</h5>
+            <p>
+              ההורים, ובמיוחד המטפל/ת העיקרי/ת, נמצאים בסיכון גבוה לשחיקה
+              (burnout), דיכאון וחרדה. האחים והאחיות חווים גם הם מצוקה &mdash;
+              תחושת אשמה, קנאה, חרדה ולעיתים הזנחה רגשית.
+            </p>
+            <p><strong>מומלץ:</strong></p>
+            <ul style="padding-right: 20px; margin: 8px 0;">
+              <li>ייעוץ פסיכולוגי למשפחה ולא רק לילד</li>
+              <li>קבוצות תמיכה להורים (צעדים קטנים, PPMD)</li>
+              <li>קבוצות אחים (sibling support groups)</li>
+              <li>הפוגות טיפוליות (respite care) &mdash; זמן למטפלים לנוח</li>
+              <li>טיפול באבל צפוי (anticipatory grief) &mdash; ליווי מקצועי לתהליכים של אובדן הדרגתי</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Tab: חינוך ולמידה -->
+        <div class="tab-content" id="tab-lifestyle-education">
+          <h4>חינוך ולמידה עם DMD</h4>
+          <p>
+            מה שלא מספרים: דיסטרופין מבוטא גם במוח, ולא רק בשרירים. לכן,
+            כשליש מילדי DMD מתמודדים עם קשיי למידה. זה לא קשור לאינטליגנציה
+            כללית אלא לתפקודים ספציפיים.
+          </p>
+
+          <div class="drug-block">
+            <h5>&#129504; קשיי למידה ב-DMD</h5>
+            <p>
+              כ-30% מילדי DMD מאובחנים עם הפרעת למידה. התחומים הנפוצים: זיכרון
+              עבודה (working memory), שטף מילים (verbal fluency), קשב ומיקוד.
+              מוטציות בחלק הדיסטלי של הגן (אקסונים 45+) קשורות לשכיחות גבוהה
+              יותר של קשיי למידה, בשל השפעה על איזופורמים מוחיים של דיסטרופין
+              (Dp140, Dp71).
+            </p>
+          </div>
+
+          <div class="drug-block success-block">
+            <h5>&#128221; זכויות חינוכיות</h5>
+            <p>
+              בישראל, ילדים עם DMD זכאים ל:
+            </p>
+            <ul style="padding-right: 20px; margin: 8px 0;">
+              <li>תוכנית חינוכית יחידנית (IEP) מותאמת</li>
+              <li>סייעת אישית בבית הספר</li>
+              <li>הנגשה פיזית של מוסד הלימודים</li>
+              <li>הקלות בבחינות (זמן נוסף, בחינות בע"פ)</li>
+              <li>טכנולוגיה מסייעת (מחשב, תוכנות מיוחדות)</li>
+            </ul>
+            <p>
+              חשוב לעבוד עם צוות החינוך מוקדם ולוודא שההתאמות מתעדכנות
+              ככל שצרכי הילד משתנים.
+            </p>
+          </div>
+
+          <div class="drug-block">
+            <h5>&#127891; השכלה גבוהה ותעסוקה</h5>
+            <p>
+              רבים מצעירים עם DMD לומדים בהצלחה באוניברסיטאות ובמכללות.
+              מוסדות להשכלה גבוהה מחויבים בהנגשה. תכנון קריירה צריך להתחיל
+              מוקדם ולהתאים לתחומי העניין ולמגבלות הפיזיות. תחומים נפוצים:
+              מחשבים, עיצוב, כתיבה, ייעוץ, מחקר. ארגון ADI בישראל מציע
+              ליווי תעסוקתי לאנשים עם מוגבלויות.
+            </p>
+          </div>
+        </div>
+
+        <!-- Tab: טכנולוגיה מסייעת -->
+        <div class="tab-content" id="tab-lifestyle-tech">
+          <h4>טכנולוגיה מסייעת &mdash; עצמאות דרך חדשנות</h4>
+          <p>
+            הטכנולוגיה מתקדמת מהר, ועבור אנשים עם DMD היא יכולה להיות
+            ממש משנת חיים. מעקב עיניים, שליטה קולית, זרועות רובוטיות
+            ובית חכם &mdash; כל אלה מאפשרים עצמאות שלא הייתה אפשרית
+            בעבר.
+          </p>
+
+          <div class="drug-block">
+            <h5>&#128065; מעקב עיניים (Eye Tracking)</h5>
+            <p>
+              מערכות מעקב עיניים כמו Tobii Dynavox מאפשרות שליטה מלאה
+              במחשב באמצעות תנועות עיניים בלבד. משמש לתקשורת, גלישה
+              באינטרנט, כתיבה, משחקים ושליטה בסביבה. חיוני בשלבים
+              מתקדמים כשתפקוד הידיים מוגבל.
+            </p>
+          </div>
+
+          <div class="drug-block">
+            <h5>&#127908; שליטה קולית</h5>
+            <p>
+              Amazon Alexa, Google Home ו-Apple Siri מאפשרים שליטה קולית
+              בבית: אורות, מזגן, טלוויזיה, טלפון, מוזיקה, תזכורות לתרופות.
+              אינטגרציה עם מערכות בית חכם הופכת את הסביבה לנגישה ללא
+              צורך בתנועה פיזית.
+            </p>
+          </div>
+
+          <div class="drug-block success-block">
+            <h5>&#129302; זרועות רובוטיות</h5>
+            <p>
+              <strong>JACO (Kinova):</strong> זרוע רובוטית שמותקנת על כיסא
+              גלגלים ומאפשרת ביצוע פעולות כמו אכילה, שתייה, פתיחת דלתות
+              והרמת חפצים. מופעלת בג'ויסטיק קטן.
+              כמה קופות חולים בישראל מסייעות במימון.
+            </p>
+          </div>
+
+          <div class="drug-block">
+            <h5>&#127918; גיימינג מותאם</h5>
+            <p>
+              <strong>Xbox Adaptive Controller:</strong> בקר משחקים מותאם של
+              מיקרוסופט שתוכנן לשחקנים עם מוגבלויות. ניתן לחבר אליו מתגים,
+              לחצנים גדולים וג'ויסטיקים מותאמים. משחקי מחשב ווידאו הם חלק
+              מרכזי מהחיים החברתיים של בני נוער עם DMD.
+            </p>
+          </div>
+
+          <div class="drug-block">
+            <h5>&#128172; תקשורת תומכת וחלופית (AAC)</h5>
+            <p>
+              מכשירי AAC (Augmentative and Alternative Communication) מסייעים
+              לאנשים שתפקוד הדיבור שלהם נפגע. כוללים: לוחות תקשורת, אפליקציות
+              דיבור בטאבלט, מערכות מעקב עיניים עם סינתזת דיבור. חשוב להתחיל
+              היכרות עם כלי AAC מוקדם, לפני שיש צורך דחוף.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION: גישה פסיכולוגית ==================== -->
+    <section id="psychological-approach" class="fade-in">
+      <div class="section-header">
+        <span class="sec-icon">&#129504;</span>
+        <div>
+          <h2>גישה פסיכולוגית</h2>
+          <p class="section-desc">בריאות נפשית, התמודדות רגשית ותמיכה למשפחה</p>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <strong>למה הפסיכולוגיה חשובה ב-DMD?</strong><br>
+        דיסטרופין, החלבון החסר ב-DMD, מבוטא גם במוח ולא רק בשרירים. איזופורמים מוחיים
+        כמו Dp140 ו-Dp71 משפיעים על תפקוד קוגניטיבי, רגשי וחברתי. המשמעות: הפרעות
+        נוירו-התפתחותיות ופסיכיאטריות הן חלק מהביולוגיה של המחלה, לא רק תגובה רגשית
+        למצב. טיפול פסיכולוגי הוא הכרח רפואי, לא תוספת אופציונלית. ההנחיות הבינלאומיות
+        (Lancet Neurology 2018) כוללות ניהול פסיכו-סוציאלי כאחד מתחומי הליבה של טיפול ב-DMD.
+      </div>
+
+      <!-- 1. הפרעות נוירו-התפתחותיות -->
+      <h3>&#129504; הפרעות נוירו-התפתחותיות</h3>
+      <p>
+        מטה-אנליזה של 23 מחקרים מצאה שכיחות גבוהה משמעותית של הפרעות נוירו-התפתחותיות
+        באוכלוסיית DMD בהשוואה לאוכלוסייה הכללית. מוטציות באזור הדיסטלי של הגן (אחרי אקסון 30)
+        מעלות את הסיכון, בשל השפעה על איזופורמי Dp140 ו-Dp71 המבוטאים במוח.
+      </p>
+
+      <div class="drug-block">
+        <h5>&#128202; שכיחות מול אוכלוסייה כללית</h5>
+        <table class="styled-table" style="margin-top: 12px;">
+          <thead>
+            <tr><th>הפרעה</th><th>שכיחות ב-DMD</th><th>אוכלוסייה כללית</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>ADHD (הפרעת קשב)</td><td><strong>18%</strong></td><td>5-7%</td></tr>
+            <tr><td>ASD (אוטיזם)</td><td><strong>7-19%</strong></td><td>1-2%</td></tr>
+            <tr><td>OCD (הפרעה טורדנית)</td><td><strong>12%</strong></td><td>1-2%</td></tr>
+            <tr><td>קשיי למידה</td><td><strong>30-40%</strong></td><td>5-10%</td></tr>
+          </tbody>
+        </table>
+        <p style="margin-top: 10px; font-size: 13px; color: var(--text-lighter);">
+          מקור: מטה-אנליזה, Archives of Physical Medicine and Rehabilitation, 23 מחקרים
+        </p>
+      </div>
+
+      <div class="info-box success">
+        <strong>&#128161; סינון שנתי חובה:</strong> ההנחיות הבינלאומיות ממליצות על סינון התנהגותי,
+        רגשי, לימודי וחברתי בכל ביקור מרפאה, ולפחות פעם בשנה הערכה מקיפה.
+        זיהוי מוקדם של ADHD, ASD או קשיי למידה מאפשר התערבות בזמן שמשפרת
+        משמעותית את איכות החיים.
+      </div>
+
+      <!-- 2. דיכאון וחרדה -->
+      <h3>&#128154; דיכאון וחרדה</h3>
+      <div class="drug-block">
+        <h5>שכיחות ומאפיינים</h5>
+        <p>
+          מחקרים מצאו שכיחות של <strong>24%</strong> להפרעות חרדה ו-<strong>11%</strong>
+          לדיכאון קליני באוכלוסיית DMD (בהשוואה ל-7.2% ו-5% באוכלוסייה הכללית
+          בגילאי 5 עד 19). בקרב מתבגרים, כ-30% מדווחים על תסמינים דיכאוניים.
+          הגורמים כוללים: אובדן תפקודי מתמשך (הליכה, יכולת ידיים), תלות גוברת, בידוד חברתי,
+          מודעות לפרוגנוזה, ותופעות לוואי של סטרואידים.
+        </p>
+      </div>
+
+      <div class="drug-block success-block">
+        <h5>&#9989; טיפולים מבוססי ראיות</h5>
+        <p>
+          <strong>טיפול קוגניטיבי-התנהגותי (CBT)</strong> הוכח כיעיל במיוחד.
+          מחקר אקראי מבוקר הראה שיעור תגובה של <strong>69%</strong> (11 מתוך 16)
+          בקבוצת CBT לעומת 27% בקבוצת ביקורת. כשקיים שילוב עם ASD, נדרשות התאמות:
+          שימוש מוגבר בחומרים ויזואליים, מעורבות הורית, מטאפורות מותאמות אישית,
+          ניטור עצמי וחיזוקים חיוביים.
+        </p>
+        <p style="margin-top: 8px;">
+          <strong>התערבויות נוספות:</strong> טיפול תרופתי (SSRI בליווי פסיכיאטר ילדים),
+          קבוצות תמיכה, חיבורים חברתיים דיגיטליים, תחביבים ותחומי עניין שמעניקים
+          תחושת מסוגלות ושליטה.
+        </p>
+      </div>
+
+      <!-- 3. דימוי גוף והערכה עצמית -->
+      <h3>&#128170; דימוי גוף, הערכה עצמית ומעבר לכיסא גלגלים</h3>
+      <div class="drug-block">
+        <p>
+          טיפול בסטרואידים (פרדניזון/דפלזקורט) משפיע על המראה החיצוני: עלייה במשקל,
+          "פנים עגולות" (moon face), עיכוב בהתבגרות מינית ועצירת צמיחה. בגיל ההתבגרות,
+          כשהמראה כל כך חשוב, ההשפעה על הביטחון העצמי יכולה להיות משמעותית.
+        </p>
+        <p style="margin-top: 8px;">
+          <strong>המעבר לכיסא גלגלים</strong> הוא רגע מכונן. מצד אחד, מלווה בתחושת
+          אובדן. מצד שני, כיסא גלגלים ממונע מחזיר עצמאות ויכולת תנועה שאבדה בחודשים
+          האחרונים של הליכה. מחקרים מראים שילדים רבים חווים התחדשות של עצמאות לאחר
+          המעבר.
+        </p>
+      </div>
+      <div class="info-box">
+        <strong>מה בונה הערכה עצמית?</strong> מחקרים מצאו שני גורמים מרכזיים:
+        <strong>הצלחה בתחומים שחשובים לנער</strong> (גיימינג, לימודים, יצירה, תכנות) ו<strong>הכרה
+        מאנשים משמעותיים</strong> (חברים, משפחה, מורים). קבוצות תמיכה לצעירים עם DMD
+        מאפשרות חיבור עם עמיתים שמבינים את החוויה.
+      </div>
+
+      <!-- 4. השפעה על אחים ואחיות -->
+      <h3>&#128107; השפעה על אחים ואחיות</h3>
+      <div class="drug-block">
+        <p>
+          מחקרים מצאו שרוב האחים והאחיות של ילדים עם DMD מסתגלים היטב, אך קיים
+          <strong>סיכון מוגבר לתסמינים רגשיים</strong>. כשליש מהאחים דיווחו שהמחלה
+          השפיעה על חייהם, ומחצית מהמשפחות דיווחו על השפעה משמעותית על חיי המשפחה כולה.
+        </p>
+        <p style="margin-top: 8px;">
+          אחים ואחיות חווים: תחושת אחריות מוגברת, תסכול ועצב, פחד מהתקדמות המחלה,
+          ולעיתים שינוי בשאיפות הקריירה. הם עלולים להרגיש "שקופים" כשהמשפחה מתמקדת
+          באח החולה.
+        </p>
+        <ul style="padding-right: 20px; margin: 12px 0;">
+          <li><strong>קבוצות אחים:</strong> מפגשים ייעודיים לאחים ואחיות של ילדים עם DMD</li>
+          <li><strong>טיפול משפחתי:</strong> שמאפשר לכל בן משפחה לקבל מקום</li>
+          <li><strong>תשומת לב אישית:</strong> זמן אחד על אחד עם כל ילד, ללא קשר למחלה</li>
+          <li><strong>שיח פתוח:</strong> עידוד שיחה על רגשות, ללא שיפוט</li>
+        </ul>
+      </div>
+
+      <!-- 5. שחיקת הורים ומטפלים -->
+      <h3>&#128148; שחיקת הורים ומטפלים</h3>
+      <div class="drug-block warning-block">
+        <h5>&#9888;&#65039; נתונים שחשוב להכיר</h5>
+        <p>
+          חרדה ודיכאון תועדו <strong>אצל עד 70%</strong> ממטפלים ראשיים של ילדי DMD.
+          <strong>77%</strong> מדווחים על תחושות אובדן, <strong>74%</strong> על בכי או
+          דיכאון, ו-<strong>59%</strong> הזניחו את התחביבים שלהם. העומס קשור ישירות
+          לעלות הכספית של הטיפול ולשעות הפנאי שמוקדשות לטיפול.
+        </p>
+        <p style="margin-top: 8px;">
+          מחקרים הראו שמטפלים ב-DMD מדווחים על בריאות נפשית <strong>נמוכה יותר</strong>,
+          רווחה נמוכה יותר ויותר ימי עבודה שהוחמצו בהשוואה להורים ללא ילד עם DMD.
+          הלחץ הכרוני יוצר <strong>עומס אלוסטטי</strong> שמשנה את כימיית המוח ומפחית
+          ייצור סרוטונין ונוירוטרנסמיטורים. זו לא שאלה של "כוח רצון".
+        </p>
+      </div>
+
+      <div class="info-box success">
+        <strong>&#128154; מה עוזר:</strong>
+        <ul style="padding-right: 20px; margin: 8px 0;">
+          <li><strong>הפוגות טיפוליות (Respite Care):</strong> זמן מנוחה מתוכנן למטפלים</li>
+          <li><strong>קבוצות תמיכה להורים:</strong> צעדים קטנים, PPMD, קבוצות מקוונות</li>
+          <li><strong>טיפול פסיכולוגי אישי:</strong> CBT, ACT או טיפול תמיכתי</li>
+          <li><strong>תוכניות פסיכו-חינוכיות:</strong> מיומנויות התמודדות, ניהול מתח</li>
+          <li><strong>סיוע מעשי:</strong> סיוע בניווט ביורוקרטיה, זכויות, קצבאות</li>
+        </ul>
+      </div>
+
+      <!-- 6. שילוב בבית הספר -->
+      <h3>&#127891; שילוב פסיכולוגי בבית הספר</h3>
+      <div class="drug-block">
+        <p>
+          מחקרים מראים שחינוך משלב מפחית סטיגמה, מקדם חוסן פסיכולוגי ומעניק
+          תחושת שייכות. ילדים עם DMD זקוקים לגישה פרואקטיבית שמשלבת הנגשה
+          פיזית עם תמיכה רגשית וחברתית.
+        </p>
+        <ul style="padding-right: 20px; margin: 12px 0;">
+          <li><strong>הכנת הצוות החינוכי:</strong> הסברה על DMD למורים, סייעות ותלמידים</li>
+          <li><strong>ייעוץ בית-ספרי:</strong> פגישות קבועות עם יועצת/פסיכולוגית בית הספר</li>
+          <li><strong>קבוצות עמיתים:</strong> תוכניות שילוב חברתי ומניעת בידוד</li>
+          <li><strong>אוריינות בריאות נפשית:</strong> חינוך הכיתה לקבלה ואמפתיה</li>
+          <li><strong>גמישות אקדמית:</strong> התאמות בזמנים, בחינות בע"פ, שימוש במחשב</li>
+        </ul>
+        <p style="margin-top: 8px;">
+          בישראל, ילדים עם DMD זכאים לתוכנית חינוכית יחידנית (IEP), סייעת אישית,
+          הנגשה פיזית והקלות בבחינות. חשוב לעדכן את ההתאמות ככל שהצרכים משתנים.
+        </p>
+      </div>
+
+      <!-- 7. מעבר לבגרות -->
+      <h3>&#127793; מעבר לבגרות</h3>
+      <div class="drug-block">
+        <p>
+          המעבר לבגרות ב-DMD מציב <strong>פרדוקס ייחודי</strong>: הרצון לעצמאות גובר
+          בדיוק כשהתלות הפיזית באחרים גוברת. מתבגרים עם DMD מדווחים על חרדה
+          מהעתיד, מהתקדמות הסימפטומים ומהפרוגנוזה ארוכת הטווח.
+        </p>
+        <p style="margin-top: 8px;">
+          מחקרים זיהו פערים בתחומי: פעילויות חברתיות, תעסוקה, <strong>מערכות יחסים
+          אינטימיות</strong> ותמיכה בדיכאון. קיים צורך בריפוי בעיסוק למבוגרים,
+          פיזיותרפיה מותאמת, הדרכה לזוגיות ומיניות ותמיכה נפשית ייעודית.
+        </p>
+      </div>
+      <div class="info-box warning">
+        <strong>&#128197; תכנון מוקדם:</strong> ההמלצה היא להתחיל לתכנן את המעבר לרפואת
+        מבוגרים (Transition of Care) כבר בגיל 14 עד 16. זה כולל לא רק מעבר רפואי
+        אלא גם הכנה פסיכולוגית: בניית עצמאות בקבלת החלטות, תכנון קריירה, פיתוח
+        מיומנויות חברתיות וניהול עצמי של צרכי בריאות.
+      </div>
+
+      <!-- 8. אבל צפוי ותמיכה פליאטיבית -->
+      <h3>&#128156; אבל צפוי ותמיכה פליאטיבית</h3>
+      <div class="drug-block">
+        <p>
+          משפחות DMD חיות עם <strong>אובדנות סדרתיים</strong>: אובדן היכולת ללכת,
+          אובדן תפקוד הידיים, אובדן עצמאות נשימתית. כל שלב מלווה באבל על מה שהיה
+          ולא יחזור. זהו <strong>אבל צפוי (anticipatory grief)</strong> שנמשך שנים ארוכות.
+        </p>
+        <p style="margin-top: 8px;">
+          מחקרים מצאו ששיחות פתוחות על פרוגנוזה, תכנון טיפול עתידי ואיכות חיים
+          הן <strong>חיוניות במיוחד</strong> כשהן מתוזמנות נכון ומלוות על ידי אנשי מקצוע.
+          רק 20 עד 30% ממשפחות DMD מקבלות שירותי הוספיס, והייעוץ הפסיכולוגי שכן
+          ניתן לא תמיד מתמקד בנושאי סוף החיים.
+        </p>
+      </div>
+      <div class="info-box">
+        <strong>&#128161; טיפול פליאטיבי = איכות חיים.</strong> טיפול פליאטיבי מתאים
+        <strong>בכל גיל ובכל שלב</strong> של המחלה, ואין דבר כזה "מוקדם מדי". מדובר
+        במערכת תמיכה שמתמקדת במה שחשוב למטופל ולמשפחה, ומלווה קבלת החלטות
+        שמשקפות את הערכים והמטרות האישיות שלהם.
+      </div>
+
+      <!-- 9. משאבים ישראליים -->
+      <h3>&#127470;&#127473; משאבים ישראליים לתמיכה נפשית</h3>
+      <div class="cards-grid">
+        <div class="card green">
+          <span class="card-icon">&#128154;</span>
+          <h3>צעדים קטנים (Little Steps)</h3>
+          <p>
+            קבוצות תמיכה למשפחות, תוכנית כלבי שירות מותאמת לילדי DMD,
+            הכשרה טכנולוגית מקצועית לנוער, וליווי צמוד דרך מערכות בריאות ורווחה.
+            הושקעו מעל 2 מיליון ש"ח במחקר.
+          </p>
+          <a href="https://www.littlesteps.org.il/" target="_blank" class="link-btn green" style="margin-top: 12px;">
+            littlesteps.org.il
+          </a>
+        </div>
+
+        <div class="card blue">
+          <span class="card-icon">&#128153;</span>
+          <h3>עמותת עדי</h3>
+          <p>
+            אגודה ישראלית למחלות ניוון שרירים. מידע, תמיכה ופעילות
+            לשיפור הטיפול הרפואי ואיתור תרופות.
+          </p>
+          <a href="https://www.adi-md.co.il/" target="_blank" class="link-btn" style="margin-top: 12px;">
+            adi-md.co.il
+          </a>
+        </div>
+
+        <div class="card purple">
+          <span class="card-icon">&#127975;</span>
+          <h3>אלי"ן (ALYN Hospital)</h3>
+          <p>
+            בית חולים לשיקום ילדים בירושלים. שירותים פסיכולוגיים,
+            עבודה סוציאלית, ריפוי בעיסוק ותמיכה משפחתית מקיפה.
+          </p>
+        </div>
+
+        <div class="card orange">
+          <span class="card-icon">&#128222;</span>
+          <h3>קו חירום רגשי</h3>
+          <p>
+            ער"ן (עזרה ראשונה נפשית): 1201<br>
+            נט"ל (קו סיוע נפשי): *2784<br>
+            זמינים 24/7 לכל מצוקה רגשית.
+          </p>
+        </div>
+      </div>
+
+      <div class="info-box success">
+        <strong>&#128154; אל תחכו למשבר.</strong> פנייה מוקדמת לתמיכה נפשית אינה סימן
+        לחולשה. היא הצעד החכם ביותר שמשפחה יכולה לעשות. כמו שטיפול לבבי ונשימתי
+        מתחילים לפני שיש בעיה, כך גם טיפול נפשי צריך להיות חלק שגרתי ממסגרת הטיפול.
+      </div>
+
+    </section>
+
+    <!-- ==================== SECTION: סיפורי השראה ==================== -->
+    <section id="stories" class="fade-in">
+      <h2><span class="section-icon">&#11088;</span> סיפורי השראה</h2>
+      <p class="section-desc">
+        מאחורי הנתונים הרפואיים עומדים אנשים מדהימים שחיים חיים מלאים ומשמעותיים
+        עם DMD. הסיפורים שלהם מוכיחים שהמחלה לא מגדירה את האדם.
+      </p>
+
+      <div class="cards-grid">
+        <div class="card orange">
+          <span class="card-icon">&#127942;</span>
+          <h3>דריוס וימס (Darius Weems)</h3>
+          <p>
+            דריוס חצה את ארצות הברית בכיסא גלגלים כדי להגיע ל-MTV ולעצב מחדש
+            את כיסא הגלגלים שלו. המסע הפך לסרט התיעודי <strong>"Darius Goes West"</strong>
+            שזכה ב-26 פרסי פסטיבלי קולנוע והעלה מודעות עצומה ל-DMD.
+            דריוס הפך לשגריר ודובר של קהילת DMD, דיבר בכנסים ובאירועים ברחבי
+            ארה"ב. הלך לעולמו בשנת 2016 בגיל 27. מורשתו ממשיכה לעורר השראה.
+          </p>
+          <a href="https://www.dariusgoeswest.org/" target="_blank" class="link-btn orange" style="margin-top: 12px;">
+            Darius Goes West
+          </a>
+        </div>
+
+        <div class="card blue">
+          <span class="card-icon">&#127918;</span>
+          <h3>מאטס סטין / אבלין (Mats Steen / Ibelin)</h3>
+          <p>
+            נורבגי שחי עם DMD ובילה שנים רבות בעולם של World of Warcraft. משפחתו
+            חשבה שהוא בודד ומבודד. רק לאחר מותו בגיל 25 גילו שהוא נגע בחייהם
+            של אלפי אנשים ברחבי העולם דרך הדמות שלו, Ibelin. חברויות עמוקות,
+            אהבה, ויחסים משמעותיים &mdash; כולם דרך המסך. סרט התיעודי של נטפליקס
+            <strong>"The Remarkable Life of Ibelin"</strong> (2024) הפך ללהיט עולמי.
+            סיפור רב עוצמה על כך שחיים דיגיטליים הם חיים אמיתיים.
+          </p>
+          <a href="https://www.netflix.com/title/81760926" target="_blank" class="link-btn" style="margin-top: 12px;">
+            לצפייה בנטפליקס
+          </a>
+        </div>
+
+        <div class="card green">
+          <span class="card-icon">&#128170;</span>
+          <h3>ג'ייק מאראצו (Jake Marrazzo)</h3>
+          <p>
+            ג'ייק הקים את <strong>JP Muscular Dystrophy Foundation</strong> כדי לגייס
+            כספים ומודעות למחקר DMD. כמרצה מוטיבציוני, הוא מדבר בכנסים,
+            באוניברסיטאות ובאירועים ציבוריים על החיים עם DMD, על עמידות
+            ועל חשיבות המחקר. ג'ייק מוכיח שאפשר להיות פעיל, יוזם ומשפיע
+            גם מכיסא גלגלים.
+          </p>
+        </div>
+
+        <div class="card purple">
+          <span class="card-icon">&#127909;</span>
+          <h3>לאונרדו פדר (Leonardo Feder)</h3>
+          <p>
+            במאי קולנוע ברזילאי שחי עם DMD. לאונרדו ביים סרטים קצרים
+            שזכו בפרסים מכיסא הגלגלים שלו. הסרטים שלו מספרים סיפורים
+            של אנשים עם מוגבלויות ושל החיים מנקודת מבט ייחודית. דרך
+            הקולנוע, הוא מראה שיצירתיות אינה מוגבלת על ידי מגבלות פיזיות
+            ושלכל אדם יש סיפור שחשוב לספר.
+          </p>
+        </div>
+      </div>
+
+      <div class="info-box success">
+        <strong>&#128154; עוד סיפורים מהקהילה:</strong>
+        ארגון Parent Project Muscular Dystrophy (PPMD) מפרסם סיפורים של משפחות
+        החיות עם DMD. הסיפורים כוללים חוויות הורים, אחים, ומטופלים עצמם.
+        <a href="https://www.parentprojectmd.org/community/stories/" target="_blank" style="color: #27AE60; font-weight: 600;">
+          לסיפורים באתר PPMD &larr;
+        </a>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION: ספרים ומדיה ==================== -->
+    <section id="books" class="fade-in">
+      <h2><span class="section-icon">&#128218;</span> ספרים ומדיה</h2>
+      <p class="section-desc">
+        ספרים, סרטים, פודקאסטים ומדריכים שיכולים לעזור להבין את DMD, להתמודד
+        אתה ולמצוא השראה. מומלצים גם למטופלים, גם להורים וגם לאנשי מקצוע.
+      </p>
+
+      <div class="cards-grid">
+        <div class="card purple">
+          <span class="card-icon">&#128218;</span>
+          <h3>ספרים לילדים ומשפחות</h3>
+          <ul style="padding-right: 16px; font-size: 14px; color: var(--text-light); line-height: 2;">
+            <li><strong>"The Mighty Miss Malone"</strong> &mdash; Christopher Paul Curtis. ספר ילדים על עוצמה פנימית והתמודדות עם קשיים.</li>
+            <li><strong>"A Different Kind of Boy"</strong> &mdash; Daniel Mont. סיפור אישי מנקודת מבט של אב לילד עם DMD. כנה, מרגש ומעשי.</li>
+            <li><strong>"Saving Sammy"</strong> &mdash; ספר ילדים על מסע הילד עם DMD. מתאים לקריאה משותפת עם אחים ואחיות.</li>
+          </ul>
+        </div>
+
+        <div class="card red">
+          <span class="card-icon">&#127909;</span>
+          <h3>סרטים ודוקומנטריים</h3>
+          <ul style="padding-right: 16px; font-size: 14px; color: var(--text-light); line-height: 2;">
+            <li><strong>"Darius Goes West"</strong> (2007) &mdash; דוקומנטרי על מסע חוצה אמריקה של דריוס וימס עם DMD. 26 פרסים.</li>
+            <li><strong>"The Remarkable Life of Ibelin"</strong> (2024) &mdash; נטפליקס. על מאטס סטין שחי חיים שלמים בעולם וירטואלי. חובה צפייה.</li>
+            <li><strong>"Breathe"</strong> (2017) &mdash; עם Andrew Garfield. סרט עלילתי על חיים עם מחלת נוירון מוטורי. לא DMD ספציפית אך רלוונטי מאוד.</li>
+          </ul>
+        </div>
+
+        <div class="card green">
+          <span class="card-icon">&#128214;</span>
+          <h3>מדריכים רפואיים</h3>
+          <ul style="padding-right: 16px; font-size: 14px; color: var(--text-light); line-height: 2;">
+            <li><strong>"Duchenne Muscular Dystrophy"</strong> &mdash; Alan E.H. Emery. ספר ההתייחסות הקליני המקיף ביותר על DMD.</li>
+            <li><strong>מדריכי PPMD</strong> &mdash; Parent Project Muscular Dystrophy מפרסם מדריכים חינמיים להורדה בנושאי טיפול, חינוך ורווחה.</li>
+            <li><strong>TREAT-NMD Care Standards</strong> &mdash; הנחיות טיפול בינלאומיות מעודכנות. זמינות בחינם באתר TREAT-NMD.</li>
+          </ul>
+        </div>
+
+        <div class="card blue">
+          <span class="card-icon">&#127911;</span>
+          <h3>פודקאסטים וערוצי יוטיוב</h3>
+          <ul style="padding-right: 16px; font-size: 14px; color: var(--text-light); line-height: 2;">
+            <li><strong>"Quest Podcast"</strong> &mdash; MDA (Muscular Dystrophy Association). פרקים על מחקר, סיפורים אישיים וחדשות מהתחום.</li>
+            <li><strong>CureDuchenne YouTube</strong> &mdash; הרצאות, עדכוני מחקר, סיפורי משפחות וכנסים מוקלטים.</li>
+            <li><strong>"EndDuchenne Podcast"</strong> &mdash; PPMD. שיחות עם חוקרים, רופאים ומשפחות. עדכונים על ניסויים קליניים.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION: תוכנית פעולה ==================== -->
+    <section id="action" class="fade-in">
+      <h2><span class="section-icon">&#9989;</span> תוכנית פעולה</h2>
+      <p class="section-desc">
+        אובחנתם עם DMD, או שילד שלכם אובחן? הנה מפת דרכים ברורה לשבעת הצעדים
+        הראשונים. כל צעד מבוסס על ההנחיות הבינלאומיות העדכניות ביותר.
+      </p>
+
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="tl-date">צעד 1</div>
+          <div class="tl-title">&#129516; אבחנה מדויקת</div>
+          <div class="tl-desc">
+            הצעד הראשון והחשוב ביותר: <strong>בדיקה גנטית מלאה</strong>.
+            התחילו עם MLPA (Multiplex Ligation-dependent Probe Amplification) לזיהוי
+            מחיקות וכפילויות (מכסה 65% עד 70% מהמקרים). אם MLPA תקין, המשיכו
+            לריצוף מלא (sequencing) של הגן. חשוב להבין <strong>בדיוק</strong> איזה אקסון
+            מושפע &mdash; זה קובע את הזכאות לטיפולי דילוג אקסונים ולריפוי גנטי.
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="tl-date">צעד 2</div>
+          <div class="tl-title">&#128101; בניית צוות רפואי</div>
+          <div class="tl-desc">
+            DMD דורשת צוות רב-תחומי. חפשו מרפאה שמרכזת את כל המומחים במקום אחד:
+            <strong>נוירולוג ילדים</strong> (עדיף מומחה תנועה / NMD specialist),
+            <strong>קרדיולוג</strong>, <strong>רופא ריאות</strong>,
+            <strong>אורתופד</strong>, <strong>פיזיותרפיסט</strong>,
+            <strong>מרפא בעיסוק</strong>, <strong>פסיכולוג</strong>
+            ו<strong>תזונאי/ת</strong>. בישראל: הדסה, שניידר, דנה-דואק או שיבא.
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="tl-date">צעד 3</div>
+          <div class="tl-title">&#128138; התחלת טיפול</div>
+          <div class="tl-desc">
+            <strong>סטרואידים:</strong> התחילו טיפול סטרואידלי כשההתפתחות המוטורית
+            מגיעה לרמה (בדרך כלל גיל 4 עד 6). שקלו Vamorolone (Agamree) כקו ראשון
+            בשל פרופיל תופעות לוואי טוב יותר.<br>
+            <strong>פיזיותרפיה:</strong> התחילו מיד לאחר האבחנה. מתיחות יומיות, סדי
+            לילה, הידרותרפיה.<br>
+            <strong>Givinostat (Duvyzat):</strong> שקלו הוספה כטיפול נוגד פיברוזיס בשילוב עם סטרואידים.
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="tl-date">צעד 4</div>
+          <div class="tl-title">&#128147; ניטור לב ונשימה</div>
+          <div class="tl-desc">
+            <strong>לב:</strong> אקו-לב + ECG <strong>אחת לשנה</strong> מרגע האבחנה.
+            מומלץ להתחיל ACE inhibitor (כמו Lisinopril) או ARB פרואקטיבית כבר בגיל
+            צעיר, גם לפני שנראים סימנים של קרדיומיופתיה.<br>
+            <strong>נשימה:</strong> בדיקות תפקודי ריאות שנתיות. ניטור FVC. כשיש ירידה,
+            התחלת תרגילי LVR ושימוש במכשיר סיוע לשיעול.
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="tl-date">צעד 5</div>
+          <div class="tl-title">&#128300; בדיקת זכאות לטיפולים חדשים</div>
+          <div class="tl-desc">
+            <strong>דילוג אקסונים:</strong> בדקו אם המוטציה שלכם מתאימה לדילוג
+            אקסון 51 (Exondys), 53 (Vyondys), 45 (Amondys) או אחר.<br>
+            <strong>ריפוי גנטי (Elevidys):</strong> בדקו זכאות &mdash; גיל 4 עד 7,
+            מטופל הולך, ללא נוגדני AAVrh74 גבוהים. בדיקת נוגדנים היא צעד ראשון חיוני.<br>
+            <strong>ניסויים קליניים:</strong> שוחחו עם הנוירולוג על ניסויים פתוחים.
+            בדקו ב-ClinicalTrials.gov.
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="tl-date">צעד 6</div>
+          <div class="tl-title">&#128154; הצטרפות לקהילה</div>
+          <div class="tl-desc">
+            אתם לא לבד. <strong>צעדים קטנים (Little Steps)</strong> בישראל מציעים
+            קבוצות תמיכה, ימי עיון, מידע בעברית וליווי משפחות. בינלאומית:
+            <strong>Parent Project MD</strong>, <strong>CureDuchenne</strong>
+            ו-<strong>MDA</strong> מציעים מידע, תמיכה ועדכוני מחקר. קהילות
+            אונליין בפייסבוק ובדיסקורד מחברות משפחות מכל העולם.
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="tl-date">צעד 7</div>
+          <div class="tl-title">&#128736;&#65039; תכנון לעתיד</div>
+          <div class="tl-desc">
+            תכנון מוקדם מאפשר מעברים חלקים:
+            <strong>נגישות הבית</strong> &mdash; רמפות, פתחי דלתות, שירותים נגישים.
+            <strong>כיסא גלגלים חשמלי</strong> &mdash; התנסות מוקדמת, הערכה אצל מרפא בעיסוק.
+            <strong>חינוך</strong> &mdash; תוכנית יחידנית, הנגשה, טכנולוגיה מסייעת.
+            <strong>מעבר לרפואת מבוגרים</strong> &mdash; תכנון המעבר מטיפול ילדים לטיפול
+            מבוגרים (Transition of Care) כבר בגיל 14 עד 16.
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== SECTION: משאבים ==================== -->
+    <section id="resources" class="fade-in">
+      <h2><span class="section-icon">&#128279;</span> משאבים</h2>
+      <p class="section-desc">
+        אוסף מקיף של ארגונים, מרכזים רפואיים, מאגרי מחקר וקישורים חיוניים
+        למשפחות החיות עם DMD &mdash; בישראל ובעולם.
+      </p>
+
+      <h3 style="color: var(--primary); margin: 20px 0 16px;">&#127470;&#127473; ארגונים בישראל</h3>
+      <div class="cards-grid">
+        <div class="card green">
+          <span class="card-icon">&#128154;</span>
+          <h3>צעדים קטנים (Little Steps)</h3>
+          <p>
+            הארגון הישראלי המרכזי למשפחות DMD. קבוצות תמיכה, ימי עיון, ייעוץ
+            למשפחות, מידע בעברית, וליווי צמוד. הארגון גם פועל לקידום נגישות
+            לטיפולים חדשניים בישראל.
+          </p>
+          <a href="https://www.littlesteps.org.il/" target="_blank" class="link-btn green" style="margin-top: 12px;">
+            littlesteps.org.il
+          </a>
+        </div>
+
+        <div class="card blue">
+          <span class="card-icon">&#128153;</span>
+          <h3>עמותת עדי</h3>
+          <p>
+            אגודה ישראלית למחלות ניוון שרירים. מספקת מידע, תמיכה וסיוע
+            למשפחות המתמודדות עם מחלות ניוון שרירים שונות, כולל DMD.
+          </p>
+        </div>
+
+        <div class="card orange">
+          <span class="card-icon">&#127759;</span>
+          <h3>ADI &mdash; קידום נכים</h3>
+          <p>
+            ארגון לאומי לקידום אנשים עם מוגבלויות. שירותי דיור, תעסוקה,
+            פנאי ושיקום. מפעיל מסגרות ברחבי הארץ.
+          </p>
+        </div>
+
+        <div class="card purple">
+          <span class="card-icon">&#127975;</span>
+          <h3>אלי"ן (ALYN Hospital)</h3>
+          <p>
+            בית החולים לשיקום ילדים ונוער בירושלים. מתמחה בשיקום
+            ילדים עם מוגבלויות מורכבות. מציע טיפולים מתקדמים, טכנולוגיה
+            מסייעת והתאמת כיסאות גלגלים.
+          </p>
+        </div>
+      </div>
+
+      <h3 style="color: var(--primary); margin: 40px 0 16px;">&#127758; ארגונים בינלאומיים</h3>
+      <div class="cards-grid">
+        <div class="card purple">
+          <h3>Parent Project Muscular Dystrophy (PPMD)</h3>
+          <p>הארגון המוביל בעולם למשפחות DMD. מידע מקיף, עדכוני מחקר, כנס שנתי, ומימון מחקר.</p>
+          <a href="https://www.parentprojectmd.org/" target="_blank" class="link-btn" style="margin-top: 12px;">
+            parentprojectmd.org
+          </a>
+        </div>
+
+        <div class="card red">
+          <h3>CureDuchenne</h3>
+          <p>ארגון מוביל במימון מחקר DMD. השקיע מעל 50 מיליון דולר במחקר. כנסים, עדכונים ותמיכה למשפחות.</p>
+          <a href="https://www.cureduchenne.org/" target="_blank" class="link-btn red" style="margin-top: 12px;">
+            cureduchenne.org
+          </a>
+        </div>
+
+        <div class="card orange">
+          <h3>MDA (Muscular Dystrophy Association)</h3>
+          <p>מהארגונים הגדולים והוותיקים ביותר. מרפאות, מחנות קיץ, מחקר, ופודקאסט Quest.</p>
+          <a href="https://www.mda.org/" target="_blank" class="link-btn orange" style="margin-top: 12px;">
+            mda.org
+          </a>
+        </div>
+
+        <div class="card green">
+          <h3>World Duchenne Organization</h3>
+          <p>ארגון גג בינלאומי שמחבר ארגוני DMD מכל העולם. קידום מדיניות, נגישות לטיפולים ושיתופי פעולה.</p>
+          <a href="https://www.worldduchenne.org/" target="_blank" class="link-btn green" style="margin-top: 12px;">
+            worldduchenne.org
+          </a>
+        </div>
+
+        <div class="card blue">
+          <h3>TREAT-NMD</h3>
+          <p>רשת בינלאומית למחקר מחלות נוירו-שריריות. הנחיות טיפול, רישום חולים, ותיאום ניסויים קליניים.</p>
+          <a href="https://treat-nmd.org/" target="_blank" class="link-btn" style="margin-top: 12px;">
+            treat-nmd.org
+          </a>
+        </div>
+      </div>
+
+      <h3 style="color: var(--primary); margin: 40px 0 16px;">&#127975; בתי חולים מומלצים בישראל</h3>
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>מרכז רפואי</th>
+            <th>התמחות</th>
+            <th>מיקום</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>הדסה עין כרם</strong></td>
+            <td>מרכז למחלות נוירומוסקולריות, גנטיקה</td>
+            <td>ירושלים</td>
+          </tr>
+          <tr>
+            <td><strong>שניידר ילדים</strong></td>
+            <td>מרפאת DMD רב-תחומית</td>
+            <td>פתח תקווה</td>
+          </tr>
+          <tr>
+            <td><strong>דנה-דואק (סוראסקי/איכילוב)</strong></td>
+            <td>נוירולוגיית ילדים, מחלות נוירו-שריריות</td>
+            <td>תל אביב</td>
+          </tr>
+          <tr>
+            <td><strong>שיבא תל השומר</strong></td>
+            <td>מרכז שיקום, נוירולוגיה</td>
+            <td>רמת גן</td>
+          </tr>
+          <tr>
+            <td><strong>רמב"ם</strong></td>
+            <td>מרפאת ניוון שרירים</td>
+            <td>חיפה</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="color: var(--primary); margin: 40px 0 16px;">&#128269; מאגרי מחקר</h3>
+      <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+        <div class="card">
+          <h3>ClinicalTrials.gov</h3>
+          <p>מאגר הניסויים הקליניים הגדול בעולם. חפשו "Duchenne" למציאת ניסויים פעילים.</p>
+          <a href="https://clinicaltrials.gov/" target="_blank" class="link-btn" style="margin-top: 10px;">
+            &#128269; חיפוש
+          </a>
+        </div>
+
+        <div class="card">
+          <h3>PubMed</h3>
+          <p>מאגר המאמרים הרפואיים. חפשו "Duchenne muscular dystrophy" למחקרים עדכניים.</p>
+          <a href="https://pubmed.ncbi.nlm.nih.gov/" target="_blank" class="link-btn" style="margin-top: 10px;">
+            &#128196; מאמרים
+          </a>
+        </div>
+
+        <div class="card">
+          <h3>TREAT-NMD Patient Registry</h3>
+          <p>רישום בינלאומי של חולי NMD. הרשמה מאפשרת התאמה לניסויים קליניים.</p>
+          <a href="https://treat-nmd.org/" target="_blank" class="link-btn green" style="margin-top: 10px;">
+            &#128100; הרשמה
+          </a>
+        </div>
+
+        <div class="card">
+          <h3>DuchenneConnect Registry</h3>
+          <p>מאגר נתונים ספציפי ל-DMD/BMD. מסייע בזיהוי מועמדים לניסויים ובמחקר אפידמיולוגי.</p>
+          <a href="https://www.parentprojectmd.org/" target="_blank" class="link-btn orange" style="margin-top: 10px;">
+            &#128202; מאגר
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- CAREPEDIA CTA -->
+    <div class="carepedia-cta">
+      <h3>רוצים פורטל מידע רפואי מבוסס מחקר?</h3>
+      <p>אנחנו בונים פורטלים לרופאים, עמותות ומרכזים רפואיים. ספרו לנו על הצורך שלכם.</p>
+      <a href="https://carepedia.org/#contact" class="cta-btn">רוצים פורטל? דברו איתנו</a>
+    </div>
+
+    <!-- ==================== FOOTER ==================== -->
+    <footer class="footer">
+      <a href="https://carepedia.org/#contact" target="_blank" class="portal-request-btn" style="margin-bottom: 20px;">➕ רוצים פורטל למחלה אחרת?</a>
+      <div class="credit-bar">
+        <span>נבנה על ידי <strong>יובל קשטכר</strong> ועוזריו הרובוטים | <a href="https://carepedia.org" style="color:var(--accent-light);text-decoration:none;">Carepedia</a></span>
+      </div>
+      <p style="margin-top: 20px; font-size: 15px; opacity: 0.85;">המידע באתר זה הוא למטרות מידע בלבד ואינו מהווה ייעוץ רפואי. יש להתייעץ עם רופא מומחה.</p>
+      <p style="margin-top: 8px; font-size: 13px; opacity: 0.7;"><a href="/disclaimer" style="color:var(--accent-light);text-decoration:underline;">Legal Disclaimer</a> | <a href="https://wa.me/+972526414555" target="_blank" rel="noopener" style="color:var(--accent-light);text-decoration:underline;">Report an Error</a></p>
+      <p style="margin-top: 10px; font-size: 14px; opacity: 0.7;">עדכון אחרון: 25 בפברואר 2026</p>
+    </footer>  </div><!-- end .main -->
+
+  <!-- Scroll Top Button -->
+  <button class="scroll-top" id="scrollTop" aria-label="חזרה למעלה">&#8593;</button>
+
+  <!-- JavaScript -->
+  <script>
+    // ========== SIDEBAR TOGGLE ==========
+    const sidebar = document.getElementById('sidebar');
+    const menuToggle = document.getElementById('menuToggle');
+    const sidebarOverlay = document.getElementById('sidebarOverlay');
+
+    menuToggle.addEventListener('click', () => {
+      sidebar.classList.toggle('open');
+      sidebarOverlay.classList.toggle('active');
+    });
+
+    sidebarOverlay.addEventListener('click', () => {
+      sidebar.classList.remove('open');
+      sidebarOverlay.classList.remove('active');
+    });
+
+    // Close sidebar on nav click (mobile)
+    document.querySelectorAll('.sidebar nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth <= 900) {
+          sidebar.classList.remove('open');
+          sidebarOverlay.classList.remove('active');
+        }
+      });
+    });
+
+    // ========== ACTIVE NAV HIGHLIGHT ==========
+    const sections = document.querySelectorAll('section, header.hero');
+    const navLinks = document.querySelectorAll('.sidebar nav a');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const top = section.offsetTop - 120;
+        if (pageYOffset >= top) {
+          current = section.getAttribute('id');
+        }
+      });
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // ========== SCROLL PROGRESS BAR ==========
+    window.addEventListener('scroll', () => {
+      const scrollBar = document.getElementById('scrollBar');
+      const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const progress = (scrollTop / scrollHeight) * 100;
+      scrollBar.style.width = progress + '%';
+    });
+
+    // ========== SCROLL TOP BUTTON ==========
+    const scrollTopBtn = document.getElementById('scrollTop');
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 400) {
+        scrollTopBtn.classList.add('visible');
+      } else {
+        scrollTopBtn.classList.remove('visible');
+      }
+    });
+
+    scrollTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // ========== FADE-IN ANIMATION ==========
+    const fadeObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-in').forEach(el => fadeObserver.observe(el));
+
+    // ========== PORTAL SEARCH ==========
+    function navigateTo(id) {
+      const el = document.getElementById(id);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        document.getElementById('portalSearch').value = '';
+        document.getElementById('searchResults').style.display = 'none';
+        document.querySelectorAll('section[id]').forEach(s => s.style.display = '');
+      }
+    }
+
+    function searchPortal(query) {
+      const resultsDiv = document.getElementById('searchResults');
+      if (!query || query.length < 2) {
+        resultsDiv.style.display = 'none';
+        document.querySelectorAll('section[id]').forEach(s => s.style.display = '');
+        return;
+      }
+      const q = query.toLowerCase();
+      const sections = document.querySelectorAll('section[id]');
+      const matches = [];
+      sections.forEach(s => {
+        const text = s.textContent.toLowerCase();
+        const title = s.querySelector('h2') ? s.querySelector('h2').textContent : '';
+        if (text.includes(q)) {
+          matches.push({ id: s.id, title: title, el: s });
+          s.style.display = '';
+        } else {
+          s.style.display = 'none';
+        }
+      });
+      if (matches.length > 0 && matches.length < sections.length) {
+        resultsDiv.innerHTML = '<div style="background:var(--white);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);">' +
+          '<p style="font-size:14px;color:var(--text-light);margin-bottom:8px;">' + matches.length + ' תוצאות נמצאו:</p>' +
+          matches.map(m => '<a href="#' + m.id + '" onclick="navigateTo(\'' + m.id + '\')" style="display:block;padding:8px 12px;color:var(--primary);text-decoration:none;border-radius:8px;font-weight:600;transition:all 0.2s ease;" onmouseover="this.style.background=\'var(--bg)\'" onmouseout="this.style.background=\'transparent\'">' + m.title + '</a>').join('') +
+          '</div>';
+        resultsDiv.style.display = 'block';
+      } else if (matches.length === sections.length) {
+        resultsDiv.style.display = 'none';
+      } else {
+        resultsDiv.innerHTML = '<div style="background:var(--white);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);"><p style="font-size:14px;color:var(--text-light);">לא נמצאו תוצאות. נסו מילה אחרת.</p></div>';
+        resultsDiv.style.display = 'block';
+      }
+    }
+
+    // ========== TABS ==========
+    document.querySelectorAll('.tabs').forEach(tabContainer => {
+      const buttons = tabContainer.querySelectorAll('.tab-btn');
+      const contents = tabContainer.querySelectorAll('.tab-content');
+
+      buttons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          // Remove active from all
+          buttons.forEach(b => b.classList.remove('active'));
+          contents.forEach(c => c.classList.remove('active'));
+
+          // Add active to clicked
+          btn.classList.add('active');
+          const tabId = 'tab-' + btn.getAttribute('data-tab');
+          const targetTab = document.getElementById(tabId);
+          if (targetTab) targetTab.classList.add('active');
+        });
+      });
+    });
+
+    // ========== ACCORDION ==========
+    document.querySelectorAll('.accordion-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const item = header.parentElement;
+        const body = item.querySelector('.accordion-body');
+        const inner = body.querySelector('.accordion-body-inner');
+
+        if (item.classList.contains('open')) {
+          body.style.maxHeight = null;
+          item.classList.remove('open');
+        } else {
+          // Close other open items in same accordion
+          item.parentElement.querySelectorAll('.accordion-item.open').forEach(openItem => {
+            openItem.classList.remove('open');
+            openItem.querySelector('.accordion-body').style.maxHeight = null;
+          });
+          item.classList.add('open');
+          body.style.maxHeight = inner.scrollHeight + 'px';
+        }
+      });
+    });
+  </script>
+
+
+</body>
+</html>

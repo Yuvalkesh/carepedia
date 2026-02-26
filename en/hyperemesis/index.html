@@ -1,0 +1,1544 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hyperemesis Gravidarum Hub | CarePedia Information Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="alternate" hreflang="he" href="https://carepedia.org/hyperemesis" />
+<link rel="alternate" hreflang="en" href="https://carepedia.org/en/hyperemesis" />
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --primary: #0f4c75;
+  --primary-light: #3282b8;
+  --accent: #00b894;
+  --accent-light: #55efc4;
+  --warm: #fdcb6e;
+  --warm-dark: #e17055;
+  --bg: #f0f4f8;
+  --card: #ffffff;
+  --text: #2c3e50;
+  --text-light: #5d6d7e;
+  --shadow: 0 4px 20px rgba(0,0,0,0.08);
+  --shadow-hover: 0 12px 40px rgba(0,0,0,0.18);
+  --radius: 16px;
+  --transition: all 0.3s cubic-bezier(.4,0,.2,1);
+  /* Aliases for Iconify icons */
+  --forest: #0f4c75;
+  --forest-mid: #3282b8;
+  --forest-light: rgba(50,130,184,0.12);
+  --amber: #fdcb6e;
+  --amber-light: rgba(253,203,110,0.12);
+  --border: #dde4eb;
+}
+
+body {
+  font-family: 'Rubik', 'Segoe UI', Tahoma, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.8;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background:
+    radial-gradient(ellipse at 10% 20%, rgba(15,76,117,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 80%, rgba(0,184,148,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(253,203,110,0.05) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.scroll-progress {
+  position: fixed;
+  top: 0; right: 0;
+  width: 100%; height: 4px;
+  z-index: 2000;
+  background: transparent;
+}
+.scroll-progress .bar {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--primary-light), var(--warm));
+  border-radius: 0 0 0 4px;
+  transition: width 0.1s linear;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 280px; height: 100vh;
+  background: rgba(15,76,117,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(255,255,255,0.1);
+  z-index: 1000;
+  padding: 30px 20px;
+  overflow-y: auto;
+  transition: transform 0.4s cubic-bezier(.4,0,.2,1);
+}
+.sidebar .logo {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+.sidebar .logo .icon { font-size: 48px; }
+.sidebar .logo h2 { color: #fff; font-size: 18px; margin-top: 8px; font-weight: 600; }
+.sidebar nav a {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 18px; color: rgba(255,255,255,0.8);
+  text-decoration: none; border-radius: 12px;
+  margin-bottom: 4px; font-size: 15px; transition: var(--transition);
+}
+.sidebar nav a:hover, .sidebar nav a.active {
+  background: rgba(255,255,255,0.15); color: #fff; transform: translateX(4px);
+}
+.sidebar nav a .nav-icon { font-size: 22px; min-width: 30px; text-align: center; }
+
+.menu-toggle {
+  display: none;
+  position: fixed;
+  top: 20px; left: 20px;
+  z-index: 1100;
+  background: var(--primary); color: #fff;
+  border: none; border-radius: 12px;
+  width: 50px; height: 50px; font-size: 24px;
+  cursor: pointer; box-shadow: var(--shadow); transition: var(--transition);
+}
+.menu-toggle:hover { transform: scale(1.05); }
+.menu-toggle.open { border-radius: 50%; background: var(--warm-dark); }
+
+.main {
+  margin-left: 280px;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--primary) 0%, #3282b8 40%, var(--accent) 100%);
+  padding: 80px 60px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%);
+  animation: float 20s linear infinite;
+}
+@keyframes float { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+.hero-content { position: relative; z-index: 1; max-width: 900px; }
+.hero h1 { font-size: 52px; font-weight: 800; margin-bottom: 10px; line-height: 1.3; }
+.hero .greeting { font-size: 22px; opacity: 0.95; margin-bottom: 30px; line-height: 1.7; }
+.hero .subtitle { font-size: 18px; opacity: 0.8; max-width: 700px; }
+
+.fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+.section { padding: 60px; max-width: 1100px; margin: 0 auto; }
+.section-header {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 40px; padding-bottom: 20px;
+  border-bottom: 3px solid var(--primary-light);
+}
+.section-header .sec-icon { font-size: 42px; }
+.section-header h2 { font-size: 36px; color: var(--primary); }
+.section-header p { color: var(--text-light); font-size: 16px; margin-top: 4px; }
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px; margin-bottom: 40px;
+}
+.card {
+  background: var(--card); border-radius: var(--radius); padding: 30px;
+  box-shadow: var(--shadow); transition: var(--transition);
+  border-top: 4px solid var(--primary-light);
+  position: relative; overflow: hidden;
+}
+.card:hover { transform: translateY(-6px) scale(1.01); box-shadow: var(--shadow-hover); }
+.card .card-icon { font-size: 40px; margin-bottom: 16px; }
+.card h3 { font-size: 20px; color: var(--primary); margin-bottom: 12px; }
+.card p { color: var(--text-light); font-size: 15px; line-height: 1.8; }
+.card.green { border-top-color: var(--accent); }
+.card.orange { border-top-color: var(--warm); }
+.card.blue { border-top-color: var(--primary-light); }
+
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px; margin-top: 40px;
+}
+.cat-card {
+  background: var(--card); border-radius: var(--radius); padding: 30px 24px;
+  text-align: center; cursor: pointer; transition: var(--transition);
+  box-shadow: var(--shadow); text-decoration: none; color: var(--text);
+}
+.cat-card:hover { transform: translateY(-6px) scale(1.02); box-shadow: var(--shadow-hover); }
+.cat-card .cat-icon { font-size: 48px; margin-bottom: 14px; }
+.cat-card h3 { font-size: 18px; color: var(--primary); margin-bottom: 8px; }
+.cat-card p { font-size: 13px; color: var(--text-light); }
+
+.accordion { margin-bottom: 16px; }
+.accordion-header {
+  background: var(--card); padding: 20px 24px; border-radius: var(--radius);
+  cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+  box-shadow: var(--shadow); transition: var(--transition);
+  font-size: 17px; font-weight: 600; color: var(--primary);
+}
+.accordion-header:hover { background: #eef4fb; }
+.accordion-header .arrow { transition: transform 0.3s ease; font-size: 20px; }
+.accordion-header.open .arrow { transform: rotate(180deg); }
+.accordion-body {
+  max-height: 0; overflow: clip; transition: max-height 0.4s ease;
+  background: var(--card); border-radius: 0 0 var(--radius) var(--radius); margin-top: -8px;
+}
+.accordion-body .inner { padding: 20px 24px 24px; color: var(--text-light); line-height: 2; }
+
+.tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+.tab-btn {
+  padding: 12px 24px; background: var(--card);
+  border: 2px solid #dde4eb; border-radius: 30px;
+  cursor: pointer; font-size: 15px; font-family: inherit;
+  color: var(--text-light); transition: var(--transition);
+}
+.tab-btn:hover { border-color: var(--primary-light); color: var(--primary); }
+.tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.tab-content { display: none; animation: fadeIn 0.4s ease; }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.info-box {
+  background: linear-gradient(135deg, #eaf4fb 0%, #e8f8f0 100%);
+  border-radius: var(--radius); padding: 24px 28px; margin: 24px 0;
+  border-left: 5px solid var(--primary-light);
+}
+.info-box.warning { background: linear-gradient(135deg, #fef9e7 0%, #fdebd0 100%); border-left-color: var(--warm); }
+.info-box.success { background: linear-gradient(135deg, #e8f8f0 0%, #d5f5e3 100%); border-left-color: var(--accent); }
+.info-box h4 { color: var(--primary); margin-bottom: 8px; font-size: 17px; }
+.info-box p { color: var(--text-light); font-size: 15px; }
+
+.link-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 24px; background: var(--primary);
+  color: #fff; text-decoration: none; border-radius: 30px;
+  font-size: 15px; transition: var(--transition); margin: 6px;
+}
+.link-btn:hover { background: var(--primary-light); transform: translateY(-2px); }
+.link-btn.green { background: var(--accent); }
+.link-btn.green:hover { background: var(--accent-light); color: var(--text); }
+.link-btn.orange { background: var(--warm-dark); }
+.link-btn.orange:hover { background: var(--warm); color: var(--text); }
+
+.styled-table {
+  width: 100%; border-collapse: collapse; margin: 20px 0;
+  background: var(--card); border-radius: var(--radius);
+  overflow: hidden; box-shadow: var(--shadow);
+}
+.styled-table thead { background: var(--primary); color: #fff; }
+.styled-table th { padding: 16px 20px; text-align: left; font-weight: 600; }
+.styled-table td { padding: 14px 20px; border-bottom: 1px solid #eee; }
+.styled-table tbody tr:hover { background: #f7fafc; }
+
+.timeline { position: relative; padding-left: 40px; margin: 30px 0; }
+.timeline::before {
+  content: '';
+  position: absolute; left: 12px; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--primary-light), var(--accent));
+  border-radius: 3px;
+}
+.timeline-item {
+  position: relative; margin-bottom: 30px; padding: 24px;
+  background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);
+}
+.timeline-item::before {
+  content: ''; position: absolute;
+  left: -34px; top: 30px;
+  width: 16px; height: 16px;
+  background: var(--accent); border-radius: 50%; border: 3px solid var(--bg);
+}
+.timeline-item h4 { color: var(--primary); font-size: 18px; margin-bottom: 8px; }
+.timeline-item p { color: var(--text-light); }
+.timeline-item .time-label {
+  display: inline-block; background: var(--primary); color: #fff;
+  padding: 4px 14px; border-radius: 20px; font-size: 13px; margin-bottom: 10px;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px; margin: 30px 0;
+}
+.stat-box {
+  background: linear-gradient(135deg, var(--card) 0%, #f7fafc 100%);
+  border-radius: var(--radius); padding: 24px; text-align: center;
+  box-shadow: var(--shadow); border-bottom: 3px solid var(--primary-light);
+  transition: var(--transition);
+}
+.stat-box:nth-child(2) { border-bottom-color: var(--accent); }
+.stat-box:nth-child(3) { border-bottom-color: var(--warm); }
+.stat-box:nth-child(4) { border-bottom-color: var(--warm-dark); }
+.stat-box:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+.stat-box .stat-num {
+  font-size: 36px; font-weight: 800;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.stat-box .stat-label { color: var(--text-light); font-size: 14px; margin-top: 6px; }
+
+.carepedia-cta {
+  background: linear-gradient(135deg, #1A73E8, #00C9A7);
+  padding: 48px 24px; text-align: center; color: #fff;
+}
+.carepedia-cta h3 { font-size: 24px; font-weight: 700; margin-bottom: 12px; }
+.carepedia-cta p { font-size: 16px; opacity: 0.9; margin-bottom: 24px; max-width: 500px; margin-left: auto; margin-right: auto; }
+.carepedia-cta .cta-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 32px; background: #fff; color: #1A73E8;
+  text-decoration: none; border-radius: 30px; font-size: 16px; font-weight: 700;
+  font-family: inherit; transition: all 0.3s ease; box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+.carepedia-cta .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+
+.credit-bar {
+  display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap;
+  padding: 14px 20px; font-size: 14px; color: rgba(255,255,255,0.85); position: relative; z-index: 1;
+}
+.credit-bar span { opacity: 0.9; }
+.portal-request-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 22px; background: var(--primary-light); color: #fff;
+  text-decoration: none; border-radius: 30px; font-size: 14px;
+  font-family: inherit; font-weight: 600; transition: var(--transition);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+.portal-request-btn:hover { background: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+
+.footer {
+  background: var(--primary); color: rgba(255,255,255,0.8);
+  text-align: center; padding: 40px; font-size: 14px;
+}
+
+.scroll-top {
+  position: fixed; bottom: 30px; left: 30px;
+  width: 50px; height: 50px; background: var(--primary);
+  color: #fff; border: none; border-radius: 50%;
+  font-size: 22px; cursor: pointer; box-shadow: var(--shadow);
+  transition: var(--transition); opacity: 0; pointer-events: none; z-index: 999;
+}
+.scroll-top.visible { opacity: 1; pointer-events: auto; }
+.scroll-top:hover { background: var(--primary-light); transform: translateY(-3px); }
+
+.search-box { position: relative; margin: 0 auto; }
+.search-box input {
+  width: 100%; padding: 14px 20px 14px 50px;
+  border: 2px solid rgba(15,76,117,0.15); border-radius: 30px;
+  font-size: 16px; font-family: 'Rubik', sans-serif;
+  background: var(--card); color: var(--text); transition: var(--transition);
+  box-sizing: border-box;
+}
+.search-box input:focus { outline: none; border-color: var(--primary-light); box-shadow: 0 0 0 4px rgba(50,130,184,0.1); }
+.search-box .search-icon {
+  position: absolute; left: 18px; top: 50%;
+  transform: translateY(-50%); font-size: 20px; pointer-events: none;
+}
+
+.sidebar-overlay {
+  display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5); z-index: 999; opacity: 0; transition: opacity 0.3s ease;
+}
+.sidebar-overlay.active { display: block; opacity: 1; }
+
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); width: 270px; }
+  .sidebar.open { transform: translateX(0); }
+  .menu-toggle { display: block; }
+  .main { margin-left: 0; }
+  .hero { padding: 60px 30px; }
+  .section { padding: 40px 24px; }
+}
+
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); width: 260px; }
+  .sidebar.open { transform: translateX(0); }
+  .menu-toggle { display: block; }
+  .main { margin-left: 0; }
+  .hero { padding: 40px 20px 36px; }
+  .hero h1 { font-size: 28px; line-height: 1.3; }
+  .hero .greeting { font-size: 16px; line-height: 1.7; }
+  .hero .subtitle { font-size: 14px; }
+  .section { padding: 28px 16px; }
+  .section-header { flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 24px; padding-bottom: 14px; }
+  .section-header .sec-icon { font-size: 32px; }
+  .section-header h2 { font-size: 24px; }
+  .section-header p { font-size: 14px; }
+  .cards-grid { grid-template-columns: 1fr; gap: 16px; margin-bottom: 24px; }
+  .card { padding: 20px; }
+  .card:hover { transform: none; }
+  .cat-card:hover { transform: none; }
+  .stat-box:hover { transform: none; }
+  .link-btn:hover { transform: none; }
+  .portal-request-btn:hover { transform: none; }
+  .scroll-top:hover { transform: none; }
+  .sidebar nav a:hover { transform: none; }
+  .card .card-icon { font-size: 32px; margin-bottom: 10px; }
+  .card h3 { font-size: 17px; }
+  .card p { font-size: 14px; }
+  .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 24px; }
+  .cat-card { padding: 18px 12px; }
+  .cat-card .cat-icon { font-size: 32px; margin-bottom: 8px; }
+  .cat-card h3 { font-size: 14px; }
+  .cat-card p { font-size: 11px; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 20px 0; }
+  .stat-box { padding: 16px 10px; }
+  .stat-box .stat-num { font-size: 26px; }
+  .stat-box .stat-label { font-size: 12px; }
+  .tabs { gap: 6px; margin-bottom: 16px; }
+  .tab-btn { padding: 8px 14px; font-size: 13px; border-radius: 20px; }
+  .styled-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 13px; }
+  .styled-table th { padding: 10px 12px; font-size: 13px; white-space: nowrap; }
+  .styled-table td { padding: 10px 12px; font-size: 13px; min-width: 100px; }
+  .info-box { padding: 16px 18px; margin: 16px 0; }
+  .info-box h4 { font-size: 15px; }
+  .info-box p { font-size: 13px; }
+  .accordion-header { padding: 14px 16px; font-size: 15px; }
+  .accordion-body .inner { padding: 14px 16px 18px; font-size: 14px; line-height: 1.9; }
+  .timeline { padding-left: 30px; margin: 20px 0; }
+  .timeline-item { padding: 16px; margin-bottom: 20px; }
+  .timeline-item::before { left: -24px; width: 12px; height: 12px; top: 22px; }
+  .timeline-item h4 { font-size: 16px; }
+  .timeline-item p { font-size: 13px; }
+  .link-btn { padding: 10px 16px; font-size: 13px; margin: 4px 2px; }
+  .search-box input { padding: 12px 18px 12px 40px; font-size: 14px; }
+  .footer { padding: 28px 16px; font-size: 13px; }
+  .scroll-top { width: 42px; height: 42px; font-size: 18px; bottom: 20px; left: 16px; }
+}
+
+@media (max-width: 380px) {
+  .hero h1 { font-size: 24px; }
+  .hero .greeting { font-size: 15px; }
+  .cat-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .cat-card { padding: 14px 8px; }
+  .cat-card .cat-icon { font-size: 26px; }
+  .cat-card h3 { font-size: 13px; }
+  .cat-card p { display: none; }
+  .stats-row { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .stat-box .stat-num { font-size: 22px; }
+  .section { padding: 20px 12px; }
+  .tab-btn { padding: 7px 10px; font-size: 12px; }
+}
+
+.disclaimer-banner {
+  background: linear-gradient(135deg, #FFF3E0, #FFF8E1);
+  border-bottom: 2px solid #FFB74D;
+  padding: 10px 20px; text-align: center; font-size: 13px; color: #5D4037;
+  position: relative; z-index: 1500;
+  display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;
+}
+.disclaimer-banner strong { color: #E65100; }
+.disclaimer-banner a { color: #1A73E8; text-decoration: underline; font-weight: 600; }
+.disclaimer-banner a:hover { color: #0D47A1; }
+@media (max-width: 768px) { .disclaimer-banner { font-size: 12px; padding: 8px 12px; } }
+</style>
+<script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js" defer></script>
+</head>
+<body>
+
+<!-- DISCLAIMER BANNER -->
+<div class="disclaimer-banner">
+  <span>&#9888;&#65039;</span>
+  <span><strong>This is not medical advice.</strong> Always consult your doctor. <a href="/disclaimer">Full legal disclaimer &rarr;</a></span>
+</div>
+
+<!-- SCROLL PROGRESS BAR -->
+<div class="scroll-progress"><div class="bar" id="progressBar"></div></div>
+
+<!-- MOBILE OVERLAY -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeMenu()"></div>
+
+<!-- MOBILE MENU TOGGLE -->
+<button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">&#9776;</button>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="logo">
+    <div class="icon"><iconify-icon icon="solar:heart-pulse-2-bold-duotone" style="color:#fff;font-size:48px;"></iconify-icon></div>
+    <h2>Hyperemesis Gravidarum Hub</h2>
+  </div>
+  <nav>
+    <a href="#home" class="active" onclick="navigate(this)">
+      <iconify-icon icon="solar:home-bold-duotone" class="nav-icon"></iconify-icon>Home
+    </a>
+    <a href="#about" onclick="navigate(this)">
+      <iconify-icon icon="solar:book-bold-duotone" class="nav-icon"></iconify-icon>What is HG?
+    </a>
+    <a href="#treatments" onclick="navigate(this)">
+      <iconify-icon icon="solar:pill-bold-duotone" class="nav-icon"></iconify-icon>Treatments &amp; Medications
+    </a>
+    <a href="#trials" onclick="navigate(this)">
+      <iconify-icon icon="solar:test-tube-bold-duotone" class="nav-icon"></iconify-icon>Clinical Trials
+    </a>
+    <a href="#research" onclick="navigate(this)">
+      <iconify-icon icon="solar:atom-bold-duotone" class="nav-icon"></iconify-icon>New Research
+    </a>
+    <a href="#nutrition" onclick="navigate(this)">
+      <iconify-icon icon="solar:apple-bold-duotone" class="nav-icon"></iconify-icon>Nutrition &amp; Hydration
+    </a>
+    <a href="#fetal" onclick="navigate(this)">
+      <iconify-icon icon="solar:baby-bold-duotone" class="nav-icon"></iconify-icon>Fetal Health
+    </a>
+    <a href="#psychological-approach" onclick="navigate(this)">
+      <iconify-icon icon="solar:heart-bold-duotone" class="nav-icon"></iconify-icon>Psychological Approach
+    </a>
+    <a href="#future" onclick="navigate(this)">
+      <iconify-icon icon="solar:calendar-bold-duotone" class="nav-icon"></iconify-icon>Future Pregnancies
+    </a>
+    <a href="#lifestyle" onclick="navigate(this)">
+      <iconify-icon icon="solar:leaf-bold-duotone" class="nav-icon"></iconify-icon>Lifestyle &amp; Management
+    </a>
+    <a href="#stories" onclick="navigate(this)">
+      <iconify-icon icon="solar:star-bold-duotone" class="nav-icon"></iconify-icon>Stories &amp; Support
+    </a>
+    <a href="#resources" onclick="navigate(this)">
+      <iconify-icon icon="solar:link-bold-duotone" class="nav-icon"></iconify-icon>Links &amp; Resources
+    </a>
+  </nav>
+</aside>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="credit-bar">
+      <span>Built by <strong>Yuval Kashtcher</strong> and his robot assistants</span>
+      <a href="https://carepedia.org/#contact" target="_blank" class="portal-request-btn">
+        &#43; Request a portal for another condition
+      </a>
+    </div>
+    <div class="hero-content">
+      <h1>Hyperemesis Gravidarum Information Hub</h1>
+      <p class="greeting">
+        Severe pregnancy nausea is not "morning sickness with a bad attitude." It is a real medical condition.<br>
+        Here you will find research-based information, treatments, and support for those going through it.
+      </p>
+      <p class="subtitle">
+        This portal brings together the latest research from 2025 and 2026, including the GDF15 protein breakthrough, new treatments, and active clinical trials worldwide.
+      </p>
+      <div class="search-box" style="margin-top: 30px; max-width: 600px;">
+        <span class="search-icon">&#128269;</span>
+        <input type="text" id="portalSearch" placeholder="Search the portal..." oninput="searchPortal(this.value)">
+      </div>
+      <div id="searchResults" style="display:none; margin-top: 16px; max-width: 600px;"></div>
+    </div>
+  </section>
+
+  <!-- QUICK NAVIGATION -->
+  <section class="section fade-in" style="padding-bottom: 20px;">
+    <div class="cat-grid">
+      <a class="cat-card" href="#about" onclick="navigateTo('about')">
+        <div class="cat-icon">&#128214;</div>
+        <h3>What is HG?</h3>
+        <p>Understanding the condition, causes, and symptoms</p>
+      </a>
+      <a class="cat-card" href="#treatments" onclick="navigateTo('treatments')">
+        <div class="cat-icon">&#128138;</div>
+        <h3>Treatments &amp; Medications</h3>
+        <p>Approved medications and innovative therapies</p>
+      </a>
+      <a class="cat-card" href="#trials" onclick="navigateTo('trials')">
+        <div class="cat-icon">&#128300;</div>
+        <h3>Clinical Trials</h3>
+        <p>Active studies and new trials worldwide</p>
+      </a>
+      <a class="cat-card" href="#research" onclick="navigateTo('research')">
+        <div class="cat-icon">&#129516;</div>
+        <h3>New Research</h3>
+        <p>Breakthroughs from 2025 and 2026</p>
+      </a>
+      <a class="cat-card" href="#nutrition" onclick="navigateTo('nutrition')">
+        <div class="cat-icon">&#127822;</div>
+        <h3>Nutrition &amp; Hydration</h3>
+        <p>What to eat, IV fluids, vitamins</p>
+      </a>
+      <a class="cat-card" href="#fetal" onclick="navigateTo('fetal')">
+        <div class="cat-icon">&#128118;</div>
+        <h3>Fetal Health</h3>
+        <p>Effects on the baby and birth outcomes</p>
+      </a>
+      <a class="cat-card" href="#psychological-approach" onclick="navigateTo('psychological-approach')">
+        <div class="cat-icon">&#128156;</div>
+        <h3>Psychological Approach</h3>
+        <p>Trauma, PTSD, depression, and emotional support</p>
+      </a>
+      <a class="cat-card" href="#future" onclick="navigateTo('future')">
+        <div class="cat-icon">&#128337;</div>
+        <h3>Future Pregnancies</h3>
+        <p>Recurrence, prevention, and planning ahead</p>
+      </a>
+      <a class="cat-card" href="#lifestyle" onclick="navigateTo('lifestyle')">
+        <div class="cat-icon">&#127807;</div>
+        <h3>Lifestyle &amp; Management</h3>
+        <p>Complementary therapies, rest, and daily management</p>
+      </a>
+      <a class="cat-card" href="#stories" onclick="navigateTo('stories')">
+        <div class="cat-icon">&#11088;</div>
+        <h3>Stories &amp; Support</h3>
+        <p>Community, organizations, and support groups</p>
+      </a>
+      <a class="cat-card" href="#resources" onclick="navigateTo('resources')">
+        <div class="cat-icon">&#128279;</div>
+        <h3>Links &amp; Resources</h3>
+        <p>International organizations and further information</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- SECTION: ABOUT -->
+  <section class="section fade-in" id="about">
+    <div class="section-header">
+      <span class="sec-icon">&#128214;</span>
+      <div>
+        <h2>What is Hyperemesis Gravidarum?</h2>
+        <p>Understanding the medical condition, its causes, and symptoms</p>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-num">0.3&ndash;10%</div>
+        <div class="stat-label">of pregnancies worldwide</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">~20M</div>
+        <div class="stat-label">women affected globally each year</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">80%</div>
+        <div class="stat-label">resolve by week 20 of pregnancy</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">GDF15</div>
+        <div class="stat-label">the protein that drives nausea</div>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">&#9888;&#65039;</div>
+        <h3>How is HG different from regular nausea?</h3>
+        <p>Nausea and vomiting of pregnancy (NVP) affects up to 80% of pregnancies and typically resolves without complications. Hyperemesis Gravidarum (HG) is the most severe form: persistent vomiting, weight loss exceeding 5% of pre-pregnancy body weight, dehydration, and electrolyte disturbances. HG is a medical condition that requires treatment.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">&#129516;</div>
+        <h3>Breakthrough: The GDF15 Protein</h3>
+        <p>A landmark study in Nature (2023) identified that the protein GDF15, produced primarily by the placenta, binds to the GFRAL receptor in the brain's vomiting center. Women with lower baseline GDF15 levels before pregnancy are more sensitive to the sharp rise during pregnancy, explaining why some women suffer far more than others.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#128202;</div>
+        <h3>Risk Factors</h3>
+        <p>Prior history of HG (strongest risk factor, RR 8.92), first pregnancy, female fetus, multiple gestation, family history, and genetic factors (mothers with a GDF15 mutation whose fetus carries the normal gene are at highest risk).</p>
+      </div>
+    </div>
+
+    <h3 style="color:var(--primary);margin-bottom:20px;">Symptoms</h3>
+    <div class="info-box">
+      <h4>&#128197; Timeline</h4>
+      <p>Onset: weeks 4 to 6 of pregnancy. Peak: weeks 8 to 12. In 90% of cases it resolves by week 20. In some cases it persists until delivery.</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">&#129326;</div>
+        <h3>Core Symptoms</h3>
+        <p>Persistent nausea (often 24/7), vomiting more than 3 times per day, weight loss exceeding 5%, inability to eat or drink, and excessive salivation (ptyalism).</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#128680;</div>
+        <h3>Signs of Dehydration</h3>
+        <p>Ketones in urine, orthostatic hypotension, rapid heart rate, dry mucous membranes, reduced urine output. Research from 2026: hyponatremia in 29%, hypokalemia in 21%, hypochloremia in 24% of hospitalized patients.</p>
+      </div>
+    </div>
+
+    <div class="info-box warning">
+      <h4>&#9888;&#65039; Wernicke's Encephalopathy (Medical Emergency)</h4>
+      <p>Thiamine (vitamin B1) deficiency can cause Wernicke's encephalopathy: confusion, abnormal eye movements, gait disturbances, and memory impairment. It typically appears between weeks 10 and 15 of pregnancy, after approximately 7 weeks of vomiting. This is a medical emergency. Without treatment it can cause irreversible brain damage.</p>
+    </div>
+
+    <h3 style="color:var(--primary);margin:30px 0 20px;">Frequently Asked Questions</h3>
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>Is HG "all in your head"?</span>
+        <span class="arrow">&#9660;</span>
+      </div>
+      <div class="accordion-body">
+        <div class="inner">No. Hyperemesis Gravidarum is a proven medical condition with a clear biological basis. A landmark study in Nature (2023) demonstrated that placental GDF15 protein directly triggers nausea through receptors in the brain. The claim that it is psychological has been scientifically disproven.</div>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>When should I go to hospital?</span>
+        <span class="arrow">&#9660;</span>
+      </div>
+      <div class="accordion-body">
+        <div class="inner">Seek hospital care when: vomiting persists despite oral medications, severe dehydration, weight loss exceeding 5%, complete inability to eat or drink, ketones in urine, or abnormal laboratory results.</div>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>How is HG diagnosed?</span>
+        <span class="arrow">&#9660;</span>
+      </div>
+      <div class="accordion-body">
+        <div class="inner">Diagnosis is primarily clinical: persistent vomiting, weight loss over 5%, dehydration, and inability to tolerate food. Laboratory tests include: urinary ketones, electrolytes (sodium, potassium, chloride, magnesium), kidney function, liver function, TSH (thyroid), and full blood count. It is important to rule out alternative diagnoses such as gastritis, gallbladder disease, molar pregnancy (requires ultrasound), and thyrotoxicosis.</div>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>Will HG recur in future pregnancies?</span>
+        <span class="arrow">&#9660;</span>
+      </div>
+      <div class="accordion-body">
+        <div class="inner">Yes, with high probability. Recurrence rates range from 15% to 89% depending on the study methodology. A prior history of HG is the strongest risk factor (RR 8.92). Prevention strategies exist, including starting antiemetic medications immediately upon detecting pregnancy, and emerging research shows that metformin taken before pregnancy may reduce risk by over 70%.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: TREATMENTS -->
+  <section class="section fade-in" id="treatments">
+    <div class="section-header">
+      <span class="sec-icon">&#128138;</span>
+      <div>
+        <h2>Treatments &amp; Medications</h2>
+        <p>Approved medications, innovative therapies, and clinical management</p>
+      </div>
+    </div>
+
+    <div class="tabs" data-tab-group="treatments">
+      <button class="tab-btn active" data-tab="first" onclick="switchTab('treatments','first')">First Line</button>
+      <button class="tab-btn" data-tab="second" onclick="switchTab('treatments','second')">Second Line</button>
+      <button class="tab-btn" data-tab="iv" onclick="switchTab('treatments','iv')">IV &amp; Feeding</button>
+      <button class="tab-btn" data-tab="emerging" onclick="switchTab('treatments','emerging')">Emerging Treatments</button>
+    </div>
+
+    <!-- TAB: FIRST LINE -->
+    <div class="tab-content active" data-tab-content="treatments" data-tab="first">
+      <div class="info-box success">
+        <h4>&#9989; First-Line Medications</h4>
+        <p>Medications proven safe in pregnancy and recommended as initial treatment</p>
+      </div>
+
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>Medication</th>
+            <th>Brand Name</th>
+            <th>Mechanism</th>
+            <th>Dosing</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Doxylamine + Pyridoxine</strong></td>
+            <td>Diclegis / Bonjesta / Xonvea</td>
+            <td>H1 histamine blocker + vitamin B6. The only FDA-approved medication for pregnancy nausea</td>
+            <td>2 tablets at bedtime. If needed: 1 in the morning. Maximum 4 per day</td>
+          </tr>
+          <tr>
+            <td><strong>Metoclopramide</strong></td>
+            <td>Reglan / Maxolon</td>
+            <td>Dopamine D2 receptor antagonist in the chemoreceptor trigger zone. Increases gastric motility</td>
+            <td>5 to 10 mg orally or IV every 8 hours</td>
+          </tr>
+          <tr>
+            <td><strong>Ondansetron</strong></td>
+            <td>Zofran</td>
+            <td>Selective 5-HT3 serotonin receptor blocker. The most widely used medication in the US</td>
+            <td>4 to 8 mg orally or IV every 8 hours</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="info-box">
+        <h4>&#128218; On Ondansetron (Zofran) Safety</h4>
+        <p>Most studies have not found an increased risk of birth defects. A 2022 meta-analysis found no overall link to abnormal pregnancy outcomes. Some studies reported a small dose-dependent increase in risk of ventricular septal defect (VSD). RCOG guidelines: second line. Expert consensus: safe and effective.</p>
+      </div>
+    </div>
+
+    <!-- TAB: SECOND LINE -->
+    <div class="tab-content" data-tab-content="treatments" data-tab="second">
+      <div class="info-box warning">
+        <h4>&#9888;&#65039; Second-Line Medications</h4>
+        <p>Used when first-line treatment is insufficient</p>
+      </div>
+
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">&#128138;</div>
+          <h3>Promethazine (Phenergan)</h3>
+          <p>First-generation antihistamine (H1 blocker) with anticholinergic properties. Dosing: 12.5 to 25 mg orally, intramuscularly, or rectally every 4 to 8 hours. Main side effect: significant drowsiness.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon">&#128137;</div>
+          <h3>Corticosteroids</h3>
+          <p>Reserved for refractory cases only. Methylprednisolone: 16 mg every 8 hours for 3 days, then tapered over two weeks. Avoid before week 10 (small risk of cleft palate). Prednisolone is considered safer as it is metabolized by the placenta.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">&#128167;</div>
+          <h3>Chlorpromazine (Thorazine)</h3>
+          <p>Phenothiazine antipsychotic with antiemetic properties. Last resort only due to significant side effects including severe sedation.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: IV & FEEDING -->
+    <div class="tab-content" data-tab-content="treatments" data-tab="iv">
+      <div class="cards-grid">
+        <div class="card green">
+          <div class="card-icon">&#128167;</div>
+          <h3>Intravenous Fluid Therapy</h3>
+          <p>Initial: 2 liters Lactated Ringer's over 2 to 3 hours. Maintenance: titrated to urine output (over 100 ml/hour). Daily electrolyte monitoring. <strong>Critical: thiamine (100 to 500 mg IV three times daily) must be given before or alongside any dextrose infusion</strong> to prevent Wernicke's encephalopathy.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">&#127869;</div>
+          <h3>Enteral Nutrition (Tube Feeding)</h3>
+          <p>Feeding via nasogastric or nasojejunal tube. Appropriate for patients unable to eat orally. Shown to reduce symptoms and shorten hospital stays. Preferred over TPN due to fewer complications.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon">&#9888;&#65039;</div>
+          <h3>Parenteral Nutrition (TPN)</h3>
+          <p>Last resort only. Direct intravenous nutrition. Carries significant risks: line infections, thrombosis, liver complications. Used only when all other options have failed.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: EMERGING -->
+    <div class="tab-content" data-tab-content="treatments" data-tab="emerging">
+      <div class="info-box success">
+        <h4>&#127775; The Future: Blocking the GDF15-GFRAL Pathway</h4>
+        <p>Four therapeutic strategies are under investigation: anti-GFRAL antibody, antagonist peptide, small molecule inhibitor, and targeted nanoparticles.</p>
+      </div>
+
+      <div class="cards-grid">
+        <div class="card green">
+          <div class="card-icon">&#128161;</div>
+          <h3>NGM120 (The Leading Candidate)</h3>
+          <p>A GFRAL antagonist monoclonal antibody, developed by NGM Biopharmaceuticals. Mechanism: blocks GDF15 from binding to the GFRAL receptor. Administration: single subcutaneous injection. Good tolerability in over 140 non-pregnant participants. Funding: $122 million (Series A, July 2024). Phase 2 (EMERALD) began February 2025.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">&#128138;</div>
+          <h3>Metformin as Prevention</h3>
+          <p>Metformin (a common diabetes medication) raises GDF15 levels, potentially "pre-conditioning" the body in advance. Use for 6 or more months before pregnancy has been linked to over 70% reduction in HG risk. HG incidence of only 1.1% in women who took metformin. This may represent the first-ever HG prevention strategy.</p>
+        </div>
+      </div>
+
+      <div class="info-box">
+        <h4>&#128269; Questions to Ask Your Doctor</h4>
+        <p>&#8226; Can medication be combined with complementary therapies?<br>
+        &#8226; Do I need thiamine supplementation?<br>
+        &#8226; What is the plan if my current medication is not helping?<br>
+        &#8226; Am I eligible for any of the clinical trials?<br>
+        &#8226; Should I consider home IV therapy?</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: CLINICAL TRIALS -->
+  <section class="section fade-in" id="trials">
+    <div class="section-header">
+      <span class="sec-icon">&#128300;</span>
+      <div>
+        <h2>Clinical Trials</h2>
+        <p>Active research and new trials worldwide</p>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <span class="time-label">February 2025 | Phase 2</span>
+        <h4>EMERALD: NGM120 vs. Hyperemesis Gravidarum</h4>
+        <p>The world's first clinical trial of an anti-GFRAL antibody in pregnant women with HG. Administration: single subcutaneous injection. Participants: weeks 9 to 16 of pregnancy. Design: randomized, placebo-controlled. Follow-up: 7 days. Sites: UK and Australia.<br>
+        <strong>ID: ISRCTN76681798 (UK) / ACTRN12624001421527 (AUS)</strong></p>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">Registered | Prevention</span>
+        <h4>Reducing HG Risk with Metformin</h4>
+        <p>A study on pre-pregnancy metformin use as a prevention strategy for HG.<br>
+        <strong>ID: NCT07129473</strong></p>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">Updated February 2024</span>
+        <h4>Capsaicin + Metoclopramide + Ondansetron</h4>
+        <p>Trial of topical capsaicin in combination with standard antiemetics. Location: Women &amp; Infants Hospital, Rhode Island, USA.<br>
+        <strong>ID: NCT05098067</strong></p>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">Registered | Comparative</span>
+        <h4>Mirtazapine vs. Ondansetron</h4>
+        <p>Randomized comparative trial: mirtazapine vs. ondansetron vs. placebo (1:1:1). Multicenter.<br>
+        <strong>ID: NCT03785691</strong></p>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">Registered | Interventional</span>
+        <h4>Hypnosis in Hyperemesis Gravidarum</h4>
+        <p>Study on the efficacy of hypnosis as a complementary therapy in HG.<br>
+        <strong>ID: NCT04828967</strong></p>
+      </div>
+    </div>
+
+    <div style="margin-top:30px;text-align:center;flex-wrap:wrap;display:flex;justify-content:center;">
+      <a href="https://clinicaltrials.gov/search?cond=Hyperemesis+Gravidarum" target="_blank" class="link-btn">&#128269; Search Trials on ClinicalTrials.gov</a>
+      <a href="https://pregnancysicknesssupport.org.uk/the-emerald-study/" target="_blank" class="link-btn green">&#127793; EMERALD Trial Information</a>
+    </div>
+  </section>
+
+  <!-- SECTION: RESEARCH -->
+  <section class="section fade-in" id="research">
+    <div class="section-header">
+      <span class="sec-icon">&#129516;</span>
+      <div>
+        <h2>New Research</h2>
+        <p>Breakthroughs and discoveries from 2025 and 2026</p>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card green">
+        <div class="card-icon">&#128220;</div>
+        <h3>The Lancet: Comprehensive Review (2025)</h3>
+        <p>A major review in The Lancet (volume 406) summarized a decade of research. Conclusion: hypersensitivity to rising GDF15 levels in pregnancy is the primary driver. Concerns about pregnancy drug labeling and the false assumption that HG resolves on its own lead to systematic under-treatment of women.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#129504;</div>
+        <h3>Mental Health &amp; HG (2025)</h3>
+        <p>A retrospective cohort study in Lancet Obstetrics found significant neuropsychiatric and mental health outcomes associated with HG. A further study in Lancet Psychiatry (Finnish national registry) confirmed the link between HG and depression.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#128118;</div>
+        <h3>Long-Term Outcomes in Children (2025)</h3>
+        <p>A population-based sibling study found that in-utero HG exposure is associated with elevated risk of abnormal brain growth, developmental delay, autism, childhood cancer, and respiratory disorders.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">&#128138;</div>
+        <h3>Metformin for Prevention (2025/2026)</h3>
+        <p>Multiple observational studies in AJOG demonstrated that pre-pregnancy metformin (6+ months) dramatically reduces HG risk. A potential paradigm shift in prevention.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128300;</div>
+        <h3>Electrolyte Disorders (2026)</h3>
+        <p>A study in Frontiers in Medicine quantified blood and electrolyte disturbances in HG: hyponatremia in 29%, hypokalemia in 21%, hypochloremia in 24% of hospitalized patients.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#9888;&#65039;</div>
+        <h3>"Mild HG" is a Misnomer (2025)</h3>
+        <p>A commentary in The Lancet argues that "mild hyperemesis" is a fundamentally flawed concept. It criticizes the systematic dismissal of HG symptoms and the tendency to classify cases as mild when they are not.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: NUTRITION -->
+  <section class="section fade-in" id="nutrition">
+    <div class="section-header">
+      <span class="sec-icon">&#127822;</span>
+      <div>
+        <h2>Nutrition &amp; Hydration</h2>
+        <p>What to eat, IV protocols, and critical vitamins</p>
+      </div>
+    </div>
+
+    <div class="info-box warning">
+      <h4>&#9888;&#65039; Thiamine (Vitamin B1): The Most Critical Nutrient</h4>
+      <p>Dosing: 100 to 500 mg IV three times daily. <strong>Must be given before any dextrose infusion</strong> (administering dextrose without thiamine can cause Wernicke's encephalopathy). Oral thiamine may be insufficient due to vomiting. A carbohydrate-heavy diet (common in HG because it is the only tolerated food) depletes thiamine more rapidly.</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card green">
+        <div class="card-icon">&#127857;</div>
+        <h3>More Tolerable Foods</h3>
+        <p>Crackers, dry toast, white rice, cold foods (less odor), protein snacks (nuts, cheese), bland low-fat foods, ice lollies and ice cubes, sour flavors (lemon, sour candy), small sips of electrolyte drinks.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128167;</div>
+        <h3>IV Fluid Protocol</h3>
+        <p>Initial: 2 liters Lactated Ringer's over 2 to 3 hours. Titrate to urine output (over 100 ml/hour). Daily monitoring of sodium, potassium, chloride, magnesium, and phosphate. Hypokalemia is particularly dangerous (cardiac risk).</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#128137;</div>
+        <h3>Common Nutritional Deficiencies</h3>
+        <p>Most women with HG consume less than half the recommended amounts of: thiamine, iron, calcium, magnesium, vitamin D, and iodine. Monitoring and supplementation are essential.</p>
+      </div>
+    </div>
+
+    <div class="info-box success">
+      <h4>&#128161; Practical Tips</h4>
+      <p>&#8226; Eat when you are hungry, not by the clock<br>
+      &#8226; Small, frequent meals (every 1 to 2 hours)<br>
+      &#8226; Favor carbohydrate- and protein-rich foods (they reduce nausea more than fatty foods)<br>
+      &#8226; Avoid fatty, spicy, or strongly-scented foods<br>
+      &#8226; Keep crackers by the bed for morning<br>
+      &#8226; Cold food is better tolerated (less odor)</p>
+    </div>
+  </section>
+
+  <!-- SECTION: FETAL HEALTH -->
+  <section class="section fade-in" id="fetal">
+    <div class="section-header">
+      <span class="sec-icon">&#128118;</span>
+      <div>
+        <h2>Fetal Health</h2>
+        <p>Effects on the baby, birth outcomes, and long-term results</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>&#128218; Findings from Meta-Analyses</h4>
+      <p>Preterm birth (before week 34): double the risk. Prematurity overall: four-fold risk. Low birth weight (under 1,500 g): elevated risk. Small for gestational age (SGA): elevated risk. NICU admission, resuscitation, and placental abruption: elevated risk.</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">&#9888;&#65039;</div>
+        <h3>Birth Outcomes</h3>
+        <p>Prolonged maternal starvation and nutritional deficiencies interfere with the supply of nutrients and metabolic processes required for normal fetal development. Early treatment and adequate nutrition can significantly improve outcomes.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#128118;</div>
+        <h3>Long-Term Outcomes in Children</h3>
+        <p>Children exposed to HG in utero were found to have a 3.82-fold elevated risk of allergies, chronic constipation, reflux, growth delays, lactose intolerance, chronic respiratory infections, and sleep problems.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">&#129504;</div>
+        <h3>Neurodevelopmental Effects</h3>
+        <p>Higher rates of attention disorders, developmental delays, autism, anxiety, and sleep problems in offspring. Abnormal brain growth and childhood cancer (small but statistically significant association).</p>
+      </div>
+    </div>
+
+    <div class="info-box success">
+      <h4>&#128154; Important Note</h4>
+      <p>Many of these outcomes are likely related to the severity and duration of maternal malnutrition, not to HG itself. <strong>HG that is properly treated with adequate nutrition may lead to better fetal outcomes.</strong> Early and aggressive treatment is the key.</p>
+    </div>
+  </section>
+
+  <!-- SECTION: PSYCHOLOGICAL APPROACH -->
+  <section class="section fade-in" id="psychological-approach">
+    <div class="section-header">
+      <span class="sec-icon">&#128156;</span>
+      <div>
+        <h2>Psychological Approach</h2>
+        <p>Trauma, depression, PTSD, isolation, identity loss, and support resources</p>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-num">18%</div>
+        <div class="stat-label">meet full criteria for PTSD</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">~50%</div>
+        <div class="stat-label">postpartum depression</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">25.5%</div>
+        <div class="stat-label">suicidal ideation</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">5%</div>
+        <div class="stat-label">terminated a wanted pregnancy</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">82.8%</div>
+        <div class="stat-label">daily activity limitation</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">2.7x</div>
+        <div class="stat-label">elevated postpartum depression risk</div>
+      </div>
+    </div>
+
+    <h3 style="color:var(--primary);margin:30px 0 15px;">&#128148; PTSD and Hyperemesis: One of the Only Pregnancy Conditions Documented to Cause Trauma</h3>
+    <div class="info-box warning">
+      <h4>&#9888;&#65039; Hyperemesis is one of the few pregnancy conditions documented as a cause of PTSD</h4>
+      <p>18% of women who experienced HG meet the full diagnostic criteria for PTSD, and over 50% experience sub-threshold trauma symptoms. Symptoms include: <strong>avoidance</strong> (of places, smells, and foods that recall the HG experience), <strong>emotional numbing</strong>, <strong>hypervigilance</strong>, <strong>re-experiencing</strong> the sensations of nausea and vomiting, and <strong>sensitivity to triggers</strong> such as food smells, hospitals, or words associated with pregnancy. At 8 weeks postpartum, women who experienced HG showed significantly higher PTSD scores than women with mild or no nausea. HG-related PTSD is directly linked to breastfeeding difficulties, relationship problems, financial hardship, and reduced functioning. Symptoms can persist for years after the pregnancy.</p>
+      <p style="margin-top:10px;font-size:13px;opacity:0.8;">Sources: HER Foundation; Mitchell-Jones et al., BJOG 2017 (systematic review); Archives of Women's Mental Health 2018; Lancet Obstetrics 2025 (476,857 women, 18 countries)</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card orange">
+        <div class="card-icon">&#128546;</div>
+        <h3>Depression: During and After Pregnancy</h3>
+        <p>49% of women with HG experience depression <strong>during pregnancy</strong> (vs. 6% in the general population). 29% experience depression 6 weeks postpartum (vs. 7% in controls). A retrospective cohort study in The Lancet (2025) found a 2.7-fold elevated postpartum depression risk. A Finnish national registry study confirmed the association. Striking finding: HG with metabolic disturbance (more severe, aggressively treated) showed a <strong>decrease</strong> in depression risk, vs. "mild" HG. Implication: adequate treatment is protective. Symptoms can persist for years.</p>
+        <p style="margin-top:8px;font-size:12px;opacity:0.7;">Sources: J Maternal-Fetal &amp; Neonatal Medicine 2022; Lancet Obstetrics 2025; King's College London</p>
+      </div>
+      <div class="card" style="border-top:4px solid #e74c3c;">
+        <div class="card-icon">&#128548;</div>
+        <h3>Medical Invalidation Trauma</h3>
+        <p>"It's just morning sickness." "Have you tried ginger?" "It's psychological." Women with HG repeatedly report being dismissed by medical staff, having symptoms minimized, and having their condition attributed to anxiety or imagination. <strong>Negative patient experience is documented as a direct risk factor for pregnancy termination and suicidal ideation</strong> (Nana et al., 2022). 82.8% of patients have limited daily activity, yet many face dismissal. Validation (recognition that this is a real and severe condition) is a documented protective factor that reduces risk of serious psychological outcomes.</p>
+        <p style="margin-top:8px;font-size:12px;opacity:0.7;">Sources: Nana et al., Women's Health 2022; Frontiers in Health Services 2025; Psychiatric Times</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">&#128118;</div>
+        <h3>Mother-Infant Bonding</h3>
+        <p>HG itself does <strong>not directly impair</strong> mother-infant attachment. A slight reduction in bonding was observed in early pregnancy (weeks 7 to 16), but the effect diminished later in pregnancy (after week 26). By contrast, postpartum depression (2.7x more common after HG) does impair bonding. The indirect pathway: HG causes depression, and depression affects the relationship. A 2023 study found infants exposed to HG in utero showed reduced attention during play with their mothers. Women describe that during severe HG "there was no room for anything else, including the baby," but afterward they invested significant effort to reconnect.</p>
+        <p style="margin-top:8px;font-size:12px;opacity:0.7;">Sources: PMC7554497 (prospective multicenter study); ScienceDirect 2023; PubMed 21413857</p>
+      </div>
+    </div>
+
+    <div class="info-box warning">
+      <h4>&#9888;&#65039; Pregnancy Termination and Suicidal Ideation</h4>
+      <p>5% of women terminated a wanted pregnancy due to HG. A further 52% considered it. 25.5% reported occasional suicidal thoughts, 6.6% reported persistent suicidal thoughts. <strong>Reasons for termination:</strong> inability to care for themselves or existing family (66.7%), fear that they or the baby would die (51.2%), fear the baby would have a disability (22%). <strong>Documented risk factors:</strong> difficulty accessing medication, negative patient experience, lack of validation from medical staff. <strong>Protective factors:</strong> holistic support from family, friends, and therapists.</p>
+      <p style="margin-top:12px;"><strong>&#128222; Crisis Resources:</strong> Samaritans: <strong>116 123</strong> (UK) | Crisis Text Line: text HOME to <strong>741741</strong> (US) | International Association for Suicide Prevention: <a href="https://www.iasp.info/resources/Crisis_Centres/" target="_blank" style="color:var(--primary);font-weight:600;">find your country's crisis line</a>. Routine mental health screening and suicide risk assessment is strongly recommended.</p>
+      <p style="margin-top:8px;font-size:12px;opacity:0.7;">Sources: Nana et al., Women's Health 2022 (over 5,000 participants); PMC9574451</p>
+    </div>
+
+    <h3 style="color:var(--primary);margin:30px 0 15px;">&#128156; The Wider Impact: Isolation, Identity, Family, and the Future</h3>
+    <div class="cards-grid">
+      <div class="card" style="border-top:4px solid #9b59b6;">
+        <div class="card-icon">&#128566;</div>
+        <h3>Social Isolation and Loneliness</h3>
+        <p>HG enforces total social isolation. Women are confined to bed for months, unable to work, attend events, or even hold a conversation. The feeling that "life is going on without me" deepens depression. Worse still, dismissive medical attitudes contribute to self-stigma that drives further isolation. Research shows depression and anxiety are more common in women with HG who have weak family and social support networks.</p>
+        <p style="margin-top:8px;font-size:12px;opacity:0.7;">Sources: ScienceDirect 2025 ("Deprived of my autonomy"); PMC5780564; Taylor &amp; Francis 2023</p>
+      </div>
+      <div class="card" style="border-top:4px solid #e67e22;">
+        <div class="card-icon">&#128557;</div>
+        <h3>Grief and Identity Loss</h3>
+        <p>HG causes multiple losses that are rarely acknowledged: the "happy pregnancy" that was imagined, career momentum and even employment, the ability to parent existing children, financial independence, friendships and social connections. A 2025 qualitative study (Sweden) described women who "watched themselves disappear from the roles of their lives: mother, partner, professional." This identity loss complicates infant bonding and alters relationship dynamics. Some women choose to forgo further children, and grieve the family they had planned.</p>
+        <p style="margin-top:8px;font-size:12px;opacity:0.7;">Sources: ScienceDirect 2025 (PubMed 40088682); Bloom Psychotherapy; Psychiatric Times</p>
+      </div>
+      <div class="card" style="border-top:4px solid #3498db;">
+        <div class="card-icon">&#128104;&#8205;&#128105;&#8205;&#128103;</div>
+        <h3>Impact on Partners and Family</h3>
+        <p>HG does not happen in a vacuum. Partners report anger, loneliness, burnout, and secondary trauma. Over 80% of women report that HG had a negative psychosocial impact, including job loss, financial stress, and relationship problems. HG-related PTSD is specifically linked to relationship difficulties as a documented outcome. Existing children in the family are affected when a mother is bedridden for months. A Psychology Today article (December 2025) described partners as playing "a vital role in restoring a sense of reality, dignity, and care."</p>
+        <p style="margin-top:8px;font-size:12px;opacity:0.7;">Sources: Psychology Today 2025; HER Foundation; PMC5056484; Taylor &amp; Francis 2023</p>
+      </div>
+      <div class="card" style="border-top:4px solid #e74c3c;">
+        <div class="card-icon">&#128552;</div>
+        <h3>Fear of Future Pregnancy</h3>
+        <p>40% of women with HG delay a subsequent pregnancy. 52% did not become pregnant again at all, and two-thirds cited HG as the reason. 23% considered or underwent pregnancy termination in subsequent pregnancies due to fear of recurrence. Importantly, <strong>this is not a rational decision but a traumatic avoidance response</strong>. Women describe panic attacks at the mere thought of future pregnancy. Recurrence rates range from 15% to 89% depending on study methodology. Relationship conflict over family planning is a common outcome.</p>
+        <p style="margin-top:8px;font-size:12px;opacity:0.7;">Sources: PMC8457209 (MOTHER study follow-up); HER Foundation; StatPearls</p>
+      </div>
+      <div class="card" style="border-top:4px solid #f39c12;">
+        <div class="card-icon">&#128188;</div>
+        <h3>Return to Work and Professional Impact</h3>
+        <p>82.8% of HG patients have limited daily functioning. Work absence is common, and hospitalizations lead to extended sick leave. Women report feeling they are "treated differently" at work. Beyond physical limitations, the psychological toll of being ill for weeks or months compounds career harm. Returning to work after extended HG-related absence involves shame, anxiety about explaining the absence, and grief over career disruption.</p>
+        <p style="margin-top:8px;font-size:12px;opacity:0.7;">Sources: IJGO 2025; Medscape; HER Foundation (employer guide)</p>
+      </div>
+    </div>
+
+    <h3 style="color:var(--primary);margin:30px 0 15px;">&#128154; Psychological Treatment and Support</h3>
+    <div class="info-box success">
+      <h4>&#128154; Evidence-Based Therapeutic Approaches</h4>
+      <p><strong>EMDR (Eye Movement Desensitization and Reprocessing):</strong> In 4 out of 5 women with HG, a rapid response was achieved after just 1 to 2 sessions. EMDR can process traumatic memories and desensitize triggers for nausea and vomiting. No safety concerns have been identified with EMDR use during pregnancy.</p>
+      <p style="margin-top:10px;"><strong>CBT (Cognitive Behavioral Therapy):</strong> Evidence-based techniques for managing anxiety, building coping mechanisms, and maintaining psychological resilience. Recommended for high-risk pregnant women.</p>
+      <p style="margin-top:10px;"><strong>ACT (Acceptance and Commitment Therapy):</strong> Helps patients cope with difficult thoughts and emotions while maintaining commitment to values and action.</p>
+      <p style="margin-top:10px;"><strong>Peer Support:</strong> Reduces isolation and provides validation from women who have shared the experience. Can be delivered remotely (phone, video) for those unable to leave home.</p>
+      <p style="margin-top:10px;"><strong>Recovery Time:</strong> Physical recovery up to two years; psychological recovery sometimes longer. It is recommended to seek a therapist specializing in perinatal mental health.</p>
+      <p style="margin-top:8px;font-size:12px;opacity:0.7;">Sources: Springer Publishing (EMDR); BJPsych Advances; EMDRIA; BMC Psychiatry 2024 (review)</p>
+    </div>
+
+    <div class="info-box">
+      <h4>&#128222; International Support Resources</h4>
+      <p><strong>Crisis Lines (Worldwide):</strong><br>
+      &#8226; Samaritans (UK &amp; Ireland): <strong>116 123</strong><br>
+      &#8226; Crisis Text Line (US, Canada, UK, Ireland): text HOME to <strong>741741</strong><br>
+      &#8226; IASP Crisis Centers: <a href="https://www.iasp.info/resources/Crisis_Centres/" target="_blank" style="color:var(--primary);font-weight:600;">find your country's line</a></p>
+      <p style="margin-top:12px;"><strong>International Organizations:</strong><br>
+      &#8226; <a href="https://www.hyperemesis.org/" target="_blank" style="color:var(--primary);font-weight:600;">HER Foundation</a> (hyperemesis.org): education, support, research, free "Ready to COPE" app<br>
+      &#8226; <a href="https://pregnancysicknesssupport.org.uk/" target="_blank" style="color:var(--primary);font-weight:600;">Pregnancy Sickness Support</a> (UK): peer support network, expert advice, remote support<br>
+      &#8226; <a href="https://www.cope.org.au/pregnancy/looking-after-yourself-in-pregnancy/hyperemesis-gravidarum-severe-morning-sickness" target="_blank" style="color:var(--primary);font-weight:600;">COPE Australia</a>: mental health and HG guide</p>
+    </div>
+
+    <div class="info-box success">
+      <h4>&#128154; Documented Protective Factors</h4>
+      <p>&#8226; Validation from medical staff: recognition that HG is a real, severe, and biologically grounded condition<br>
+      &#8226; Partner and family support: active involvement in care and daily management<br>
+      &#8226; Access to professional psychological care: therapist with perinatal specialization<br>
+      &#8226; Peer support from HG survivors: support groups, online communities<br>
+      &#8226; Adequate medical treatment of symptoms: including early access to medication<br>
+      &#8226; Routine mental health screening: proactive assessment of mood and suicidal thoughts<br>
+      &#8226; Workplace accommodations: employer flexibility during pregnancy and return to work</p>
+    </div>
+  </section>
+
+  <!-- SECTION: FUTURE PREGNANCIES -->
+  <section class="section fade-in" id="future">
+    <div class="section-header">
+      <span class="sec-icon">&#128337;</span>
+      <div>
+        <h2>Future Pregnancies</h2>
+        <p>Recurrence rates, prevention strategies, and planning ahead</p>
+      </div>
+    </div>
+
+    <div class="info-box warning">
+      <h4>&#128202; Recurrence Rates</h4>
+      <p>HG recurs in 15% to 89% of subsequent pregnancies depending on study methodology. A prior history of HG is the strongest risk factor (RR 8.92). 40% of women delay a subsequent pregnancy. 52% did not become pregnant again, with two-thirds citing HG as the reason.</p>
+    </div>
+
+    <h3 style="color:var(--primary);margin:30px 0 20px;">7 Prevention Strategies</h3>
+    <div class="cards-grid">
+      <div class="card green">
+        <div class="card-icon">1&#65039;&#8419;</div>
+        <h3>Pre-Pregnancy Counseling</h3>
+        <p>Review medical history and develop an early intervention plan with your care team before becoming pregnant.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">2&#65039;&#8419;</div>
+        <h3>Prophylactic Antiemetics</h3>
+        <p>Starting Doxylamine/Pyridoxine immediately upon detecting pregnancy (before symptoms appear). An RCT demonstrated this reduces severity and duration.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">3&#65039;&#8419;</div>
+        <h3>Prenatal Multivitamins</h3>
+        <p>Starting a multivitamin before or at the start of pregnancy may reduce the risk of severe nausea.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">4&#65039;&#8419;</div>
+        <h3>Metformin (New!)</h3>
+        <p>6 or more months of metformin before pregnancy linked to over 70% risk reduction. Observational studies are promising; prospective trials are needed.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">5&#65039;&#8419;</div>
+        <h3>Optimal Nutritional Status</h3>
+        <p>Optimize nutrition and physical condition before attempting pregnancy.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">6&#65039;&#8419;</div>
+        <h3>Early Monitoring</h3>
+        <p>Arrange early prenatal follow-up for rapid intervention if symptoms begin.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">7&#65039;&#8419;</div>
+        <h3>Psychological Preparation</h3>
+        <p>Establish support networks in advance: partner, family, mental health therapist, and support group.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: LIFESTYLE -->
+  <section class="section fade-in" id="lifestyle">
+    <div class="section-header">
+      <span class="sec-icon">&#127807;</span>
+      <div>
+        <h2>Lifestyle &amp; Management</h2>
+        <p>Complementary therapies, rest, and daily management</p>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card green">
+        <div class="card-icon">&#127854;</div>
+        <h3>Ginger</h3>
+        <p>Systematic reviews and meta-analyses confirm ginger as an effective non-pharmacological treatment. Active compounds: gingerols and shogaols. Recommended dosing: 250 mg capsules 4 times daily, or ginger tea. Complements but does not replace medication in severe cases.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#129306;</div>
+        <h3>Acupressure</h3>
+        <p>PC6 (Neiguan) point on the inner forearm above the wrist. Acupressure at PC6: 90% efficacy in one study. Manual pressure at the point: 63% efficacy (vs. placebo). SeaBand wristbands apply pressure to this point and are available over the counter.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#128164;</div>
+        <h3>Rest and Stress Reduction</h3>
+        <p>Adequate rest and sleep. Reducing workload and stress. Lying down during severe episodes. Avoiding visual and olfactory triggers.</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>&#128161; Daily Tips</h4>
+      <p>&#8226; Avoid strong smells and strongly-scented food<br>
+      &#8226; Open windows for fresh air<br>
+      &#8226; Ask for help with cooking and cleaning<br>
+      &#8226; Drink in small sips throughout the day<br>
+      &#8226; Prefer cold food (less odor)<br>
+      &#8226; Keep dry snacks in every room</p>
+    </div>
+  </section>
+
+  <!-- SECTION: STORIES & SUPPORT -->
+  <section class="section fade-in" id="stories">
+    <div class="section-header">
+      <span class="sec-icon">&#11088;</span>
+      <div>
+        <h2>Stories &amp; Support</h2>
+        <p>Organizations, communities, and support groups</p>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card green">
+        <div class="card-icon">&#127760;</div>
+        <h3>HER Foundation</h3>
+        <p>The world's largest HG network. Online community, 7 Facebook groups, monthly Zoom meetings, individual support matching, helpline (833-2ChatHG-1), HG Care app, HELP Score assessment tools, and treatment protocols for healthcare providers. Website: <a href="https://www.hyperemesis.org/" target="_blank" style="color:var(--primary);font-weight:600;">hyperemesis.org</a></p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#127468;&#127463;</div>
+        <h3>Pregnancy Sickness Support (UK)</h3>
+        <p>The only UK charity dedicated to HG. National peer support network, expert advice, GP toolkit, helpline: 024 7638 2020. Website: <a href="https://pregnancysicknesssupport.org.uk/" target="_blank" style="color:var(--primary);font-weight:600;">pregnancysicknesssupport.org.uk</a></p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#127462;&#127482;</div>
+        <h3>Hyperemesis Australia</h3>
+        <p>Run by women who experienced HG. Volunteer support, closed Facebook communities, "You, Me &amp; HG" podcast, pregnancy acknowledgment cards, free "Ready to COPE" mental health app. Website: <a href="https://www.hyperemesisaustralia.org.au/" target="_blank" style="color:var(--primary);font-weight:600;">hyperemesisaustralia.org.au</a></p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>&#128218; Books</h4>
+      <p>&#8226; "Hyperemesis Gravidarum &mdash; The Definitive Guide" (includes a section for partners)<br>
+      &#8226; "The Chronicles of Nausea" by Ashli McCall</p>
+    </div>
+
+    <div class="info-box success">
+      <h4>&#128172; Online Communities</h4>
+      <p>&#8226; HER Foundation community (non-social media platform)<br>
+      &#8226; Reddit: r/HyperemesisGravidarum<br>
+      &#8226; Facebook groups (HER Foundation and independent groups)<br>
+      &#8226; SOLVE HG Network (US-based advocacy and peer support)</p>
+    </div>
+  </section>
+
+  <!-- SECTION: RESOURCES -->
+  <section class="section fade-in" id="resources">
+    <div class="section-header">
+      <span class="sec-icon">&#128279;</span>
+      <div>
+        <h2>Links &amp; Resources</h2>
+        <p>International organizations, key literature, and further reading</p>
+      </div>
+    </div>
+
+    <h3 style="color:var(--primary);margin-bottom:20px;">&#127760; International Organizations</h3>
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Organization</th>
+          <th>Country / Region</th>
+          <th>Focus</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong><a href="https://www.hyperemesis.org/" target="_blank" style="color:var(--primary);">HER Foundation</a></strong></td>
+          <td>United States (Global)</td>
+          <td>Education, research funding, peer support, HELP Score, HG Care app, provider protocols</td>
+        </tr>
+        <tr>
+          <td><strong><a href="https://pregnancysicknesssupport.org.uk/" target="_blank" style="color:var(--primary);">Pregnancy Sickness Support</a></strong></td>
+          <td>United Kingdom</td>
+          <td>Peer support, expert advice, GP toolkit, EMERALD trial information</td>
+        </tr>
+        <tr>
+          <td><strong><a href="https://www.hyperemesisaustralia.org.au/" target="_blank" style="color:var(--primary);">Hyperemesis Australia</a></strong></td>
+          <td>Australia</td>
+          <td>Peer support, advocacy, "Ready to COPE" app, podcast, community</td>
+        </tr>
+        <tr>
+          <td><strong><a href="https://www.cope.org.au/" target="_blank" style="color:var(--primary);">COPE Australia</a></strong></td>
+          <td>Australia</td>
+          <td>Perinatal mental health, HG psychological guide for patients and clinicians</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="info-box">
+      <h4>&#127760; Accessing Care Internationally</h4>
+      <p>HG is recognized as a medical condition requiring treatment in all developed healthcare systems. In the UK, RCOG and NICE have published clinical guidelines for HG management. In the US, ACOG provides guidance. Antiemetic medications (including metoclopramide, ondansetron, and promethazine) are available in most countries. For hospitalization due to dehydration or weight loss, speak with your obstetrician or midwife. Home IV therapy programs exist in many countries as an alternative to inpatient admission.</p>
+    </div>
+
+    <h3 style="color:var(--primary);margin:30px 0 20px;">&#128301; Key Articles and Guidelines</h3>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:30px;">
+      <a href="https://www.nature.com/articles/s41586-023-06921-9" target="_blank" class="link-btn">Nature: GDF15 and Pregnancy Nausea (2023)</a>
+      <a href="https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(25)01454-0/abstract" target="_blank" class="link-btn green">The Lancet: Comprehensive Review 2025</a>
+      <a href="https://clinicaltrials.gov/search?cond=Hyperemesis+Gravidarum" target="_blank" class="link-btn orange">ClinicalTrials.gov</a>
+      <a href="https://www.rcog.org.uk/guidance/browse-all-guidance/green-top-guidelines/the-management-of-nausea-and-vomiting-of-pregnancy-and-hyperemesis-gravidarum-green-top-guideline-no-69/" target="_blank" class="link-btn">RCOG Green-top Guideline No. 69</a>
+      <a href="https://www.acog.org/clinical/clinical-guidance/practice-bulletin/articles/2018/01/nausea-and-vomiting-of-pregnancy" target="_blank" class="link-btn green">ACOG Practice Bulletin: NVP</a>
+      <a href="https://www.hyperemesis.org/research/publications/" target="_blank" class="link-btn orange">HER Foundation Research Publications</a>
+    </div>
+
+    <h3 style="color:var(--primary);margin:30px 0 20px;">&#128301; Healthcare Provider Resources</h3>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:30px;">
+      <a href="https://www.hyperemesis.org/healthcare-providers/" target="_blank" class="link-btn">HER Foundation Provider Toolkit</a>
+      <a href="https://pregnancysicknesssupport.org.uk/gps-and-healthcare-professionals/" target="_blank" class="link-btn green">PSS GP Toolkit (UK)</a>
+      <a href="https://www.motherisk.org/prof_nav.jsp" target="_blank" class="link-btn orange">Motherisk Drug Safety</a>
+    </div>
+  </section>
+
+  <!-- CAREPEDIA CTA -->
+  <div class="carepedia-cta">
+    <h3>Want a research-based medical information portal?</h3>
+    <p>We build portals for physicians, patient organizations, and medical centers. Tell us about your need.</p>
+    <a href="https://carepedia.org/#contact" class="cta-btn">Request a Portal &rarr;</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p style="margin-bottom: 16px;">
+      Built by <strong>Yuval Kashtcher</strong> and his robot assistants | <a href="https://carepedia.org" style="color:var(--accent-light);text-decoration:none;">Carepedia</a>
+    </p>
+    <a href="https://carepedia.org/#contact" target="_blank" class="portal-request-btn" style="margin-bottom: 20px;">&#43; Request a portal for another condition</a>
+    <p style="margin-top: 20px; font-size: 15px; opacity: 0.85;">All information on this site is for educational purposes only and does not constitute professional medical advice.</p>
+    <p style="margin-top: 8px; font-size: 13px; opacity: 0.7;"><a href="/disclaimer" style="color:var(--accent-light);text-decoration:underline;">Legal Disclaimer</a> | <a href="https://wa.me/+972526414555" target="_blank" rel="noopener" style="color:var(--accent-light);text-decoration:underline;">Report an Error</a></p>
+    <p style="margin-top: 10px; font-size: 14px; opacity: 0.7;">Last updated: February 2026 | Includes citations from peer-reviewed literature</p>
+  </footer>
+
+</div>
+
+<!-- SCROLL TO TOP -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#11014;</button>
+
+<script>
+function toggleMenu() {
+  const sidebar = document.getElementById('sidebar');
+  const toggle = document.getElementById('menuToggle');
+  const overlay = document.getElementById('sidebarOverlay');
+  sidebar.classList.toggle('open');
+  toggle.classList.toggle('open');
+  overlay.classList.toggle('active');
+  toggle.textContent = sidebar.classList.contains('open') ? '\u2715' : '\u2630';
+  document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '';
+}
+
+function closeMenu() {
+  const sidebar = document.getElementById('sidebar');
+  const toggle = document.getElementById('menuToggle');
+  const overlay = document.getElementById('sidebarOverlay');
+  sidebar.classList.remove('open');
+  toggle.classList.remove('open');
+  overlay.classList.remove('active');
+  toggle.textContent = '\u2630';
+  document.body.style.overflow = '';
+}
+
+function navigate(el) {
+  document.querySelectorAll('.sidebar nav a').forEach(a => a.classList.remove('active'));
+  el.classList.add('active');
+  closeMenu();
+}
+
+function navigateTo(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+  document.querySelectorAll('.sidebar nav a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+  });
+}
+
+function toggleAccordion(header) {
+  const body = header.nextElementSibling;
+  const isOpen = header.classList.contains('open');
+  header.classList.toggle('open');
+  body.style.maxHeight = isOpen ? '0' : body.scrollHeight + 'px';
+}
+
+function switchTab(tabGroup, tabName) {
+  document.querySelectorAll('[data-tab-group="' + tabGroup + '"] .tab-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.tab === tabName);
+  });
+  document.querySelectorAll('[data-tab-content="' + tabGroup + '"]').forEach(c => {
+    c.classList.toggle('active', c.dataset.tab === tabName);
+  });
+}
+
+// Scroll progress bar + scroll spy
+window.addEventListener('scroll', () => {
+  const scrollTop = document.getElementById('scrollTop');
+  const progressBar = document.getElementById('progressBar');
+  const scrolled = window.scrollY;
+  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = maxScroll > 0 ? (scrolled / maxScroll) * 100 : 0;
+  progressBar.style.width = pct + '%';
+  scrollTop.classList.toggle('visible', scrolled > 500);
+
+  const sections = document.querySelectorAll('.section[id], .hero[id]');
+  let current = '';
+  sections.forEach(s => {
+    if (scrolled >= s.offsetTop - 100) current = s.id;
+  });
+  if (current) {
+    document.querySelectorAll('.sidebar nav a').forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  }
+});
+
+// Fade-in on scroll
+const fadeEls = document.querySelectorAll('.fade-in');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+fadeEls.forEach(el => observer.observe(el));
+
+// Portal search
+let searchTimeout;
+function searchPortal(query) {
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(() => _doSearch(query), 150);
+}
+
+function _doSearch(query) {
+  const resultsDiv = document.getElementById('searchResults');
+
+  if (!query || query.length < 2) {
+    resultsDiv.style.display = 'none';
+    document.querySelectorAll('.section').forEach(s => {
+      s.style.display = '';
+    });
+    return;
+  }
+  const q = query.toLowerCase();
+  const sections = document.querySelectorAll('.section[id]');
+  const matches = [];
+  sections.forEach(s => {
+    const text = s.textContent.toLowerCase();
+    const title = s.querySelector('h2') ? s.querySelector('h2').textContent : '';
+    const subtitle = s.querySelector('.section-header p') ? s.querySelector('.section-header p').textContent : '';
+    if (text.includes(q)) {
+      const count = (text.match(new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')) || []).length;
+      matches.push({ id: s.id, title: title, subtitle: subtitle, count: count, el: s });
+      s.style.display = '';
+    } else {
+      s.style.display = 'none';
+    }
+  });
+  matches.sort((a, b) => b.count - a.count);
+
+  if (matches.length > 0 && matches.length < sections.length) {
+    resultsDiv.innerHTML = '<div style="background:var(--card);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);">' +
+      '<p style="font-size:14px;color:var(--text-light);margin-bottom:8px;">' + matches.length + ' result(s) found:</p>' +
+      matches.map(m =>
+        '<a href="#' + m.id + '" onclick="navigateTo(\'' + m.id + '\')" style="display:block;padding:10px 12px;color:var(--primary);text-decoration:none;border-radius:8px;font-weight:600;transition:var(--transition);">' +
+        m.title +
+        (m.count > 1 ? ' <span style="font-size:12px;color:var(--text-light);font-weight:400;">(' + m.count + ' mentions)</span>' : '') +
+        '</a>'
+      ).join('') +
+      '</div>';
+    resultsDiv.style.display = 'block';
+  } else if (matches.length === sections.length) {
+    resultsDiv.style.display = 'none';
+  } else {
+    resultsDiv.innerHTML = '<div style="background:var(--card);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);"><p style="font-size:14px;color:var(--text-light);">No results found. Try a different term.</p></div>';
+    resultsDiv.style.display = 'block';
+  }
+}
+</script>
+
+</body>
+</html>

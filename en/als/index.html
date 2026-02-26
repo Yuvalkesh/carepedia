@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ALS Hub | CarePedia Information Center</title>
+  <link rel="alternate" hreflang="he" href="https://carepedia.org/als"/>
+  <link rel="alternate" hreflang="en" href="https://carepedia.org/en/als"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+  <script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
+  <style>
+    :root {
+      --primary: #0f4c75;
+      --primary-light: #3282b8;
+      --accent: #00b894;
+      --accent-light: #00cec9;
+      --warm: #e17055;
+      --warm-dark: #c0392b;
+      --bg: #f0f4f8;
+      --card: #ffffff;
+      --text: #1a2533;
+      --text-light: #5a6a7a;
+      --shadow: 0 4px 20px rgba(15,76,117,0.10);
+      --shadow-hover: 0 8px 32px rgba(15,76,117,0.18);
+      --radius: 16px;
+      --transition: 0.3s cubic-bezier(0.4,0,0.2,1);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Rubik', sans-serif; background: var(--bg); color: var(--text); min-height: 100vh; }
+    #scroll-progress { position: fixed; top: 0; left: 0; height: 3px; background: linear-gradient(90deg, var(--accent), var(--primary-light)); z-index: 9999; width: 0%; transition: width 0.1s; }
+    .sidebar {
+      position: fixed; top: 0; left: 0; width: 280px; height: 100vh;
+      background: rgba(15,76,117,0.85); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px);
+      color: #fff; z-index: 1000; display: flex; flex-direction: column;
+      overflow-y: auto; overflow-x: hidden; transition: transform var(--transition);
+      border-right: 1px solid rgba(255,255,255,0.10);
+    }
+    .sidebar-header { padding: 28px 20px 20px; border-bottom: 1px solid rgba(255,255,255,0.12); display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    .sidebar-icon { font-size: 44px; color: #ffd166; }
+    .sidebar-title { font-size: 1.05rem; font-weight: 700; text-align: center; line-height: 1.35; letter-spacing: 0.01em; }
+    .sidebar-subtitle { font-size: 0.72rem; opacity: 0.65; text-align: center; letter-spacing: 0.04em; text-transform: uppercase; }
+    .sidebar-search { padding: 14px 16px 10px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .sidebar-search input { width: 100%; padding: 9px 14px; border-radius: 30px; border: 1px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.10); color: #fff; font-size: 0.82rem; font-family: 'Rubik', sans-serif; outline: none; transition: border var(--transition); }
+    .sidebar-search input::placeholder { color: rgba(255,255,255,0.45); }
+    .sidebar-search input:focus { border-color: rgba(255,255,255,0.45); }
+    nav { padding: 10px 0 20px; flex: 1; }
+    nav a { display: flex; align-items: center; gap: 11px; padding: 10px 22px; color: rgba(255,255,255,0.82); text-decoration: none; font-size: 0.88rem; font-weight: 500; border-radius: 0 30px 30px 0; margin-right: 12px; transition: all var(--transition); border-left: 3px solid transparent; }
+    nav a:hover, nav a.active { background: rgba(255,255,255,0.12); color: #fff; border-left-color: var(--accent); transform: translateX(4px); }
+    nav a .iconify { font-size: 18px; flex-shrink: 0; opacity: 0.8; }
+    nav a:hover .iconify, nav a.active .iconify { opacity: 1; }
+    .nav-section-label { font-size: 0.65rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.38); padding: 14px 22px 4px; }
+    .main { margin-left: 280px; min-height: 100vh; }
+    .disclaimer-banner { background: linear-gradient(135deg, #fff3cd, #ffeaa7); border-bottom: 2px solid #f9ca24; padding: 11px 28px; display: flex; align-items: center; gap: 10px; font-size: 0.82rem; color: #856404; font-weight: 500; }
+    .disclaimer-banner .iconify { font-size: 20px; color: #e17055; flex-shrink: 0; }
+    .hero { background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 60%, var(--accent-light) 100%); color: white; padding: 56px 48px 48px; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; top: -60px; right: -60px; width: 300px; height: 300px; border-radius: 50%; background: rgba(255,255,255,0.06); }
+    .hero::after { content: ''; position: absolute; bottom: -80px; left: 30%; width: 220px; height: 220px; border-radius: 50%; background: rgba(255,255,255,0.04); }
+    .hero-badge { display: inline-flex; align-items: center; gap: 7px; background: rgba(255,255,255,0.15); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.25); border-radius: 30px; padding: 6px 16px; font-size: 0.78rem; font-weight: 600; margin-bottom: 18px; letter-spacing: 0.03em; }
+    .hero h1 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 800; line-height: 1.2; margin-bottom: 14px; }
+    .hero p { font-size: 1.05rem; opacity: 0.88; max-width: 620px; line-height: 1.65; margin-bottom: 28px; }
+    .hero-stats { display: flex; flex-wrap: wrap; gap: 20px; margin-top: 10px; }
+    .hero-stat { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.20); border-radius: 14px; padding: 14px 20px; backdrop-filter: blur(8px); text-align: center; min-width: 130px; }
+    .hero-stat strong { display: block; font-size: 1.5rem; font-weight: 800; line-height: 1; }
+    .hero-stat span { font-size: 0.72rem; opacity: 0.78; margin-top: 3px; display: block; }
+    .cat-grid-section { padding: 36px 48px 12px; }
+    .cat-grid-section h2 { font-size: 1.15rem; font-weight: 700; color: var(--primary); margin-bottom: 20px; display: flex; align-items: center; gap: 8px; }
+    .cat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 14px; }
+    .cat-card { background: var(--card); border-radius: 14px; padding: 18px 14px; text-align: center; box-shadow: var(--shadow); cursor: pointer; transition: all var(--transition); border: 2px solid transparent; text-decoration: none; color: var(--text); display: flex; flex-direction: column; align-items: center; gap: 8px; }
+    .cat-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); border-color: var(--primary-light); color: var(--primary); }
+    .cat-card .iconify { font-size: 30px; color: var(--primary-light); }
+    .cat-card span { font-size: 0.80rem; font-weight: 600; }
+    .content-section { padding: 36px 48px; }
+    .section-header { display: flex; align-items: center; gap: 14px; margin-bottom: 28px; padding-bottom: 16px; border-bottom: 2px solid rgba(15,76,117,0.10); }
+    .section-icon { width: 52px; height: 52px; background: linear-gradient(135deg, var(--primary), var(--primary-light)); border-radius: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .section-icon .iconify { font-size: 26px; color: white; }
+    .section-header h2 { font-size: 1.55rem; font-weight: 800; color: var(--primary); }
+    .section-header p { font-size: 0.9rem; color: var(--text-light); margin-top: 3px; }
+    .cards-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; margin-bottom: 28px; }
+    .info-card { background: var(--card); border-radius: var(--radius); padding: 24px; box-shadow: var(--shadow); border-top: 4px solid var(--primary-light); transition: all var(--transition); }
+    .info-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-hover); }
+    .info-card h3 { font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+    .info-card h3 .iconify { font-size: 20px; color: var(--accent); }
+    .info-card p { font-size: 0.875rem; color: var(--text-light); line-height: 1.65; }
+    .info-card ul { margin-top: 10px; padding-left: 18px; }
+    .info-card ul li { font-size: 0.86rem; color: var(--text-light); margin-bottom: 5px; line-height: 1.5; }
+    .accent-card { background: linear-gradient(135deg, var(--accent), var(--accent-light)); color: white; border-top-color: rgba(255,255,255,0.3); }
+    .accent-card h3, .accent-card p, .accent-card li { color: white !important; }
+    .accent-card h3 .iconify { color: rgba(255,255,255,0.85) !important; }
+    .warm-card { border-top-color: var(--warm); }
+    .warm-card h3 { color: var(--warm-dark) !important; }
+    .tab-bar { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+    .tab-btn { padding: 9px 20px; border-radius: 30px; border: 2px solid var(--primary-light); background: transparent; color: var(--primary); font-size: 0.84rem; font-weight: 600; cursor: pointer; transition: all var(--transition); font-family: 'Rubik', sans-serif; }
+    .tab-btn:hover { background: var(--primary-light); color: white; }
+    .tab-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    .med-table { width: 100%; border-collapse: collapse; background: var(--card); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); font-size: 0.85rem; margin-bottom: 20px; }
+    .med-table th { background: var(--primary); color: white; padding: 12px 16px; text-align: left; font-weight: 600; }
+    .med-table td { padding: 11px 16px; border-bottom: 1px solid #e8edf2; }
+    .med-table tr:last-child td { border-bottom: none; }
+    .med-table tr:hover td { background: rgba(15,76,117,0.04); }
+    .med-table td:first-child { font-weight: 600; color: var(--primary); }
+    .accordion { margin-bottom: 12px; }
+    .accordion-header { background: var(--card); border-radius: 12px; padding: 16px 20px; cursor: pointer; display: flex; align-items: center; justify-content: space-between; box-shadow: var(--shadow); transition: all var(--transition); font-weight: 600; font-size: 0.92rem; color: var(--primary); border-left: 4px solid var(--primary-light); }
+    .accordion-header:hover { background: rgba(15,76,117,0.04); }
+    .accordion-header.open { border-radius: 12px 12px 0 0; border-left-color: var(--accent); }
+    .accordion-header .iconify { transition: transform var(--transition); font-size: 20px; }
+    .accordion-header.open .iconify { transform: rotate(180deg); }
+    .accordion-body { background: var(--card); border-radius: 0 0 12px 12px; max-height: 0; overflow: hidden; transition: max-height 0.4s ease; border-left: 4px solid var(--accent); }
+    .accordion-body.open { max-height: 1400px; }
+    .accordion-inner { padding: 18px 22px; font-size: 0.875rem; color: var(--text-light); line-height: 1.7; }
+    .accordion-inner ul { padding-left: 18px; margin-top: 8px; }
+    .accordion-inner ul li { margin-bottom: 6px; }
+    .alert-box { border-radius: 12px; padding: 16px 20px; margin-bottom: 18px; display: flex; gap: 12px; font-size: 0.875rem; line-height: 1.6; }
+    .alert-box .iconify { font-size: 22px; flex-shrink: 0; margin-top: 2px; }
+    .alert-info { background: #e8f4fd; border-left: 4px solid var(--primary-light); color: #1a3a5c; }
+    .alert-info .iconify { color: var(--primary-light); }
+    .alert-success { background: #e6f9f4; border-left: 4px solid var(--accent); color: #0d4a3a; }
+    .alert-success .iconify { color: var(--accent); }
+    .alert-warning { background: #fff8e6; border-left: 4px solid #f9ca24; color: #6b4c00; }
+    .alert-warning .iconify { color: #e67e22; }
+    .timeline { position: relative; padding-left: 24px; }
+    .timeline::before { content: ''; position: absolute; left: 8px; top: 0; bottom: 0; width: 2px; background: linear-gradient(to bottom, var(--primary-light), var(--accent)); }
+    .timeline-item { position: relative; margin-bottom: 22px; }
+    .timeline-item::before { content: ''; position: absolute; left: -20px; top: 6px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent); border: 2px solid white; box-shadow: 0 0 0 2px var(--accent); }
+    .timeline-item h4 { font-size: 0.92rem; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+    .timeline-item p { font-size: 0.84rem; color: var(--text-light); line-height: 1.6; }
+    .highlight-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .highlight-box { background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: white; border-radius: var(--radius); padding: 22px; }
+    .highlight-box .iconify { font-size: 28px; margin-bottom: 10px; color: rgba(255,255,255,0.85); display: block; }
+    .highlight-box h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 6px; }
+    .highlight-box p { font-size: 0.82rem; opacity: 0.88; line-height: 1.55; }
+    .story-card { background: var(--card); border-radius: var(--radius); padding: 26px; box-shadow: var(--shadow); border-left: 5px solid var(--accent); margin-bottom: 18px; transition: all var(--transition); }
+    .story-card:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+    .story-card blockquote { font-size: 1.0rem; font-style: italic; color: var(--text); line-height: 1.75; margin-bottom: 14px; }
+    .story-card cite { font-size: 0.82rem; color: var(--text-light); font-style: normal; font-weight: 600; }
+    .resource-links { display: flex; flex-direction: column; gap: 12px; }
+    .resource-link { background: var(--card); border-radius: 12px; padding: 16px 20px; display: flex; align-items: center; gap: 14px; box-shadow: var(--shadow); text-decoration: none; color: var(--text); transition: all var(--transition); border: 1px solid transparent; }
+    .resource-link:hover { border-color: var(--primary-light); transform: translateX(4px); box-shadow: var(--shadow-hover); }
+    .resource-link .iconify { font-size: 24px; color: var(--primary-light); flex-shrink: 0; }
+    .resource-link .rl-title { font-weight: 600; font-size: 0.9rem; color: var(--primary); }
+    .resource-link .rl-desc { font-size: 0.78rem; color: var(--text-light); margin-top: 2px; }
+    .action-step { background: var(--card); border-radius: var(--radius); padding: 20px 22px; margin-bottom: 14px; box-shadow: var(--shadow); display: flex; gap: 16px; align-items: flex-start; transition: all var(--transition); }
+    .action-step:hover { transform: translateX(4px); box-shadow: var(--shadow-hover); }
+    .step-num { width: 38px; height: 38px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: white; font-weight: 800; font-size: 1rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .step-content h4 { font-size: 0.95rem; font-weight: 700; color: var(--primary); margin-bottom: 5px; }
+    .step-content p { font-size: 0.85rem; color: var(--text-light); line-height: 1.6; }
+    .badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 0.72rem; font-weight: 600; margin-right: 4px; margin-bottom: 4px; }
+    .badge-blue { background: #dbeafe; color: #1e40af; }
+    .badge-green { background: #d1fae5; color: #065f46; }
+    .badge-red { background: #fee2e2; color: #991b1b; }
+    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+    .menu-toggle { display: none; position: fixed; top: 14px; left: 14px; z-index: 1100; background: var(--primary); color: white; border: none; border-radius: 10px; padding: 10px 12px; cursor: pointer; box-shadow: var(--shadow); }
+    .menu-toggle .iconify { font-size: 22px; }
+    #scroll-top { position: fixed; bottom: 28px; right: 28px; background: var(--primary); color: white; border: none; border-radius: 50%; width: 46px; height: 46px; cursor: pointer; box-shadow: var(--shadow-hover); display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: all var(--transition); z-index: 900; }
+    #scroll-top.show { opacity: 1; pointer-events: all; }
+    #scroll-top:hover { transform: translateY(-3px); background: var(--primary-light); }
+    .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.45); z-index: 999; }
+    .overlay.show { display: block; }
+    @media (max-width: 900px) {
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.open { transform: translateX(0); }
+      .main { margin-left: 0; }
+      .menu-toggle { display: flex; }
+      .hero { padding: 70px 24px 36px; }
+      .content-section { padding: 24px 20px; }
+      .cat-grid-section { padding: 24px 20px 10px; }
+      .cards-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 1.55rem; }
+      .hero-stats { gap: 10px; }
+      .hero-stat { min-width: 100px; padding: 10px 14px; }
+      .tab-btn { padding: 7px 14px; font-size: 0.78rem; }
+    }
+  </style>
+</head>
+<body>
+<div id="scroll-progress"></div>
+<button class="menu-toggle" onclick="toggleMenu()" aria-label="Open menu">
+  <span class="iconify" data-icon="solar:hamburger-menu-bold"></span>
+</button>
+<div class="overlay" id="overlay" onclick="closeMenu()"></div>
+
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <span class="iconify sidebar-icon" data-icon="solar:stethoscope-bold-duotone"></span>
+    <div class="sidebar-title">ALS Hub</div>
+    <div class="sidebar-subtitle">CarePedia Information Center</div>
+  </div>
+  <div class="sidebar-search">
+    <input type="text" id="search-input" placeholder="Search the portal..." oninput="searchPortal(this.value)" aria-label="Search portal"/>
+  </div>
+  <nav id="main-nav">
+    <div class="nav-section-label">Overview</div>
+    <a href="#home" onclick="navigate('home')" class="active"><span class="iconify" data-icon="solar:home-bold-duotone"></span> Home</a>
+    <a href="#about" onclick="navigate('about')"><span class="iconify" data-icon="solar:info-circle-bold-duotone"></span> About ALS</a>
+    <div class="nav-section-label">Treatment</div>
+    <a href="#treatments" onclick="navigate('treatments')"><span class="iconify" data-icon="solar:pill-bold-duotone"></span> Treatments</a>
+    <a href="#trials" onclick="navigate('trials')"><span class="iconify" data-icon="solar:test-tube-bold-duotone"></span> Clinical Trials</a>
+    <a href="#research" onclick="navigate('research')"><span class="iconify" data-icon="solar:microscope-bold-duotone"></span> Research</a>
+    <div class="nav-section-label">Living Well</div>
+    <a href="#physio" onclick="navigate('physio')"><span class="iconify" data-icon="solar:bicycling-round-bold-duotone"></span> Physiotherapy</a>
+    <a href="#lifestyle" onclick="navigate('lifestyle')"><span class="iconify" data-icon="solar:running-round-bold-duotone"></span> Lifestyle &amp; Nutrition</a>
+    <a href="#psychological-approach" onclick="navigate('psychological-approach')"><span class="iconify" data-icon="solar:heart-pulse-bold-duotone"></span> Mental Health</a>
+    <div class="nav-section-label">Community</div>
+    <a href="#stories" onclick="navigate('stories')"><span class="iconify" data-icon="solar:users-group-rounded-bold-duotone"></span> Stories</a>
+    <a href="#action" onclick="navigate('action')"><span class="iconify" data-icon="solar:checklist-minimalistic-bold-duotone"></span> Action Plan</a>
+    <a href="#resources" onclick="navigate('resources')"><span class="iconify" data-icon="solar:library-bold-duotone"></span> Resources</a>
+  </nav>
+</aside>
+
+<div class="main">
+  <div class="disclaimer-banner">
+    <span class="iconify" data-icon="solar:danger-bold"></span>
+    <span><strong>This is not medical advice.</strong> Always consult your doctor before making any changes to your treatment plan.</span>
+  </div>
+
+  <section class="hero" id="home">
+    <div class="hero-badge"><span class="iconify" data-icon="solar:stethoscope-bold-duotone"></span> ALS Information Hub</div>
+    <h1>Understanding ALS (Amyotrophic Lateral Sclerosis)</h1>
+    <p>A comprehensive, evidence-based guide to ALS — covering diagnosis, approved treatments, breakthrough research, supportive care strategies, and global resources. Updated with the latest clinical findings.</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><strong>30K+</strong><span>People living with ALS in the US</span></div>
+      <div class="hero-stat"><strong>2-3</strong><span>Cases per 100,000 people worldwide</span></div>
+      <div class="hero-stat"><strong>3-5 yrs</strong><span>Median survival after diagnosis</span></div>
+      <div class="hero-stat"><strong>200+</strong><span>Active clinical trials worldwide</span></div>
+    </div>
+  </section>
+
+  <div class="cat-grid-section">
+    <h2><span class="iconify" data-icon="solar:compass-bold-duotone"></span> Navigate the Portal</h2>
+    <div class="cat-grid">
+      <a class="cat-card" href="#about" onclick="navigate('about')"><span class="iconify" data-icon="solar:info-circle-bold-duotone"></span><span>About ALS</span></a>
+      <a class="cat-card" href="#treatments" onclick="navigate('treatments')"><span class="iconify" data-icon="solar:pill-bold-duotone"></span><span>Treatments</span></a>
+      <a class="cat-card" href="#trials" onclick="navigate('trials')"><span class="iconify" data-icon="solar:test-tube-bold-duotone"></span><span>Clinical Trials</span></a>
+      <a class="cat-card" href="#research" onclick="navigate('research')"><span class="iconify" data-icon="solar:microscope-bold-duotone"></span><span>Research</span></a>
+      <a class="cat-card" href="#physio" onclick="navigate('physio')"><span class="iconify" data-icon="solar:bicycling-round-bold-duotone"></span><span>Physiotherapy</span></a>
+      <a class="cat-card" href="#lifestyle" onclick="navigate('lifestyle')"><span class="iconify" data-icon="solar:running-round-bold-duotone"></span><span>Lifestyle</span></a>
+      <a class="cat-card" href="#psychological-approach" onclick="navigate('psychological-approach')"><span class="iconify" data-icon="solar:heart-pulse-bold-duotone"></span><span>Mental Health</span></a>
+      <a class="cat-card" href="#stories" onclick="navigate('stories')"><span class="iconify" data-icon="solar:users-group-rounded-bold-duotone"></span><span>Stories</span></a>
+      <a class="cat-card" href="#action" onclick="navigate('action')"><span class="iconify" data-icon="solar:checklist-minimalistic-bold-duotone"></span><span>Action Plan</span></a>
+      <a class="cat-card" href="#resources" onclick="navigate('resources')"><span class="iconify" data-icon="solar:library-bold-duotone"></span><span>Resources</span></a>
+    </div>
+  </div>
+
+  <section class="content-section fade-in" id="about">
+    <div class="section-header">
+      <div class="section-icon"><span class="iconify" data-icon="solar:info-circle-bold-duotone"></span></div>
+      <div><h2>What Is ALS?</h2><p>Understanding the biology, types, and diagnostic process</p></div>
+    </div>
+    <div class="cards-grid">
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:brain-bold-duotone"></span> The Biology of ALS</h3>
+        <p>ALS is a progressive neurodegenerative disease affecting both upper motor neurons (brain and brainstem) and lower motor neurons (spinal cord). As neurons die, muscles progressively weaken and waste. <strong>TDP-43 protein mislocalization and aggregation</strong> is found in 97% of ALS cases and is considered the central pathological hallmark.</p>
+        <p style="margin-top:10px;">Muscle weakness typically begins focally — one limb or in the bulbar region (speech and swallowing) — then spreads to affect all voluntary muscles. The diaphragm and respiratory muscles are eventually affected in all patients.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:dna-bold-duotone"></span> Types of ALS</h3>
+        <ul>
+          <li><strong>Sporadic ALS (sALS):</strong> 90-95% of cases; no clear family history; cause is multifactorial (genetic + environmental)</li>
+          <li><strong>Familial ALS (fALS):</strong> 5-10% of cases; clear genetic inheritance; most commonly SOD1, C9orf72, TARDBP, or FUS gene mutations</li>
+          <li><strong>C9orf72 repeat expansion:</strong> The most common genetic cause, accounting for 40% of fALS and 5-10% of sALS cases worldwide</li>
+          <li><strong>SOD1 mutations:</strong> Second most common; now a target of approved gene therapy (Tofersen/Qalsody)</li>
+        </ul>
+      </div>
+      <div class="info-card warm-card">
+        <h3><span class="iconify" data-icon="solar:health-bold-duotone"></span> Key Symptoms</h3>
+        <ul>
+          <li>Progressive limb weakness (arm or leg onset) or bulbar onset (speech, swallowing)</li>
+          <li>Muscle cramps, fasciculations (twitching)</li>
+          <li>Spasticity (upper motor neuron) and atrophy (lower motor neuron)</li>
+          <li>Dysarthria (slurred speech) and dysphagia (swallowing difficulty)</li>
+          <li>Respiratory muscle weakness — requires monitoring and NIV</li>
+          <li>Cognitive/behavioral changes: up to 50% have some FTD features; 5-10% develop full FTD</li>
+          <li>Pain, fatigue, emotional lability (pseudobulbar affect)</li>
+        </ul>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span><span class="iconify" data-icon="solar:clipboard-bold-duotone"></span> &nbsp;Diagnosis of ALS</span>
+        <span class="iconify" data-icon="solar:alt-arrow-down-bold"></span>
+      </div>
+      <div class="accordion-body">
+        <div class="accordion-inner">
+          <p>ALS is a diagnosis of exclusion — there is no single definitive test. The Gold Coast Criteria (2020 revision) require:</p>
+          <ul>
+            <li>Progressive motor weakness affecting at least 2 body regions</li>
+            <li>Evidence of upper and/or lower motor neuron degeneration</li>
+            <li>Exclusion of other conditions that mimic ALS</li>
+          </ul>
+          <p style="margin-top:10px;"><strong>Key diagnostic tests:</strong></p>
+          <ul>
+            <li><strong>EMG/nerve conduction:</strong> The most important test — shows active denervation and reinnervation</li>
+            <li><strong>MRI brain and spine:</strong> Rules out structural causes of weakness</li>
+            <li><strong>Blood tests:</strong> CBC, metabolic panel, autoimmune, thyroid, B12, HIV, heavy metals</li>
+            <li><strong>Genetic testing:</strong> SOD1, C9orf72, TARDBP, FUS recommended for all patients</li>
+            <li><strong>NfL (neurofilament light chain):</strong> A blood biomarker now used to track disease progression and validate trial outcomes</li>
+          </ul>
+          <p style="margin-top:10px;"><strong>Average time to diagnosis is 12 months</strong> — often delayed due to symptom variability and rarity. Seek a specialist at an ALS center immediately if ALS is suspected.</p>
+        </div>
+      </div>
+    </div>
+    <div class="alert-box alert-warning">
+      <span class="iconify" data-icon="solar:danger-bold"></span>
+      <div><strong>Seek an ALS specialist immediately.</strong> ALS centers provide multidisciplinary care that significantly extends survival and quality of life. Studies consistently show that patients managed at ALS clinics live longer and have better outcomes than those managed by generalists alone.</div>
+    </div>
+  </section>
+
+  <section class="content-section fade-in" id="treatments">
+    <div class="section-header">
+      <div class="section-icon"><span class="iconify" data-icon="solar:pill-bold-duotone"></span></div>
+      <div><h2>Treatments</h2><p>Approved medications, emerging therapies, and respiratory management</p></div>
+    </div>
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab(this,'treatments-group','main-meds')">Approved Medications</button>
+      <button class="tab-btn" onclick="switchTab(this,'treatments-group','new-treatments')">Emerging Therapies</button>
+      <button class="tab-btn" onclick="switchTab(this,'treatments-group','respiratory')">Respiratory Care</button>
+      <button class="tab-btn" onclick="switchTab(this,'treatments-group','ask-doctor')">Ask Your Doctor</button>
+    </div>
+    <div data-tab-group="treatments-group">
+      <div data-tab-content="main-meds" class="tab-content active">
+        <div class="alert-box alert-info">
+          <span class="iconify" data-icon="solar:info-circle-bold"></span>
+          <div>Only a few medications have been approved for ALS. They modestly slow progression; none is curative. The pipeline is active, with several promising agents in late-stage trials. All treatment decisions should involve an ALS specialist.</div>
+        </div>
+        <table class="med-table">
+          <thead><tr><th>Drug (Brand Name)</th><th>Approved</th><th>Mechanism</th><th>Evidence</th></tr></thead>
+          <tbody>
+            <tr><td>Riluzole (Rilutek)</td><td>1995 (FDA, EMA, worldwide)</td><td>Glutamate release inhibitor; reduces excitotoxicity</td><td>Extends survival by 2-3 months on average; considered standard of care for all patients</td></tr>
+            <tr><td>Edaravone (Radicava)</td><td>2017 (FDA, Japan, Canada)</td><td>Free radical scavenger; reduces oxidative stress</td><td>Slowed functional decline in a subgroup of patients in Phase 3; IV or oral formulation</td></tr>
+            <tr><td>Tofersen (Qalsody)</td><td>2023 (FDA accelerated)</td><td>Antisense oligonucleotide (ASO) targeting SOD1 mRNA; reduces SOD1 protein</td><td>Significantly lowers SOD1 and NfL; approved for SOD1-ALS patients specifically</td></tr>
+            <tr><td>Sodium phenylbutyrate + taurursodiol (Relyvrio/AMX0035)</td><td>Withdrawn 2024</td><td>Targets mitochondrial and ER stress pathways</td><td>FDA approval 2022; manufacturer withdrew after Phase 3 trial failed to replicate Phase 2 results</td></tr>
+            <tr><td>Mecobalamin (Rozebalamin, high-dose methylcobalamin)</td><td>2024 (Japan only)</td><td>Ultra-high dose methylcobalamin (50mg IM); neuroprotection mechanism not fully established</td><td>Phase 3 in Japan showed significant survival benefit in early-diagnosed patients; not yet approved outside Japan</td></tr>
+          </tbody>
+        </table>
+        <div class="alert-box alert-info">
+          <span class="iconify" data-icon="solar:info-circle-bold"></span>
+          <div><strong>Symptomatic medications</strong> are a critical part of ALS management: muscle relaxants for spasticity and cramps (baclofen, tizanidine), saliva management (atropine, glycopyrrolate, Botox injections), pseudobulbar affect (dextromethorphan/quinidine — Nuedexta), pain management, and sleep medications.</div>
+        </div>
+      </div>
+      <div data-tab-content="new-treatments" class="tab-content">
+        <div class="cards-grid">
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:dna-bold-duotone"></span> Antisense Oligonucleotides (ASOs)</h3>
+            <p>Following the success of Tofersen (SOD1-ALS), multiple ASO programs are in clinical development targeting C9orf72, ATXN2, and other gene variants. WAVE Life Sciences and other companies are advancing next-generation ASOs with improved delivery and potency. ASOs are delivered by lumbar puncture into the CSF.</p>
+          </div>
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:cells-bold-duotone"></span> Gene Therapy — AMT-162</h3>
+            <p>UniQure's AMT-162 (NCT06100276) is an AAV5 gene therapy delivering a microRNA to silence both wild-type and mutant SOD1. A single intrathecal injection aims to provide durable SOD1 suppression. Phase 1/2 safety trial is actively enrolling SOD1-ALS patients worldwide.</p>
+          </div>
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:cells-bold-duotone"></span> Stem Cell Therapies</h3>
+            <p>Multiple stem cell approaches are in trials: NurOwn (BrainStorm) delivers MSCs secreting BDNF and VEGF; AstroRx (Kadimastem) delivers astrocyte progenitors; and various other approaches inject cells intrathecally. Phase 3 results for NurOwn were mixed; next-generation trials with refined protocols are ongoing.</p>
+          </div>
+          <div class="info-card warm-card">
+            <h3><span class="iconify" data-icon="solar:device-phone-bold-duotone"></span> Brain-Computer Interfaces (BCI)</h3>
+            <p>For patients with advanced ALS who have lost motor function, BCI technologies allow communication and device control through neural signals. Neuralink's N1 implant and Synchron's Stentrode (stent-based, no open brain surgery) have demonstrated remarkable communication restoration in ALS patients who had lost all voluntary movement.</p>
+          </div>
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:test-tube-bold-duotone"></span> Immunotherapy Approaches</h3>
+            <p>Neuroinflammation plays a major role in ALS progression. COYA 302 (NCT05945394) combines Treg-boosting IL-2 therapy to modulate immune overactivation. RAG-17 is an anti-neuroinflammatory compound in early trials. The HEALEY ALS Platform Trial is evaluating multiple investigational drugs simultaneously.</p>
+          </div>
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:health-bold-duotone"></span> Microbiome-Based Approaches</h3>
+            <p>Dr. Richard Bedlack (Duke University), through his ALSUntangled program, has documented cases of ALS "reversals" or unusual stability and is investigating whether gut microbiome factors may play a protective role. The BL-001 probiotic (Pendulibacter vulgatus) is in early clinical evaluation based on findings from ALS mouse models.</p>
+          </div>
+        </div>
+      </div>
+      <div data-tab-content="respiratory" class="tab-content">
+        <div class="alert-box alert-warning">
+          <span class="iconify" data-icon="solar:danger-bold"></span>
+          <div><strong>Respiratory management is the most critical factor in ALS survival.</strong> Respiratory failure is the primary cause of death in ALS. Early intervention with NIV (non-invasive ventilation) extends survival by 7-12 months on average and significantly improves quality of life.</div>
+        </div>
+        <div class="cards-grid">
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:wind-bold-duotone"></span> Non-Invasive Ventilation (NIV/BiPAP)</h3>
+            <p>NIV via mask — typically BiPAP (bilevel positive airway pressure) — is initiated when FVC drops below 50-65% or when symptoms of respiratory insufficiency appear (poor sleep, morning headaches, exertional dyspnea). NIV should be started early; late initiation significantly reduces benefit. Many patients use NIV >16 hours/day in advanced stages.</p>
+          </div>
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:medical-kit-bold-duotone"></span> Cough Assist (Mechanical Insufflation-Exsufflation)</h3>
+            <p>The Cough Assist device delivers positive then negative pressure to simulate a powerful cough and clear airway secretions. Critically important for preventing aspiration pneumonia. Should be initiated when peak cough flow drops below 270 L/min. Used in combination with manually assisted cough techniques.</p>
+          </div>
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:bicycling-round-bold-duotone"></span> Respiratory Muscle Training (RMT)</h3>
+            <p>Threshold inspiratory muscle training (threshold IMT) can slow the rate of respiratory decline when started early in ALS. Evidence from randomized trials shows benefit when FVC is above 70%. Must be carefully supervised — overwork weakness is a risk if applied too aggressively.</p>
+          </div>
+          <div class="info-card warm-card">
+            <h3><span class="iconify" data-icon="solar:shield-warning-bold-duotone"></span> Tracheostomy and Invasive Ventilation</h3>
+            <p>Permanent tracheostomy with mechanical ventilation (TMV) can extend life indefinitely but requires 24-hour care. The decision is deeply personal and should be discussed early, when the patient can fully participate in decision-making. Advance directives and goals-of-care conversations are a critical part of ALS multidisciplinary care.</p>
+          </div>
+        </div>
+      </div>
+      <div data-tab-content="ask-doctor" class="tab-content">
+        <div class="cards-grid">
+          <div class="info-card accent-card">
+            <h3><span class="iconify" data-icon="solar:question-circle-bold-duotone"></span> Key Questions to Ask</h3>
+            <ul>
+              <li>Should I have full genetic testing (SOD1, C9orf72, TARDBP, FUS)?</li>
+              <li>Am I eligible for Tofersen (Qalsody) if I have SOD1 mutation?</li>
+              <li>When should I start NIV, and what targets should I monitor?</li>
+              <li>What clinical trials am I eligible for?</li>
+              <li>Should I have a PEG tube placed while I still have good respiratory function?</li>
+              <li>Can you connect me with the HEALEY Platform Trial at Massachusetts General?</li>
+              <li>What advance directives and palliative care planning should we discuss now?</li>
+            </ul>
+          </div>
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:document-bold-duotone"></span> The ALS Multidisciplinary Team</h3>
+            <p>ALS clinics provide comprehensive, coordinated care including:</p>
+            <ul>
+              <li><strong>ALS neurologist</strong> — disease management, medications, trials</li>
+              <li><strong>Pulmonologist</strong> — respiratory monitoring and NIV management</li>
+              <li><strong>Speech-language pathologist</strong> — speech, swallowing, AAC devices</li>
+              <li><strong>Physiotherapist</strong> — mobility, exercise, equipment</li>
+              <li><strong>Occupational therapist</strong> — adaptive devices, home modifications</li>
+              <li><strong>Dietitian</strong> — nutrition management, PEG tube feeding</li>
+              <li><strong>Social worker</strong> — resources, palliative care planning, caregiver support</li>
+              <li><strong>Palliative care team</strong> — symptom management, goals of care</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section fade-in" id="trials">
+    <div class="section-header">
+      <div class="section-icon"><span class="iconify" data-icon="solar:test-tube-bold-duotone"></span></div>
+      <div><h2>Clinical Trials</h2><p>Active and recruiting trials worldwide — as of 2024/2025</p></div>
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <h4>HEALEY ALS Platform Trial (NCT04297683) — Massachusetts General Hospital</h4>
+        <p>A revolutionary master protocol trial that tests multiple investigational drugs simultaneously in ALS patients using a shared infrastructure. Multiple "regimens" (drug arms) can be added or removed based on interim results. This platform approach dramatically accelerates ALS drug development. Multiple regimens are currently active.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>PREVAiLS — C9orf72 Pre-Symptomatic Prevention (NCT04856982)</h4>
+        <p>The first ALS prevention trial — enrolling C9orf72 mutation carriers who do not yet have symptoms. Tests whether early ASO treatment can prevent or delay ALS onset. A landmark trial that could reshape how genetic ALS is managed. Conducted at sites across the US, Canada, UK, and Europe.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>ATLAS — SOD1 Pre-Symptomatic (NCT04931862)</h4>
+        <p>Tests Tofersen (Qalsody) in presymptomatic SOD1 mutation carriers. The ATLAS trial has already shown that early Tofersen treatment can dramatically delay ALS onset in high-risk carriers. This represents a major paradigm shift toward pre-symptomatic intervention in genetic ALS.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>NurOwn Phase 3b — BrainStorm Cell Therapeutics</h4>
+        <p>A revised Phase 3 trial of NurOwn (autologous MSC-NTF cells) with refined patient selection criteria focusing on earlier-stage patients, where the Phase 2 signal was strongest. Intrathecal injection of cells engineered to secrete neuroprotective factors (BDNF, VEGF, HGF).</p>
+      </div>
+      <div class="timeline-item">
+        <h4>AMT-162 — SOD1 Gene Therapy (NCT06100276)</h4>
+        <p>UniQure's AAV5-based gene therapy delivering microRNA targeting SOD1. A single intrathecal injection. Phase 1/2 dose-escalation trial in SOD1-ALS. The appeal: a one-time treatment rather than chronic drug administration. Early safety data expected 2025.</p>
+      </div>
+      <div class="timeline-item">
+        <h4>COYA 302 — Treg Immunotherapy (NCT05945394)</h4>
+        <p>Combines low-dose interleukin-2 with rapamycin to expand and activate regulatory T cells (Tregs), which are known to be reduced and dysfunctional in ALS. Neuroinflammation driven by immune dysregulation may accelerate motor neuron death — Treg therapy aims to restore immune balance.</p>
+      </div>
+    </div>
+    <div class="alert-box alert-success">
+      <span class="iconify" data-icon="solar:verified-check-bold"></span>
+      <div><strong>ALS Trial Finder:</strong> Visit <a href="https://www.als.org/research/research-we-fund/clinical-trials" target="_blank" style="color:inherit;">als.org/research</a> (ALS Association) and <a href="https://www.clinicaltrials.gov" target="_blank" style="color:inherit;">ClinicalTrials.gov</a> to find current trials. The NEALS (Northeast ALS) Consortium at neals.org also maintains a comprehensive trial directory.</div>
+    </div>
+  </section>
+
+  <section class="content-section fade-in" id="research">
+    <div class="section-header">
+      <div class="section-icon"><span class="iconify" data-icon="solar:microscope-bold-duotone"></span></div>
+      <div><h2>Latest Research</h2><p>Breakthroughs from 2023-2025</p></div>
+    </div>
+    <div class="cards-grid">
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:cells-bold-duotone"></span> TDP-43 Cryo-EM Structure</h3>
+        <p>Researchers have now solved the 3D cryo-EM structure of pathological TDP-43 aggregates at near-atomic resolution (Science, 2023). This reveals the precise misfolded confirmation of TDP-43 filaments found in 97% of ALS cases — a critical step toward designing drugs that dissolve or prevent these aggregates.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:dna-bold-duotone"></span> C9orf72 Folate-Sensitive Fragile Site</h3>
+        <p>A 2024 Nature Genetics study discovered that the C9orf72 repeat expansion occurs at a folate-sensitive fragile chromosomal site, explaining why some regions show higher ALS rates. This finding opens new research directions: folate metabolism may influence C9orf72 stability and expression.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:test-tube-bold-duotone"></span> NfL as Blood Biomarker</h3>
+        <p>Neurofilament light chain (NfL) measured in blood is now validated as the primary biomarker for ALS progression and treatment response. NfL levels closely correlate with the rate of motor neuron death. It is now being used as the primary endpoint in multiple clinical trials, dramatically reducing required sample sizes.</p>
+      </div>
+      <div class="info-card warm-card">
+        <h3><span class="iconify" data-icon="solar:cpu-bold-duotone"></span> AI Diagnosis from EMG</h3>
+        <p>A 2024 machine learning study showed that AI analysis of standard EMG recordings can diagnose ALS with greater accuracy than experienced neurologists alone, and can predict disease progression rate. This could dramatically reduce the current 12-month average time to diagnosis — earlier diagnosis enables earlier treatment and trial enrollment.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:health-bold-duotone"></span> Gut Microbiome in ALS</h3>
+        <p>Multiple studies have found altered gut microbiome compositions in ALS patients. Dr. Bedlack's ALSUntangled program documented a case of ALS stabilization linked to probiotic use. Animal studies show that Pendulibacter vulgatus supplementation is neuroprotective. The BL-001 probiotic trial is now evaluating this in humans.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:layers-bold-duotone"></span> ATLAS Trial Breakthrough</h3>
+        <p>The ATLAS trial (Tofersen in presymptomatic SOD1-ALS) showed that starting treatment before symptom onset reduced NfL levels by 80% and dramatically delayed the onset of motor symptoms in high-risk carriers. This is the first time a drug has demonstrated meaningful prevention of ALS onset — a paradigm-shifting finding.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section fade-in" id="physio">
+    <div class="section-header">
+      <div class="section-icon"><span class="iconify" data-icon="solar:bicycling-round-bold-duotone"></span></div>
+      <div><h2>Physiotherapy</h2><p>Exercise and rehabilitation in ALS — principles and evidence</p></div>
+    </div>
+    <div class="alert-box alert-warning">
+      <span class="iconify" data-icon="solar:danger-bold"></span>
+      <div><strong>Important ALS-specific principle:</strong> Unlike Parkinson's disease, overwork weakness IS a real risk in ALS. Exercise should be moderate in intensity — not vigorous. The goal is to maintain function and delay muscle atrophy, not to push through fatigue. Always exercise with physiotherapy supervision.</div>
+    </div>
+    <div class="cards-grid">
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:diploma-bold-duotone"></span> Neurological Physiotherapy</h3>
+        <p>An ALS-specialized physiotherapist designs individualized programs that adapt as the disease progresses. Assessment covers strength, functional mobility, fatigue levels, and fall risk. The focus shifts over time from strengthening to compensation, adaptive equipment, and caregiver training. Regular reassessment is essential.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:running-round-bold-duotone"></span> Moderate Aerobic Exercise</h3>
+        <p>Moderate aerobic exercise — walking, cycling at low resistance, recumbent cycling — has been shown to slow functional decline compared to sedentary behavior in ALS. The key is moderate intensity: perceived exertion of 12-14 on the Borg scale, never reaching exhaustion. Stop at first sign of significant fatigue.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:swimming-bold-duotone"></span> Aquatic (Hydrotherapy)</h3>
+        <p>Water buoyancy allows patients with significant muscle weakness to exercise safely with minimal fall risk. Warm water reduces spasticity and pain. Aquatic therapy maintains cardiovascular fitness, range of motion, and functional strength. Available at specialized hydrotherapy pools; supervision by ALS-experienced staff is important.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:wheelchair-bold-duotone"></span> Occupational Therapy</h3>
+        <p>OT is critical throughout ALS progression: adaptive eating utensils, voice-activated home systems, electric wheelchairs and power accessories, home modifications (ramps, grab bars, hospital beds), environmental control units, and eye-gaze communication devices for advanced stages.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:wind-bold-duotone"></span> Respiratory Muscle Training</h3>
+        <p>Inspiratory threshold muscle training (IMT) slows respiratory function decline when started while FVC is above 70%. Requires careful monitoring — overwork can be counterproductive. Sessions should be brief (15-20 minutes) and never cause significant fatigue. Always conducted under pulmonological supervision in ALS.</p>
+      </div>
+      <div class="info-card warm-card">
+        <h3><span class="iconify" data-icon="solar:shield-warning-bold-duotone"></span> Overwork Weakness Warning</h3>
+        <p>Unlike most neurological conditions, pushing through fatigue in ALS can cause irreversible additional muscle damage ("overwork weakness"). Signs to stop: significant fatigue lasting more than 30 minutes after exercise, new weakness, muscle soreness lasting over 24 hours. Always exercise at moderate — not maximum — capacity.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section fade-in" id="lifestyle">
+    <div class="section-header">
+      <div class="section-icon"><span class="iconify" data-icon="solar:running-round-bold-duotone"></span></div>
+      <div><h2>Lifestyle, Nutrition, and Communication</h2><p>Managing daily life and independence with ALS</p></div>
+    </div>
+    <div class="tab-bar">
+      <button class="tab-btn active" onclick="switchTab(this,'lifestyle-group','nutrition')">Nutrition</button>
+      <button class="tab-btn" onclick="switchTab(this,'lifestyle-group','communication')">Communication</button>
+      <button class="tab-btn" onclick="switchTab(this,'lifestyle-group','assistive-tech')">Assistive Technology</button>
+    </div>
+    <div data-tab-group="lifestyle-group">
+      <div data-tab-content="nutrition" class="tab-content active">
+        <div class="alert-box alert-success">
+          <span class="iconify" data-icon="solar:star-bold"></span>
+          <div><strong>Maintaining nutrition and healthy weight is critically important in ALS.</strong> Weight loss accelerates disease progression. Patients who maintain their weight through adequate caloric intake have significantly better survival outcomes. High-calorie, high-protein diets are the standard recommendation.</div>
+        </div>
+        <div class="cards-grid">
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:leaf-bold-duotone"></span> High-Calorie, High-Protein Diet</h3>
+            <p>ALS increases caloric demands due to increased energy expenditure from fasciculations and reduced efficiency of muscle use. Target 125-150% of normal daily caloric intake. High protein (1.5-2g/kg body weight) supports muscle mass preservation. Calorie-dense, easy-to-swallow foods should be prioritized as dysphagia develops.</p>
+          </div>
+          <div class="info-card warm-card">
+            <h3><span class="iconify" data-icon="solar:medical-kit-bold-duotone"></span> PEG Tube (Percutaneous Endoscopic Gastrostomy)</h3>
+            <p>A feeding tube placed directly into the stomach is recommended when oral intake becomes insufficient to maintain weight, or when aspiration risk becomes significant. Critical timing: PEG should be placed while respiratory function is still adequate (FVC above 50%). Placed too late, the procedure carries significant risk. PEG preserves quality of life and extends survival.</p>
+          </div>
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:layers-bold-duotone"></span> IDDSI Texture Framework</h3>
+            <p>As dysphagia progresses, food textures must be modified to prevent aspiration. The International Dysphagia Diet Standardisation Initiative (IDDSI) provides a standardized framework (Levels 0-7) from thin liquids to regular foods. A speech-language pathologist determines the appropriate texture level using clinical swallowing assessment and videofluoroscopy.</p>
+          </div>
+        </div>
+      </div>
+      <div data-tab-content="communication" class="tab-content">
+        <div class="cards-grid">
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:microphone-bold-duotone"></span> Voice Banking</h3>
+            <p>Voice banking records a large number of speech samples while the patient's voice is still clear, creating a personalized synthetic voice. Services include ModelTalker, VocaliD, and Acapela My-Own-Voice. Voice banking should begin immediately after diagnosis — before any noticeable speech changes. A synthetic voice that sounds like you preserves identity and improves communication quality.</p>
+          </div>
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:chat-round-bold-duotone"></span> Message Banking</h3>
+            <p>Beyond voice, message banking records personally meaningful phrases, expressions, humor, and stories that can be played back later. Recording "I love you," "Good morning," laughter, and other personal expressions preserves a crucial part of identity. Apps like Snap Core First and Proloquo allow personal message libraries.</p>
+          </div>
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:eye-bold-duotone"></span> AAC and Eye-Tracking Technology</h3>
+            <p>When speech becomes significantly impaired, augmentative and alternative communication (AAC) devices take over. Eye-tracking technology (Tobii Dynavox, Grid Pad) allows full communication, computer access, and environmental control using only eye movements. For patients who lose all motor function, brain-computer interfaces (Synchron Stentrode, Neuralink) can restore communication.</p>
+          </div>
+        </div>
+      </div>
+      <div data-tab-content="assistive-tech" class="tab-content">
+        <div class="cards-grid">
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:wheelchair-bold-duotone"></span> Power Wheelchairs and Mobility</h3>
+            <p>Electric power wheelchairs should be introduced early, while the patient can still learn to operate them independently. Features to consider: tilt-in-space and recline for positioning, ventilator mount, AAC device mount, and power-adjustable headrest. Custom seating and pressure management are critical for preventing pressure sores.</p>
+          </div>
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:home-bold-duotone"></span> Smart Home and Environmental Control</h3>
+            <p>Voice-activated systems (Amazon Alexa, Google Home), smart plugs, and environmental control units allow patients to control lights, TV, temperature, doors, and phones independently. As speech weakens, switch-activated or eye-gaze controlled systems take over. Early setup prevents loss of independence.</p>
+          </div>
+          <div class="info-card">
+            <h3><span class="iconify" data-icon="solar:device-phone-bold-duotone"></span> Emerging Communication Devices</h3>
+            <p>Synchron's Stentrode BCI is implanted via a blood vessel (no open brain surgery) and restored reliable communication to ALS patients who had lost all motor function. Neuralink's N1 implant has similarly shown remarkable results in ALS. These technologies are in active clinical trials with an accelerating path toward availability.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section fade-in" id="psychological-approach">
+    <div class="section-header">
+      <div class="section-icon"><span class="iconify" data-icon="solar:heart-pulse-bold-duotone"></span></div>
+      <div><h2>Mental Health and Psychological Support</h2><p>Emotional wellbeing, family support, and palliative care</p></div>
+    </div>
+    <div class="cards-grid">
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:chart-2-bold-duotone"></span> Prevalence of Psychological Challenges</h3>
+        <ul>
+          <li><strong>Depression:</strong> Affects approximately 33% of ALS patients</li>
+          <li><strong>Anxiety:</strong> Affects approximately 35% of patients</li>
+          <li><strong>Pseudobulbar affect (PBA):</strong> Uncontrolled laughing or crying; affects 20-50% of patients</li>
+          <li><strong>Caregiver burden:</strong> Nearly 49% of caregivers experience significant burnout</li>
+          <li><strong>Frontal lobe changes:</strong> Up to 50% of patients have some behavioral/cognitive change; 5-10% develop frontotemporal dementia (FTD)</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3><span class="iconify" data-icon="solar:chat-square-like-bold-duotone"></span> Evidence-Based Psychological Interventions</h3>
+        <ul>
+          <li><strong>CBT:</strong> Addresses depression, anxiety, and existential distress; adapted for ALS communication limitations</li>
+          <li><strong>ACT (Acceptance and Commitment Therapy):</strong> Strong evidence for adapting to progressive illness; focuses on values-based living</li>
+          <li><strong>Dignity Therapy:</strong> A brief, narrative psychotherapy specifically developed for patients with terminal illness; creates a lasting "legacy document"</li>
+          <li><strong>Mindfulness-Based Approaches:</strong> Reduce anxiety and improve coping; many programs are available online</li>
+          <li><strong>Family therapy:</strong> Essential for processing shared grief and caregiver burnout</li>
+        </ul>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span><span class="iconify" data-icon="solar:pill-bold-duotone"></span> &nbsp;Managing Pseudobulbar Affect (PBA) and Depression</span>
+        <span class="iconify" data-icon="solar:alt-arrow-down-bold"></span>
+      </div>
+      <div class="accordion-body">
+        <div class="accordion-inner">
+          <p><strong>Pseudobulbar Affect (PBA):</strong> Characterized by sudden, uncontrollable laughing or crying disproportionate to the situation. Caused by upper motor neuron damage disrupting emotional expression circuits.</p>
+          <ul>
+            <li>Nuedexta (dextromethorphan/quinidine) — the only FDA-approved treatment for PBA; significantly reduces episode frequency and severity</li>
+            <li>SSRIs and TCAs are also used off-label and can help</li>
+          </ul>
+          <p style="margin-top:10px;"><strong>Depression:</strong> SSRIs are the first-line choice; mirtazapine is useful when appetite stimulation is also needed. Methylphenidate is sometimes used for fatigue-related low mood. Psychological therapy is strongly recommended alongside medication.</p>
+        </div>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span><span class="iconify" data-icon="solar:hand-heart-bold-duotone"></span> &nbsp;Palliative Care and Advance Planning</span>
+        <span class="iconify" data-icon="solar:alt-arrow-down-bold"></span>
+      </div>
+      <div class="accordion-body">
+        <div class="accordion-inner">
+          <p>Palliative care is not "giving up" — it is expert, parallel care focused on quality of life alongside disease management. In ALS, early palliative care integration is associated with longer survival and better quality of life.</p>
+          <ul>
+            <li>Advance directive discussions: ventilation preferences, PEG tube, CPR, hospitalization goals</li>
+            <li>Hospice enrollment (when appropriate) provides significant comfort and family support</li>
+            <li>Medical aid in dying (MAID) is legal and available in several countries and US states</li>
+            <li>Legacy projects: voice/message banking, video recordings, written letters for family milestones</li>
+            <li>Grief support for family before and after bereavement</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span><span class="iconify" data-icon="solar:users-group-rounded-bold-duotone"></span> &nbsp;Caregiver Support</span>
+        <span class="iconify" data-icon="solar:alt-arrow-down-bold"></span>
+      </div>
+      <div class="accordion-body">
+        <div class="accordion-inner">
+          <p>ALS caregiving is one of the most demanding roles in all of medicine. Caregiver burnout, depression, and social isolation are common. Key support strategies include:</p>
+          <ul>
+            <li>Respite care (short-term breaks from caregiving) — available through ALS organizations and community programs</li>
+            <li>Caregiver support groups through the ALS Association and MNDA</li>
+            <li>Home health aide services and personal care attendants</li>
+            <li>Professional counseling and therapy for caregivers</li>
+            <li>Financial planning and benefits navigation (social work support)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section fade-in" id="stories">
+    <div class="section-header">
+      <div class="section-icon"><span class="iconify" data-icon="solar:users-group-rounded-bold-duotone"></span></div>
+      <div><h2>Community Stories</h2><p>Experiences from people living with ALS and their families</p></div>
+    </div>
+    <div class="story-card">
+      <blockquote>"Being diagnosed with SOD1-ALS was devastating, but it also meant I qualified for Tofersen. After six months, my neurologist told me my NfL levels had dropped dramatically. I don't know how much time it has bought me, but I'm fighting with every tool available."</blockquote>
+      <cite>— James, 48, SOD1-ALS diagnosis, on Tofersen since 2023</cite>
+    </div>
+    <div class="story-card">
+      <blockquote>"We started voice banking six weeks after diagnosis. Now, three years later, my father uses a synthetic version of his own voice to talk to his grandchildren. The technology is imperfect, but hearing 'his' voice saying 'I love you' — that means everything."</blockquote>
+      <cite>— Claire, daughter of ALS patient</cite>
+    </div>
+    <div class="story-card">
+      <blockquote>"The ALS clinic changed everything for us. Before, we were seeing a general neurologist who had maybe three ALS patients. At the clinic, the whole team works together — respiratory, speech, physio, social work — all in one day. I felt like I had an army on my side."</blockquote>
+      <cite>— Robert, 61, bulbar-onset ALS, diagnosed 2022</cite>
+    </div>
+    <div class="story-card">
+      <blockquote>"I enrolled in the HEALEY Platform Trial. Even if the drug doesn't work for me, I'm contributing to research that might help someone else. The monitoring I receive through the trial is exceptional — I actually feel better cared for than before."</blockquote>
+      <cite>— Linda, 55, in HEALEY Platform Trial since 2023</cite>
+    </div>
+    <div class="alert-box alert-info">
+      <span class="iconify" data-icon="solar:info-circle-bold"></span>
+      <div>ALS affects every person differently. Disease progression, symptoms, and responses to treatment vary widely. Always work with an ALS specialist and multidisciplinary team to develop a personalized care plan.</div>
+    </div>
+  </section>
+
+  <section class="content-section fade-in" id="action">
+    <div class="section-header">
+      <div class="section-icon"><span class="iconify" data-icon="solar:checklist-minimalistic-bold-duotone"></span></div>
+      <div><h2>Your Action Plan</h2><p>Critical steps after an ALS diagnosis</p></div>
+    </div>
+    <div class="action-steps">
+      <div class="action-step">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>Get to an ALS clinic immediately</h4>
+          <p>ALS multidisciplinary clinics provide specialized, coordinated care that has been shown to extend survival by months and significantly improve quality of life. Search for your nearest certified ALS center via the ALS Association (als.org) or MNDA (mndassociation.org). Do not wait — early enrollment in an ALS clinic changes outcomes.</p>
+        </div>
+      </div>
+      <div class="action-step">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>Request complete genetic testing immediately</h4>
+          <p>Genetic testing for SOD1, C9orf72, TARDBP, FUS, and other ALS genes is now standard of care. A SOD1 mutation qualifies you for Tofersen (approved) and gene therapy trials. C9orf72 may qualify you for ASO trials and the PREVAiLS prevention study. Results also enable your family members to be tested and potentially treated preventively.</p>
+        </div>
+      </div>
+      <div class="action-step">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>Discuss respiratory monitoring immediately</h4>
+          <p>Begin regular FVC (forced vital capacity) measurements every 3 months. Discuss the timing of NIV initiation with your pulmonologist or ALS neurologist. Initiate respiratory muscle training while FVC is above 70%. Discuss PEG tube placement timing before respiratory function becomes too compromised for the procedure.</p>
+        </div>
+      </div>
+      <div class="action-step">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h4>Start voice banking NOW</h4>
+          <p>Voice banking takes weeks of recording effort and must be done before your voice changes significantly. Start immediately — ideally within weeks of diagnosis. Use ModelTalker, VocaliD, or Acapela My-Own-Voice. Simultaneously begin message banking: record personal phrases, laughter, stories, and words of love that will matter deeply in the future.</p>
+        </div>
+      </div>
+      <div class="action-step">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <h4>Explore clinical trials</h4>
+          <p>ALS research is moving faster than at any point in history. Visit ClinicalTrials.gov, the NEALS Consortium (neals.org), and the ALS Association trial finder to identify trials you may qualify for. The HEALEY Platform Trial at Massachusetts General is open nationally. Trial participation provides excellent monitoring and contributes to the field.</p>
+        </div>
+      </div>
+      <div class="action-step">
+        <div class="step-num">6</div>
+        <div class="step-content">
+          <h4>Advance care planning — do it early</h4>
+          <p>Have detailed goals-of-care conversations while you can fully participate: ventilation preferences, PEG tube decisions, CPR preferences, hospice wishes, legal advance directives, power of attorney, and financial planning. Your ALS social worker can guide this process. Decisions made early — when you are well — are honored more completely and relieve enormous burden from your family.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section fade-in" id="resources">
+    <div class="section-header">
+      <div class="section-icon"><span class="iconify" data-icon="solar:library-bold-duotone"></span></div>
+      <div><h2>Resources and Organizations</h2><p>Leading international organizations, centers, and tools</p></div>
+    </div>
+    <h3 style="font-size:1rem; font-weight:700; color:var(--primary); margin-bottom:16px;">International Organizations</h3>
+    <div class="resource-links" style="margin-bottom:28px;">
+      <a class="resource-link" href="https://www.als.org" target="_blank">
+        <span class="iconify" data-icon="solar:global-bold-duotone"></span>
+        <div><div class="rl-title">ALS Association (US)</div><div class="rl-desc">Largest US ALS nonprofit; research funding, clinical services, care services, advocacy, care center finder</div></div>
+      </a>
+      <a class="resource-link" href="https://www.mndassociation.org" target="_blank">
+        <span class="iconify" data-icon="solar:map-point-bold-duotone"></span>
+        <div><div class="rl-title">Motor Neurone Disease (MND) Association — UK</div><div class="rl-desc">UK's leading MND/ALS charity; information, helpline, support groups, research funding</div></div>
+      </a>
+      <a class="resource-link" href="https://www.als.ca" target="_blank">
+        <span class="iconify" data-icon="solar:global-bold-duotone"></span>
+        <div><div class="rl-title">ALS Canada</div><div class="rl-desc">Canadian ALS organization; research funding, patient support, care programs, advocacy</div></div>
+      </a>
+      <a class="resource-link" href="https://www.alsaustralia.org.au" target="_blank">
+        <span class="iconify" data-icon="solar:global-bold-duotone"></span>
+        <div><div class="rl-title">MND Australia</div><div class="rl-desc">Australia's national MND/ALS organization; support, research, advocacy</div></div>
+      </a>
+    </div>
+    <h3 style="font-size:1rem; font-weight:700; color:var(--primary); margin-bottom:16px;">Leading ALS Research Centers</h3>
+    <div class="resource-links" style="margin-bottom:28px;">
+      <a class="resource-link" href="https://www.massgeneral.org/neurology/als-clinic" target="_blank">
+        <span class="iconify" data-icon="solar:hospital-bold-duotone"></span>
+        <div><div class="rl-title">Massachusetts General Hospital ALS Clinic (Boston)</div><div class="rl-desc">Home of the HEALEY ALS Platform Trial; world-leading ALS research and clinical care</div></div>
+      </a>
+      <a class="resource-link" href="https://www.hopkinsmedicine.org/neurology-neurosurgery/centers-clinics/als-clinic.html" target="_blank">
+        <span class="iconify" data-icon="solar:hospital-bold-duotone"></span>
+        <div><div class="rl-title">Johns Hopkins ALS Clinic</div><div class="rl-desc">Comprehensive multidisciplinary ALS care and research, including genetic counseling</div></div>
+      </a>
+      <a class="resource-link" href="https://als.ucsf.edu" target="_blank">
+        <span class="iconify" data-icon="solar:hospital-bold-duotone"></span>
+        <div><div class="rl-title">UCSF ALS Center (San Francisco)</div><div class="rl-desc">Top-ranked ALS research and clinical center; multiple active trials</div></div>
+      </a>
+    </div>
+    <h3 style="font-size:1rem; font-weight:700; color:var(--primary); margin-bottom:16px;">Clinical Trial Resources</h3>
+    <div class="resource-links">
+      <a class="resource-link" href="https://www.neals.org" target="_blank">
+        <span class="iconify" data-icon="solar:test-tube-bold-duotone"></span>
+        <div><div class="rl-title">NEALS Consortium</div><div class="rl-desc">Northeast ALS Consortium; clinical trial network with comprehensive trial directory</div></div>
+      </a>
+      <a class="resource-link" href="https://www.clinicaltrials.gov" target="_blank">
+        <span class="iconify" data-icon="solar:document-bold-duotone"></span>
+        <div><div class="rl-title">ClinicalTrials.gov</div><div class="rl-desc">Complete US and international clinical trial registry (US National Institutes of Health)</div></div>
+      </a>
+      <a class="resource-link" href="https://www.alsuntangled.com" target="_blank">
+        <span class="iconify" data-icon="solar:microscope-bold-duotone"></span>
+        <div><div class="rl-title">ALSUntangled (Dr. Bedlack, Duke)</div><div class="rl-desc">Evidence-based reviews of alternative and emerging ALS treatments; ROAR program for reversals</div></div>
+      </a>
+    </div>
+  </section>
+
+</div>
+
+<button id="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" aria-label="Back to top">
+  <span class="iconify" data-icon="solar:alt-arrow-up-bold"></span>
+</button>
+
+<script>
+  window.addEventListener('scroll', () => {
+    const st = document.documentElement.scrollTop;
+    const sh = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+    document.getElementById('scroll-progress').style.width = ((st / sh) * 100) + '%';
+    document.getElementById('scroll-top').classList.toggle('show', st > 300);
+  });
+  function toggleMenu() {
+    document.getElementById('sidebar').classList.toggle('open');
+    document.getElementById('overlay').classList.toggle('show');
+  }
+  function closeMenu() {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('show');
+  }
+  function navigate(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({behavior:'smooth', block:'start'});
+    document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+    const link = document.querySelector('nav a[onclick*="' + id + '"]');
+    if (link) link.classList.add('active');
+    if (window.innerWidth <= 900) closeMenu();
+    return false;
+  }
+  function navigateTo(id) { return navigate(id); }
+  function toggleAccordion(header) {
+    const body = header.nextElementSibling;
+    const isOpen = body.classList.contains('open');
+    document.querySelectorAll('.accordion-body.open').forEach(b => {
+      b.classList.remove('open');
+      b.previousElementSibling.classList.remove('open');
+    });
+    if (!isOpen) { body.classList.add('open'); header.classList.add('open'); }
+  }
+  function switchTab(btn, group, tabId) {
+    const groupEl = document.querySelector('[data-tab-group="' + group + '"]');
+    if (!groupEl) return;
+    groupEl.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active'));
+    const target = groupEl.querySelector('[data-tab-content="' + tabId + '"]');
+    if (target) target.classList.add('active');
+    btn.closest('.tab-bar').querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        const id = entry.target.id;
+        if (id) {
+          document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+          const link = document.querySelector('nav a[onclick*="' + id + '"]');
+          if (link) link.classList.add('active');
+        }
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '-80px 0px -80px 0px' });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  function searchPortal(query) {
+    if (!query.trim()) { document.querySelectorAll('.content-section').forEach(s => s.style.display = ''); return; }
+    const q = query.toLowerCase();
+    document.querySelectorAll('.content-section').forEach(s => {
+      s.style.display = s.innerText.toLowerCase().includes(q) ? '' : 'none';
+    });
+  }
+</script>
+</body>
+</html>

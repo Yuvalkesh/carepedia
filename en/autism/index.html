@@ -1,0 +1,1743 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Autism Spectrum Disorder Hub | CarePedia Information Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="alternate" hreflang="he" href="https://carepedia.org/autism" />
+<link rel="alternate" hreflang="en" href="https://carepedia.org/en/autism" />
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --primary: #0f4c75;
+  --primary-light: #3282b8;
+  --accent: #00b894;
+  --accent-light: #55efc4;
+  --warm: #fdcb6e;
+  --warm-dark: #e17055;
+  --bg: #f0f4f8;
+  --card: #ffffff;
+  --text: #2c3e50;
+  --text-light: #5d6d7e;
+  --shadow: 0 4px 20px rgba(0,0,0,0.08);
+  --shadow-hover: 0 12px 40px rgba(0,0,0,0.18);
+  --radius: 16px;
+  --transition: all 0.3s cubic-bezier(.4,0,.2,1);
+  /* Aliases for Iconify icons */
+  --forest: #0f4c75;
+  --forest-mid: #3282b8;
+  --forest-light: rgba(50,130,184,0.12);
+  --amber: #fdcb6e;
+  --amber-light: rgba(253,203,110,0.12);
+  --border: #dde4eb;
+}
+
+body {
+  font-family: 'Rubik', 'Segoe UI', Tahoma, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.8;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background:
+    radial-gradient(ellipse at 10% 20%, rgba(15,76,117,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 80%, rgba(0,184,148,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(253,203,110,0.05) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.scroll-progress {
+  position: fixed;
+  top: 0; right: 0;
+  width: 100%; height: 4px;
+  z-index: 2000;
+  background: transparent;
+}
+.scroll-progress .bar {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--primary-light), var(--warm));
+  border-radius: 0 0 0 4px;
+  transition: width 0.1s linear;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 280px; height: 100vh;
+  background: rgba(15,76,117,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(255,255,255,0.1);
+  z-index: 1000;
+  padding: 30px 20px;
+  overflow-y: auto;
+  transition: transform 0.4s cubic-bezier(.4,0,.2,1);
+}
+.sidebar .logo {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+.sidebar .logo .icon { font-size: 48px; }
+.sidebar .logo h2 { color: #fff; font-size: 18px; margin-top: 8px; font-weight: 600; }
+.sidebar nav a {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 18px; color: rgba(255,255,255,0.8);
+  text-decoration: none; border-radius: 12px;
+  margin-bottom: 4px; font-size: 15px; transition: var(--transition);
+}
+.sidebar nav a:hover, .sidebar nav a.active {
+  background: rgba(255,255,255,0.15); color: #fff; transform: translateX(4px);
+}
+.sidebar nav a .nav-icon { font-size: 22px; min-width: 30px; text-align: center; }
+
+.menu-toggle {
+  display: none;
+  position: fixed;
+  top: 20px; left: 20px;
+  z-index: 1100;
+  background: var(--primary); color: #fff;
+  border: none; border-radius: 12px;
+  width: 50px; height: 50px; font-size: 24px;
+  cursor: pointer; box-shadow: var(--shadow); transition: var(--transition);
+}
+.menu-toggle:hover { transform: scale(1.05); }
+.menu-toggle.open { border-radius: 50%; background: var(--warm-dark); }
+
+.main {
+  margin-left: 280px;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--primary) 0%, #3282b8 40%, var(--accent) 100%);
+  padding: 80px 60px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%);
+  animation: float 20s linear infinite;
+}
+@keyframes float { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+.hero-content { position: relative; z-index: 1; max-width: 900px; }
+.hero h1 { font-size: 52px; font-weight: 800; margin-bottom: 10px; line-height: 1.3; }
+.hero .greeting { font-size: 22px; opacity: 0.95; margin-bottom: 30px; line-height: 1.7; }
+.hero .subtitle { font-size: 18px; opacity: 0.8; max-width: 700px; }
+
+.fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+.section { padding: 60px; max-width: 1100px; margin: 0 auto; }
+.section-header {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 40px; padding-bottom: 20px;
+  border-bottom: 3px solid var(--primary-light);
+}
+.section-header .sec-icon { font-size: 42px; }
+.section-header h2 { font-size: 36px; color: var(--primary); }
+.section-header p { color: var(--text-light); font-size: 16px; margin-top: 4px; }
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px; margin-bottom: 40px;
+}
+.card {
+  background: var(--card); border-radius: var(--radius); padding: 30px;
+  box-shadow: var(--shadow); transition: var(--transition);
+  border-top: 4px solid var(--primary-light);
+  position: relative; overflow: hidden;
+}
+.card:hover { transform: translateY(-6px) scale(1.01); box-shadow: var(--shadow-hover); }
+.card .card-icon { font-size: 40px; margin-bottom: 16px; }
+.card h3 { font-size: 20px; color: var(--primary); margin-bottom: 12px; }
+.card p { color: var(--text-light); font-size: 15px; line-height: 1.8; }
+.card.green { border-top-color: var(--accent); }
+.card.orange { border-top-color: var(--warm); }
+.card.blue { border-top-color: var(--primary-light); }
+
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px; margin-top: 40px;
+}
+.cat-card {
+  background: var(--card); border-radius: var(--radius); padding: 30px 24px;
+  text-align: center; cursor: pointer; transition: var(--transition);
+  box-shadow: var(--shadow); text-decoration: none; color: var(--text);
+}
+.cat-card:hover { transform: translateY(-6px) scale(1.02); box-shadow: var(--shadow-hover); }
+.cat-card .cat-icon { font-size: 48px; margin-bottom: 14px; }
+.cat-card h3 { font-size: 18px; color: var(--primary); margin-bottom: 8px; }
+.cat-card p { font-size: 13px; color: var(--text-light); }
+
+.accordion { margin-bottom: 16px; }
+.accordion-header {
+  background: var(--card); padding: 20px 24px; border-radius: var(--radius);
+  cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+  box-shadow: var(--shadow); transition: var(--transition);
+  font-size: 17px; font-weight: 600; color: var(--primary);
+}
+.accordion-header:hover { background: #eef4fb; }
+.accordion-header .arrow { transition: transform 0.3s ease; font-size: 20px; }
+.accordion-header.open .arrow { transform: rotate(180deg); }
+.accordion-body {
+  max-height: 0; overflow: clip; transition: max-height 0.4s ease;
+  background: var(--card); border-radius: 0 0 var(--radius) var(--radius); margin-top: -8px;
+}
+.accordion-body .inner { padding: 20px 24px 24px; color: var(--text-light); line-height: 2; }
+
+.tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+.tab-btn {
+  padding: 12px 24px; background: var(--card);
+  border: 2px solid #dde4eb; border-radius: 30px;
+  cursor: pointer; font-size: 15px; font-family: inherit;
+  color: var(--text-light); transition: var(--transition);
+}
+.tab-btn:hover { border-color: var(--primary-light); color: var(--primary); }
+.tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.tab-content { display: none; animation: fadeIn 0.4s ease; }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.info-box {
+  background: linear-gradient(135deg, #eaf4fb 0%, #e8f8f0 100%);
+  border-radius: var(--radius); padding: 24px 28px; margin: 24px 0;
+  border-left: 5px solid var(--primary-light);
+}
+.info-box.warning { background: linear-gradient(135deg, #fef9e7 0%, #fdebd0 100%); border-left-color: var(--warm); }
+.info-box.success { background: linear-gradient(135deg, #e8f8f0 0%, #d5f5e3 100%); border-left-color: var(--accent); }
+.info-box h4 { color: var(--primary); margin-bottom: 8px; font-size: 17px; }
+.info-box p { color: var(--text-light); font-size: 15px; }
+
+.link-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 24px; background: var(--primary);
+  color: #fff; text-decoration: none; border-radius: 30px;
+  font-size: 15px; transition: var(--transition); margin: 6px;
+}
+.link-btn:hover { background: var(--primary-light); transform: translateY(-2px); }
+.link-btn.green { background: var(--accent); }
+.link-btn.green:hover { background: var(--accent-light); color: var(--text); }
+.link-btn.orange { background: var(--warm-dark); }
+.link-btn.orange:hover { background: var(--warm); color: var(--text); }
+
+.styled-table {
+  width: 100%; border-collapse: collapse; margin: 20px 0;
+  background: var(--card); border-radius: var(--radius);
+  overflow: hidden; box-shadow: var(--shadow);
+}
+.styled-table thead { background: var(--primary); color: #fff; }
+.styled-table th { padding: 16px 20px; text-align: left; font-weight: 600; }
+.styled-table td { padding: 14px 20px; border-bottom: 1px solid #eee; }
+.styled-table tbody tr:hover { background: #f7fafc; }
+
+.timeline { position: relative; padding-left: 40px; margin: 30px 0; }
+.timeline::before {
+  content: '';
+  position: absolute; left: 12px; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--primary-light), var(--accent));
+  border-radius: 3px;
+}
+.timeline-item {
+  position: relative; margin-bottom: 30px; padding: 24px;
+  background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);
+}
+.timeline-item::before {
+  content: ''; position: absolute;
+  left: -34px; top: 30px;
+  width: 16px; height: 16px;
+  background: var(--accent); border-radius: 50%; border: 3px solid var(--bg);
+}
+.timeline-item h4 { color: var(--primary); font-size: 18px; margin-bottom: 8px; }
+.timeline-item p { color: var(--text-light); }
+.timeline-item .time-label {
+  display: inline-block; background: var(--primary); color: #fff;
+  padding: 4px 14px; border-radius: 20px; font-size: 13px; margin-bottom: 10px;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px; margin: 30px 0;
+}
+.stat-box {
+  background: linear-gradient(135deg, var(--card) 0%, #f7fafc 100%);
+  border-radius: var(--radius); padding: 24px; text-align: center;
+  box-shadow: var(--shadow); border-bottom: 3px solid var(--primary-light);
+  transition: var(--transition);
+}
+.stat-box:nth-child(2) { border-bottom-color: var(--accent); }
+.stat-box:nth-child(3) { border-bottom-color: var(--warm); }
+.stat-box:nth-child(4) { border-bottom-color: var(--warm-dark); }
+.stat-box:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+.stat-box .stat-num {
+  font-size: 36px; font-weight: 800;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.stat-box .stat-label { color: var(--text-light); font-size: 14px; margin-top: 6px; }
+
+.carepedia-cta {
+  background: linear-gradient(135deg, #1A73E8, #00C9A7);
+  padding: 48px 24px; text-align: center; color: #fff;
+}
+.carepedia-cta h3 { font-size: 24px; font-weight: 700; margin-bottom: 12px; }
+.carepedia-cta p { font-size: 16px; opacity: 0.9; margin-bottom: 24px; max-width: 500px; margin-left: auto; margin-right: auto; }
+.carepedia-cta .cta-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 32px; background: #fff; color: #1A73E8;
+  text-decoration: none; border-radius: 30px; font-size: 16px; font-weight: 700;
+  font-family: inherit; transition: all 0.3s ease; box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+.carepedia-cta .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+
+.credit-bar {
+  display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap;
+  padding: 14px 20px; font-size: 14px; color: rgba(255,255,255,0.85); position: relative; z-index: 1;
+}
+.credit-bar span { opacity: 0.9; }
+.portal-request-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 22px; background: var(--primary-light); color: #fff;
+  text-decoration: none; border-radius: 30px; font-size: 14px;
+  font-family: inherit; font-weight: 600; transition: var(--transition);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+.portal-request-btn:hover { background: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+
+.footer {
+  background: var(--primary); color: rgba(255,255,255,0.8);
+  text-align: center; padding: 40px; font-size: 14px;
+}
+
+.scroll-top {
+  position: fixed; bottom: 30px; left: 30px;
+  width: 50px; height: 50px; background: var(--primary);
+  color: #fff; border: none; border-radius: 50%;
+  font-size: 22px; cursor: pointer; box-shadow: var(--shadow);
+  transition: var(--transition); opacity: 0; pointer-events: none; z-index: 999;
+}
+.scroll-top.visible { opacity: 1; pointer-events: auto; }
+.scroll-top:hover { background: var(--primary-light); transform: translateY(-3px); }
+
+.search-box { position: relative; margin: 0 auto; }
+.search-box input {
+  width: 100%; padding: 14px 20px 14px 50px;
+  border: 2px solid rgba(15,76,117,0.15); border-radius: 30px;
+  font-size: 16px; font-family: 'Rubik', sans-serif;
+  background: var(--card); color: var(--text); transition: var(--transition);
+  box-sizing: border-box;
+}
+.search-box input:focus { outline: none; border-color: var(--primary-light); box-shadow: 0 0 0 4px rgba(50,130,184,0.1); }
+.search-box .search-icon {
+  position: absolute; left: 18px; top: 50%;
+  transform: translateY(-50%); font-size: 20px; pointer-events: none;
+}
+
+.sidebar-overlay {
+  display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5); z-index: 999; opacity: 0; transition: opacity 0.3s ease;
+}
+.sidebar-overlay.active { display: block; opacity: 1; }
+
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); width: 270px; }
+  .sidebar.open { transform: translateX(0); }
+  .menu-toggle { display: block; }
+  .main { margin-left: 0; }
+  .hero { padding: 60px 30px; }
+  .section { padding: 40px 24px; }
+}
+
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); width: 260px; }
+  .sidebar.open { transform: translateX(0); }
+  .menu-toggle { display: block; }
+  .main { margin-left: 0; }
+  .hero { padding: 40px 20px 36px; }
+  .hero h1 { font-size: 28px; line-height: 1.3; }
+  .hero .greeting { font-size: 16px; line-height: 1.7; }
+  .hero .subtitle { font-size: 14px; }
+  .section { padding: 28px 16px; }
+  .section-header { flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 24px; padding-bottom: 14px; }
+  .section-header .sec-icon { font-size: 32px; }
+  .section-header h2 { font-size: 24px; }
+  .section-header p { font-size: 14px; }
+  .cards-grid { grid-template-columns: 1fr; gap: 16px; margin-bottom: 24px; }
+  .card { padding: 20px; }
+  .card:hover { transform: none; }
+  .cat-card:hover { transform: none; }
+  .stat-box:hover { transform: none; }
+  .link-btn:hover { transform: none; }
+  .portal-request-btn:hover { transform: none; }
+  .scroll-top:hover { transform: none; }
+  .sidebar nav a:hover { transform: none; }
+  .card .card-icon { font-size: 32px; margin-bottom: 10px; }
+  .card h3 { font-size: 17px; }
+  .card p { font-size: 14px; }
+  .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 24px; }
+  .cat-card { padding: 18px 12px; }
+  .cat-card .cat-icon { font-size: 32px; margin-bottom: 8px; }
+  .cat-card h3 { font-size: 14px; }
+  .cat-card p { font-size: 11px; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 20px 0; }
+  .stat-box { padding: 16px 10px; }
+  .stat-box .stat-num { font-size: 26px; }
+  .stat-box .stat-label { font-size: 12px; }
+  .tabs { gap: 6px; margin-bottom: 16px; }
+  .tab-btn { padding: 8px 14px; font-size: 13px; border-radius: 20px; }
+  .styled-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 13px; }
+  .styled-table th { padding: 10px 12px; font-size: 13px; white-space: nowrap; }
+  .styled-table td { padding: 10px 12px; font-size: 13px; min-width: 100px; }
+  .info-box { padding: 16px 18px; margin: 16px 0; }
+  .info-box h4 { font-size: 15px; }
+  .info-box p { font-size: 13px; }
+  .accordion-header { padding: 14px 16px; font-size: 15px; }
+  .accordion-body .inner { padding: 14px 16px 18px; font-size: 14px; line-height: 1.9; }
+  .timeline { padding-left: 30px; margin: 20px 0; }
+  .timeline-item { padding: 16px; margin-bottom: 20px; }
+  .timeline-item::before { left: -24px; width: 12px; height: 12px; top: 22px; }
+  .timeline-item h4 { font-size: 16px; }
+  .timeline-item p { font-size: 13px; }
+  .link-btn { padding: 10px 16px; font-size: 13px; margin: 4px 2px; }
+  .search-box input { padding: 12px 18px 12px 40px; font-size: 14px; }
+  .footer { padding: 28px 16px; font-size: 13px; }
+  .scroll-top { width: 42px; height: 42px; font-size: 18px; bottom: 20px; left: 16px; }
+}
+
+@media (max-width: 380px) {
+  .hero h1 { font-size: 24px; }
+  .hero .greeting { font-size: 15px; }
+  .cat-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .cat-card { padding: 14px 8px; }
+  .cat-card .cat-icon { font-size: 26px; }
+  .cat-card h3 { font-size: 13px; }
+  .cat-card p { display: none; }
+  .stats-row { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .stat-box .stat-num { font-size: 22px; }
+  .section { padding: 20px 12px; }
+  .tab-btn { padding: 7px 10px; font-size: 12px; }
+}
+
+.disclaimer-banner {
+  background: linear-gradient(135deg, #FFF3E0, #FFF8E1);
+  border-bottom: 2px solid #FFB74D;
+  padding: 10px 20px; text-align: center; font-size: 13px; color: #5D4037;
+  position: relative; z-index: 1500;
+  display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;
+}
+.disclaimer-banner strong { color: #E65100; }
+.disclaimer-banner a { color: #1A73E8; text-decoration: underline; font-weight: 600; }
+.disclaimer-banner a:hover { color: #0D47A1; }
+@media (max-width: 768px) { .disclaimer-banner { font-size: 12px; padding: 8px 12px; } }
+</style>
+<script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js" defer></script>
+</head>
+<body>
+
+<!-- DISCLAIMER BANNER -->
+<div class="disclaimer-banner">
+  <iconify-icon icon="solar:danger-bold" style="font-size:16px;color:var(--forest);"></iconify-icon>
+  <span><strong>This is not medical advice.</strong> Always consult your doctor. <a href="/disclaimer">Full legal disclaimer &rarr;</a></span>
+</div>
+
+<!-- SCROLL PROGRESS BAR -->
+<div class="scroll-progress"><div class="bar" id="progressBar"></div></div>
+
+<!-- MOBILE OVERLAY -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeMenu()"></div>
+
+<!-- MOBILE MENU TOGGLE -->
+<button class="menu-toggle" id="menuToggle" onclick="toggleMenu()"><iconify-icon icon="solar:hamburger-menu-bold"></iconify-icon></button>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="logo">
+    <div class="icon"><iconify-icon icon="solar:brain-bold-duotone" style="font-size:44px;color:var(--amber);display:block;"></iconify-icon></div>
+    <h2>Autism Spectrum Disorder Hub</h2>
+  </div>
+  <nav>
+    <a href="#home" class="active" onclick="navigate(this)"><iconify-icon icon="solar:home-bold" class="nav-icon" style="font-size:20px;"></iconify-icon>Home</a>
+    <a href="#about" onclick="navigate(this)"><iconify-icon icon="solar:book-2-bold" class="nav-icon" style="font-size:20px;"></iconify-icon>What is Autism?</a>
+    <a href="#early-signs" onclick="navigate(this)"><iconify-icon icon="solar:baby-bold" class="nav-icon" style="font-size:20px;"></iconify-icon>Early Signs</a>
+    <a href="#diagnosis" onclick="navigate(this)"><iconify-icon icon="solar:magnifier-zoom-bold" class="nav-icon" style="font-size:20px;"></iconify-icon>Diagnosis</a>
+    <a href="#therapies" onclick="navigate(this)"><iconify-icon icon="solar:heart-pulse-bold" class="nav-icon" style="font-size:20px;"></iconify-icon>Therapies &amp; Interventions</a>
+    <a href="#medications" onclick="navigate(this)"><iconify-icon icon="solar:pill-bold" class="nav-icon" style="font-size:20px;"></iconify-icon>Medications</a>
+    <a href="#trials" onclick="navigate(this)"><iconify-icon icon="solar:test-tube-bold" class="nav-icon" style="font-size:20px;"></iconify-icon>Clinical Trials</a>
+    <a href="#research" onclick="navigate(this)"><iconify-icon icon="solar:dna-bold" class="nav-icon" style="font-size:20px;"></iconify-icon>New Research</a>
+    <a href="#pseudoscience" onclick="navigate(this)"><iconify-icon icon="solar:close-circle-bold" class="nav-icon" style="font-size:20px;"></iconify-icon>Pseudoscience</a>
+    <a href="#education" onclick="navigate(this)"><iconify-icon icon="solar:diploma-bold" class="nav-icon" style="font-size:20px;"></iconify-icon>Education &amp; Inclusion</a>
+    <a href="#psychological-approach" onclick="navigate(this)"><iconify-icon icon="solar:brain-bold" class="nav-icon" style="font-size:20px;"></iconify-icon>Psychological Approach</a>
+    <a href="#stories" onclick="navigate(this)"><iconify-icon icon="solar:star-bold" class="nav-icon" style="font-size:20px;"></iconify-icon>Success Stories</a>
+    <a href="#resources" onclick="navigate(this)"><iconify-icon icon="solar:link-bold" class="nav-icon" style="font-size:20px;"></iconify-icon>Links &amp; Resources</a>
+  </nav>
+</aside>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h1>🧩 Autism Spectrum Disorder Hub</h1>
+      <p class="greeting">A comprehensive, research-based information center on Autism Spectrum Disorder (ASD). Everything you need to know — from early signs and diagnosis, through evidence-based therapies and breakthrough research, to practical resources for families and caregivers worldwide.</p>
+      <p class="subtitle">Up-to-date, accurate, and accessible medical information. Grounded in peer-reviewed scientific literature.</p>
+
+      <div class="search-box" style="margin-top: 30px; max-width: 600px;">
+        <span class="search-icon"><iconify-icon icon="solar:magnifier-bold" style="font-size:18px;color:rgba(255,255,255,0.6);"></iconify-icon></span>
+        <input type="text" id="portalSearch" placeholder="Search the portal..." oninput="searchPortal(this.value)">
+      </div>
+      <div id="searchResults" style="display:none; margin-top: 16px; max-width: 600px;"></div>
+
+      <div class="credit-bar">
+        <span>Built by <strong>Yuval Kashtkir</strong> and his robot assistants</span>
+        <a href="https://carepedia.org/en/#contact" target="_blank" class="portal-request-btn">
+          ➕ Want a portal for another disease?
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUICK NAV -->
+  <section class="section fade-in" style="padding-bottom: 20px;">
+    <div class="cat-grid">
+      <a class="cat-card" onclick="navigateTo('about')">
+        <div class="cat-icon">📖</div>
+        <h3>What is Autism?</h3>
+        <p>Definition, types and statistics</p>
+      </a>
+      <a class="cat-card" onclick="navigateTo('early-signs')">
+        <div class="cat-icon">👶</div>
+        <h3>Early Signs</h3>
+        <p>Early identification in infants and toddlers</p>
+      </a>
+      <a class="cat-card" onclick="navigateTo('therapies')">
+        <div class="cat-icon">🧠</div>
+        <h3>Therapies</h3>
+        <p>Evidence-based interventions</p>
+      </a>
+      <a class="cat-card" onclick="navigateTo('research')">
+        <div class="cat-icon">🧬</div>
+        <h3>New Research</h3>
+        <p>Breakthroughs in 2025</p>
+      </a>
+      <a class="cat-card" onclick="navigateTo('pseudoscience')">
+        <div class="cat-icon">🚫</div>
+        <h3>Pseudoscience</h3>
+        <p>Myths you need to know</p>
+      </a>
+      <a class="cat-card" onclick="navigateTo('resources')">
+        <div class="cat-icon">🔗</div>
+        <h3>Resources</h3>
+        <p>Organizations and support worldwide</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section fade-in" id="about">
+    <div class="section-header">
+      <span class="sec-icon">📖</span>
+      <div>
+        <h2>What is Autism?</h2>
+        <p>A neurological developmental disorder affecting communication, behavior, and social interaction</p>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-num">1:36</div>
+        <div class="stat-label">Children diagnosed in the US (CDC 2025)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">0.77%</div>
+        <div class="stat-label">Global prevalence in children (meta-analysis 2025)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">4:1</div>
+        <div class="stat-label">Male-to-female ratio</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">~1%</div>
+        <div class="stat-label">WHO estimated worldwide prevalence</div>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🧩</div>
+        <h3>A Wide Spectrum</h3>
+        <p>Autism is a broad spectrum of conditions characterized by challenges in social skills, repetitive behaviors, speech, and nonverbal communication. According to the World Health Organization (WHO), approximately 1 in 100 children worldwide is diagnosed with autism.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">📈</div>
+        <h3>Rising Prevalence</h3>
+        <p>The CDC reported in 2025 that 1 in 36 children in the United States has ASD — up from 1 in 150 in 2000. A global meta-analysis (2025) found an overall prevalence of 0.77% in children, with Australia at 1.7%, the Americas and Africa at ~1%, Europe at 0.5%, and Asia at 0.4%.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">🌐</div>
+        <h3>Global Impact</h3>
+        <p>Autism affects an estimated 75 million people worldwide. It occurs in all racial, ethnic, and socioeconomic groups. Boys are approximately four times more likely to be diagnosed than girls, though research suggests girls may be underdiagnosed due to greater social masking.</p>
+      </div>
+    </div>
+
+    <h3 style="color: var(--primary); margin: 30px 0 16px;">Severity Levels per DSM-5</h3>
+    <p style="color: var(--text-light); margin-bottom: 20px;">The DSM-5 (Diagnostic and Statistical Manual of Mental Disorders, 5th edition) defines three levels of severity:</p>
+
+    <div class="cards-grid">
+      <div class="card">
+        <h3>Level 1: Requiring Support</h3>
+        <p>Difficulty initiating social interactions, atypical responses to social overtures. Can function with minimal support. Formerly recognized as "Asperger Syndrome" before the DSM-5 unified the diagnoses.</p>
+      </div>
+      <div class="card green">
+        <h3>Level 2: Requiring Substantial Support</h3>
+        <p>Marked deficits in verbal and nonverbal communication, notable social difficulties even with support, restricted and repetitive behaviors that are obvious to casual observers and interfere with functioning.</p>
+      </div>
+      <div class="card orange">
+        <h3>Level 3: Requiring Very Substantial Support</h3>
+        <p>Severe deficits in communication, very limited initiation of social interactions, minimal response to social overtures, and great difficulty coping with change. Behavior significantly interferes with functioning.</p>
+      </div>
+    </div>
+
+    <h3 style="color: var(--primary); margin: 30px 0 16px;">Frequently Asked Questions</h3>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>What is the difference between autism and Asperger Syndrome?</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <div class="inner">
+          Since 2013, when the DSM-5 took effect, Asperger Syndrome is no longer a separate diagnosis. It is now included under the broader category of Autism Spectrum Disorder (ASD), at Level 1. Previously, Asperger Syndrome was described as "high-functioning autism" without significant language delay, but today the understanding is that these conditions lie on the same spectrum with different expressions.
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>Is autism a disease?</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <div class="inner">
+          Autism is not a "disease" in the classic medical sense, but a neurodevelopmental condition. The brain of an autistic person processes information differently. Many in the autism community prefer the term "Neurodiversity" and view autism as a natural part of human variation rather than a condition requiring a "cure."
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>Is autism hereditary?</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <div class="inner">
+          Autism has a very strong genetic component. Twin studies show that the risk for autism is 60–90% heritable. A 2025 Princeton University study identified approximately 2,500 genes that may contribute to autism, and company GeneDx added 230 new genes to the list. However, it is a polygenic (multi-gene) condition, not caused by a single gene.
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>Do vaccines cause autism?</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <div class="inner">
+          <strong>No. In no way whatsoever.</strong> The original 1998 study by Andrew Wakefield claiming a link between the MMR vaccine and autism was proven fraudulent, the paper was retracted from The Lancet, and Wakefield lost his medical license. Since then, more than 20 large studies involving millions of children have conclusively proven: there is no link between vaccines and autism. According to the Johns Hopkins Bloomberg School of Public Health (2025), the evidence is crystal clear.
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EARLY SIGNS -->
+  <section class="section fade-in" id="early-signs">
+    <div class="section-header">
+      <span class="sec-icon">👶</span>
+      <div>
+        <h2>Early Signs</h2>
+        <p>Early identification is the key to successful intervention</p>
+      </div>
+    </div>
+
+    <div class="info-box success">
+      <h4>Why is early identification so important?</h4>
+      <p>Research shows that children who receive intensive intervention before age 5 show an average improvement of 15–20 IQ points compared to control groups, and approximately 50% achieve significant gains in cognitive, language, and adaptive functioning.</p>
+    </div>
+
+    <h3 style="color: var(--primary); margin: 30px 0 16px;">Signs by Age</h3>
+
+    <div class="tabs" data-tab-group="signs">
+      <button class="tab-btn active" data-tab="6m" onclick="switchTab('signs','6m')">6 Months</button>
+      <button class="tab-btn" data-tab="12m" onclick="switchTab('signs','12m')">12 Months</button>
+      <button class="tab-btn" data-tab="18m" onclick="switchTab('signs','18m')">18 Months</button>
+      <button class="tab-btn" data-tab="24m" onclick="switchTab('signs','24m')">24 Months</button>
+    </div>
+
+    <div class="tab-content active" data-tab-content="signs" data-tab="6m">
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">👁️</div>
+          <h3>Limited Eye Contact</h3>
+          <p>Little or no eye contact with parents and caregivers. Does not visually track faces or objects.</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon">😊</div>
+          <h3>Absence of Social Smiling</h3>
+          <p>Does not smile in response to others' smiles. Limited facial expressions overall.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon">🗣️</div>
+          <h3>Unusually Quiet</h3>
+          <p>Reduced vocalizations, babbling, or laughter by 6 months of age.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" data-tab-content="signs" data-tab="12m">
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">👆</div>
+          <h3>No Pointing</h3>
+          <p>Does not point at interesting objects, does not show things to parents. Absence of communicative gestures such as waving goodbye.</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon">🎵</div>
+          <h3>No Response to Name</h3>
+          <p>Does not respond when called by name, does not turn toward the person calling them.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon">🧸</div>
+          <h3>Limited Play</h3>
+          <p>Does not participate in peek-a-boo or other simple social games. Preference for solitary play.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" data-tab-content="signs" data-tab="18m">
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">🗨️</div>
+          <h3>Speech Delay</h3>
+          <p>Fewer than 6 words by 18 months. No two-word phrases. May have developed speech and then lost it (regression).</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon">🎭</div>
+          <h3>No Pretend Play</h3>
+          <p>Does not "feed" a doll, does not "talk" on a toy phone. Preference for lining up objects or spinning wheels.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon">🔄</div>
+          <h3>Repetitive Behaviors</h3>
+          <p>Repetitive movements such as hand-flapping, toe-walking, spinning objects. Intense interest in small details.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" data-tab-content="signs" data-tab="24m">
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">👥</div>
+          <h3>Social Isolation</h3>
+          <p>No interest in other children, does not engage in shared play. Prefers playing alone and "in their own world."</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon">📢</div>
+          <h3>Echolalia</h3>
+          <p>Repeating words or phrases heard elsewhere (e.g., quotes from videos) instead of generating new sentences. Using third-person pronouns to refer to themselves.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon">😰</div>
+          <h3>Difficulty with Change</h3>
+          <p>Extreme reactions to changes in routine. Intense meltdowns when things do not go "in order." Oversensitivity to sounds, textures, or tastes.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box warning">
+      <h4>Important to Know</h4>
+      <p>The presence of one or two signs does not necessarily indicate autism. Every child develops at their own pace. If you are concerned, speak with your pediatrician and request a developmental evaluation. Early diagnosis opens doors to interventions that can be life-changing.</p>
+    </div>
+
+    <h3 style="color: var(--primary); margin: 30px 0 16px;">Screening Tool: M-CHAT-R</h3>
+    <p style="color: var(--text-light); margin-bottom: 20px;">The Modified Checklist for Autism in Toddlers, Revised (M-CHAT-R) is a 20-question parent questionnaire for children aged 16–30 months. The questionnaire takes under 5 minutes and is freely available.</p>
+
+    <div class="cards-grid">
+      <div class="card">
+        <h3>Score 0–2</h3>
+        <p>Low risk for autism. No special follow-up needed at this time.</p>
+      </div>
+      <div class="card green">
+        <h3>Score 3–7</h3>
+        <p>Medium risk. Recommended to complete the Follow-Up interview and seek a comprehensive evaluation.</p>
+      </div>
+      <div class="card orange">
+        <h3>Score 8–20</h3>
+        <p>High risk. Seek an immediate comprehensive evaluation by a specialist in the field.</p>
+      </div>
+    </div>
+
+    <div style="margin-top: 20px;">
+      <a href="https://www.autismspeaks.org/screen-your-child" target="_blank" class="link-btn">Complete the M-CHAT-R Screening (Autism Speaks)</a>
+    </div>
+  </section>
+
+  <!-- DIAGNOSIS -->
+  <section class="section fade-in" id="diagnosis">
+    <div class="section-header">
+      <span class="sec-icon">🔍</span>
+      <div>
+        <h2>Diagnosis</h2>
+        <p>The diagnostic process — how autism is identified</p>
+      </div>
+    </div>
+
+    <p style="color: var(--text-light); margin-bottom: 24px;">Autism diagnosis is based on behavioral observation and clinical assessment. There is no blood test or brain scan that can diagnose autism. Diagnosis is carried out by a multidisciplinary team including a developmental psychologist, pediatric neurologist, speech-language pathologist, and occupational therapist.</p>
+
+    <h3 style="color: var(--primary); margin: 24px 0 16px;">Diagnostic Criteria (DSM-5)</h3>
+    <p style="color: var(--text-light); margin-bottom: 20px;">The DSM-5 defines two core areas for diagnosis:</p>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">💬</div>
+        <h3>Domain A: Social Communication and Interaction</h3>
+        <p>Persistent deficits in social communication and interaction across multiple contexts: difficulties in social-emotional reciprocity, nonverbal communication, and in developing and maintaining relationships.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">🔁</div>
+        <h3>Domain B: Restricted and Repetitive Patterns</h3>
+        <p>At least 2 of 4: repetitive movements or speech, insistence on sameness, restricted and intense interests, and hyper- or hyporeactivity to sensory input.</p>
+      </div>
+    </div>
+
+    <h3 style="color: var(--primary); margin: 30px 0 16px;">Diagnostic Process</h3>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <span class="time-label">Step 1</span>
+        <h4>Pediatrician Screening</h4>
+        <p>Parents raise concerns with the family doctor or pediatrician. The doctor conducts an initial assessment and completes an M-CHAT-R questionnaire. The American Academy of Pediatrics recommends universal screening at 18 and 24 months.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">Step 2</span>
+        <h4>Referral to Developmental Specialist</h4>
+        <p>The doctor refers to a developmental pediatrician, child neurologist, or autism specialist. Wait times vary widely by region. Private evaluations may be faster but may not be covered by insurance.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">Step 3</span>
+        <h4>Multidisciplinary Evaluation</h4>
+        <p>A team including a psychologist, pediatric neurologist, speech-language pathologist, and occupational therapist. Primary tools: ADOS-2 (structured observation), ADI-R (parent interview), and additional developmental tests. The process spans several sessions.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">Step 4</span>
+        <h4>Diagnosis and Support Plan</h4>
+        <p>After diagnosis, a formal report is provided. The diagnosis opens access to therapies, educational support, and community resources. Families should request an individualized education plan (IEP) and early intervention services.</p>
+      </div>
+    </div>
+
+    <h3 style="color: var(--primary); margin: 30px 0 16px;">Key Diagnostic Tools</h3>
+    <table class="styled-table">
+      <thead>
+        <tr><th>Tool</th><th>Type</th><th>Age Range</th><th>Duration</th><th>Sensitivity</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>M-CHAT-R/F</strong></td>
+          <td>Parent screening questionnaire</td>
+          <td>16–30 months</td>
+          <td>~5 minutes</td>
+          <td>78%</td>
+        </tr>
+        <tr>
+          <td><strong>ADOS-2</strong></td>
+          <td>Structured clinical observation</td>
+          <td>12 months+</td>
+          <td>45–90 minutes</td>
+          <td>87%</td>
+        </tr>
+        <tr>
+          <td><strong>ADI-R</strong></td>
+          <td>Structured parent interview</td>
+          <td>All ages</td>
+          <td>2–3 hours</td>
+          <td>77%</td>
+        </tr>
+        <tr>
+          <td><strong>EarliPoint</strong></td>
+          <td>Eye-tracking (FDA approved)</td>
+          <td>16–30 months</td>
+          <td>12 minutes</td>
+          <td>New</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="info-box warning">
+      <h4>Diagnosis in Girls</h4>
+      <p>Girls with autism are frequently underdiagnosed or diagnosed later than boys. Research shows girls tend to "mask" their autistic traits more effectively in social situations. If your daughter shows signs but does not receive a diagnosis, seeking a second opinion from a specialist experienced with female presentations of autism is strongly recommended.</p>
+    </div>
+  </section>
+
+  <!-- THERAPIES -->
+  <section class="section fade-in" id="therapies">
+    <div class="section-header">
+      <span class="sec-icon">🧠</span>
+      <div>
+        <h2>Therapies and Interventions</h2>
+        <p>Evidence-based approaches that make a real difference</p>
+      </div>
+    </div>
+
+    <div class="info-box success">
+      <h4>The earlier, the better</h4>
+      <p>Research consistently shows that early intensive intervention — especially before age 5 — produces the greatest gains in language, cognition, and adaptive behavior. There is no single "best" therapy for all autistic people. Treatment should be individualized.</p>
+    </div>
+
+    <div class="tabs" data-tab-group="therapies">
+      <button class="tab-btn active" data-tab="behavioral" onclick="switchTab('therapies','behavioral')">Behavioral</button>
+      <button class="tab-btn" data-tab="communication" onclick="switchTab('therapies','communication')">Communication</button>
+      <button class="tab-btn" data-tab="occupational" onclick="switchTab('therapies','occupational')">Occupational</button>
+      <button class="tab-btn" data-tab="family" onclick="switchTab('therapies','family')">Family Support</button>
+    </div>
+
+    <div class="tab-content active" data-tab-content="therapies" data-tab="behavioral">
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">📊</div>
+          <h3>Applied Behavior Analysis (ABA)</h3>
+          <p>The most researched intervention for autism. ABA uses structured teaching and positive reinforcement to build skills and reduce problematic behaviors. Modern ABA emphasizes naturalistic approaches and child-led learning. Intensive programs run 20–40 hours per week. Meta-analyses show significant gains in language, cognition, and adaptive behavior.</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon">🌱</div>
+          <h3>ESDM — Early Start Denver Model</h3>
+          <p>A naturalistic developmental behavioral intervention designed for children 12–48 months. Delivered in play-based settings, often by trained parents. A landmark RCT (Dawson et al., Pediatrics 2010) showed significant improvements in IQ, language, and adaptive behavior after 2 years of treatment.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon">🎮</div>
+          <h3>Pivotal Response Treatment (PRT)</h3>
+          <p>Targets "pivotal" areas such as motivation and responsiveness to multiple cues. Child-initiated and play-based. Research shows improvements in social communication, play, and self-management. Particularly effective for school-age children with some verbal ability.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" data-tab-content="therapies" data-tab="communication">
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">💬</div>
+          <h3>Speech-Language Therapy</h3>
+          <p>Core component of autism treatment. Targets verbal and nonverbal communication, pragmatic language, and conversation skills. Highly individualized — goals range from developing first words to improving complex social communication in verbal individuals.</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon">🖼️</div>
+          <h3>AAC — Augmentative and Alternative Communication</h3>
+          <p>For non-speaking or minimally verbal autistic people. Includes picture exchange systems (PECS), speech-generating devices, and tablet-based communication apps. Research shows AAC does not hinder speech development and often supports it (ASHA guidelines).</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon">👥</div>
+          <h3>Social Skills Training</h3>
+          <p>Structured programs that teach social rules, conversation, perspective-taking, and friendship skills. Group settings (such as PEERS) allow practice with peers. Evidence supports improvements in social knowledge and quality of friendships for adolescents and adults.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" data-tab-content="therapies" data-tab="occupational">
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">✋</div>
+          <h3>Occupational Therapy (OT)</h3>
+          <p>Addresses sensory processing difficulties, fine motor skills, self-care, and daily living activities. OT helps autistic individuals manage sensory overload and develop independence. Sensory Integration Therapy is commonly used, though evidence quality varies.</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon">🎨</div>
+          <h3>Sensory Integration</h3>
+          <p>Many autistic people experience sensory sensitivities — to sound, light, touch, taste, or smell. OTs design sensory diets and environments that reduce overload and support self-regulation. Weighted blankets, fidget tools, and noise-canceling headphones are common supports.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon">🏃</div>
+          <h3>Physical Therapy</h3>
+          <p>Targets gross motor delays, balance, coordination, and physical fitness. Some autistic children show hypotonia (low muscle tone) or motor planning difficulties. Physical activity is also associated with reduced repetitive behaviors and improved mood and sleep.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" data-tab-content="therapies" data-tab="family">
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">👨‍👩‍👦</div>
+          <h3>Parent-Mediated Intervention</h3>
+          <p>Training parents to deliver intervention strategies in natural home settings. Programs such as Hanen "More Than Words" and JASPER (Joint Attention, Symbolic Play, Engagement) teach parents to support their child's communication throughout daily routines. Research shows these approaches are as effective as therapist-delivered sessions.</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon">🤝</div>
+          <h3>Sibling Support</h3>
+          <p>Siblings of autistic children are at elevated risk for anxiety and depression. Programs such as Sibshops provide peer support and education for siblings. Research shows that siblings who receive support show better emotional outcomes and greater understanding of their autistic brother or sister.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon">💡</div>
+          <h3>Support Groups and Respite Care</h3>
+          <p>Parent support groups reduce caregiver stress and isolation. Respite care — temporary relief for primary caregivers — is associated with lower rates of parental burnout. Organizations such as Autism Speaks and the Autism Society of America maintain directories of local support services.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MEDICATIONS -->
+  <section class="section fade-in" id="medications">
+    <div class="section-header">
+      <span class="sec-icon">💊</span>
+      <div>
+        <h2>Medications</h2>
+        <p>No medication treats autism itself — but some support associated conditions</p>
+      </div>
+    </div>
+
+    <div class="info-box warning">
+      <h4>Important Principle</h4>
+      <p>There are currently no FDA-approved medications that treat the core features of autism. Medications are used to manage co-occurring conditions such as anxiety, ADHD, irritability, sleep difficulties, or seizures. Always work with a physician experienced in autism to weigh benefits against side effects.</p>
+    </div>
+
+    <table class="styled-table">
+      <thead>
+        <tr><th>Medication</th><th>Approved For</th><th>Notes</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Risperidone</strong> (Risperdal)</td>
+          <td>Irritability associated with ASD (FDA-approved, ages 5+)</td>
+          <td>Reduces aggression, self-injury, and severe tantrums. Side effects include weight gain and sedation. First FDA-approved medication for ASD (2006).</td>
+        </tr>
+        <tr>
+          <td><strong>Aripiprazole</strong> (Abilify)</td>
+          <td>Irritability associated with ASD (FDA-approved, ages 6+)</td>
+          <td>Second FDA-approved medication for ASD (2009). Lower weight-gain risk compared to risperidone. Monitor for restlessness.</td>
+        </tr>
+        <tr>
+          <td><strong>Methylphenidate / Amphetamines</strong></td>
+          <td>Co-occurring ADHD</td>
+          <td>Effective for attention and hyperactivity in many autistic individuals. Response rates may be lower than in neurotypical children. Start low and titrate slowly.</td>
+        </tr>
+        <tr>
+          <td><strong>SSRIs</strong> (e.g., Fluoxetine, Sertraline)</td>
+          <td>Co-occurring anxiety and depression</td>
+          <td>Commonly prescribed for anxiety, OCD, and depression in autistic individuals. Evidence is mixed for core autism symptoms. Monitor for increased irritability.</td>
+        </tr>
+        <tr>
+          <td><strong>Melatonin</strong></td>
+          <td>Sleep difficulties</td>
+          <td>Well-tolerated and effective for sleep onset problems, which are very common in autism (affects 50–80%). Over-the-counter in many countries.</td>
+        </tr>
+        <tr>
+          <td><strong>Anticonvulsants</strong></td>
+          <td>Co-occurring epilepsy</td>
+          <td>Up to 30% of autistic individuals have epilepsy. Treatment follows standard seizure management protocols and is individualized to seizure type.</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="info-box">
+      <h4>Emerging Pharmacological Research</h4>
+      <p>Several compounds are under investigation to target specific mechanisms in autism, including oxytocin (for social behavior), bumetanide (for GABA signaling), and mTOR inhibitors for tuberous sclerosis-related autism. These remain experimental and are not yet standard of care.</p>
+    </div>
+  </section>
+
+  <!-- CLINICAL TRIALS -->
+  <section class="section fade-in" id="trials">
+    <div class="section-header">
+      <span class="sec-icon">🔬</span>
+      <div>
+        <h2>Clinical Trials</h2>
+        <p>Active research worldwide — what is currently being tested</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>How to Find Active Trials</h4>
+      <p>The world's largest registry of clinical trials is <strong>ClinicalTrials.gov</strong>. Search for "autism spectrum disorder" or specific conditions to find trials recruiting near you. Autism Speaks also maintains a <a href="https://www.autismspeaks.org/clinical-trials-corner" target="_blank" style="color:var(--primary-light);">Clinical Trials Corner</a> with plain-language summaries.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <span class="time-label">Active</span>
+        <h4>Oxytocin for Social Behavior</h4>
+        <p>Multiple trials are testing intranasal oxytocin to improve social cognition and communication in autistic adults and adolescents. Results have been mixed — some studies show modest benefits in social motivation, while others show no significant effect. Ongoing research is refining dose, timing, and patient selection.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">Active</span>
+        <h4>Gut Microbiome and Autism</h4>
+        <p>Building on findings that autistic individuals often have distinct gut microbiome profiles, researchers are testing probiotics and microbiome transfer therapies. A 2019 Arizona State University study found sustained improvements in GI symptoms and autism-related behaviors at 2-year follow-up after microbiota transfer therapy.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">Active</span>
+        <h4>mTOR Pathway — Tuberous Sclerosis</h4>
+        <p>Everolimus, an mTOR inhibitor, is being tested for autism associated with tuberous sclerosis complex (TSC). Early studies show reductions in seizures and some improvement in cognitive function in TSC patients.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">Active</span>
+        <h4>Transcranial Magnetic Stimulation (TMS)</h4>
+        <p>Non-invasive brain stimulation targeting social and executive function circuits. Several Phase 2 trials are underway in autistic adolescents and adults. Some studies show improvements in executive function and repetitive behaviors.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">Active</span>
+        <h4>Balovaptan</h4>
+        <p>A vasopressin V1a receptor antagonist investigated for improving social communication in autism. Phase 3 trials (VANILLA) did not meet primary endpoints, but subgroup analyses continue. Research into the vasopressin system in autism is ongoing.</p>
+      </div>
+    </div>
+
+    <div style="margin-top: 20px;">
+      <a href="https://clinicaltrials.gov/search?cond=autism+spectrum+disorder" target="_blank" class="link-btn">Search Trials on ClinicalTrials.gov</a>
+      <a href="https://www.autismspeaks.org/clinical-trials-corner" target="_blank" class="link-btn green">Autism Speaks Trial Corner</a>
+    </div>
+  </section>
+
+  <!-- RESEARCH -->
+  <section class="section fade-in" id="research">
+    <div class="section-header">
+      <span class="sec-icon">🧬</span>
+      <div>
+        <h2>New Research</h2>
+        <p>Breakthrough discoveries in 2024–2025</p>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🧬</div>
+        <h3>Genetics: 2,500 Autism Genes</h3>
+        <p>A 2025 study from Princeton University identified approximately 2,500 genes that may contribute to autism risk, dramatically expanding our understanding of autism's genetic architecture. Company GeneDx added 230 additional candidate genes. The study underscores autism's extreme genetic heterogeneity. (<a href="https://pubmed.ncbi.nlm.nih.gov/" target="_blank" style="color:var(--primary-light);">Nature Genetics 2025</a>)</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">🤖</div>
+        <h3>AI-Based Diagnosis</h3>
+        <p>Machine learning algorithms trained on eye-tracking data, facial expression analysis, and voice patterns are achieving diagnostic accuracy exceeding 80% in toddlers as young as 14 months. The FDA-cleared EarliPoint system uses eye-tracking during video viewing to objectively quantify autism-related behaviors in 12 minutes.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">🧠</div>
+        <h3>Brain Connectivity</h3>
+        <p>Large-scale neuroimaging studies (EU-AIMS LEAP project, n=750+) identified distinct neural subtypes within ASD with different connectivity signatures. These subtypes correlate with different behavioral profiles, paving the way for stratified, personalized treatment approaches. (<a href="https://www.nature.com/articles/s41593-019-0498-9" target="_blank" style="color:var(--primary-light);">Nature Neuroscience 2020</a>)</p>
+      </div>
+      <div class="card blue">
+        <div class="card-icon">🦠</div>
+        <h3>Gut-Brain Axis</h3>
+        <p>2025 research from Caltech and other institutions confirmed that specific gut bacteria produce short-chain fatty acids that influence brain development and behavior in mouse models of autism. Human trials of targeted probiotic interventions are underway. The gut-brain connection is one of the most active areas of autism research.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">🔬</div>
+        <h3>Prenatal Biomarkers</h3>
+        <p>Studies from Stanford and the University of California (2024) identified blood-based biomarkers measurable during pregnancy that predict autism risk with moderate accuracy. This opens the possibility of prenatal intervention — though much work remains before clinical application.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">💻</div>
+        <h3>Technology-Assisted Therapy</h3>
+        <p>Virtual reality (VR) social skills training and robot-mediated therapy (NAO, Kaspar) are showing promising results. A 2025 meta-analysis found VR-based social skills training yielded significant improvements in social cognition scores. These technologies may increase access to therapy in underserved areas.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PSEUDOSCIENCE -->
+  <section class="section fade-in" id="pseudoscience">
+    <div class="section-header">
+      <span class="sec-icon">🚫</span>
+      <div>
+        <h2>Pseudoscience and Harmful Myths</h2>
+        <p>What the science does NOT support — and why it matters</p>
+      </div>
+    </div>
+
+    <div class="info-box warning">
+      <h4>Why this section exists</h4>
+      <p>Families of autistic people are frequently targeted by unproven or dangerous treatments. Understanding what the evidence shows — and does not show — protects children from harm and helps families direct their resources toward approaches that actually work.</p>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>Miracle Mineral Solution (MMS / Chlorine Dioxide)</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <div class="inner">
+          <strong>Dangerous and ineffective.</strong> MMS is industrial bleach that has been marketed online as an autism cure. Administering it causes chemical burns to the gastrointestinal tract, vomiting, severe diarrhea, and life-threatening complications. The FDA and health agencies worldwide have issued explicit warnings. There is no scientific evidence it has any benefit for autism.
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>Facilitated Communication (FC)</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <div class="inner">
+          Facilitated Communication claims that a "facilitator" helps a non-speaking autistic person communicate by supporting their hand or arm on a keyboard. Multiple controlled studies have conclusively demonstrated that the output reflects the facilitator's knowledge, not the autistic person's. FC has been rejected by the American Psychological Association, ASHA, and other professional bodies. It is not a valid communication method.
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>Gluten-Free / Casein-Free Diet as Autism Treatment</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <div class="inner">
+          There is no high-quality evidence that GFCF diets improve autism symptoms in individuals without celiac disease or gluten sensitivity. A 2016 Cochrane review found no reliable evidence to recommend this diet for autism. However, some autistic individuals do have gastrointestinal issues that may benefit from dietary adjustments — always consult a registered dietitian before making major dietary changes.
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>Hyperbaric Oxygen Therapy (HBOT) for Autism</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <div class="inner">
+          Despite widespread promotion in alternative medicine circles, multiple randomized controlled trials have found no significant benefit of HBOT over placebo for autism. It is expensive, time-consuming, and carries risks including ear and sinus barotrauma. It is not recommended by any mainstream autism authority.
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>Secretin Injections</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <div class="inner">
+          In the late 1990s, secretin (a gastrointestinal hormone) was widely promoted as an autism treatment following anecdotal reports. Subsequent double-blind randomized trials found no benefit over placebo. This is a cautionary tale about the importance of rigorous clinical trials over anecdotal evidence.
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box success">
+      <h4>How to Evaluate a Claimed Treatment</h4>
+      <p>Ask these questions: (1) Has it been tested in randomized controlled trials? (2) Were the results published in peer-reviewed journals? (3) Has it been replicated by independent researchers? (4) Do mainstream professional organizations (AAP, ASHA, APA) endorse it? If the answer to all four is no, proceed with great caution.</p>
+    </div>
+  </section>
+
+  <!-- EDUCATION AND INCLUSION -->
+  <section class="section fade-in" id="education">
+    <div class="section-header">
+      <span class="sec-icon">🎓</span>
+      <div>
+        <h2>Education and Inclusion</h2>
+        <p>Rights, accommodations, and strategies for success at school</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>Legal Rights to Education</h4>
+      <p>In the United States, the Individuals with Disabilities Education Act (IDEA) guarantees autistic children a free and appropriate public education in the least restrictive environment. The 504 Plan and Individualized Education Program (IEP) are the two main legal frameworks for school accommodations. Similar legislation exists in the UK (EHCP), Australia (NDIS), Canada, and European countries.</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">📋</div>
+        <h3>Individualized Education Program (IEP)</h3>
+        <p>A legal document created for each eligible student that outlines goals, services, accommodations, and placement. Parents have the right to participate in IEP meetings and to request changes. Key areas include communication goals, behavioral supports, and transition planning for adulthood.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">🏫</div>
+        <h3>Inclusive Education</h3>
+        <p>Research supports inclusive settings — where autistic students learn alongside peers — for many students, particularly with appropriate support. Benefits include improved social skills, language development, and academic achievement. The level of inclusion should match the individual child's needs and support requirements.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">🛠️</div>
+        <h3>Common Accommodations</h3>
+        <p>Extended time on tests, reduced distraction environments, visual schedules, sensory breaks, preferential seating, written instructions, noise-canceling headphones, alternative communication methods, and social support from classroom aides. Accommodations should be tailored to each student's specific profile.</p>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🎯</div>
+        <h3>Transition to Adulthood</h3>
+        <p>Transition planning (vocational training, independent living skills, higher education) should begin by age 14–16. Many autistic adults successfully attend college, hold jobs, and live independently. Research shows employment rates improve dramatically with targeted vocational support programs.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">💼</div>
+        <h3>Workplace Inclusion</h3>
+        <p>Programs such as Microsoft's Autism Hiring Program, SAP's Autism at Work, and Goldman Sachs' Neurodiversity Hiring Initiative have demonstrated that autistic employees bring unique strengths — pattern recognition, attention to detail, reliability — that benefit organizations. Disclosure decisions remain personal.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">🌟</div>
+        <h3>Strengths-Based Approach</h3>
+        <p>Many autistic individuals have exceptional abilities in memory, mathematics, music, visual thinking, or technology. A strengths-based approach to education and employment — building on what a person does well rather than focusing solely on deficits — is associated with better self-esteem and outcomes.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- PSYCHOLOGICAL APPROACH -->
+  <section class="section fade-in" id="psychological-approach">
+    <div class="section-header">
+      <span class="sec-icon">🧠</span>
+      <div>
+        <h2>Psychological Approach</h2>
+        <p>Mental health, emotional coping, and psychological tools</p>
+      </div>
+    </div>
+
+    <p style="color: var(--text-light); margin-bottom: 24px;">Autistic people face mental health challenges at significantly higher rates than the general population. Current understanding is that many of these challenges arise from the interaction with a world largely designed for neurotypical people, rather than from an inherent "flaw." A tailored psychological approach can substantially improve quality of life.</p>
+
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-num">42%</div>
+        <div class="stat-label">Lifetime prevalence of anxiety (<a href="https://pubmed.ncbi.nlm.nih.gov/30178724/" target="_blank" style="color: var(--accent);">Hollocks et al.</a>)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">37%</div>
+        <div class="stat-label">Lifetime prevalence of depression (<a href="https://pubmed.ncbi.nlm.nih.gov/30178724/" target="_blank" style="color: var(--accent);">Hollocks et al.</a>)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">74%</div>
+        <div class="stat-label">With at least one co-occurring condition (<a href="https://www.nature.com/articles/s41398-023-02374-w" target="_blank" style="color: var(--accent);">Translational Psychiatry</a>)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">69%</div>
+        <div class="stat-label">Autistic adults experienced autistic burnout (<a href="https://onlinelibrary.wiley.com/doi/full/10.1002/aur.3129" target="_blank" style="color: var(--accent);">Mantzalas 2024</a>)</div>
+      </div>
+    </div>
+
+    <h3 style="color: var(--primary); margin: 30px 0 16px;">Co-occurring Mental Health Conditions</h3>
+    <p style="color: var(--text-light); margin-bottom: 20px;">According to a meta-analysis in <a href="https://www.nature.com/articles/s41398-023-02374-w" target="_blank">Translational Psychiatry</a> (2023), approximately 74% of autistic people experience at least one co-occurring mental health condition. The most common:</p>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">😟</div>
+        <h3>Anxiety</h3>
+        <p>42% lifetime prevalence in autistic adults, compared to ~25% in the general population. Most common types: specific phobia (31%), generalized anxiety (26%), and social anxiety. Source: <a href="https://pubmed.ncbi.nlm.nih.gov/30178724/" target="_blank">Hollocks et al., Psychological Medicine</a>.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">🌧️</div>
+        <h3>Depression</h3>
+        <p>37% lifetime prevalence. 23% experience depression at any given time. A 2025 study found 34.2% of autistic individuals reported suicidal behavior and 24.3% reported suicide attempts. Sources: <a href="https://pubmed.ncbi.nlm.nih.gov/30178724/" target="_blank">Hollocks et al.</a>; <a href="https://psycnet.apa.org/record/2025-23035-013" target="_blank">APA PsycNET 2025</a>.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">🔄</div>
+        <h3>ADHD and OCD</h3>
+        <p>ADHD is the most common co-occurring condition in autism, followed by anxiety disorders. Obsessive-compulsive disorder (OCD) also occurs at higher rates than in the general population. Source: <a href="https://www.nature.com/articles/s41398-023-02374-w" target="_blank">Translational Psychiatry 2023</a>.</p>
+      </div>
+    </div>
+
+    <div class="info-box warning">
+      <h4>Warning Signs of Distress</h4>
+      <p>Given the high prevalence of suicidal ideation (34.2%), it is important to watch for signs such as increased social withdrawal, changes in sleep or eating, unusual irritability, or loss of interest in previously engaging topics. <strong>In a mental health emergency, contact the 988 Suicide and Crisis Lifeline (US) by calling or texting 988, or reach your local emergency services.</strong></p>
+    </div>
+
+    <h3 style="color: var(--primary); margin: 30px 0 16px;">Masking (Camouflaging)</h3>
+    <p style="color: var(--text-light); margin-bottom: 20px;">Masking is a strategy in which autistic people hide or suppress their autistic traits in social situations. A 2025 systematic review in <a href="https://www.sciencedirect.com/science/article/pii/S3050656525000288" target="_blank">ScienceDirect</a> found that masking carries a significant psychological cost:</p>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🎭</div>
+        <h3>Exhaustion and Burnout</h3>
+        <p>Continuously monitoring one's behavior demands enormous energy and leads to chronic exhaustion. A 2025 co-twin study confirmed that masking is associated with elevated long-term biological stress markers. Source: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12659362/" target="_blank">PMC co-twin study 2025</a>.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">🪞</div>
+        <h3>Impact on Identity and Self-Esteem</h3>
+        <p>Suppressing the authentic self damages self-worth and intensifies the feeling of "I am not enough as I am." A 2025 study found a bidirectional relationship: masking causes psychological difficulties, and psychological difficulties lead to increased masking. Source: <a href="https://journals.sagepub.com/doi/10.1177/13623613251347104" target="_blank">van der Putten et al., Autism 2025</a>.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">♀️</div>
+        <h3>Gender Differences</h3>
+        <p>Autistic women tend to mask more than autistic men, contributing to later diagnosis and a greater accumulated psychological burden. Research indicates this is one of the key drivers of the diagnostic gender gap. Source: <a href="https://www.sciencedirect.com/science/article/pii/S3050656525000288" target="_blank">Systematic review 2025</a>.</p>
+      </div>
+    </div>
+
+    <h3 style="color: var(--primary); margin: 30px 0 16px;">Autistic Burnout</h3>
+    <p style="color: var(--text-light); margin-bottom: 20px;">Autistic burnout is a state of deep physical, mental, and emotional exhaustion arising from the cumulative demands of living in a world not designed for autistic people. A 2025 systematic review in <a href="https://pubmed.ncbi.nlm.nih.gov/41207162/" target="_blank">PubMed</a> found it is fundamentally different from general (occupational) burnout:</p>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🔋</div>
+        <h3>Signs and Prevalence</h3>
+        <p>69% of autistic adults reported at least one burnout episode, and 46% experienced four or more episodes. Signs include extreme exhaustion, loss of skills previously held, increased sensory sensitivity, and functional decline. Source: <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/aur.3129" target="_blank">Mantzalas et al., Autism Research 2024</a>.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">⚡</div>
+        <h3>Key Contributing Factors</h3>
+        <p>Sustained sensory and social overload, prolonged masking, stigma and lack of understanding from the environment, daily life challenges, and alexithymia (difficulty identifying emotions). Source: <a href="https://pubmed.ncbi.nlm.nih.gov/41207162/" target="_blank">Systematic review 2025</a>.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">🛡️</div>
+        <h3>Prevention and Recovery</h3>
+        <p>Rest, chosen solitude, reducing sensory load, community support, and environmental awareness all support recovery. Greater self-understanding as an autistic person and moving toward supportive environments are key to prevention. Source: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7313636/" target="_blank">Raymaker et al., Autism in Adulthood</a>.</p>
+      </div>
+    </div>
+
+    <h3 style="color: var(--primary); margin: 30px 0 16px;">Adapted Psychological Therapies</h3>
+    <p style="color: var(--text-light); margin-bottom: 20px;">Research shows that psychological therapies adapted for autism are more effective than standard approaches. A 2024 meta-analysis in <a href="https://link.springer.com/article/10.1007/s10578-024-01686-2" target="_blank">Springer</a> found a large effect size (0.81) for autism-adapted CBT on clinical needs related to autism:</p>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>Adapted CBT (Cognitive Behavioral Therapy adapted for autism)</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <div class="inner">
+          A 2025 systematic review (<a href="https://doi.org/10.1177/13591045251314906" target="_blank">Roberts &amp; Rankin</a>) found that standard CBT is effective for anxiety in autistic young people, but adapted CBT is more effective, with sustained gains up to 26 months post-treatment. Necessary adaptations include: visual supports, attention to sensory needs, active family involvement, and a paced approach. The CBT-DAY program (<a href="https://journals.sagepub.com/doi/10.1177/13623613231213543" target="_blank">Schwartzman et al., 2024</a>) demonstrated feasibility in treating depression in autistic young people using a neurodiversity-affirming approach.
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>ACT (Acceptance and Commitment Therapy)</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <div class="inner">
+          A randomized controlled trial (RCT) from 2024 (<a href="https://journals.sagepub.com/doi/full/10.1177/13623613231172241" target="_blank">Maughan et al., Autism</a>) showed that ACT for parents of autistic children led to significant improvement in parental stress, psychological flexibility, and parenting sense of competence. Improvements were maintained at a 6-month follow-up. A 2025 meta-analysis (<a href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2025.1590489/full" target="_blank">Frontiers in Psychology</a>) recommends 4–8 weeks, at least 35 minutes per session, 1–2 sessions per week.
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>Mindfulness</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <div class="inner">
+          A 2025 RCT (<a href="https://journals.sagepub.com/doi/10.1177/25739581251400582" target="_blank">Hirvikoski et al., Autism in Adulthood</a>) demonstrated that MBSR (Mindfulness-Based Stress Reduction) groups significantly reduce anxiety and stress in autistic adults. A 2025 meta-analysis (<a href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2025.1526001/full" target="_blank">Frontiers in Psychology</a>) confirmed that mindfulness interventions reduce parental stress, anxiety, and depression, and improve social responsiveness in autistic children. The MYmind program (9 weekly 90-minute sessions) offers parallel mindfulness training for young people and their parents.
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box success">
+      <h4>Neurodiversity-Affirming Approach to Therapy</h4>
+      <p>Current research (<a href="https://onlinelibrary.wiley.com/doi/full/10.1002/capr.12874" target="_blank">Graf-Kurtulus, 2025</a>) calls for a therapeutic approach that centers the autistic perspective, focuses on mental health and authentic self-expression, rather than on conforming to neurotypical behaviors. Good therapy respects neurodiversity as a natural part of human variation.</p>
+    </div>
+
+    <h3 style="color: var(--primary); margin: 30px 0 16px;">Late Diagnosis: The Psychological Impact</h3>
+    <p style="color: var(--text-light); margin-bottom: 20px;">Adults diagnosed with autism later in life face unique psychological challenges:</p>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">📊</div>
+        <h3>Elevated Risk</h3>
+        <p>Adults diagnosed in adulthood are three times more likely to receive a diagnosis of mood disorders, anxiety, or personality disorders, compared to those diagnosed in childhood. Source: <a href="https://psycnet.apa.org/record/2025-23035-013" target="_blank">APA PsycNET 2025</a>.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">🔍</div>
+        <h3>Identity Reprocessing</h3>
+        <p>A late diagnosis triggers a process of reframing past experiences. Many experience relief alongside grief. According to <a href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2021.699335/full" target="_blank">Frontiers in Psychology</a>, the longer the time since diagnosis, the better the identity adaptation and the higher the self-esteem.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">🤝</div>
+        <h3>Community Connection as Protective Factor</h3>
+        <p>Research shows that connection to the autistic community is a significant protective factor against minority stress and improves mental health. Online spaces and forums provide belonging and identity affirmation. Source: <a href="https://journals.sagepub.com/doi/10.1177/27546330241233088" target="_blank">Najeeb &amp; Quadt, 2024</a>.</p>
+      </div>
+    </div>
+
+    <h3 style="color: var(--primary); margin: 30px 0 16px;">Family and Caregiver Mental Health</h3>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">👨‍👩‍👦</div>
+        <h3>Parental Burnout</h3>
+        <p>Approximately one-third (33%) of parents of autistic children experience depression, and 28% experience clinical anxiety. Mothers are at higher risk for burnout due to the cumulative caregiving burden. ACT and support groups have been shown to significantly reduce parental stress. Sources: <a href="https://www.sciencedirect.com/science/article/pii/S2950307825000785" target="_blank">Umbrella review 2025</a>; <a href="https://www.frontiersin.org/journals/psychology/articles/10.3389/fpsyg.2025.1581321/full" target="_blank">Frontiers 2025</a>.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">👧</div>
+        <h3>Siblings</h3>
+        <p>A systematic review (<a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11592025/" target="_blank">PMC 2024</a>) found that neurotypical siblings are at elevated risk for symptoms of depression and anxiety. The impact varies with the autistic sibling's support needs. However, many develop heightened empathy and resilience. Targeted emotional support for siblings is important.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">💡</div>
+        <h3>What Helps Families</h3>
+        <p>Research points to several factors that reduce family burden: parent support groups, ACT or CBT for parents, connecting families to community resources, and dedicated emotional support for siblings. Psychological flexibility has been identified as a key protective factor.</p>
+      </div>
+    </div>
+
+    <div class="info-box warning">
+      <h4>When to Seek Professional Help</h4>
+      <p>Seek a mental health professional if you or a family member experiences: significant decline in daily functioning, anxiety that disrupts daily routines, persistent feelings of depression, extreme social isolation, suicidal thoughts (in an emergency: call 988 in the US or your local crisis line), or recurring autistic burnout. Request a therapist experienced with autistic clients and with a neurodiversity-affirming approach.</p>
+    </div>
+  </section>
+
+  <!-- SUCCESS STORIES -->
+  <section class="section fade-in" id="stories">
+    <div class="section-header">
+      <span class="sec-icon">⭐</span>
+      <div>
+        <h2>Success Stories and Inspiration</h2>
+        <p>Autistic people who have made the world better</p>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🌟</div>
+        <h3>Temple Grandin</h3>
+        <p>Professor of animal science at Colorado State University, author, and autism advocate. Diagnosed at age 2, she was told she would never speak. Today she is one of the most celebrated scientists in her field and a leading voice for autistic people worldwide. Her insight: "I think in pictures."</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">💻</div>
+        <h3>Satya Nadella, Elon Musk and Autistic Tech Leaders</h3>
+        <p>Several prominent technology leaders have publicly identified as autistic or on the spectrum. Elon Musk disclosed his Asperger diagnosis in 2021. The technology industry has become one of the most actively inclusive sectors, with major neurodiversity hiring programs at Microsoft, SAP, Google, and others.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">🌍</div>
+        <h3>Greta Thunberg</h3>
+        <p>Climate activist diagnosed with Asperger syndrome, OCD, and selective mutism. She has described autism as her superpower, enabling her intense focus on climate change. She launched the global Fridays for Future movement at age 15 and addressed the United Nations at 16.</p>
+      </div>
+      <div class="card blue">
+        <div class="card-icon">🎵</div>
+        <h3>Susan Boyle</h3>
+        <p>Scottish singer diagnosed with Asperger syndrome at age 51. Her performance on Britain's Got Talent became one of the most watched online videos in history. She described her late diagnosis as a relief — finally understanding herself after decades of confusion.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESOURCES -->
+  <section class="section fade-in" id="resources">
+    <div class="section-header">
+      <span class="sec-icon">🔗</span>
+      <div>
+        <h2>Links and Resources</h2>
+        <p>International organizations, research databases, and support services</p>
+      </div>
+    </div>
+
+    <h3 style="color: var(--primary); margin-bottom: 16px;">Leading International Organizations</h3>
+    <div class="cards-grid">
+      <div class="card">
+        <h3>Autism Speaks</h3>
+        <p>The largest autism advocacy organization in the United States. Funds research, provides resources and tools, and offers a resource directory for families seeking services. Operates the Autism Response Team helpline.</p>
+        <a href="https://www.autismspeaks.org" target="_blank" class="link-btn" style="margin-top:10px;">Autism Speaks</a>
+      </div>
+      <div class="card green">
+        <h3>Autism Society of America</h3>
+        <p>The oldest autism advocacy organization in the US, founded in 1965. Focuses on community inclusion, employment, housing, and education. Maintains a network of local chapters across all 50 states.</p>
+        <a href="https://www.autism-society.org" target="_blank" class="link-btn green" style="margin-top:10px;">Autism Society</a>
+      </div>
+      <div class="card orange">
+        <h3>Autism Europe</h3>
+        <p>Pan-European organization representing the interests of autistic people and their families in Europe. Advocates for rights, inclusion, and quality services across EU member states. Member of EASPD and EURORDIS.</p>
+        <a href="https://www.autismeurope.org" target="_blank" class="link-btn orange" style="margin-top:10px;">Autism Europe</a>
+      </div>
+    </div>
+
+    <h3 style="color: var(--primary); margin: 40px 0 16px;">Additional Organizations</h3>
+    <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom: 30px;">
+      <a href="https://www.autism.org.uk/" target="_blank" class="link-btn">National Autistic Society (UK)</a>
+      <a href="https://www.autism-alliance.org/" target="_blank" class="link-btn green">International Autism Alliance</a>
+      <a href="https://www.globalautismpublichealth.org/" target="_blank" class="link-btn orange">GAPH</a>
+      <a href="https://www.insar.org/" target="_blank" class="link-btn">INSAR (Research Society)</a>
+      <a href="https://www.autisticadvocacy.org/" target="_blank" class="link-btn green">ASAN (Autistic Self Advocacy Network)</a>
+    </div>
+
+    <h3 style="color: var(--primary); margin: 40px 0 16px;">Screening and Diagnostic Resources</h3>
+    <div style="display:flex; flex-wrap:wrap; gap:8px; margin-bottom: 30px;">
+      <a href="https://www.autismspeaks.org/screen-your-child" target="_blank" class="link-btn">M-CHAT-R Screening (Autism Speaks)</a>
+      <a href="https://www.cdc.gov/ncbddd/autism/screening.html" target="_blank" class="link-btn green">CDC Autism Screening</a>
+      <a href="https://earlitech.com/" target="_blank" class="link-btn orange">EarliPoint (AI Screening)</a>
+    </div>
+
+    <h3 style="color: var(--primary); margin: 40px 0 16px;">Key Research Sources</h3>
+    <div class="cards-grid">
+      <div class="card">
+        <h3>Scientific Literature</h3>
+        <ul style="list-style: none; padding: 0;">
+          <li style="margin-bottom: 8px;"><a href="https://pubmed.ncbi.nlm.nih.gov/30178724/" target="_blank" style="color:var(--primary-light);">Hollocks et al. — Anxiety and depression in ASD</a></li>
+          <li style="margin-bottom: 8px;"><a href="https://www.nature.com/articles/s41398-023-02374-w" target="_blank" style="color:var(--primary-light);">Translational Psychiatry 2023 — Co-occurring conditions</a></li>
+          <li style="margin-bottom: 8px;"><a href="https://onlinelibrary.wiley.com/doi/full/10.1002/aur.3129" target="_blank" style="color:var(--primary-light);">Mantzalas et al. 2024 — Autistic burnout</a></li>
+          <li style="margin-bottom: 8px;"><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC7313636/" target="_blank" style="color:var(--primary-light);">Raymaker et al. — Autistic burnout definition</a></li>
+        </ul>
+      </div>
+      <div class="card green">
+        <h3>Databases and Registries</h3>
+        <ul style="list-style: none; padding: 0;">
+          <li style="margin-bottom: 8px;"><a href="https://clinicaltrials.gov/search?cond=autism+spectrum+disorder" target="_blank" style="color:var(--primary-light);">ClinicalTrials.gov — ASD Trials</a></li>
+          <li style="margin-bottom: 8px;"><a href="https://www.sfari.org/" target="_blank" style="color:var(--primary-light);">SFARI — Simons Foundation Autism Research</a></li>
+          <li style="margin-bottom: 8px;"><a href="https://www.cdc.gov/ncbddd/autism/data.html" target="_blank" style="color:var(--primary-light);">CDC ADDM Network — Prevalence Data</a></li>
+          <li style="margin-bottom: 8px;"><a href="https://www.autismspeaks.org/tool-kit/100-day-kit" target="_blank" style="color:var(--primary-light);">Autism Speaks 100 Day Kit</a></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- CAREPEDIA CTA -->
+  <div class="carepedia-cta">
+    <h3>Want a research-based medical information portal?</h3>
+    <p>We build portals for physicians, nonprofits, and medical centers. Tell us what you need.</p>
+    <a href="https://carepedia.org/en/#contact" class="cta-btn">Want a portal? Talk to us</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p style="margin-bottom: 16px;">
+      Built by <strong>Yuval Kashtkir</strong> and his robot assistants | <a href="https://carepedia.org/en" style="color:var(--accent-light);text-decoration:none;">Carepedia</a>
+    </p>
+    <a href="https://carepedia.org/en/#contact" target="_blank" class="portal-request-btn" style="margin-bottom: 20px;">➕ Want a portal for another disease?</a>
+    <p style="margin-top: 20px; font-size: 15px; opacity: 0.85;">All information on this site is for educational purposes only and does not constitute a substitute for professional medical advice.</p>
+    <p style="margin-top: 8px; font-size: 13px; opacity: 0.7;">
+      <a href="/disclaimer" style="color:var(--accent-light);text-decoration:underline;">Legal Disclaimer</a> |
+      <a href="https://wa.me/+972526414555" target="_blank" rel="noopener" style="color:var(--accent-light);text-decoration:underline;">Report an Error</a>
+    </p>
+    <p style="margin-top: 10px; font-size: 14px; opacity: 0.7;">Last updated: February 2026 | Includes citations from peer-reviewed literature | International edition</p>
+  </footer>
+
+</div>
+
+<!-- SCROLL TO TOP -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</button>
+
+<script>
+function toggleMenu() {
+  const sidebar = document.getElementById('sidebar');
+  const toggle = document.getElementById('menuToggle');
+  const overlay = document.getElementById('sidebarOverlay');
+  sidebar.classList.toggle('open');
+  toggle.classList.toggle('open');
+  overlay.classList.toggle('active');
+  document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '';
+}
+
+function closeMenu() {
+  const sidebar = document.getElementById('sidebar');
+  const toggle = document.getElementById('menuToggle');
+  const overlay = document.getElementById('sidebarOverlay');
+  sidebar.classList.remove('open');
+  toggle.classList.remove('open');
+  overlay.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function navigate(el) {
+  document.querySelectorAll('.sidebar nav a').forEach(a => a.classList.remove('active'));
+  el.classList.add('active');
+  closeMenu();
+}
+
+function navigateTo(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+  document.querySelectorAll('.sidebar nav a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+  });
+}
+
+function toggleAccordion(header) {
+  const body = header.nextElementSibling;
+  const isOpen = header.classList.contains('open');
+  header.classList.toggle('open');
+  body.style.maxHeight = isOpen ? '0' : body.scrollHeight + 'px';
+}
+
+function switchTab(tabGroup, tabName) {
+  document.querySelectorAll('[data-tab-group="' + tabGroup + '"] .tab-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.tab === tabName);
+  });
+  document.querySelectorAll('[data-tab-content="' + tabGroup + '"]').forEach(c => {
+    c.classList.toggle('active', c.dataset.tab === tabName);
+  });
+}
+
+// Scroll progress bar and scroll-to-top
+window.addEventListener('scroll', () => {
+  const scrollTop = document.getElementById('scrollTop');
+  const progressBar = document.getElementById('progressBar');
+  const scrolled = window.scrollY;
+  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = maxScroll > 0 ? (scrolled / maxScroll) * 100 : 0;
+  progressBar.style.width = pct + '%';
+  scrollTop.classList.toggle('visible', scrolled > 500);
+
+  // Scroll spy
+  const sections = document.querySelectorAll('.section[id], .hero[id]');
+  let current = '';
+  sections.forEach(s => {
+    if (scrolled >= s.offsetTop - 100) current = s.id;
+  });
+  if (current) {
+    document.querySelectorAll('.sidebar nav a').forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  }
+});
+
+// Fade-in on scroll
+const fadeEls = document.querySelectorAll('.fade-in');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+fadeEls.forEach(el => observer.observe(el));
+
+// Portal search
+let searchTimeout;
+function searchPortal(query) {
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(() => _doSearch(query), 150);
+}
+
+function _doSearch(query) {
+  const resultsDiv = document.getElementById('searchResults');
+  if (!query || query.length < 2) {
+    resultsDiv.style.display = 'none';
+    document.querySelectorAll('.section').forEach(s => s.style.display = '');
+    return;
+  }
+  const q = query.toLowerCase();
+  const sections = document.querySelectorAll('.section[id]');
+  const matches = [];
+  sections.forEach(s => {
+    const text = s.textContent.toLowerCase();
+    const title = s.querySelector('h2') ? s.querySelector('h2').textContent : '';
+    const subtitle = s.querySelector('.section-header p') ? s.querySelector('.section-header p').textContent : '';
+    if (text.includes(q)) {
+      const count = (text.match(new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')) || []).length;
+      matches.push({ id: s.id, title: title, subtitle: subtitle, count: count });
+      s.style.display = '';
+    } else {
+      s.style.display = 'none';
+    }
+  });
+  matches.sort((a, b) => b.count - a.count);
+  if (matches.length > 0 && matches.length < sections.length) {
+    resultsDiv.innerHTML = '<div style="background:var(--card);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);">' +
+      '<p style="font-size:14px;color:var(--text-light);margin-bottom:8px;">' + matches.length + ' results found:</p>' +
+      matches.map(m =>
+        '<a href="#' + m.id + '" onclick="navigateTo(\'' + m.id + '\')" style="display:block;padding:10px 12px;color:var(--primary);text-decoration:none;border-radius:8px;font-weight:600;transition:var(--transition);">' +
+        m.title +
+        (m.count > 1 ? ' <span style="font-size:12px;color:var(--text-light);font-weight:400;">(' + m.count + ' mentions)</span>' : '') +
+        '</a>'
+      ).join('') + '</div>';
+    resultsDiv.style.display = 'block';
+  } else if (matches.length === sections.length) {
+    resultsDiv.style.display = 'none';
+  } else {
+    resultsDiv.innerHTML = '<div style="background:var(--card);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);"><p style="font-size:14px;color:var(--text-light);">No results found. Try a different term.</p></div>';
+    resultsDiv.style.display = 'block';
+  }
+}
+</script>
+
+</body>
+</html>

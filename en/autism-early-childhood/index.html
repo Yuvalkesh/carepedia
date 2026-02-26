@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Early Childhood Autism Hub | CarePedia Information Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="alternate" hreflang="he" href="https://carepedia.org/autism-early-childhood" />
+<link rel="alternate" hreflang="en" href="https://carepedia.org/en/autism-early-childhood" />
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --primary: #0f4c75;
+  --primary-light: #3282b8;
+  --accent: #00b894;
+  --accent-light: #55efc4;
+  --warm: #fdcb6e;
+  --warm-dark: #e17055;
+  --bg: #f0f4f8;
+  --card: #ffffff;
+  --text: #2c3e50;
+  --text-light: #5d6d7e;
+  --shadow: 0 4px 20px rgba(0,0,0,0.08);
+  --shadow-hover: 0 12px 40px rgba(0,0,0,0.18);
+  --radius: 16px;
+  --transition: all 0.3s cubic-bezier(.4,0,.2,1);
+  /* Aliases for Iconify icons */
+  --forest: #0f4c75;
+  --forest-mid: #3282b8;
+  --forest-light: rgba(50,130,184,0.12);
+  --amber: #fdcb6e;
+  --amber-light: rgba(253,203,110,0.12);
+  --border: #dde4eb;
+}
+
+body {
+  font-family: 'Rubik', 'Segoe UI', Tahoma, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.8;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background:
+    radial-gradient(ellipse at 10% 20%, rgba(15,76,117,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 80%, rgba(0,184,148,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(253,203,110,0.05) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.scroll-progress {
+  position: fixed;
+  top: 0; right: 0;
+  width: 100%; height: 4px;
+  z-index: 2000;
+  background: transparent;
+}
+.scroll-progress .bar {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--primary-light), var(--warm));
+  border-radius: 0 0 0 4px;
+  transition: width 0.1s linear;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 280px; height: 100vh;
+  background: rgba(15,76,117,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(255,255,255,0.1);
+  z-index: 1000;
+  padding: 30px 20px;
+  overflow-y: auto;
+  transition: transform 0.4s cubic-bezier(.4,0,.2,1);
+}
+.sidebar .logo {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+.sidebar .logo .icon { font-size: 48px; }
+.sidebar .logo h2 { color: #fff; font-size: 18px; margin-top: 8px; font-weight: 600; }
+.sidebar nav a {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 18px; color: rgba(255,255,255,0.8);
+  text-decoration: none; border-radius: 12px;
+  margin-bottom: 4px; font-size: 15px; transition: var(--transition);
+}
+.sidebar nav a:hover, .sidebar nav a.active {
+  background: rgba(255,255,255,0.15); color: #fff; transform: translateX(4px);
+}
+.sidebar nav a .nav-icon { font-size: 22px; min-width: 30px; text-align: center; }
+
+.menu-toggle {
+  display: none;
+  position: fixed;
+  top: 20px; left: 20px;
+  z-index: 1100;
+  background: var(--primary); color: #fff;
+  border: none; border-radius: 12px;
+  width: 50px; height: 50px; font-size: 24px;
+  cursor: pointer; box-shadow: var(--shadow); transition: var(--transition);
+}
+.menu-toggle:hover { transform: scale(1.05); }
+.menu-toggle.open { border-radius: 50%; background: var(--warm-dark); }
+
+.main {
+  margin-left: 280px;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--primary) 0%, #3282b8 40%, var(--accent) 100%);
+  padding: 80px 60px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%);
+  animation: float 20s linear infinite;
+}
+@keyframes float { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+.hero-content { position: relative; z-index: 1; max-width: 900px; }
+.hero h1 { font-size: 52px; font-weight: 800; margin-bottom: 10px; line-height: 1.3; }
+.hero .greeting { font-size: 22px; opacity: 0.95; margin-bottom: 30px; line-height: 1.7; }
+.hero .subtitle { font-size: 18px; opacity: 0.8; max-width: 700px; }
+
+.fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+.section { padding: 60px; max-width: 1100px; margin: 0 auto; }
+.section-header {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 40px; padding-bottom: 20px;
+  border-bottom: 3px solid var(--primary-light);
+}
+.section-header .sec-icon { font-size: 42px; }
+.section-header h2 { font-size: 36px; color: var(--primary); }
+.section-header p { color: var(--text-light); font-size: 16px; margin-top: 4px; }
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px; margin-bottom: 40px;
+}
+.card {
+  background: var(--card); border-radius: var(--radius); padding: 30px;
+  box-shadow: var(--shadow); transition: var(--transition);
+  border-top: 4px solid var(--primary-light);
+  position: relative; overflow: hidden;
+}
+.card:hover { transform: translateY(-6px) scale(1.01); box-shadow: var(--shadow-hover); }
+.card .card-icon { font-size: 40px; margin-bottom: 16px; }
+.card h3 { font-size: 20px; color: var(--primary); margin-bottom: 12px; }
+.card p { color: var(--text-light); font-size: 15px; line-height: 1.8; }
+.card.green { border-top-color: var(--accent); }
+.card.orange { border-top-color: var(--warm); }
+.card.blue { border-top-color: var(--primary-light); }
+
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px; margin-top: 40px;
+}
+.cat-card {
+  background: var(--card); border-radius: var(--radius); padding: 30px 24px;
+  text-align: center; cursor: pointer; transition: var(--transition);
+  box-shadow: var(--shadow); text-decoration: none; color: var(--text);
+}
+.cat-card:hover { transform: translateY(-6px) scale(1.02); box-shadow: var(--shadow-hover); }
+.cat-card .cat-icon { font-size: 48px; margin-bottom: 14px; }
+.cat-card h3 { font-size: 18px; color: var(--primary); margin-bottom: 8px; }
+.cat-card p { font-size: 13px; color: var(--text-light); }
+
+.accordion { margin-bottom: 16px; }
+.accordion-header {
+  background: var(--card); padding: 20px 24px; border-radius: var(--radius);
+  cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+  box-shadow: var(--shadow); transition: var(--transition);
+  font-size: 17px; font-weight: 600; color: var(--primary);
+}
+.accordion-header:hover { background: #eef4fb; }
+.accordion-header .arrow { transition: transform 0.3s ease; font-size: 20px; }
+.accordion-header.open .arrow { transform: rotate(180deg); }
+.accordion-body {
+  max-height: 0; overflow: clip; transition: max-height 0.4s ease;
+  background: var(--card); border-radius: 0 0 var(--radius) var(--radius); margin-top: -8px;
+}
+.accordion-body .inner { padding: 20px 24px 24px; color: var(--text-light); line-height: 2; }
+
+.tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+.tab-btn {
+  padding: 12px 24px; background: var(--card);
+  border: 2px solid #dde4eb; border-radius: 30px;
+  cursor: pointer; font-size: 15px; font-family: inherit;
+  color: var(--text-light); transition: var(--transition);
+}
+.tab-btn:hover { border-color: var(--primary-light); color: var(--primary); }
+.tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.tab-content { display: none; animation: fadeIn 0.4s ease; }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.info-box {
+  background: linear-gradient(135deg, #eaf4fb 0%, #e8f8f0 100%);
+  border-radius: var(--radius); padding: 24px 28px; margin: 24px 0;
+  border-left: 5px solid var(--primary-light);
+}
+.info-box.warning { background: linear-gradient(135deg, #fef9e7 0%, #fdebd0 100%); border-left-color: var(--warm); }
+.info-box.success { background: linear-gradient(135deg, #e8f8f0 0%, #d5f5e3 100%); border-left-color: var(--accent); }
+.info-box h4 { color: var(--primary); margin-bottom: 8px; font-size: 17px; }
+.info-box p { color: var(--text-light); font-size: 15px; }
+
+.link-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 24px; background: var(--primary);
+  color: #fff; text-decoration: none; border-radius: 30px;
+  font-size: 15px; transition: var(--transition); margin: 6px;
+}
+.link-btn:hover { background: var(--primary-light); transform: translateY(-2px); }
+.link-btn.green { background: var(--accent); }
+.link-btn.green:hover { background: var(--accent-light); color: var(--text); }
+.link-btn.orange { background: var(--warm-dark); }
+.link-btn.orange:hover { background: var(--warm); color: var(--text); }
+
+.styled-table {
+  width: 100%; border-collapse: collapse; margin: 20px 0;
+  background: var(--card); border-radius: var(--radius);
+  overflow: hidden; box-shadow: var(--shadow);
+}
+.styled-table thead { background: var(--primary); color: #fff; }
+.styled-table th { padding: 16px 20px; text-align: left; font-weight: 600; }
+.styled-table td { padding: 14px 20px; border-bottom: 1px solid #eee; }
+.styled-table tbody tr:hover { background: #f7fafc; }
+
+.timeline { position: relative; padding-left: 40px; margin: 30px 0; }
+.timeline::before {
+  content: '';
+  position: absolute; left: 12px; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--primary-light), var(--accent));
+  border-radius: 3px;
+}
+.timeline-item {
+  position: relative; margin-bottom: 30px; padding: 24px;
+  background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);
+}
+.timeline-item::before {
+  content: ''; position: absolute;
+  left: -34px; top: 30px;
+  width: 16px; height: 16px;
+  background: var(--accent); border-radius: 50%; border: 3px solid var(--bg);
+}
+.timeline-item h4 { color: var(--primary); font-size: 18px; margin-bottom: 8px; }
+.timeline-item p { color: var(--text-light); }
+.timeline-item .time-label {
+  display: inline-block; background: var(--primary); color: #fff;
+  padding: 4px 14px; border-radius: 20px; font-size: 13px; margin-bottom: 10px;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px; margin: 30px 0;
+}
+.stat-box {
+  background: linear-gradient(135deg, var(--card) 0%, #f7fafc 100%);
+  border-radius: var(--radius); padding: 24px; text-align: center;
+  box-shadow: var(--shadow); border-bottom: 3px solid var(--primary-light);
+  transition: var(--transition);
+}
+.stat-box:nth-child(2) { border-bottom-color: var(--accent); }
+.stat-box:nth-child(3) { border-bottom-color: var(--warm); }
+.stat-box:nth-child(4) { border-bottom-color: var(--warm-dark); }
+.stat-box:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+.stat-box .stat-num {
+  font-size: 36px; font-weight: 800;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.stat-box .stat-label { color: var(--text-light); font-size: 14px; margin-top: 6px; }
+
+.carepedia-cta {
+  background: linear-gradient(135deg, #1A73E8, #00C9A7);
+  padding: 48px 24px; text-align: center; color: #fff;
+}
+.carepedia-cta h3 { font-size: 24px; font-weight: 700; margin-bottom: 12px; }
+.carepedia-cta p { font-size: 16px; opacity: 0.9; margin-bottom: 24px; max-width: 500px; margin-left: auto; margin-right: auto; }
+.carepedia-cta .cta-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 32px; background: #fff; color: #1A73E8;
+  text-decoration: none; border-radius: 30px; font-size: 16px; font-weight: 700;
+  font-family: inherit; transition: all 0.3s ease; box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+.carepedia-cta .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+
+.credit-bar {
+  display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap;
+  padding: 14px 20px; font-size: 14px; color: rgba(255,255,255,0.85); position: relative; z-index: 1;
+}
+.credit-bar span { opacity: 0.9; }
+.portal-request-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 22px; background: var(--primary-light); color: #fff;
+  text-decoration: none; border-radius: 30px; font-size: 14px;
+  font-family: inherit; font-weight: 600; transition: var(--transition);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+.portal-request-btn:hover { background: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+
+.footer {
+  background: var(--primary); color: rgba(255,255,255,0.8);
+  text-align: center; padding: 40px; font-size: 14px;
+}
+
+.scroll-top {
+  position: fixed; bottom: 30px; left: 30px;
+  width: 50px; height: 50px; background: var(--primary);
+  color: #fff; border: none; border-radius: 50%;
+  font-size: 22px; cursor: pointer; box-shadow: var(--shadow);
+  transition: var(--transition); opacity: 0; pointer-events: none; z-index: 999;
+}
+.scroll-top.visible { opacity: 1; pointer-events: auto; }
+.scroll-top:hover { background: var(--primary-light); transform: translateY(-3px); }
+
+.search-box { position: relative; margin: 0 auto; }
+.search-box input {
+  width: 100%; padding: 14px 20px 14px 50px;
+  border: 2px solid rgba(15,76,117,0.15); border-radius: 30px;
+  font-size: 16px; font-family: 'Rubik', sans-serif;
+  background: var(--card); color: var(--text); transition: var(--transition);
+  box-sizing: border-box;
+}
+.search-box input:focus { outline: none; border-color: var(--primary-light); box-shadow: 0 0 0 4px rgba(50,130,184,0.1); }
+.search-box .search-icon {
+  position: absolute; left: 18px; top: 50%;
+  transform: translateY(-50%); font-size: 20px; pointer-events: none;
+}
+
+.sidebar-overlay {
+  display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5); z-index: 999; opacity: 0; transition: opacity 0.3s ease;
+}
+.sidebar-overlay.active { display: block; opacity: 1; }
+
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); width: 270px; }
+  .sidebar.open { transform: translateX(0); }
+  .menu-toggle { display: block; }
+  .main { margin-left: 0; }
+  .hero { padding: 60px 30px; }
+  .section { padding: 40px 24px; }
+}
+
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); width: 260px; }
+  .sidebar.open { transform: translateX(0); }
+  .menu-toggle { display: block; }
+  .main { margin-left: 0; }
+  .hero { padding: 40px 20px 36px; }
+  .hero h1 { font-size: 28px; line-height: 1.3; }
+  .hero .greeting { font-size: 16px; line-height: 1.7; }
+  .hero .subtitle { font-size: 14px; }
+  .section { padding: 28px 16px; }
+  .section-header { flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 24px; padding-bottom: 14px; }
+  .section-header .sec-icon { font-size: 32px; }
+  .section-header h2 { font-size: 24px; }
+  .section-header p { font-size: 14px; }
+  .cards-grid { grid-template-columns: 1fr; gap: 16px; margin-bottom: 24px; }
+  .card { padding: 20px; }
+  .card:hover { transform: none; }
+  .cat-card:hover { transform: none; }
+  .stat-box:hover { transform: none; }
+  .link-btn:hover { transform: none; }
+  .portal-request-btn:hover { transform: none; }
+  .scroll-top:hover { transform: none; }
+  .sidebar nav a:hover { transform: none; }
+  .card .card-icon { font-size: 32px; margin-bottom: 10px; }
+  .card h3 { font-size: 17px; }
+  .card p { font-size: 14px; }
+  .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 24px; }
+  .cat-card { padding: 18px 12px; }
+  .cat-card .cat-icon { font-size: 32px; margin-bottom: 8px; }
+  .cat-card h3 { font-size: 14px; }
+  .cat-card p { font-size: 11px; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 20px 0; }
+  .stat-box { padding: 16px 10px; }
+  .stat-box .stat-num { font-size: 26px; }
+  .stat-box .stat-label { font-size: 12px; }
+  .tabs { gap: 6px; margin-bottom: 16px; }
+  .tab-btn { padding: 8px 14px; font-size: 13px; border-radius: 20px; }
+  .styled-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 13px; }
+  .styled-table th { padding: 10px 12px; font-size: 13px; white-space: nowrap; }
+  .styled-table td { padding: 10px 12px; font-size: 13px; min-width: 100px; }
+  .info-box { padding: 16px 18px; margin: 16px 0; }
+  .info-box h4 { font-size: 15px; }
+  .info-box p { font-size: 13px; }
+  .accordion-header { padding: 14px 16px; font-size: 15px; }
+  .accordion-body .inner { padding: 14px 16px 18px; font-size: 14px; line-height: 1.9; }
+  .timeline { padding-left: 30px; margin: 20px 0; }
+  .timeline-item { padding: 16px; margin-bottom: 20px; }
+  .timeline-item::before { left: -24px; width: 12px; height: 12px; top: 22px; }
+  .timeline-item h4 { font-size: 16px; }
+  .timeline-item p { font-size: 13px; }
+  .link-btn { padding: 10px 16px; font-size: 13px; margin: 4px 2px; }
+  .search-box input { padding: 12px 18px 12px 40px; font-size: 14px; }
+  .footer { padding: 28px 16px; font-size: 13px; }
+  .scroll-top { width: 42px; height: 42px; font-size: 18px; bottom: 20px; left: 16px; }
+}
+
+@media (max-width: 380px) {
+  .hero h1 { font-size: 24px; }
+  .hero .greeting { font-size: 15px; }
+  .cat-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .cat-card { padding: 14px 8px; }
+  .cat-card .cat-icon { font-size: 26px; }
+  .cat-card h3 { font-size: 13px; }
+  .cat-card p { display: none; }
+  .stats-row { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .stat-box .stat-num { font-size: 22px; }
+  .section { padding: 20px 12px; }
+  .tab-btn { padding: 7px 10px; font-size: 12px; }
+}
+
+.disclaimer-banner {
+  background: linear-gradient(135deg, #FFF3E0, #FFF8E1);
+  border-bottom: 2px solid #FFB74D;
+  padding: 10px 20px; text-align: center; font-size: 13px; color: #5D4037;
+  position: relative; z-index: 1500;
+  display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;
+}
+.disclaimer-banner strong { color: #E65100; }
+.disclaimer-banner a { color: #1A73E8; text-decoration: underline; font-weight: 600; }
+.disclaimer-banner a:hover { color: #0D47A1; }
+@media (max-width: 768px) { .disclaimer-banner { font-size: 12px; padding: 8px 12px; } }
+</style>
+<script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js" defer></script>
+</head>
+<body>
+
+<!-- DISCLAIMER BANNER -->
+<div class="disclaimer-banner">
+  <iconify-icon icon="solar:danger-bold" style="font-size:16px;color:var(--forest);"></iconify-icon>
+  <span><strong>This is not medical advice.</strong> Always consult your doctor. <a href="/disclaimer">Full legal disclaimer &rarr;</a></span>
+</div>
+
+<!-- SCROLL PROGRESS BAR -->
+<div class="scroll-progress"><div class="bar" id="progressBar"></div></div>
+
+<!-- MOBILE OVERLAY -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeMenu()"></div>
+
+<!-- MOBILE MENU TOGGLE -->
+<button class="menu-toggle" id="menuToggle" onclick="toggleMenu()"><iconify-icon icon="solar:hamburger-menu-bold"></iconify-icon></button>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="logo">
+    <div class="icon"><iconify-icon icon="solar:baby-bold-duotone" style="font-size:44px;color:var(--amber);display:block;"></iconify-icon></div>
+    <h2>Early Childhood Autism Hub</h2>
+  </div>
+  <nav>
+    <a href="#home" class="active" onclick="navigate(this)"><iconify-icon icon="solar:home-bold" class="nav-icon" style="font-size:20px;"></iconify-icon>Home</a>
+    <a href="#about" onclick="navigate(this)"><iconify-icon icon="solar:book-2-bold" class="nav-icon" style="font-size:20px;"></iconify-icon>What is Autism?</a>
+    <a href="#signs" onclick="navigate(this)"><iconify-icon icon="solar:flag-bold" class="nav-icon" style="font-size:20px;"></iconify-icon>Early Warning Signs</a>
+    <a href="#diagnosis" onclick="navigate(this)"><iconify-icon icon="solar:stethoscope-bold" class="nav-icon" style="font-size:20px;"></iconify-icon>Diagnosis Process</a>
+  </nav>
+</aside>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-content">
+      <h1>👶 Early Childhood Autism Hub</h1>
+      <p class="greeting">Comprehensive, evidence-based information for parents and caregivers of young children with Autism Spectrum Disorder. From first signs in infancy through official diagnosis — everything you need to act early and give your child the best possible start.</p>
+      <p class="subtitle">Early identification is the most powerful tool we have. Research shows that intervention before age 5 produces the greatest lifelong gains.</p>
+
+      <div class="search-box" style="margin-top: 30px; max-width: 600px;">
+        <span class="search-icon"><iconify-icon icon="solar:magnifier-bold" style="font-size:18px;color:rgba(255,255,255,0.6);"></iconify-icon></span>
+        <input type="text" id="portalSearch" placeholder="Search the portal..." oninput="searchPortal(this.value)">
+      </div>
+      <div id="searchResults" style="display:none; margin-top: 16px; max-width: 600px;"></div>
+
+      <div class="credit-bar">
+        <span>Built by <strong>Yuval Kashtkir</strong> and his robot assistants</span>
+        <a href="https://carepedia.org/en/#contact" target="_blank" class="portal-request-btn">
+          ➕ Want a portal for another disease?
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- QUICK NAV -->
+  <section class="section fade-in" style="padding-bottom: 20px;">
+    <div class="cat-grid">
+      <a class="cat-card" onclick="navigateTo('about')">
+        <div class="cat-icon">📖</div>
+        <h3>What is Autism?</h3>
+        <p>Definition, spectrum, and prevalence</p>
+      </a>
+      <a class="cat-card" onclick="navigateTo('signs')">
+        <div class="cat-icon">🚩</div>
+        <h3>Early Warning Signs</h3>
+        <p>Age-by-age red flags to watch for</p>
+      </a>
+      <a class="cat-card" onclick="navigateTo('diagnosis')">
+        <div class="cat-icon">🩺</div>
+        <h3>Diagnosis Process</h3>
+        <p>From screening to official diagnosis</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section fade-in" id="about">
+    <div class="section-header">
+      <span class="sec-icon">📖</span>
+      <div>
+        <h2>What is Autism?</h2>
+        <p>A basic understanding of Autism Spectrum Disorder (ASD)</p>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-num">1:31</div>
+        <div class="stat-label">Children diagnosed in the US (CDC 2025, 2022 data)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">3.4x</div>
+        <div class="stat-label">More common in boys than girls</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">~1%</div>
+        <div class="stat-label">WHO estimated worldwide prevalence</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">23%</div>
+        <div class="stat-label">Annual increase in diagnosis rates worldwide</div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>What is the Autism Spectrum?</h4>
+      <p>Autism Spectrum Disorder (ASD) is a neurodevelopmental condition characterized by difficulties in social communication and restricted, repetitive patterns of behavior. The word "spectrum" emphasizes that this covers a very wide range: some children need minimal support, others need very substantial support. It is not a "disease" but a different way in which the brain processes information.</p>
+      <p style="margin-top: 10px;"><strong>Genetics:</strong> Twin studies show concordance rates of 60–90% in identical twins. Over 100 genes have been linked to autism. Environmental factors — such as parental age, pregnancy complications — also play a role.</p>
+    </div>
+
+    <h3 style="margin: 30px 0 20px; color: var(--primary); font-size: 22px;">Three Severity Levels (DSM-5)</h3>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🟢</div>
+        <h3>Level 1: "Requiring Support"</h3>
+        <p>Difficulty initiating social interactions, atypical responses to social situations, reduced interest in social relationships. Repetitive behaviors interfere with functioning in some contexts.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">🟡</div>
+        <h3>Level 2: "Requiring Substantial Support"</h3>
+        <p>Marked deficits in verbal and nonverbal communication, limited social initiation, atypical responses. Repetitive behaviors noticeable to casual observers; distress with change.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">🔴</div>
+        <h3>Level 3: "Requiring Very Substantial Support"</h3>
+        <p>Severe deficits in communication, very limited social initiation, minimal response to social overtures. Fixed behaviors and repetitive patterns severely interfere with functioning.</p>
+      </div>
+    </div>
+
+    <div class="info-box success">
+      <h4>Did You Know?</h4>
+      <p>According to CDC 2025 data, autism prevalence in the United States has risen from 1 in 150 in 2000 to 1 in 31 in 2022. The increase is largely attributed to improved diagnostic tools, greater awareness, and a broadened definition — not necessarily a true rise in underlying rates.</p>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>What causes autism?</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <div class="inner">
+          <p>There is no single cause. Research points to a combination of factors:</p>
+          <ul style="padding-left: 20px; margin-top: 10px;">
+            <li><strong>Genetics:</strong> Over 100 genes are linked. Higher risk when a sibling has autism.</li>
+            <li><strong>Brain structure:</strong> Differences in brain connectivity, particularly in areas responsible for social cognition.</li>
+            <li><strong>Environmental factors:</strong> Advanced parental age, pregnancy and birth complications, exposure to certain medications during pregnancy.</li>
+            <li><strong>Epigenetics:</strong> Changes in gene expression that are not changes to DNA itself.</li>
+          </ul>
+          <p style="margin-top: 12px;"><strong>Important:</strong> Vaccines do not cause autism. Numerous large studies — including a study of over 650,000 children in Denmark — have definitively disproved this claim.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>What is the difference between autism, Asperger Syndrome, and PDD-NOS?</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <div class="inner">
+          <p>Since DSM-5 (2013), all previous separate diagnoses have been unified under one name: <strong>Autism Spectrum Disorder (ASD)</strong>. The former separate diagnoses were:</p>
+          <ul style="padding-left: 20px; margin-top: 10px;">
+            <li><strong>Autistic Disorder:</strong> What was considered "classic autism"</li>
+            <li><strong>Asperger Syndrome:</strong> Social difficulties without significant language delay</li>
+            <li><strong>PDD-NOS:</strong> Pervasive developmental disorder not otherwise specified</li>
+          </ul>
+          <p style="margin-top: 12px;">Today, all are diagnosed as ASD with a severity level (1, 2, or 3) based on the degree of support needed.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EARLY WARNING SIGNS -->
+  <section class="section fade-in" id="signs">
+    <div class="section-header">
+      <span class="sec-icon">🚩</span>
+      <div>
+        <h2>Early Warning Signs by Age</h2>
+        <p>Early identification is the key to successful intervention</p>
+      </div>
+    </div>
+
+    <div class="info-box warning">
+      <h4>Important to Know</h4>
+      <p>Although autism is difficult to diagnose before age 2, signs can appear as early as 6–12 months. A reliable diagnosis is possible in some children as early as 14 months. <strong>If something concerns you, do not wait.</strong> Even if a child is "just a bit behind," an early evaluation does no harm and can save years of critical developmental time.</p>
+    </div>
+
+    <div class="tabs" data-tab-group="signs">
+      <button class="tab-btn active" data-tab="baby" onclick="switchTab('signs','baby')">6–12 Months</button>
+      <button class="tab-btn" data-tab="toddler1" onclick="switchTab('signs','toddler1')">12–18 Months</button>
+      <button class="tab-btn" data-tab="toddler2" onclick="switchTab('signs','toddler2')">18–24 Months</button>
+      <button class="tab-btn" data-tab="preschool" onclick="switchTab('signs','preschool')">2–3 Years</button>
+    </div>
+
+    <div class="tab-content active" data-tab-content="signs" data-tab="baby">
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">👀</div>
+          <h3>Eye Contact</h3>
+          <p>Limited or absent eye contact. The baby does not look into eyes when being spoken to or held.</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon">😊</div>
+          <h3>Social Smile</h3>
+          <p>No big smiles or expressions of joy by 6 months. No sharing of facial expressions, smiles, or sounds by 9 months.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon">👋</div>
+          <h3>Response to Name</h3>
+          <p>No response to name by 12 months. The baby does not turn their head when called.</p>
+        </div>
+        <div class="card blue">
+          <div class="card-icon">🗣️</div>
+          <h3>Babbling</h3>
+          <p>Reduced babbling, especially the back-and-forth "conversational" babbling. No use of gestures such as pointing, reaching out, or waving.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" data-tab-content="signs" data-tab="toddler1">
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">🗨️</div>
+          <h3>First Words</h3>
+          <p>No single words by 16 months. No gestures such as pointing, showing, reaching, or waving.</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon">👆</div>
+          <h3>Joint Attention</h3>
+          <p>No joint attention: the child does not point at things that interest them, does not look where you are pointing. This ability should be established by 18 months.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon">🔄</div>
+          <h3>Developmental Regression</h3>
+          <p>Loss of words or babbling already acquired. Approximately 25% of children with autism experience regression between 15 and 24 months.</p>
+        </div>
+        <div class="card blue">
+          <div class="card-icon">🎭</div>
+          <h3>Symbolic Play</h3>
+          <p>Absence of "pretend" play (for example, "feeding" a doll). Preference for playing alone.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" data-tab-content="signs" data-tab="toddler2">
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">💬</div>
+          <h3>Language Delay</h3>
+          <p>No meaningful two-word combinations (not counting echolalia) by 24 months. Significant language delay overall.</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon">🔁</div>
+          <h3>Repetitive Behaviors</h3>
+          <p>Repetitive behaviors become more noticeable: hand-flapping, rocking, spinning objects, lining up toys in a row.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon">🔊</div>
+          <h3>Sensory Sensitivity</h3>
+          <p>Strong reactions to sensory stimuli: covering ears from noise, avoiding certain textures, reacting sharply to lights.</p>
+        </div>
+        <div class="card blue">
+          <div class="card-icon">🚶</div>
+          <h3>Toe-Walking</h3>
+          <p>Consistent toe-walking. Lack of imitation of actions or sounds.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" data-tab-content="signs" data-tab="preschool">
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">🤝</div>
+          <h3>Social Difficulties</h3>
+          <p>Difficulty playing with other children. Parallel play instead of interactive play. Does not understand basic social "rules."</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon">📋</div>
+          <h3>Coping with Change</h3>
+          <p>Great difficulty with transitions and changes in routine. Emotional outbursts over small changes.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon">🎯</div>
+          <h3>Intense, Restricted Interests</h3>
+          <p>Intense and narrow interest in specific topics. Repetitive preoccupation with a single subject.</p>
+        </div>
+        <div class="card blue">
+          <div class="card-icon">🪞</div>
+          <h3>Echolalia and Language</h3>
+          <p>Repeating phrases heard elsewhere (echolalia). Limited or absent language. Speaking about themselves in the third person.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-box success">
+      <h4>What to Do</h4>
+      <p>If you have noticed even some of these signs, contact your pediatrician right away and ask for a referral to a developmental specialist. You can also complete the <strong>M-CHAT-R</strong> screening questionnaire (for children aged 16–30 months) and bring the results to your doctor. Do not wait for the child to "grow out of it" — early intervention is the most important factor in outcomes.</p>
+    </div>
+  </section>
+
+  <!-- DIAGNOSIS -->
+  <section class="section fade-in" id="diagnosis">
+    <div class="section-header">
+      <span class="sec-icon">🩺</span>
+      <div>
+        <h2>The Diagnostic Process</h2>
+        <p>From first concerns through a formal diagnosis and opening rights</p>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <span class="time-label">Step 1</span>
+        <h4>Initial Identification by Pediatrician</h4>
+        <p>Your child's pediatrician tracks development at routine well-child visits. The American Academy of Pediatrics (AAP) recommends universal autism screening at 18 and 24 months using the M-CHAT-R. Parents can also raise concerns independently at any visit.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">Step 2</span>
+        <h4>Referral to a Developmental Specialist</h4>
+        <p>The pediatrician refers to a developmental pediatrician, child neurologist, child psychiatrist, or autism specialist team. Wait times vary by region and healthcare system. In many countries, early intervention services can be accessed while the formal diagnostic process is underway.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">Step 3</span>
+        <h4>Multidisciplinary Evaluation</h4>
+        <p>A team including a developmental pediatrician, psychologist, speech-language pathologist, and occupational therapist. Key tools: <strong>ADOS-2</strong> (structured observation, 45–90 minutes, sensitivity ~87%), developmental tests, language assessment, and parent interview (ADI-R). The process spans multiple appointments.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">Step 4</span>
+        <h4>Diagnosis and Support Plan</h4>
+        <p>After a formal diagnosis, families receive a detailed written report. This opens access to early intervention services, speech and occupational therapy, special education services, and — in many countries — government disability support programs. Request an Individualized Family Service Plan (IFSP) for children under 3, or an IEP for school-age children.</p>
+      </div>
+    </div>
+
+    <h3 style="margin: 30px 0 20px; color: var(--primary); font-size: 22px;">Screening and Diagnostic Tools</h3>
+    <table class="styled-table">
+      <thead>
+        <tr>
+          <th>Tool</th>
+          <th>Type</th>
+          <th>Age Range</th>
+          <th>Duration</th>
+          <th>Sensitivity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>M-CHAT-R/F</strong></td>
+          <td>Parent screening questionnaire</td>
+          <td>16–30 months</td>
+          <td>~5 minutes</td>
+          <td>78%</td>
+        </tr>
+        <tr>
+          <td><strong>ADOS-2</strong></td>
+          <td>Structured clinical observation</td>
+          <td>12 months+</td>
+          <td>45–90 minutes</td>
+          <td>87%</td>
+        </tr>
+        <tr>
+          <td><strong>ADI-R</strong></td>
+          <td>Structured parent interview</td>
+          <td>All ages</td>
+          <td>2–3 hours</td>
+          <td>77%</td>
+        </tr>
+        <tr>
+          <td><strong>EarliPoint</strong></td>
+          <td>Eye-tracking (FDA approved)</td>
+          <td>16–30 months</td>
+          <td>12 minutes</td>
+          <td>New</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="info-box">
+      <h4>Early Intervention Services</h4>
+      <p>In the United States, the Individuals with Disabilities Education Act (IDEA) Part C guarantees free early intervention services from birth to age 3. In many other countries, similar entitlements exist. Research consistently shows that starting therapy as early as possible — even before a formal diagnosis — produces significantly better outcomes. Services may include speech therapy, occupational therapy, physical therapy, developmental therapy, and parent coaching programs such as the Early Start Denver Model (ESDM).</p>
+    </div>
+
+    <div class="info-box warning">
+      <h4>Seeking a Second Opinion</h4>
+      <p>If you have concerns about your child's development but have been told to "wait and see," you have every right to request a referral to a developmental specialist. No parent should wait. Research is clear: the earlier intervention begins, the greater the benefit. Trust your instincts as a parent.</p>
+    </div>
+
+    <h3 style="margin: 30px 0 20px; color: var(--primary); font-size: 22px;">International Organizations and Resources</h3>
+    <div class="cards-grid">
+      <div class="card">
+        <h3>Autism Speaks</h3>
+        <p>The largest autism advocacy organization in the United States. Offers a free 100 Day Kit for newly diagnosed families, a resource directory, and the M-CHAT-R online screening tool.</p>
+        <a href="https://www.autismspeaks.org" target="_blank" class="link-btn" style="margin-top:10px;">Autism Speaks</a>
+      </div>
+      <div class="card green">
+        <h3>INSAR</h3>
+        <p>International Society for Autism Research. The leading scientific society dedicated to advancing knowledge of ASD. Publishes Autism Research journal and hosts the largest annual autism science conference globally.</p>
+        <a href="https://www.autism-insar.org" target="_blank" class="link-btn green" style="margin-top:10px;">INSAR</a>
+      </div>
+      <div class="card orange">
+        <h3>CDC Autism Resources</h3>
+        <p>The US Centers for Disease Control and Prevention provide free "Learn the Signs. Act Early." materials in many languages, including developmental milestone checklists and information for pediatricians and parents.</p>
+        <a href="https://www.cdc.gov/ncbddd/autism" target="_blank" class="link-btn orange" style="margin-top:10px;">CDC Autism</a>
+      </div>
+    </div>
+
+    <div style="margin-top: 20px;">
+      <a href="https://www.autismspeaks.org/screen-your-child" target="_blank" class="link-btn">M-CHAT-R Screening (Autism Speaks)</a>
+      <a href="https://www.cdc.gov/ncbddd/actearly/milestones/index.html" target="_blank" class="link-btn green">CDC Milestone Tracker</a>
+      <a href="https://clinicaltrials.gov/search?cond=autism+early+intervention" target="_blank" class="link-btn orange">Early Intervention Trials</a>
+    </div>
+  </section>
+
+  <!-- CAREPEDIA CTA -->
+  <div class="carepedia-cta">
+    <h3>Want a research-based medical information portal?</h3>
+    <p>We build portals for physicians, nonprofits, and medical centers. Tell us what you need.</p>
+    <a href="https://carepedia.org/en/#contact" class="cta-btn">Want a portal? Talk to us</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p style="margin-bottom: 16px;">
+      Built by <strong>Yuval Kashtkir</strong> and his robot assistants | <a href="https://carepedia.org/en" style="color:var(--accent-light);text-decoration:none;">Carepedia</a>
+    </p>
+    <a href="https://carepedia.org/en/#contact" target="_blank" class="portal-request-btn" style="margin-bottom: 20px;">➕ Want a portal for another disease?</a>
+    <p style="margin-top: 20px; font-size: 15px; opacity: 0.85;">All information on this site is for educational purposes only and does not constitute a substitute for professional medical advice.</p>
+    <p style="margin-top: 8px; font-size: 13px; opacity: 0.7;">
+      <a href="/disclaimer" style="color:var(--accent-light);text-decoration:underline;">Legal Disclaimer</a> |
+      <a href="https://wa.me/+972526414555" target="_blank" rel="noopener" style="color:var(--accent-light);text-decoration:underline;">Report an Error</a>
+    </p>
+    <p style="margin-top: 10px; font-size: 14px; opacity: 0.7;">Last updated: February 2026 | Includes citations from peer-reviewed literature | International edition</p>
+  </footer>
+
+</div>
+
+<!-- SCROLL TO TOP -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</button>
+
+<script>
+function toggleMenu() {
+  const sidebar = document.getElementById('sidebar');
+  const toggle = document.getElementById('menuToggle');
+  const overlay = document.getElementById('sidebarOverlay');
+  sidebar.classList.toggle('open');
+  toggle.classList.toggle('open');
+  overlay.classList.toggle('active');
+  document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '';
+}
+
+function closeMenu() {
+  const sidebar = document.getElementById('sidebar');
+  const toggle = document.getElementById('menuToggle');
+  const overlay = document.getElementById('sidebarOverlay');
+  sidebar.classList.remove('open');
+  toggle.classList.remove('open');
+  overlay.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+function navigate(el) {
+  document.querySelectorAll('.sidebar nav a').forEach(a => a.classList.remove('active'));
+  el.classList.add('active');
+  closeMenu();
+}
+
+function navigateTo(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+  document.querySelectorAll('.sidebar nav a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+  });
+}
+
+function toggleAccordion(header) {
+  const body = header.nextElementSibling;
+  const isOpen = header.classList.contains('open');
+  header.classList.toggle('open');
+  body.style.maxHeight = isOpen ? '0' : body.scrollHeight + 'px';
+}
+
+function switchTab(tabGroup, tabName) {
+  document.querySelectorAll('[data-tab-group="' + tabGroup + '"] .tab-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.tab === tabName);
+  });
+  document.querySelectorAll('[data-tab-content="' + tabGroup + '"]').forEach(c => {
+    c.classList.toggle('active', c.dataset.tab === tabName);
+  });
+}
+
+window.addEventListener('scroll', () => {
+  const scrollTop = document.getElementById('scrollTop');
+  const progressBar = document.getElementById('progressBar');
+  const scrolled = window.scrollY;
+  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = maxScroll > 0 ? (scrolled / maxScroll) * 100 : 0;
+  progressBar.style.width = pct + '%';
+  scrollTop.classList.toggle('visible', scrolled > 500);
+
+  const sections = document.querySelectorAll('.section[id], .hero[id]');
+  let current = '';
+  sections.forEach(s => {
+    if (scrolled >= s.offsetTop - 100) current = s.id;
+  });
+  if (current) {
+    document.querySelectorAll('.sidebar nav a').forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  }
+});
+
+const fadeEls = document.querySelectorAll('.fade-in');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+fadeEls.forEach(el => observer.observe(el));
+
+let searchTimeout;
+function searchPortal(query) {
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(() => _doSearch(query), 150);
+}
+
+function _doSearch(query) {
+  const resultsDiv = document.getElementById('searchResults');
+  if (!query || query.length < 2) {
+    resultsDiv.style.display = 'none';
+    document.querySelectorAll('.section').forEach(s => s.style.display = '');
+    return;
+  }
+  const q = query.toLowerCase();
+  const sections = document.querySelectorAll('.section[id]');
+  const matches = [];
+  sections.forEach(s => {
+    const text = s.textContent.toLowerCase();
+    const title = s.querySelector('h2') ? s.querySelector('h2').textContent : '';
+    if (text.includes(q)) {
+      const count = (text.match(new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')) || []).length;
+      matches.push({ id: s.id, title: title, count: count });
+      s.style.display = '';
+    } else {
+      s.style.display = 'none';
+    }
+  });
+  matches.sort((a, b) => b.count - a.count);
+  if (matches.length > 0 && matches.length < sections.length) {
+    resultsDiv.innerHTML = '<div style="background:var(--card);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);">' +
+      '<p style="font-size:14px;color:var(--text-light);margin-bottom:8px;">' + matches.length + ' results found:</p>' +
+      matches.map(m =>
+        '<a href="#' + m.id + '" onclick="navigateTo(\'' + m.id + '\')" style="display:block;padding:10px 12px;color:var(--primary);text-decoration:none;border-radius:8px;font-weight:600;transition:var(--transition);">' +
+        m.title +
+        (m.count > 1 ? ' <span style="font-size:12px;color:var(--text-light);font-weight:400;">(' + m.count + ' mentions)</span>' : '') +
+        '</a>'
+      ).join('') + '</div>';
+    resultsDiv.style.display = 'block';
+  } else if (matches.length === sections.length) {
+    resultsDiv.style.display = 'none';
+  } else {
+    resultsDiv.innerHTML = '<div style="background:var(--card);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);"><p style="font-size:14px;color:var(--text-light);">No results found. Try a different term.</p></div>';
+    resultsDiv.style.display = 'block';
+  }
+}
+</script>
+
+</body>
+</html>

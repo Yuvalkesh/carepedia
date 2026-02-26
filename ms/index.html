@@ -1,0 +1,1638 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>טרשת נפוצה Hub | מרכז מידע ומחקר</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --primary: #D35400;
+  --primary-light: #E67E22;
+  --accent: #F39C12;
+  --accent-light: #F7DC6F;
+  --warm: #fdcb6e;
+  --warm-dark: #e17055;
+  --bg: #f0f4f8;
+  --card: #ffffff;
+  --text: #2c3e50;
+  --text-light: #5d6d7e;
+  --shadow: 0 4px 20px rgba(0,0,0,0.08);
+  --shadow-hover: 0 12px 40px rgba(0,0,0,0.18);
+  --radius: 16px;
+  --transition: all 0.3s cubic-bezier(.4,0,.2,1);
+}
+
+body {
+  font-family: 'Rubik', 'Segoe UI', Tahoma, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.8;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background:
+    radial-gradient(ellipse at 10% 20%, rgba(211,84,0,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 80%, rgba(243,156,18,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(253,203,110,0.05) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.scroll-progress {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 4px;
+  z-index: 2000;
+  background: transparent;
+}
+.scroll-progress .bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--primary-light), var(--warm));
+  border-radius: 0 0 0 4px;
+  transition: width 0.1s linear;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 280px;
+  height: 100vh;
+  background: rgba(211,84,0,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-left: 1px solid rgba(255,255,255,0.1);
+  z-index: 1000;
+  padding: 30px 20px;
+  overflow-y: auto;
+  transition: transform 0.4s cubic-bezier(.4,0,.2,1);
+}
+
+.sidebar .logo {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+.sidebar .logo .icon { font-size: 48px; }
+.sidebar .logo h2 {
+  color: #fff;
+  font-size: 18px;
+  margin-top: 8px;
+  font-weight: 600;
+}
+
+.sidebar nav a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 18px;
+  color: rgba(255,255,255,0.8);
+  text-decoration: none;
+  border-radius: 12px;
+  margin-bottom: 4px;
+  font-size: 15px;
+  transition: var(--transition);
+}
+.sidebar nav a:hover, .sidebar nav a.active {
+  background: rgba(255,255,255,0.15);
+  color: #fff;
+  transform: translateX(-4px);
+}
+.sidebar nav a .nav-icon { font-size: 22px; min-width: 30px; text-align: center; }
+
+.menu-toggle {
+  display: none;
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1100;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  width: 50px;
+  height: 50px;
+  font-size: 24px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+}
+.menu-toggle:hover { transform: scale(1.05); }
+.menu-toggle.open { border-radius: 50%; background: var(--warm-dark); }
+
+.main {
+  margin-right: 280px;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--primary) 0%, #E67E22 40%, var(--accent) 100%);
+  padding: 80px 60px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%);
+  animation: float 20s linear infinite;
+}
+@keyframes float {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.hero-content { position: relative; z-index: 1; max-width: 900px; }
+.hero h1 { font-size: 52px; font-weight: 800; margin-bottom: 10px; line-height: 1.3; }
+.hero .greeting { font-size: 22px; opacity: 0.95; margin-bottom: 30px; line-height: 1.7; }
+.hero .subtitle { font-size: 18px; opacity: 0.8; max-width: 700px; }
+
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+.section { padding: 60px; max-width: 1100px; margin: 0 auto; }
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 40px;
+  padding-bottom: 20px;
+  border-bottom: 3px solid var(--primary-light);
+}
+.section-header .sec-icon { font-size: 42px; }
+.section-header h2 { font-size: 36px; color: var(--primary); }
+.section-header p { color: var(--text-light); font-size: 16px; margin-top: 4px; }
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 30px;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  border-top: 4px solid var(--primary-light);
+  position: relative;
+  overflow: hidden;
+}
+.card:hover { transform: translateY(-6px) scale(1.01); box-shadow: var(--shadow-hover); }
+.card .card-icon { font-size: 40px; margin-bottom: 16px; }
+.card h3 { font-size: 20px; color: var(--primary); margin-bottom: 12px; }
+.card p { color: var(--text-light); font-size: 15px; line-height: 1.8; }
+.card.green { border-top-color: var(--accent); }
+.card.orange { border-top-color: var(--warm); }
+.card.blue { border-top-color: var(--primary-light); }
+
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px;
+  margin-top: 40px;
+}
+.cat-card {
+  background: var(--card);
+  border-radius: var(--radius);
+  padding: 30px 24px;
+  text-align: center;
+  cursor: pointer;
+  transition: var(--transition);
+  box-shadow: var(--shadow);
+  text-decoration: none;
+  color: var(--text);
+}
+.cat-card:hover { transform: translateY(-6px) scale(1.02); box-shadow: var(--shadow-hover); }
+.cat-card .cat-icon { font-size: 48px; margin-bottom: 14px; }
+.cat-card h3 { font-size: 18px; color: var(--primary); margin-bottom: 8px; }
+.cat-card p { font-size: 13px; color: var(--text-light); }
+
+.accordion { margin-bottom: 16px; }
+.accordion-header {
+  background: var(--card);
+  padding: 20px 24px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  font-size: 17px;
+  font-weight: 600;
+  color: var(--primary);
+}
+.accordion-header:hover { background: #fef5ed; }
+.accordion-header .arrow { transition: transform 0.3s ease; font-size: 20px; }
+.accordion-header.open .arrow { transform: rotate(180deg); }
+.accordion-body {
+  max-height: 0;
+  overflow: clip;
+  transition: max-height 0.4s ease;
+  background: var(--card);
+  border-radius: 0 0 var(--radius) var(--radius);
+  margin-top: -8px;
+}
+.accordion-body .inner { padding: 20px 24px 24px; color: var(--text-light); line-height: 2; }
+
+.tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+.tab-btn {
+  padding: 12px 24px;
+  background: var(--card);
+  border: 2px solid #dde4eb;
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--text-light);
+  transition: var(--transition);
+}
+.tab-btn:hover { border-color: var(--primary-light); color: var(--primary); }
+.tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.tab-content { display: none; animation: fadeIn 0.4s ease; }
+.tab-content.active { display: block; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.info-box {
+  background: linear-gradient(135deg, #fef5ed 0%, #fdebd0 100%);
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  margin: 24px 0;
+  border-right: 5px solid var(--primary-light);
+}
+.info-box.warning {
+  background: linear-gradient(135deg, #fef9e7 0%, #fdebd0 100%);
+  border-right-color: var(--warm);
+}
+.info-box.success {
+  background: linear-gradient(135deg, #e8f8f0 0%, #d5f5e3 100%);
+  border-right-color: #00b894;
+}
+.info-box h4 { color: var(--primary); margin-bottom: 8px; font-size: 17px; }
+.info-box p { color: var(--text-light); font-size: 15px; }
+
+.link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  background: var(--primary);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 30px;
+  font-size: 15px;
+  transition: var(--transition);
+  margin: 6px;
+}
+.link-btn:hover { background: var(--primary-light); transform: translateY(-2px); }
+.link-btn.green { background: #00b894; }
+.link-btn.green:hover { background: #55efc4; color: var(--text); }
+.link-btn.orange { background: var(--warm-dark); }
+.link-btn.orange:hover { background: var(--warm); color: var(--text); }
+
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  background: var(--card);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+.styled-table thead { background: var(--primary); color: #fff; }
+.styled-table th { padding: 16px 20px; text-align: right; font-weight: 600; }
+.styled-table td { padding: 14px 20px; border-bottom: 1px solid #eee; }
+.styled-table tbody tr:hover { background: #f7fafc; }
+
+.timeline { position: relative; padding-right: 40px; margin: 30px 0; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  right: 12px; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--primary-light), var(--accent));
+  border-radius: 3px;
+}
+.timeline-item {
+  position: relative;
+  margin-bottom: 30px;
+  padding: 24px;
+  background: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  right: -34px; top: 30px;
+  width: 16px; height: 16px;
+  background: var(--accent);
+  border-radius: 50%;
+  border: 3px solid var(--bg);
+}
+.timeline-item h4 { color: var(--primary); font-size: 18px; margin-bottom: 8px; }
+.timeline-item p { color: var(--text-light); }
+.timeline-item .time-label {
+  display: inline-block;
+  background: var(--primary);
+  color: #fff;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  margin-bottom: 10px;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  margin: 30px 0;
+}
+.stat-box {
+  background: linear-gradient(135deg, var(--card) 0%, #f7fafc 100%);
+  border-radius: var(--radius);
+  padding: 24px;
+  text-align: center;
+  box-shadow: var(--shadow);
+  border-bottom: 3px solid var(--primary-light);
+  transition: var(--transition);
+}
+.stat-box:nth-child(2) { border-bottom-color: var(--accent); }
+.stat-box:nth-child(3) { border-bottom-color: var(--warm); }
+.stat-box:nth-child(4) { border-bottom-color: var(--warm-dark); }
+.stat-box:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+.stat-box .stat-num {
+  font-size: 36px;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.stat-box .stat-label { color: var(--text-light); font-size: 14px; margin-top: 6px; }
+
+.carepedia-cta {
+  background: linear-gradient(135deg, #1A73E8, #00C9A7);
+  padding: 48px 24px;
+  text-align: center;
+  color: #fff;
+}
+.carepedia-cta h3 { font-size: 24px; font-weight: 700; margin-bottom: 12px; }
+.carepedia-cta p { font-size: 16px; opacity: 0.9; margin-bottom: 24px; max-width: 500px; margin-left: auto; margin-right: auto; }
+.carepedia-cta .cta-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 32px; background: #fff; color: #1A73E8;
+  text-decoration: none; border-radius: 30px; font-size: 16px;
+  font-weight: 700; font-family: inherit; transition: all 0.3s ease;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+.carepedia-cta .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+
+.credit-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 14px 20px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.85);
+  position: relative;
+  z-index: 1;
+}
+.credit-bar span { opacity: 0.9; }
+
+.portal-request-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 22px;
+  background: var(--primary-light);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 30px;
+  font-size: 14px;
+  font-family: inherit;
+  font-weight: 600;
+  transition: var(--transition);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+.portal-request-btn:hover { background: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+
+.footer {
+  background: var(--primary);
+  color: rgba(255,255,255,0.8);
+  text-align: center;
+  padding: 40px;
+  font-size: 14px;
+}
+
+.scroll-top {
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+  width: 50px;
+  height: 50px;
+  background: var(--primary);
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  font-size: 22px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: var(--transition);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 999;
+}
+.scroll-top.visible { opacity: 1; pointer-events: auto; }
+.scroll-top:hover { background: var(--primary-light); transform: translateY(-3px); }
+
+.search-box { position: relative; margin: 0 auto; width: 100%; }
+.search-box input {
+  width: 100%;
+  padding: 14px 50px 14px 50px;
+  border: 2px solid rgba(211,84,0,0.15);
+  border-radius: 30px;
+  font-size: 16px;
+  font-family: 'Rubik', sans-serif;
+  background: var(--card);
+  color: var(--text);
+  transition: var(--transition);
+  box-sizing: border-box;
+  -webkit-appearance: none;
+}
+.search-box input:focus {
+  outline: none;
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 4px rgba(211,84,0,0.1);
+}
+.search-box .search-icon {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 20px;
+  pointer-events: none;
+}
+.search-clear {
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: var(--text-light);
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 50%;
+  transition: var(--transition);
+  line-height: 1;
+}
+.search-clear:hover { background: var(--bg); color: var(--text); }
+#searchResults a:active { background: var(--bg); }
+
+.sidebar-overlay {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 999;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.sidebar-overlay.active { display: block; opacity: 1; }
+
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(100%); width: 270px; }
+  .sidebar.open { transform: translateX(0); }
+  .menu-toggle { display: block; }
+  .main { margin-right: 0; }
+  .hero { padding: 60px 30px; }
+  .section { padding: 40px 24px; }
+  .search-box { max-width: 100% !important; }
+  #searchResults { max-width: 100% !important; }
+}
+
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(100%); width: 260px; }
+  .sidebar.open { transform: translateX(0); }
+  .menu-toggle { display: block; }
+  .main { margin-right: 0; }
+  .hero { padding: 40px 20px 36px; }
+  .hero h1 { font-size: 28px; line-height: 1.3; }
+  .hero .greeting { font-size: 16px; line-height: 1.7; }
+  .hero .subtitle { font-size: 14px; }
+  .section { padding: 28px 16px; }
+  .section-header { flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 24px; padding-bottom: 14px; }
+  .section-header .sec-icon { font-size: 32px; }
+  .section-header h2 { font-size: 24px; }
+  .section-header p { font-size: 14px; }
+  .cards-grid { grid-template-columns: 1fr; gap: 16px; margin-bottom: 24px; }
+  .card { padding: 20px; }
+  .card:hover { transform: none; }
+  .cat-card:hover { transform: none; }
+  .stat-box:hover { transform: none; }
+  .link-btn:hover { transform: none; }
+  .portal-request-btn:hover { transform: none; }
+  .scroll-top:hover { transform: none; }
+  .sidebar nav a:hover { transform: none; }
+  .card .card-icon { font-size: 32px; margin-bottom: 10px; }
+  .card h3 { font-size: 17px; }
+  .card p { font-size: 14px; }
+  .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 24px; }
+  .cat-card { padding: 18px 12px; }
+  .cat-card .cat-icon { font-size: 32px; margin-bottom: 8px; }
+  .cat-card h3 { font-size: 14px; }
+  .cat-card p { font-size: 11px; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 20px 0; }
+  .stat-box { padding: 16px 10px; }
+  .stat-box .stat-num { font-size: 26px; }
+  .stat-box .stat-label { font-size: 12px; }
+  .tabs { gap: 6px; margin-bottom: 16px; }
+  .tab-btn { padding: 8px 14px; font-size: 13px; border-radius: 20px; }
+  .styled-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 13px; }
+  .styled-table th { padding: 10px 12px; font-size: 13px; white-space: nowrap; }
+  .styled-table td { padding: 10px 12px; font-size: 13px; min-width: 100px; }
+  .info-box { padding: 16px 18px; margin: 16px 0; }
+  .info-box h4 { font-size: 15px; }
+  .info-box p { font-size: 13px; }
+  .accordion-header { padding: 14px 16px; font-size: 15px; }
+  .accordion-body .inner { padding: 14px 16px 18px; font-size: 14px; line-height: 1.9; }
+  .timeline { padding-right: 30px; margin: 20px 0; }
+  .timeline-item { padding: 16px; margin-bottom: 20px; }
+  .timeline-item::before { right: -24px; width: 12px; height: 12px; top: 22px; }
+  .timeline-item h4 { font-size: 16px; }
+  .timeline-item p { font-size: 13px; }
+  .link-btn { padding: 10px 16px; font-size: 13px; margin: 4px 2px; }
+  .search-box input { padding: 12px 40px 12px 40px; font-size: 16px; border-radius: 24px; }
+  .search-box .search-icon { right: 14px; font-size: 18px; }
+  .search-clear { left: 10px; font-size: 16px; }
+  #searchResults { font-size: 14px; }
+  #searchResults a { padding: 10px 12px; }
+  .footer { padding: 28px 16px; font-size: 13px; }
+  .scroll-top { width: 42px; height: 42px; font-size: 18px; bottom: 20px; left: 16px; }
+}
+
+@media (max-width: 380px) {
+  .hero h1 { font-size: 24px; }
+  .hero .greeting { font-size: 15px; }
+  .cat-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .cat-card { padding: 14px 8px; }
+  .cat-card .cat-icon { font-size: 26px; }
+  .cat-card h3 { font-size: 13px; }
+  .cat-card p { display: none; }
+  .stats-row { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .stat-box .stat-num { font-size: 22px; }
+  .section { padding: 20px 12px; }
+  .tab-btn { padding: 7px 10px; font-size: 12px; }
+  .search-box input { padding: 10px 36px 10px 36px; border-radius: 20px; }
+  .search-box .search-icon { right: 12px; font-size: 16px; }
+}
+
+/* DISCLAIMER BANNER */
+.disclaimer-banner {
+  background: linear-gradient(135deg, #FFF3E0, #FFF8E1);
+  border-bottom: 2px solid #FFB74D;
+  padding: 10px 20px;
+  text-align: center;
+  font-size: 13px;
+  color: #5D4037;
+  position: relative;
+  z-index: 1500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.disclaimer-banner strong { color: #E65100; }
+.disclaimer-banner a {
+  color: #1A73E8;
+  text-decoration: underline;
+  font-weight: 600;
+}
+.disclaimer-banner a:hover { color: #0D47A1; }
+@media (max-width: 768px) {
+  .disclaimer-banner { font-size: 12px; padding: 8px 12px; }
+}
+</style>
+</head>
+<body>
+
+<!-- DISCLAIMER BANNER -->
+<div class="disclaimer-banner">
+  <span>⚠️</span>
+  <span><strong>This is not medical advice.</strong> Always consult your doctor. <a href="/disclaimer">Full legal disclaimer &rarr;</a></span>
+</div>
+
+<div class="scroll-progress"><div class="bar" id="progressBar"></div></div>
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeMenu()"></div>
+<button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">&#9776;</button>
+
+<aside class="sidebar" id="sidebar">
+  <div class="logo">
+    <div class="icon">&#129505;</div>
+    <h2>&#1496;&#1512;&#1513;&#1514; &#1504;&#1508;&#1493;&#1510;&#1492; Hub</h2>
+  </div>
+  <nav>
+    <a href="#home" class="active" onclick="navigate(this)"><span class="nav-icon">&#127968;</span>דף הבית</a>
+    <a href="#about" onclick="navigate(this)"><span class="nav-icon">&#128214;</span>מה זה טרשת נפוצה?</a>
+    <a href="#types" onclick="navigate(this)"><span class="nav-icon">&#128300;</span>סוגים והתקפות</a>
+    <a href="#treatments" onclick="navigate(this)"><span class="nav-icon">&#128138;</span>טיפולים ותרופות</a>
+    <a href="#trials" onclick="navigate(this)"><span class="nav-icon">&#129516;</span>ניסויים קליניים</a>
+    <a href="#research" onclick="navigate(this)"><span class="nav-icon">&#128161;</span>מחקרים חדשים</a>
+    <a href="#symptoms" onclick="navigate(this)"><span class="nav-icon">&#9888;&#65039;</span>תסמינים וניהול</a>
+    <a href="#rehab" onclick="navigate(this)"><span class="nav-icon">&#127939;</span>שיקום ופיזיותרפיה</a>
+    <a href="#psychological-approach" onclick="navigate(this)"><span class="nav-icon">&#128156;</span>גישה פסיכולוגית</a>
+    <a href="#lifestyle" onclick="navigate(this)"><span class="nav-icon">&#127807;</span>אורח חיים ותזונה</a>
+    <a href="#pregnancy" onclick="navigate(this)"><span class="nav-icon">&#129328;</span>הריון ו-MS</a>
+    <a href="#support" onclick="navigate(this)"><span class="nav-icon">&#129309;</span>תמיכה וקהילה</a>
+    <a href="#resources" onclick="navigate(this)"><span class="nav-icon">&#128279;</span>קישורים ומשאבים</a>
+  </nav>
+</aside>
+
+<div class="main">
+
+  <section class="hero" id="home">
+    <div class="credit-bar">
+      <span>נבנה על ידי <strong>יובל קשטכר</strong> ועוזריו הרובוטים</span>
+      <a href="https://carepedia.org/#contact" target="_blank" class="portal-request-btn">
+        &#10133; רוצים פורטל למחלה אחרת?
+      </a>
+    </div>
+    <div class="hero-content">
+      <h1>מרכז מידע על טרשת נפוצה</h1>
+      <p class="greeting">
+        מידע מבוסס מחקר על MS: מהסוגים השונים דרך הטיפולים החדשניים ועד חיים מלאים עם המחלה.<br>
+        כי ידע הוא הכלי החזק ביותר שיש.
+      </p>
+      <p class="subtitle">
+        פורטל זה כולל את כל התרופות המאושרות, ניסויים קליניים פעילים, פריצת הדרך בקשר EBV, ומשאבים ייחודיים לישראל.
+      </p>
+      <div class="search-box" style="margin-top: 30px; max-width: 600px;">
+        <span class="search-icon">&#128269;</span>
+        <input type="text" id="portalSearch" placeholder="חיפוש בפורטל..." oninput="searchPortal(this.value)">
+        <button class="search-clear" id="searchClear" onclick="clearSearch()" style="display:none;">&#10005;</button>
+      </div>
+      <div id="searchResults" style="display:none; margin-top: 16px; max-width: 600px;"></div>
+    </div>
+  </section>
+
+  <section class="section fade-in" style="padding-bottom: 20px;">
+    <div class="cat-grid">
+      <a class="cat-card" href="#about" onclick="navigateTo('about')">
+        <div class="cat-icon">&#128214;</div>
+        <h3>מה זה טרשת נפוצה?</h3>
+        <p>הבנת המחלה, גורמים ואבחון</p>
+      </a>
+      <a class="cat-card" href="#types" onclick="navigateTo('types')">
+        <div class="cat-icon">&#128300;</div>
+        <h3>סוגים והתקפות</h3>
+        <p>RRMS, SPMS, PPMS ועוד</p>
+      </a>
+      <a class="cat-card" href="#treatments" onclick="navigateTo('treatments')">
+        <div class="cat-icon">&#128138;</div>
+        <h3>טיפולים ותרופות</h3>
+        <p>20+ תרופות מאושרות ועוד בפיתוח</p>
+      </a>
+      <a class="cat-card" href="#trials" onclick="navigateTo('trials')">
+        <div class="cat-icon">&#129516;</div>
+        <h3>ניסויים קליניים</h3>
+        <p>מחקרים פעילים ב2025 ו2026</p>
+      </a>
+      <a class="cat-card" href="#research" onclick="navigateTo('research')">
+        <div class="cat-icon">&#128161;</div>
+        <h3>מחקרים חדשים</h3>
+        <p>קשר EBV, ביומרקרים ועוד</p>
+      </a>
+      <a class="cat-card" href="#symptoms" onclick="navigateTo('symptoms')">
+        <div class="cat-icon">&#9888;&#65039;</div>
+        <h3>תסמינים וניהול</h3>
+        <p>עייפות, כאב, קוגניציה ועוד</p>
+      </a>
+      <a class="cat-card" href="#rehab" onclick="navigateTo('rehab')">
+        <div class="cat-icon">&#127939;</div>
+        <h3>שיקום ופיזיותרפיה</h3>
+        <p>פעילות גופנית, שיקום ועזרים</p>
+      </a>
+      <a class="cat-card" href="#psychological-approach" onclick="navigateTo('psychological-approach')">
+        <div class="cat-icon">&#128156;</div>
+        <h3>גישה פסיכולוגית</h3>
+        <p>דיכאון, חרדה, התמודדות, שיקום קוגניטיבי ומשפחה</p>
+      </a>
+      <a class="cat-card" href="#lifestyle" onclick="navigateTo('lifestyle')">
+        <div class="cat-icon">&#127807;</div>
+        <h3>אורח חיים ותזונה</h3>
+        <p>תזונה, ויטמין D, ניהול חום</p>
+      </a>
+      <a class="cat-card" href="#pregnancy" onclick="navigateTo('pregnancy')">
+        <div class="cat-icon">&#129328;</div>
+        <h3>הריון ו-MS</h3>
+        <p>תכנון משפחה, הנקה, תרופות</p>
+      </a>
+      <a class="cat-card" href="#support" onclick="navigateTo('support')">
+        <div class="cat-icon">&#129309;</div>
+        <h3>תמיכה וקהילה</h3>
+        <p>ארגונים, קבוצות תמיכה, מפגשים</p>
+      </a>
+      <a class="cat-card" href="#resources" onclick="navigateTo('resources')">
+        <div class="cat-icon">&#128279;</div>
+        <h3>קישורים ומשאבים</h3>
+        <p>מרכזים בישראל וארגונים</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- SECTION: ABOUT -->
+  <section class="section fade-in" id="about">
+    <div class="section-header">
+      <span class="sec-icon">&#128214;</span>
+      <div>
+        <h2>מה זה טרשת נפוצה?</h2>
+        <p>הבנת המחלה, הגורמים, ואבחון</p>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-box"><div class="stat-num">2.8M</div><div class="stat-label">אנשים עם MS בעולם</div></div>
+      <div class="stat-box"><div class="stat-num">5,000+</div><div class="stat-label">חולי MS בישראל</div></div>
+      <div class="stat-box"><div class="stat-num">x32</div><div class="stat-label">סיכון מוגבר אחרי EBV</div></div>
+      <div class="stat-box"><div class="stat-num">20+</div><div class="stat-label">תרופות מאושרות</div></div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">&#129504;</div>
+        <h3>מה קורה בגוף?</h3>
+        <p>טרשת נפוצה היא מחלה אוטואימונית כרונית של מערכת העצבים המרכזית. מערכת החיסון תוקפת בטעות את המיאלין, השכבה המבודדת שעוטפת סיבי עצב במוח ובחוט השדרה. הנזק למיאלין (דמיילינציה) גורם להאטה או חסימה של העברת אותות עצביים.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">&#129440;</div>
+        <h3>פריצת דרך: קשר EBV</h3>
+        <p>מחקר פורץ דרך ב-Science (2022) הוכיח שנגיף אפשטיין בר (EBV) הוא הגורם המוביל ל-MS. הסיכון עולה פי 32 אחרי הידבקות ב-EBV. המנגנון: נוגדנים נגד חלבון EBNA1 של הנגיף תוקפים בטעות את חלבון GlialCAM במוח (חיקוי מולקולרי).</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#128202;</div>
+        <h3>גורמי סיכון</h3>
+        <p>הידבקות ב-EBV (גורם הסיכון המרכזי), מחסור בויטמין D, רקע גנטי (HLA-DRB1*15:01), עישון, השמנה בגיל ההתבגרות, מגדר (נשים בסיכון כפול עד משולש), ומגורים הרחק מקו המשווה.</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>&#128269; אבחון: קריטריונים מעודכנים (2024)</h4>
+      <p>קריטריוני האבחון עודכנו ב2024 וכוללים כעת גם <strong>נגעים עם שוליים פרמגנטיים (Paramagnetic Rim Lesions)</strong> ו<strong>סימן הווריד המרכזי (Central Vein Sign)</strong> ככלים אבחנתיים. בנוסף: MRI מוח וחוט שדרה, ניקור מותני (פסים אוליגוקלונליים ב95% מהחולים), פוטנציאלים מעוררים (VEP), NfL בדם (סמן לנזק עצבי), ובדיקות דם לשלילת מצבים אחרים. מחקר CAVS-MS הבינלאומי הדגים רגישות וסגוליות גבוהות של הקריטריונים החדשים.</p>
+    </div>
+
+    <h3 style="color:var(--primary);margin:30px 0 20px;">שאלות נפוצות</h3>
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)"><span>האם MS היא מחלה תורשתית?</span><span class="arrow">&#9660;</span></div>
+      <div class="accordion-body"><div class="inner">MS אינה מחלה תורשתית ישירה, אבל יש מרכיב גנטי. הסיכון לבני משפחה מדרגה ראשונה גבוה יותר. הגן HLA-DRB1*15:01 הוא גורם הסיכון הגנטי החזק ביותר, אך הוא לא מספיק לבדו. MS נגרמת משילוב של גנטיקה, גורמים סביבתיים (EBV, ויטמין D, עישון), ומערכת החיסון.</div></div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)"><span>האם אפשר לחיות חיים מלאים עם MS?</span><span class="arrow">&#9660;</span></div>
+      <div class="accordion-body"><div class="inner">כן. עם הטיפולים התרופתיים המודרניים (מעל 20 תרופות מאושרות), שיקום, פעילות גופנית, ותמיכה מקצועית, אנשים רבים עם MS חיים חיים פעילים ומלאים. התחלת טיפול מוקדם ואגרסיבי משפרת משמעותית את הפרוגנוזה ארוכת הטווח.</div></div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)"><span>איך מאבחנים MS?</span><span class="arrow">&#9660;</span></div>
+      <div class="accordion-body"><div class="inner">האבחון מבוסס על קריטריוני מקדונלד (עודכנו 2017): הדגמת נגעים במקומות שונים ובזמנים שונים ב-MRI, בשילוב עם ממצאים קליניים. ניקור מותני (פסים אוליגוקלונליים) יכול להחליף את הדרישה להפרדה בזמן. בדיקות דם משמשות בעיקר לשלילת מצבים דומים כמו NMOSD, לופוס, ולאים.</div></div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)"><span>מה ההבדל בין MS ל-NMOSD?</span><span class="arrow">&#9660;</span></div>
+      <div class="accordion-body"><div class="inner">NMOSD (Neuromyelitis Optica Spectrum Disorder) היא מחלה אוטואימונית נפרדת הפוגעת בעיקר בעצב הראייה ובחוט השדרה. המבדיל העיקרי: ב-NMOSD יש נוגדני AQP4-IgG בדם (ב70% מהמקרים). ההתקפות ב-NMOSD נוטות להיות חמורות יותר, וחלק מתרופות ה-MS (כמו אינטרפרונים) עלולות להחמיר NMOSD. אבחנה מדויקת חיונית.</div></div>
+    </div>
+  </section>
+
+  <!-- SECTION: TYPES -->
+  <section class="section fade-in" id="types">
+    <div class="section-header">
+      <span class="sec-icon">&#128300;</span>
+      <div>
+        <h2>סוגים והתקפות</h2>
+        <p>RRMS, SPMS, PPMS, CIS ומודיפיקטורים</p>
+      </div>
+    </div>
+
+    <table class="styled-table">
+      <thead><tr><th>סוג</th><th>קיצור</th><th>שכיחות</th><th>תיאור</th></tr></thead>
+      <tbody>
+        <tr><td><strong>הדף חוזר</strong></td><td>RRMS</td><td>~85%</td><td>התקפות (הדפים) ברורות עם החלמה מלאה או חלקית. בין ההתקפות אין התקדמות</td></tr>
+        <tr><td><strong>פרוגרסיבי משני</strong></td><td>SPMS</td><td>50% מ-RRMS תוך 10 שנים</td><td>מתחיל כ-RRMS ומתקדם להחמרה הדרגתית, עם או בלי התקפות</td></tr>
+        <tr><td><strong>פרוגרסיבי ראשוני</strong></td><td>PPMS</td><td>10 עד 15%</td><td>החמרה הדרגתית מההתחלה, ללא הדפים ברורים</td></tr>
+        <tr><td><strong>תסמונת מבודדת קלינית</strong></td><td>CIS</td><td>מבשר MS</td><td>אירוע נוירולוגי ראשון הנמשך 24+ שעות. לא כל CIS מתפתח ל-MS</td></tr>
+      </tbody>
+    </table>
+
+    <div class="info-box">
+      <h4>&#128202; מודיפיקטורים (עדכון 2013)</h4>
+      <p>כל סוג מסווג גם לפי: <strong>פעיל / לא פעיל</strong> (האם יש התקפות או נגעים חדשים ב-MRI) ו<strong>עם / ללא התקדמות</strong>. כלומר, SPMS יכול להיות "פעיל עם התקדמות" או "לא פעיל ללא התקדמות" ועוד.</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card green">
+        <div class="card-icon">&#9889;</div>
+        <h3>מה זה הדף (Relapse)?</h3>
+        <p>הופעת תסמינים נוירולוגיים חדשים או החמרה של תסמינים קיימים, הנמשכת לפחות 24 שעות, ללא חום או זיהום. בין הדפים ייתכנו תקופות יציבות של שבועות, חודשים או שנים.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128200;</div>
+        <h3>מעבר מ-RRMS ל-SPMS</h3>
+        <p>ללא טיפול, כ50% מחולי RRMS עוברים ל-SPMS תוך 10 שנים, ו90% תוך 25 שנה. טיפול מוקדם בתרופות מעכבות מחלה (DMTs) מעכב משמעותית את המעבר ומשפר את הפרוגנוזה.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: TREATMENTS -->
+  <section class="section fade-in" id="treatments">
+    <div class="section-header">
+      <span class="sec-icon">&#128138;</span>
+      <div>
+        <h2>טיפולים ותרופות</h2>
+        <p>מעל 20 תרופות מאושרות, טיפולי התקפה, וטיפולים מתפתחים</p>
+      </div>
+    </div>
+
+    <div class="tabs" data-tab-group="treatments">
+      <button class="tab-btn active" data-tab="inject" onclick="switchTab('treatments','inject')">זריקות</button>
+      <button class="tab-btn" data-tab="oral" onclick="switchTab('treatments','oral')">פומיות</button>
+      <button class="tab-btn" data-tab="infusion" onclick="switchTab('treatments','infusion')">עירוי</button>
+      <button class="tab-btn" data-tab="relapse" onclick="switchTab('treatments','relapse')">טיפול בהתקפה</button>
+      <button class="tab-btn" data-tab="emerging" onclick="switchTab('treatments','emerging')">טיפולים חדשים</button>
+    </div>
+
+    <div class="tab-content active" data-tab-content="treatments" data-tab="inject">
+      <table class="styled-table">
+        <thead><tr><th>תרופה</th><th>שם מסחרי</th><th>מנגנון</th><th>מתן</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Interferon beta-1a</strong></td><td>Avonex</td><td>אימונומודולציה, הפחתת נדידת תאים דלקתיים דרך מחסום דם מוח</td><td>זריקה תוך שרירית, פעם בשבוע</td></tr>
+          <tr><td><strong>Interferon beta-1a</strong></td><td>Rebif</td><td>כנ"ל</td><td>זריקה תת עורית, 3 פעמים בשבוע</td></tr>
+          <tr><td><strong>Interferon beta-1b</strong></td><td>Betaseron/Extavia</td><td>כנ"ל</td><td>זריקה תת עורית, כל יום שני</td></tr>
+          <tr><td><strong>Peginterferon beta-1a</strong></td><td>Plegridy</td><td>אינטרפרון ממושך שחרור</td><td>זריקה כל 14 יום</td></tr>
+          <tr><td><strong>Glatiramer acetate</strong></td><td>Copaxone / Glatopa</td><td>פפטיד סינתטי הדומה למיאלין, מסיט תגובה חיסונית מ-Th1 ל-Th2</td><td>20 מ"ג יומית או 40 מ"ג 3 פעמים בשבוע</td></tr>
+          <tr><td><strong>Ofatumumab</strong></td><td>Kesimpta</td><td>נוגדן אנטי CD20, מדלדל תאי B</td><td>זריקה תת עורית עצמית, חודשית (אחרי טעינה)</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tab-content" data-tab-content="treatments" data-tab="oral">
+      <table class="styled-table">
+        <thead><tr><th>תרופה</th><th>שם מסחרי</th><th>מנגנון</th><th>הערות</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Fingolimod</strong></td><td>Gilenya</td><td>מווסת S1P, לוכד לימפוציטים בבלוטות לימפה</td><td>מינון ראשון דורש ניטור לב. סיכון לבצקת מקולרית</td></tr>
+          <tr><td><strong>Siponimod</strong></td><td>Mayzent</td><td>מווסת S1P1/S1P5 סלקטיבי</td><td>מאושר ל-SPMS פעיל. דורש טיטרציה</td></tr>
+          <tr><td><strong>Ozanimod</strong></td><td>Zeposia</td><td>מווסת S1P1/S1P5 סלקטיבי</td><td>פרופיל בטיחות לבבי טוב יותר מ-Fingolimod</td></tr>
+          <tr><td><strong>Teriflunomide</strong></td><td>Aubagio</td><td>מעכב DHODH, מפחית שגשוג לימפוציטים</td><td><strong>טרטוגני!</strong> אסור בהריון. דורש הליך חיסול לפני הריון</td></tr>
+          <tr><td><strong>Dimethyl fumarate</strong></td><td>Tecfidera</td><td>מפעיל מסלול Nrf2, נוגד דלקת ומגן עצבי</td><td>גלי חום ובעיות GI (בעיקר בהתחלה). סיכון נדיר ל-PML בלימפופניה חמורה</td></tr>
+          <tr><td><strong>Cladribine</strong></td><td>Mavenclad</td><td>אנטימטבוליט פורין, מדלדל לימפוציטים סלקטיבית (בעיקר B)</td><td>2 קורסים שנתיים בלבד. אושר בישראל 2018. מעל 8,500 שנות מטופל ללא PML</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="tab-content" data-tab-content="treatments" data-tab="infusion">
+      <table class="styled-table">
+        <thead><tr><th>תרופה</th><th>שם מסחרי</th><th>מנגנון</th><th>תדירות</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Natalizumab</strong></td><td>Tysabri</td><td>נוגדן אנטי alpha4-integrin, חוסם נדידת לימפוציטים למוח</td><td>עירוי כל 4 שבועות. סיכון PML (בעיקר JCV+)</td></tr>
+          <tr><td><strong>Ocrelizumab</strong></td><td>Ocrevus</td><td>נוגדן אנטי CD20, מדלדל תאי B</td><td>עירוי כל 6 חודשים. <strong>התרופה הראשונה שאושרה ל-PPMS</strong></td></tr>
+          <tr><td><strong>Ocrelizumab SC</strong></td><td>Ocrevus Zunovo</td><td>נוגדן אנטי CD20 בפורמולציית תת עורית (עם hyaluronidase)</td><td><strong>חדש! אושר ספטמבר 2024.</strong> זריקה של ~10 דקות כל 6 חודשים (במקום עירוי של שעות). ניסוי OCARINA II: 97% דיכוי פעילות מחלה</td></tr>
+          <tr><td><strong>Ublituximab</strong></td><td>Briumvi</td><td>נוגדן אנטי CD20 משופר, מכוון לאפיטופ ייחודי</td><td>עירוי שעה אחת כל 6 חודשים. ARR פחות מ0.10. ב2025: ניסוי שלב 4 ENABLE לבדיקת יעילות בעולם האמיתי</td></tr>
+          <tr><td><strong>Alemtuzumab</strong></td><td>Lemtrada</td><td>נוגדן אנטי CD52, דילדול חיסוני רחב ושיקום</td><td>5 ימים בשנה 1, 3 ימים בשנה 2. סיבוכים אוטואימוניים (תריס 30 עד 40%)</td></tr>
+        </tbody>
+      </table>
+      <div class="info-box success">
+        <h4>&#128200; מגמת טיפול 2018 עד 2025</h4>
+        <p>שיעור המטופלים שמתחילים בטיפולים עתירי יעילות (אנטי CD20, Natalizumab, Alemtuzumab) הוכפל יותר מפעמיים. הגישה המודרנית: "להכות חזק, להכות מוקדם" עם טיפולים עתירי יעילות כבר מההתחלה.</p>
+      </div>
+    </div>
+
+    <div class="tab-content" data-tab-content="treatments" data-tab="relapse">
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">&#128137;</div>
+          <h3>קורטיקוסטרואידים IV</h3>
+          <p>Methylprednisolone 1000 מ"ג ליום למשך 3 עד 5 ימים. קו ראשון לטיפול בהתקפה חריפה. מקצר את משך ההתקפה, אך לא משנה תוצאות ארוכות טווח.</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon">&#128167;</div>
+          <h3>החלפת פלזמה (PLEX)</h3>
+          <p>כל יום שני, 5 עד 7 מפגשים. קו שני להתקפות עמידות לסטרואידים. הטיפול היחיד מקו שני עם ראיות מוצקות. לשקול כאשר ההחמרה ב-EDSS מעל 3 נקודות.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" data-tab-content="treatments" data-tab="emerging">
+      <div class="cards-grid">
+        <div class="card green">
+          <div class="card-icon">&#127775;</div>
+          <h3>מעכבי BTK (פריצת דרך)</h3>
+          <p><strong>Fenebrutinib</strong> (Roche): תוצאות שלב 3 "חסרות תקדים" בנובמבר 2025 ופברואר 2026. <strong>התרופה הראשונה ביותר מעשור שהפחיתה התקדמות מוגבלות ב-PPMS.</strong> פומית, חודרת למוח, פועלת על תאי B ומיקרוגליה. Tolebrutinib (Sanofi) נדחה ע"י FDA בדצמבר 2025.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">&#129516;</div>
+          <h3>השתלת תאי גזע (HSCT)</h3>
+          <p>"אתחול" מערכת החיסון. תוצאות: 87% ללא הדפים ב5 שנים (שוודיה). תעסוקה מלאה עלתה מ3% ל52% לאחר 5 שנים. תמותה הקשורה לטיפול: פחות מ1% במרכזים מנוסים.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon">&#129516;</div>
+          <h3>טיפול CAR-T ל-MS</h3>
+          <p>מספר ניסויים שלב 1 פעילים (2025/2026). KYV-101: בטוח ונסבל ב-MS פרוגרסיבי. Azer-cel: ה-CAR-T "מדף" הראשון שניתן לחולה MS (אוגוסט 2025). תאי T רגולטוריים (TRX319): אושר ע"י FDA לניסוי שלב 1/2a.</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon">&#128138;</div>
+          <h3>רמיילינציה: הוכחה ראשונה</h3>
+          <p>ניסוי CCMR-Two הוכיח לראשונה קלינית שתיקון מיאלין אפשרי: שילוב <strong>Clemastine + Metformin</strong> (תרופות קיימות) הדגים שיקום מיאלין ב-MS פרוגרסיבי. בנוסף, Frexalimab (אנטי CD40L) הפחית נגעים ב89% (שלב 2, NEJM 2024) ושלב 3 בדרך.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">&#128137;</div>
+          <h3>חיסוני mRNA נגד EBV</h3>
+          <p><strong>Moderna mRNA-1195</strong>: שלב 2 (NCT06735248), מגייס 180 מבוגרים עם MS מוקדם. <strong>MDX2201</strong> (Modex/Merck): שלב 1, מטופל ראשון קיבל מנה בינואר 2025. אם חיסון ימנע הידבקות ב-EBV, ייתכן ויהיה אפשר למנוע MS.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon">&#128138;</div>
+          <h3>Vidofludimus calcium</h3>
+          <p>מנגנון כפול חדשני: מעכב DHODH (נוגד דלקת) + מפעיל Nurr1 (הגנה עצבית). חזק פי 2.6 מ-Teriflunomide. ניסויי שלב 3 ENSURE (2,100 משתתפים) מגויסים במלואם. תוצאות ראשוניות צפויות בסוף 2026.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: TRIALS -->
+  <section class="section fade-in" id="trials">
+    <div class="section-header">
+      <span class="sec-icon">&#129516;</span>
+      <div>
+        <h2>ניסויים קליניים</h2>
+        <p>מחקרים פעילים ובולטים ב2025 ו2026</p>
+      </div>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <span class="time-label">שלב 3 | תוצאות 2025/2026</span>
+        <h4>Fenebrutinib (FENhance / FENtrepid)</h4>
+        <p>מעכב BTK פומי מ-Roche. עמד ביעדים ב-RMS וב-PPMS. ראשון מעל עשור להפחית התקדמות ב-PPMS. NCT04586023, NCT04544449, NCT04586010.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">שלב 3 | נדחה ע"י FDA דצמבר 2025</span>
+        <h4>Tolebrutinib (HERCULES / PERSEUS)</h4>
+        <p>מעכב BTK מ-Sanofi. HERCULES: הפחית 31% החמרה ב-nrSPMS. PERSEUS (PPMS): לא עמד ביעד. FDA דחה בדצמבר 2025. NCT04411641, NCT04458051.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">שלב 3 | מגייס</span>
+        <h4>Remibrutinib</h4>
+        <p>מעכב BTK מ-Novartis. מחקרים תאומים שלב 3 מול Teriflunomide ב-RMS. מגייס באופן פעיל.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">שלב 3 | מגויס במלואו</span>
+        <h4>Vidofludimus calcium (ENSURE)</h4>
+        <p>מנגנון כפול חדשני (DHODH + Nurr1) מ-Immunic Therapeutics. 2,100 משתתפים. NCT05134441. תוצאות צפויות סוף 2026.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">שלב 3 | מגייס</span>
+        <h4>Remibrutinib</h4>
+        <p>מעכב BTK מ-Novartis. מחקרים תאומים שלב 3 מול Teriflunomide ב-RMS. NCT05156281, NCT05147220.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">שלב 2 | מגייס</span>
+        <h4>חיסוני mRNA נגד EBV</h4>
+        <p><strong>Moderna mRNA-1195</strong> (NCT06735248): 180 מבוגרים עם MS מוקדם. <strong>MDX2201</strong> (Modex/Merck, שלב 1): 200 משתתפים, מטופל ראשון בינואר 2025. שינוי פרדיגמה פוטנציאלי.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">שלב 2a | מגייס</span>
+        <h4>Foralumab אינטרנזלי (INFORM-MS)</h4>
+        <p>אנטי CD3 בנזלי ל-SPMS לא פעיל. נתונים ראשוניים: ייצוב EDSS בכל המטופלים, 3 מתוך 4 הראו שיפור ב12 חודשים. NCT06292923.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">שלב 2 | תוצאות חיוביות</span>
+        <h4>Clemastine + Metformin (רמיילינציה)</h4>
+        <p>ניסוי CCMR-Two: <strong>הוכחה קלינית ראשונה לתיקון מיאלין.</strong> שני תרופות מחדשות שימוש. MACSiMiSE-BRAIN ממשיך לבדוק את השילוב.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">שלב 2 | מגייס</span>
+        <h4>Orelabrutinib</h4>
+        <p>מעכב BTK מ-InnoCare. 160 משתתפים עם RRMS. NCT04711148. סיום צפוי מרץ 2026.</p>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">שלב 1 | 2025/2026</span>
+        <h4>טיפולי CAR-T ל-MS</h4>
+        <p><strong>KYV-101</strong> (NCT06384976): בטוח ונסבל, תאים חדרו למוח. <strong>Azer-cel</strong>: ה-CAR-T "מדף" הראשון (אוגוסט 2025). <strong>אנטי BCMA CAR-T</strong>: 5 חולים ב-Cell 2025, שיפור נוירולוגי. <strong>TRX319</strong>: תאי T רגולטוריים.</p>
+      </div>
+    </div>
+
+    <div style="margin-top:30px;text-align:center;display:flex;flex-wrap:wrap;justify-content:center;">
+      <a href="https://clinicaltrials.gov/search?cond=Multiple+Sclerosis" target="_blank" class="link-btn">&#128269; ClinicalTrials.gov</a>
+      <a href="https://www.nationalmssociety.org/research" target="_blank" class="link-btn green">&#128218; NMSS מחקר</a>
+    </div>
+  </section>
+
+  <!-- SECTION: RESEARCH -->
+  <section class="section fade-in" id="research">
+    <div class="section-header">
+      <span class="sec-icon">&#128161;</span>
+      <div>
+        <h2>מחקרים חדשים</h2>
+        <p>פריצות דרך ותגליות מ2025 ו2026</p>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card green">
+        <div class="card-icon">&#129440;</div>
+        <h3>EBV ו-MS: המנגנון נחשף (2026)</h3>
+        <p>פברואר 2026 (Nature Immunology, UCSF): תאי T "רוצחים" הקשורים ל-EBV נמצאו בשפע רב יותר במטופלי MS. גן EBV אחד היה פעיל אך ורק אצל חולי MS. 2025 (קרולינסקה/סטנפורד): אישור שנוגדנים ל-EBNA1 תוקפים בטעות את GlialCAM במוח.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#127942;</div>
+        <h3>פרס Breakthrough לאסקריו</h3>
+        <p>פרופ' Alberto Ascherio מהרווארד קיבל את פרס Breakthrough על המחקר שהוכיח את הקשר הסיבתי בין EBV ל-MS (מאמר Science 2022, מעל 10 מיליון משתתפים).</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#128138;</div>
+        <h3>Fenebrutinib: שינוי כללי המשחק</h3>
+        <p>נובמבר 2025: תוצאות "חסרות תקדים" בשלב 3 ב-RMS וב-PPMS. פברואר 2026: אושר כתרופה חוקרת ראשונה ביותר מעשור שמפחיתה התקדמות מוגבלות ב-PPMS. אם תאושר: הטיפול הפומי עתיר היעילות הראשון ל-PPMS.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">&#128200;</div>
+        <h3>ביומרקרים חדשים</h3>
+        <p>NfL בדם (Neurofilament Light): סמן לנזק עצבי, עולה עוד לפני הופעת MS קלינית, מיד אחרי הידבקות ב-EBV. GFAP: סמן מתפתח להתקדמות חרישית. שניהם צפויים להפוך לכלי ניטור שגרתיים.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#129516;</div>
+        <h3>CAR-T: אבני דרך 2025</h3>
+        <p>אוגוסט 2025: ה-CAR-T "מדף" הראשון (Azer-cel) ניתן לחולה MS. מחקר ב-Cell (2025): אנטי BCMA CAR-T חדר למוח, דילדל תאי פלזמה, ושיפר מצב נוירולוגי ב5 חולים. BMS Breakfree-1: 94% מהמטופלים נשארו ללא דיכוי חיסוני כרוני.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#9888;&#65039;</div>
+        <h3>Tolebrutinib: נדחה ע"י FDA</h3>
+        <p>למרות תוצאות חיוביות בניסוי HERCULES (31% הפחתה בהתקדמות ב-nrSPMS), ה-FDA הוציא מכתב דחייה בדצמבר 2025. ניסויי RMS (GEMINI) ו-PPMS (PERSEUS) לא עמדו ביעדים. חששות בטיחות כבד חמורים.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">&#128200;</div>
+        <h3>רמיילינציה: הוכחה ראשונה</h3>
+        <p>ניסוי CCMR-Two הוכיח לראשונה שתיקון מיאלין אפשרי קלינית. שילוב <strong>Metformin + Clemastine</strong> (תרופות קיימות בזולות) הדגים שיקום מיאלין ב-MS פרוגרסיבי. פריצת דרך עצומה לחולים שלא הייתה להם תקווה לתיקון נזק.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#129504;</div>
+        <h3>ECTRIMS 2025: 4 תובנות מרכזיות</h3>
+        <p>1) מעכבי BTK מעצבים מחדש את נוף הטיפול. 2) רפואה מותאמת אישית מאפשרת עיצוב ניסויים חכם. 3) קריטריוני אבחון חדשים (PRLs, סימן ווריד מרכזי). 4) מנגנוני מחלה שנחשבו בלתי נגישים נמצאים כעת בהישג יד.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: SYMPTOMS -->
+  <section class="section fade-in" id="symptoms">
+    <div class="section-header">
+      <span class="sec-icon">&#9888;&#65039;</span>
+      <div>
+        <h2>תסמינים וניהול</h2>
+        <p>עייפות, כאב, ראייה, קוגניציה, וניהול תסמינים</p>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">&#128170;</div>
+        <h3>מוטוריים</h3>
+        <p>חולשה בגפיים (לעיתים מתחילה ברגל אחת), ספסטיות (נוקשות שרירים ועוויתות), הפרעות הליכה ושיווי משקל, רפלקסים מוגברים, רעד ובעיות קואורדינציה.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">&#128064;</div>
+        <h3>ראייה</h3>
+        <p><strong>דלקת עצב ראייה (Optic Neuritis)</strong>: ירידה תת חריפה בראייה, כאב בתנועת עין, ירידה בראיית צבע. לעיתים קרובות התסמין הראשון. ראייה כפולה, ניסטגמוס. מעל 40% מחולי MS חווים בעיות תנועת עיניים.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#128546;</div>
+        <h3>תחושתיים</h3>
+        <p>עקצוצים ונימול בגפיים או בפנים, אובדן חלקי של תחושה, כאב נוירופתי (שורף, דוקר, כמו הלם חשמלי). <strong>סימן לרמיט</strong>: תחושת הלם חשמלי לאורך עמוד השדרה בכיפוף הצוואר (סמן לדמיילינציה צווארית).</p>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-box"><div class="stat-num">80%</div><div class="stat-label">חווים עייפות</div></div>
+      <div class="stat-box"><div class="stat-num">40-65%</div><div class="stat-label">פגיעה קוגניטיבית</div></div>
+      <div class="stat-box"><div class="stat-num">50%</div><div class="stat-label">דיכאון</div></div>
+      <div class="stat-box"><div class="stat-num">40%+</div><div class="stat-label">בעיות ראייה</div></div>
+    </div>
+
+    <div class="info-box warning">
+      <h4>&#9888;&#65039; תופעת אוטהוף (רגישות לחום)</h4>
+      <p>החמרה זמנית של תסמינים עקב עלייה בחום הגוף. לא מדובר בהתקפה אמיתית. התסמינים חולפים כשהגוף מתקרר. נגרם מחסימת הולכה תלוית טמפרטורה בסיבי עצב חשופים. משפיע על עייפות, כאב, שיווי משקל, ראייה, קוגניציה ותחושה.</p>
+    </div>
+  </section>
+
+  <!-- SECTION: REHAB -->
+  <section class="section fade-in" id="rehab">
+    <div class="section-header">
+      <span class="sec-icon">&#127939;</span>
+      <div>
+        <h2>שיקום ופיזיותרפיה</h2>
+        <p>פעילות גופנית, שיקום רב תחומי, ועזרים</p>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card green">
+        <div class="card-icon">&#127939;</div>
+        <h3>פיזיותרפיה</h3>
+        <p>חיזוק שרירים, ניהול ספסטיות (מתיחות, מיצוב), אימוני שיווי משקל וקואורדינציה, אימון הליכה, טיפול בכאב, הידרותרפיה (בבריכה מקוררת), ושיפור כושר אירובי.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128736;&#65039;</div>
+        <h3>ריפוי בעיסוק</h3>
+        <p>פעילויות יומיומיות (בישול, הלבשה, היגיינה), אסטרטגיות חיסכון באנרגיה, שיקום קוגניטיבי, התאמות בית ומקום עבודה, עזרים מותאמים, ושיקום מוטוריקה עדינה.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#128483;&#65039;</div>
+        <h3>קלינאות תקשורת</h3>
+        <p>טיפול בדיבור (דיסארתריה נפוצה ב-MS), טיפול בבליעה (דיספגיה), שיקום תקשורת קוגניטיבית, וטיפול בקול.</p>
+      </div>
+    </div>
+
+    <div class="info-box success">
+      <h4>&#128161; עזרים וניידות</h4>
+      <p>&#8226; <strong>ניידות מוקדמת</strong>: מקלות הליכה, מוטות<br>
+      &#8226; <strong>ניידות בינונית</strong>: הליכונים, קביים, סדי קרסול (AFO)<br>
+      &#8226; <strong>ניידות מתקדמת</strong>: כיסאות גלגלים ידניים וממונעים, קטנועי ניידות<br>
+      &#8226; <strong>טכנולוגיה</strong>: מכשירים חכמים מופעלי קול, ממשקי מחשב מותאמים, תוכנות דיבור לטקסט</p>
+    </div>
+  </section>
+
+  <!-- SECTION: PSYCHOLOGICAL APPROACH -->
+  <section class="section fade-in" id="psychological-approach">
+    <div class="section-header">
+      <span class="sec-icon">&#128156;</span>
+      <div>
+        <h2>גישה פסיכולוגית</h2>
+        <p>דיכאון, חרדה, התמודדות עם אי ודאות, שיקום קוגניטיבי, ומשפחה</p>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">&#128546;</div>
+        <h3>דיכאון וחרדה</h3>
+        <p>דיכאון משפיע על עד 50% מחולי MS, שכיח פי 3 מהאוכלוסייה הכללית. חרדה מופיעה אצל כ22% מהמטופלים ולעיתים קרובות אינה מאובחנת. הגורמים מרובים: נוירולוגיים (מיקום נגעים במוח), תרופתיים (אינטרפרונים), ופסיכולוגיים (התמודדות עם מחלה כרונית). דיכאון וחרדה יוצרים מעגל דו כיווני עם עייפות ומוגבלות, ומשפיעים על היענות לטיפול, קוגניציה, ואיכות חיים.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#9888;&#65039;</div>
+        <h3>מחשבות אובדניות ומצוקה קשה</h3>
+        <p>מטה אנליזה של 64 מחקרים מצאה שכיחות מצטברת של 22.6% למחשבות אובדניות בקרב חולי MS, יותר מכפול מהאוכלוסייה הכללית. 1 מכל 8 מדווחים על מחשבות כאלה בשבועות שלאחר האבחנה. גורמי סיכון: דיכאון, חרדה, סטיגמה חברתית, הדרה חברתית, ותפקוד גופני ירוד. גורמי הגנה: תחושת משמעות, פרודוקטיביות, ואמונה רוחנית. <strong>בכל מצב של מחשבות אובדניות יש לפנות מיד לעזרה מקצועית.</strong></p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128557;</div>
+        <h3>אפקט פסאודובולברי (PBA)</h3>
+        <p>שכיחות של 10% עד 46% בחולי MS, בהתאם לשיטת המדידה. מתבטא בפרצי בכי או צחוק בלתי רצוניים, שאינם תואמים את מצב הרוח. לעיתים קרובות מאובחן בטעות כדיכאון. גורם לבידוד חברתי ומבוכה. הטיפול המאושר היחיד הוא Nuedexta (דקסטרומתורפן/קינידין, אישור FDA משנת 2010). בנוסף, SSRIs במינון נמוך משמשים כאופציה נוספת.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">&#129504;</div>
+        <h3>שינויים קוגניטיביים ושיקום</h3>
+        <p>ליקויים קוגניטיביים משפיעים על 34% עד 70% מהמטופלים. התחומים הנפגעים: מהירות עיבוד מידע, זיכרון עבודה, זיכרון מילולי, ותפקודים ניהוליים. יכולים להופיע מוקדם, עוד לפני מוגבלות פיזית. פרוטוקול REHACOP (שיקום קוגניטיבי רב תחומי בקבוצה) הראה שיפור במספר תחומים. שיקום קוגניטיבי מקושר לחיזוק נוירופלסטיות מבנית ותפקודית. גישה משולבת: טיפול בדיכאון, שיפור שינה, פעילות גופנית, ותרופות DMT.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#128164;</div>
+        <h3>עייפות והגישה הפסיכולוגית</h3>
+        <p>עייפות ב-MS כוללת מרכיב פסיכולוגי משמעותי. CBT מקוון (iCBT) הראה ירידה קלינית משמעותית בעייפות הקשורה ל-MS. התערבויות מבוססות מיינדפולנס (MBSR) הדגימו שיפור עמיד בעייפות, דיכאון ואיכות חיים במעקב של 6 חודשים. מחקר אקראי מבוקר הראה שהפחתת לחץ מבוססת קוגניציה הפחיתה נגעים דלקתיים חדשים במוח ביותר מ50%, בסינרגיה עם התרופות. אסטרטגיות ניהול אנרגיה ופייסינג מבוססות על עקרונות פסיכולוגיים.</p>
+      </div>
+      <div class="card blue">
+        <div class="card-icon">&#127754;</div>
+        <h3>התמודדות עם אי ודאות</h3>
+        <p>המהלך הבלתי צפוי של MS הוא אתגר פסיכולוגי מרכזי. ייצוג המחלה מאופיין בתסמינים משביתים, גורם לא ברור, הופעה פתאומית, מהלך בלתי צפוי, ותחושת שליטה נמוכה. מחקרים מראים שהימנעות רגשית כאסטרטגיית התמודדות מחמירה את ההסתגלות. לעומת זאת, מעורבות פעילה בטיפול, שמירה על פעילויות (גם אם מותאמות), ותמיכה חברתית מפחיתות משמעותית תסמיני מצב רוח. גישות CBT לעבודה על ייצוגי מחלה ועל גמישות בין מיקוד במחלה לבין מיקוד בבריאות מסייעות להסתגלות.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#128106;</div>
+        <h3>השפעה על המשפחה ובני הזוג</h3>
+        <p>80% מחולי MS מקבלים טיפול לא פורמלי, כשהמטפל מקדיש בממוצע 6.5 שעות ביום (כמעט משרה מלאה, ללא תשלום). עד 40% ממטפלים חווים דיכאון, ו78% מדווחים על שחיקה. הפרעות תפקוד מיני משפיעות על יותר מ50% מהמטופלים ומשפיעות קשות על מערכות יחסים. תמיכה חברתית היא גורם מגן מרכזי: היעדר תמיכה מחמיר את בריאות הנפש של המטפל ללא קשר לחומרת המחלה. ילדים של הורים עם MS זקוקים גם הם לתמיכה בהסתגלות.</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>&#128154; התערבויות מבוססות ראיות</h4>
+      <p>&#8226; <strong>CBT (טיפול קוגניטיבי התנהגותי)</strong>: מטה אנליזה מ2024 (15 מחקרים, 1,508 משתתפים) מצאה גודל אפקט בינוני לדיכאון וגודל אפקט קטן לחרדה. CBT מקוון נמצא יעיל ונגיש (The Lancet Digital Health)<br>
+      &#8226; <strong>ACT (טיפול בקבלה ומחויבות)</strong>: שיפור בחרדה (d=0.56) ובלחץ (d=0.62) לעומת קבוצת ביקורת, עם שימור רווחים במעקב<br>
+      &#8226; <strong>MBSR (הפחתת לחץ מבוססת מיינדפולנס)</strong>: שיפור עמיד באיכות חיים, דיכאון ועייפות. קורס סטנדרטי של 8 שבועות מראה תוצאות חזקות יותר<br>
+      &#8226; <strong>שיקום נוירופסיכולוגי</strong>: פרוטוקול REHACOP (רב תחומי, קבוצתי) שיפר מהירות עיבוד, זיכרון עבודה, זיכרון מילולי ותפקודים ניהוליים<br>
+      &#8226; <strong>תרופות</strong>: SSRIs, SNRIs (בתשומת לב לאינטראקציות עם DMTs). Nuedexta לאפקט פסאודובולברי<br>
+      &#8226; <strong>חוסן פסיכולוגי</strong>: מחקר מ2025 הראה שחוסן נפשי מתווך בין דיכאון לאיכות חיים ב-RRMS. אופטימיות, התמודדות מסתגלת, ושמירה על רווחה נפשית מפחיתים את ההשפעה השלילית של דיכאון</p>
+    </div>
+
+    <div class="info-box success">
+      <h4>&#128241; טיפול פסיכולוגי מרחוק (טלהלת')</h4>
+      <p>&#8226; CBT מקוון (iCBT): מחקר אקראי מבוקר ב-Lancet Digital Health הדגים יעילות של תוכניות CBT אוטומטיות לחלוטין להפחתת דיכאון ב-MS<br>
+      &#8226; מסלולי טיפול דיגיטליים: בית החולים באוניברסיטת הלסינקי פיתח מסלול דיגיטלי שהראה שיפור בבריאות הנפשית, במיוחד למאובחנים חדשים<br>
+      &#8226; תוכניות חוסן דיאדיות: תוכנית טלהלת' למטופלים ובני הזוג גם יחד, עם שביעות רצון גבוהה ותוצאות חיוביות<br>
+      &#8226; נגישות 24/7 חשובה במיוחד למטופלים עם מגבלות ניידות או עייפות קשה</p>
+    </div>
+
+    <div class="info-box warning">
+      <h4>&#9888;&#65039; מתי לפנות לעזרה מקצועית</h4>
+      <p>&#8226; דיכאון שנמשך יותר משבועיים ומשפיע על תפקוד יומיומי<br>
+      &#8226; <strong>מחשבות אובדניות: יש לפנות מיד. ער"ן (עזרה ראשונה נפשית): 1201. נט"ל (קו חירום נפשי): 1-800-363-363</strong><br>
+      &#8226; חרדה מתמשכת שמפריעה לשגרה, לשינה, או להיענות לטיפול<br>
+      &#8226; פרצי בכי או צחוק בלתי רצוניים שלא תואמים את מצב הרוח (בדיקת PBA)<br>
+      &#8226; שחיקה אצל מטפלים: עייפות רגשית, ניתוק, תחושת חוסר אונים<br>
+      &#8226; ירידה קוגניטיבית שמשפיעה על עבודה או מערכות יחסים (הפניה להערכה נוירופסיכולוגית)</p>
+    </div>
+
+    <div class="info-box success">
+      <h4>&#127470;&#127473; משאבים בישראל</h4>
+      <p>&#8226; <strong>האגודה הישראלית לטרשת נפוצה</strong>: רח' חומה ומגדל 16, תל אביב. שעות מענה: ראשון עד רביעי 9:00 עד 13:00<br>
+      &#8226; <strong>המרכז הלאומי ל-MS בבית החולים שיבא</strong>: מטפל בכ60% מכלל חולי MS בישראל. צוות רב מקצועי: נוירולוגים, פסיכולוגים, פיזיותרפיסטים, עובדים סוציאליים, ריפוי בעיסוק<br>
+      &#8226; <strong>מרכז MS בהדסה</strong>: מרכז מומחה נוסף<br>
+      &#8226; בישראל כ5,000 חולי MS (שכיחות 95 ל100,000, נתוני 2024)<br>
+      &#8226; שירותי בריאות הנפש כלולים בסל הבריאות הישראלי. ניתן לפנות לקופת החולים לקבלת הפניה לפסיכולוג או פסיכיאטר</p>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)"><span>מה ההבדל בין דיכאון לאפקט פסאודובולברי?</span><span class="arrow">&#9660;</span></div>
+      <div class="accordion-body"><div class="inner">דיכאון הוא הפרעת מצב רוח שמתבטאת בעצב מתמשך, אובדן עניין, שינויי שינה ותיאבון, ותחושת חוסר ערך. אפקט פסאודובולברי (PBA) הוא הפרעה נוירולוגית שמתבטאת בפרצי בכי או צחוק פתאומיים ובלתי נשלטים, שלא משקפים בהכרח את הרגש הפנימי. ב-PBA הפרצים הם קצרים ואפיזודיים, ואילו דיכאון הוא מצב רוח מתמשך. שניהם יכולים להתקיים במקביל. PBA מטופל ב-Nuedexta, בעוד דיכאון מטופל בתרופות נוגדות דיכאון ו/או פסיכותרפיה. חשוב לדווח לנוירולוג על שני סוגי התסמינים.</div></div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)"><span>האם טיפול פסיכולוגי מקוון יעיל עבור חולי MS?</span><span class="arrow">&#9660;</span></div>
+      <div class="accordion-body"><div class="inner">כן. מחקרים אקראיים מבוקרים הראו שתוכניות CBT מקוונות (iCBT) יעילות להפחתת דיכאון ועייפות בחולי MS. מחקר שפורסם ב-Lancet Digital Health הדגים שתוכניות אוטומטיות לחלוטין יכולות להיות אפקטיביות. טיפול מרחוק (טלהלת') מתגבר על חסמי ניידות, עלויות נסיעה, ועייפות. הוא מתאים במיוחד למטופלים עם מוגבלות פיזית, לתושבי פריפריה, ולמטופלים עם עייפות קשה שמקשה על הגעה לקליניקה. ניתן לפנות לקופת החולים לבירור אפשרויות טיפול מרחוק.</div></div>
+    </div>
+  </section>
+
+  <!-- SECTION: LIFESTYLE -->
+  <section class="section fade-in" id="lifestyle">
+    <div class="section-header">
+      <span class="sec-icon">&#127807;</span>
+      <div>
+        <h2>אורח חיים ותזונה</h2>
+        <p>פעילות גופנית, תזונה, ויטמין D, וניהול חום</p>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card green">
+        <div class="card-icon">&#127939;</div>
+        <h3>פעילות גופנית</h3>
+        <p>אחת ההתערבויות הלא תרופתיות החשובות ביותר. משפרת כוח, שיווי משקל, כושר, מצב רוח ועייפות. עשויה לקדם הגנה עצבית ונוירופלסטיות. מומלץ: אירובי קל (הליכה, רכיבה, שחייה), אימוני כוח, יוגה וטאי צ'י.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#127858;</div>
+        <h3>תזונה ים תיכונית</h3>
+        <p>הראיות החזקות ביותר ב2025. מטא אנליזה הראתה שתוספת תזונה ים תיכונית ל-DMF הפחיתה שיעורי הדפים מעבר לתרופה לבדה. עשירה בפירות, ירקות, שמן זית, אגוזים. מפחיתה עייפות, משפרת איכות חיים, מווסתת סמני דלקת. דיאטה קטוגנית ופרוטוקול Wahls גם מראים תוצאות מבטיחות.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#9728;&#65039;</div>
+        <h3>ויטמין D</h3>
+        <p>מחסור בויטמין D הוא גורם סיכון מבוסס ל-MS. מווסת מערכת חיסון דרך קולטני VDR: מדכא Th1/Th17 ותומך תאי T רגולטוריים. רמות גבוהות יותר קשורות לסיכון מופחת ולפעילות מחלה מופחתת. מומחים ממליצים על רמות 40 עד 60 ng/mL.</p>
+      </div>
+    </div>
+
+    <div class="info-box success">
+      <h4>&#129440; מיקרוביום המעי ו-MS (מחקר 2025)</h4>
+      <p>מחקרים ב-Frontiers in Immunology (2025) מבססים קשר חזק בין דיסביוזיס במעי לבין MS. ויטמין D, סיבים תזונתיים, ואומגה 3 מטפחים מיקרואורגניזמים נוגדי דלקת. פוליפנולים עשויים לשפר את פרופיל המיקרוביום. שילוב תזונה מאוזנת עם DMTs הוא הגישה המומלצת ב2025.</p>
+    </div>
+
+    <div class="info-box warning">
+      <h4>&#9888;&#65039; ניהול חום (תופעת אוטהוף)</h4>
+      <p>&#8226; אפודות קירור עם קרח או ג'ל לפעילויות בחוץ<br>
+      &#8226; מזגנים, מאווררים, תריסים סגורים בימים חמים<br>
+      &#8226; תרסיסי אדים קרים, מטליות לחות על הצוואר<br>
+      &#8226; משקאות קרים, קוביות קרח<br>
+      &#8226; בגדים קלים ומנדפי לחות<br>
+      &#8226; הימנעות מאמבטיות/מקלחות חמות (מים פושרים)<br>
+      &#8226; פעילות גופנית בסביבה מקוררת או בשעות הקרירות</p>
+    </div>
+  </section>
+
+  <!-- SECTION: PREGNANCY -->
+  <section class="section fade-in" id="pregnancy">
+    <div class="section-header">
+      <span class="sec-icon">&#129328;</span>
+      <div>
+        <h2>הריון ו-MS</h2>
+        <p>השפעת הריון על המחלה, הנקה, ותרופות</p>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card green">
+        <div class="card-icon">&#129328;</div>
+        <h3>השפעת ההריון</h3>
+        <p>שיעור ההדפים <strong>יורד</strong> במהלך ההריון, במיוחד בטרימסטר השלישי (ירידה של עד 70%). שיעור ההדפים <strong>עולה ב3 עד 6 החודשים אחרי הלידה</strong> (20 עד 40%). מוגבלות ארוכת טווח אינה מושפעת לרעה. הריון אינו מחמיר את הפרוגנוזה.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#127868;</div>
+        <h3>הנקה</h3>
+        <p>הנקה בלעדית מגנה: נשים שהניקו בלעדית היו בסיכון <strong>נמוך ב63% (HR=0.37)</strong> להדף אחרי הלידה. טיפולים מסוג נוגדנים (Ocrelizumab, Natalizumab, Ofatumumab) בסיכון נמוך לתינוק בהנקה. מומלץ מאוד להניק בלעדית.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#9888;&#65039;</div>
+        <h3>בטיחות תרופות בהריון</h3>
+        <p><strong>נחשבות בטוחות</strong>: Glatiramer acetate, Interferon beta. <strong>אסורות</strong>: Teriflunomide (טרטוגנית!). <strong>להפסיק לפני הריון</strong>: S1P modulators (2 חודשים), Cladribine (6 חודשים). <strong>מגמה חדשה 2025</strong>: Ocrelizumab/Rituximab לפני הריון נחשבת לגישה המועדפת. במחקר: 0% הדפים אחרי לידה בקבוצת אנטי CD20 (לעומת 21.4% ב-Natalizumab). חשיפה תוך רחמית ל-Ocrelizumab לא נמצאה קשורה לסיכון מוגבר.</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>&#128161; תכנון משפחה</h4>
+      <p>רופאים צריכים לדון בתכנון משפחה <strong>מוקדם ולעיתים קרובות</strong>. תזמון הפסקת DMT ותחילת הריון חייבים להיות מתוכננים בקפידה. בנשים עם MS אגרסיבי, ייתכן צורך להמשיך DMT קרוב יותר ל/בתחילת ההריון. החלטה משותפת, תלוית מצב אישי.</p>
+    </div>
+  </section>
+
+  <!-- SECTION: SUPPORT -->
+  <section class="section fade-in" id="support">
+    <div class="section-header">
+      <span class="sec-icon">&#129309;</span>
+      <div>
+        <h2>תמיכה וקהילה</h2>
+        <p>ארגונים ישראליים, קבוצות תמיכה, מפגשים ותמיכה רגשית</p>
+      </div>
+    </div>
+
+    <h3 style="color:var(--primary);margin-bottom:20px;">&#127470;&#127473; ארגוני תמיכה בישראל</h3>
+
+    <div class="cards-grid">
+      <div class="card green">
+        <div class="card-icon">&#127968;</div>
+        <h3>מותת MS ישראל (חל"צ)</h3>
+        <p><strong>מרכז תמיכה ארצי לאנשים שחיים עם טרשת נפוצה.</strong> חברה לתועלת הציבור שיוזמת, מארגנת ומנהלת פעילויות למטופלים, משפחות וחוגי תמיכה. חינוך על המחלה, טיפולים, מחקרים, תזונה ורפואה משלימה. תמיכה אישית וקבוצתית. קבוצת פייסבוק פרטית (~1,000 חברים). מעלה מודעות ציבורית ומפחיתה סטיגמה.</p>
+      </div>
+      <div class="card">
+        <div class="card-icon">&#129505;</div>
+        <h3>האגודה הישראלית לטרשת נפוצה</h3>
+        <p>עמותה ותיקה ומבוססת. קבוצות תמיכה למטופלים ומשפחות ברחבי הארץ. מרכזי טיפול יום, מרכזי שיקום. ייעוץ זכויות: נכות, מס הכנסה, ניידות, ביטוח לאומי. ייצוג מול קופות חולים בנושא זכויות תרופתיות. הטבות והנחות עם חברות שותפות.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">&#127968;</div>
+        <h3>הבית לחולי טרשת נפוצה</h3>
+        <p>עמותה רשומה (ע"ר, מ2006). מקדמת טיפול משולב ותומך לחולי MS החיים בקהילה. מספקת מידע חיוני ומשאבי תמיכה. פועלת לשיפור איכות החיים של חולי MS ומשפחותיהם.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">&#128172;</div>
+        <h3>כמוני (Camoni)</h3>
+        <p>רשת חברתית בריאותית ישראלית עם קהילת MS ייעודית. תוכן שמתחדש מדי חודש. סדנאות ופגישות חיות עם מומחים ומטופלים. מאמרים על אבחון, אפשרויות טיפול, ואסטרטגיות התמודדות. פורומים ודיונים קהילתיים.</p>
+      </div>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin:30px 0;">
+      <a href="https://www.ms-israel.co.il/" target="_blank" class="link-btn">&#127968; מותת MS ישראל</a>
+      <a href="https://mssociety.org.il/" target="_blank" class="link-btn green">&#127470;&#127473; האגודה הישראלית ל-MS</a>
+      <a href="https://mshome.org.il/" target="_blank" class="link-btn orange">&#127968; הבית לחולי MS</a>
+      <a href="https://www.camoni.co.il/%D7%98%D7%A8%D7%A9%D7%AA-%D7%A0%D7%A4%D7%95%D7%A6%D7%94" target="_blank" class="link-btn">&#128172; כמוני</a>
+    </div>
+
+    <h3 style="color:var(--primary);margin:30px 0 20px;">&#127760; קהילות תמיכה בינלאומיות</h3>
+
+    <table class="styled-table">
+      <thead><tr><th>קהילה</th><th>פרטים</th><th>חברים/הערות</th></tr></thead>
+      <tbody>
+        <tr><td><strong>MSWorld</strong></td><td>הקהילה הגדולה ביותר המנוהלת על ידי מתנדבים. צ'אט, פורומים, מרכז רווחה</td><td>220,000+</td></tr>
+        <tr><td><strong>MyMSTeam</strong></td><td>רשת חברתית למטופלי MS. תמיכה רגשית ועצות טיפוליות</td><td>אפליקציה זמינה</td></tr>
+        <tr><td><strong>Shift.ms</strong></td><td>קהילה בינלאומית. מתמקדת במאובחנים חדשים</td><td>11,000+ (אפליקציה iOS/Android)</td></tr>
+        <tr><td><strong>PatientsLikeMe</strong></td><td>קהילה מבוססת נתונים. סיפורי בריאות ומעקב תסמינים</td><td>71,000+ חולי MS, מעל מיליון פוסטים</td></tr>
+        <tr><td><strong>My MSAA Community</strong></td><td>קהילה חינמית של ה-MSAA. מנוהלת על HealthUnlocked</td><td>מטופלים ומטפלים</td></tr>
+        <tr><td><strong>Overcoming MS</strong></td><td>קהילה עם דגש על אורח חיים ותזונה</td><td>אירועים + קורסים</td></tr>
+        <tr><td><strong>National MS Society</strong></td><td>קהילות מקוונות רשמיות של ארגון ה-MS האמריקאי</td><td>ארה"ב</td></tr>
+        <tr><td><strong>קבוצות פייסבוק</strong></td><td>Multiple Sclerosis Foundation (~21K), MS Focus (~26K)</td><td>עשרות קבוצות נוספות</td></tr>
+      </tbody>
+    </table>
+
+    <div class="info-box">
+      <h4>&#128241; אפליקציות לניהול MS</h4>
+      <p>&#8226; <strong>Shift.ms</strong>: חיבור עם חולי MS אחרים, ניהול מהאבחון (iOS/Android, חינם)<br>
+      &#8226; <strong>MyMSTeam</strong>: רשת חברתית ומעקב<br>
+      &#8226; <strong>My MS Manager</strong> (MSAA): מעקב תסמינים, תרופות ותורים<br>
+      &#8226; <strong>Cleo</strong>: ניהול MS (פעילות, מיינדפולנס, מעקב)<br>
+      &#8226; אפליקציות קופות חולים בישראל לניהול מרשמים ותורים</p>
+    </div>
+  </section>
+
+  <!-- SECTION: RESOURCES -->
+  <section class="section fade-in" id="resources">
+    <div class="section-header">
+      <span class="sec-icon">&#128279;</span>
+      <div>
+        <h2>קישורים ומשאבים</h2>
+        <p>מרכזים בישראל, ארגונים, ותמיכה</p>
+      </div>
+    </div>
+
+    <h3 style="color:var(--primary);margin-bottom:20px;">&#127470;&#127473; מרכזי MS בישראל</h3>
+    <table class="styled-table">
+      <thead><tr><th>מרכז רפואי</th><th>עיר</th><th>פרטים</th></tr></thead>
+      <tbody>
+        <tr><td><strong>שיבא (תל השומר)</strong></td><td>רמת גן</td><td><strong>המרכז הלאומי ל-MS.</strong> מטפל ב~60% מכלל חולי MS בישראל. ~14,000 ביקורי מטופלים/שנה. פרופ' ענת אכירון. מעל 20 שנות מחקר MS</td></tr>
+        <tr><td><strong>הדסה (עין כרם)</strong></td><td>ירושלים</td><td>פרופ' דימיטריוס קרוסיס. חלוץ ב<strong>ניסויים קליניים של תאי גזע</strong> ל-MS (ראשון בעולם שהזריק תאי גזע ישירות לחוט שדרה)</td></tr>
+        <tr><td><strong>סוראסקי (איכילוב)</strong></td><td>תל אביב</td><td>מחלקת נוירולוגיה גדולה עם מרפאת MS. תוכניות טיפול מותאמות אישית</td></tr>
+        <tr><td><strong>רמב"ם</strong></td><td>חיפה</td><td>מרכז טיפול MS מרכזי בצפון ישראל. מעל 1,000 מיטות. תוכנית מטופלים בינלאומית</td></tr>
+        <tr><td><strong>כרמל</strong></td><td>חיפה</td><td>שירותי MS נוספים באזור חיפה</td></tr>
+      </tbody>
+    </table>
+
+    <div class="info-box">
+      <h4>&#127470;&#127473; מערכת הבריאות בישראל</h4>
+      <p>תרופות MS כלולות <strong>בסל הבריאות</strong>. כל ה-DMTs המרכזיות (אינטרפרונים, Glatiramer acetate, Natalizumab, Fingolimod, Dimethyl fumarate, Ocrelizumab ועוד) זמינות דרך ארבע קופות החולים: <strong>כללית, מכבי, מאוחדת, לאומית</strong>. Cladribine (Mavenclad) אושרה בישראל ב2018. אבחון MS בדרך כלל מוביל לפטור רפואי משירות צבאי (פרופיל 21). ביטוח לאומי מספק גמלת נכות.</p>
+    </div>
+
+    <h3 style="color:var(--primary);margin:30px 0 20px;">&#127760; ארגונים בינלאומיים</h3>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:30px;">
+      <a href="https://www.nationalmssociety.org/" target="_blank" class="link-btn green">NMSS (ארה"ב)</a>
+      <a href="https://www.msif.org/" target="_blank" class="link-btn orange">MSIF (בינלאומי)</a>
+      <a href="https://mymsaa.org/" target="_blank" class="link-btn">MSAA</a>
+      <a href="https://www.mssociety.org.uk/" target="_blank" class="link-btn green">MS Society (UK)</a>
+      <a href="https://www.ms-israel.co.il/" target="_blank" class="link-btn orange">&#127968; מותת MS ישראל</a>
+      <a href="https://mssociety.org.il/en/" target="_blank" class="link-btn">&#127470;&#127473; האגודה הישראלית ל-MS</a>
+    </div>
+
+    <h3 style="color:var(--primary);margin:30px 0 20px;">&#128300; מאמרים מרכזיים</h3>
+    <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:30px;">
+      <a href="https://www.science.org/doi/10.1126/science.abj8222" target="_blank" class="link-btn">Science 2022: EBV ו-MS</a>
+      <a href="https://www.shebaonline.org/national-multiple-sclerosis-center-israel/" target="_blank" class="link-btn green">שיבא: מרכז MS לאומי</a>
+      <a href="https://clinicaltrials.gov/search?cond=Multiple+Sclerosis" target="_blank" class="link-btn orange">ClinicalTrials.gov</a>
+    </div>
+  </section>
+
+  <!-- CAREPEDIA CTA -->
+  <div class="carepedia-cta">
+    <h3>רוצים פורטל מידע רפואי מבוסס מחקר?</h3>
+    <p>אנחנו בונים פורטלים לרופאים, עמותות ומרכזים רפואיים. ספרו לנו על הצורך שלכם.</p>
+    <a href="https://carepedia.org/#contact" class="cta-btn">רוצים פורטל? דברו איתנו</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p style="margin-bottom: 16px;">
+      נבנה על ידי <strong>יובל קשטכר</strong> ועוזריו הרובוטים | <a href="https://carepedia.org" style="color:var(--accent-light);text-decoration:none;">Carepedia</a>
+    </p>
+    <a href="https://carepedia.org/#contact" target="_blank" class="portal-request-btn" style="margin-bottom: 20px;">&#10133; רוצים פורטל למחלה אחרת?</a>
+    <p style="margin-top: 20px; font-size: 15px; opacity: 0.85;">כל המידע באתר הוא למטרות לימוד בלבד ואינו מהווה תחליף לייעוץ רפואי מקצועי.</p>
+    <p style="margin-top: 8px; font-size: 13px; opacity: 0.7;"><a href="/disclaimer" style="color:var(--accent-light);text-decoration:underline;">Legal Disclaimer</a> | <a href="https://wa.me/+972526414555" target="_blank" rel="noopener" style="color:var(--accent-light);text-decoration:underline;">Report an Error</a></p>
+    <p style="margin-top: 10px; font-size: 14px; opacity: 0.7;">עודכן לאחרונה: פברואר 2026 | כולל ציטוטים ממאמרים מדעיים</p>
+  </footer>
+
+</div>
+
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">&#11014;</button>
+
+<script>
+function toggleMenu() {
+  const sidebar = document.getElementById('sidebar');
+  const toggle = document.getElementById('menuToggle');
+  const overlay = document.getElementById('sidebarOverlay');
+  sidebar.classList.toggle('open');
+  toggle.classList.toggle('open');
+  overlay.classList.toggle('active');
+  toggle.textContent = sidebar.classList.contains('open') ? '\u2715' : '\u2630';
+  document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '';
+}
+
+function closeMenu() {
+  const sidebar = document.getElementById('sidebar');
+  const toggle = document.getElementById('menuToggle');
+  const overlay = document.getElementById('sidebarOverlay');
+  sidebar.classList.remove('open');
+  toggle.classList.remove('open');
+  overlay.classList.remove('active');
+  toggle.textContent = '\u2630';
+  document.body.style.overflow = '';
+}
+
+function navigate(el) {
+  document.querySelectorAll('.sidebar nav a').forEach(a => a.classList.remove('active'));
+  el.classList.add('active');
+  closeMenu();
+}
+
+function navigateTo(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+  document.querySelectorAll('.sidebar nav a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+  });
+}
+
+function toggleAccordion(header) {
+  const body = header.nextElementSibling;
+  const isOpen = header.classList.contains('open');
+  header.classList.toggle('open');
+  body.style.maxHeight = isOpen ? '0' : body.scrollHeight + 'px';
+}
+
+function switchTab(tabGroup, tabName) {
+  document.querySelectorAll('[data-tab-group="' + tabGroup + '"] .tab-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.tab === tabName);
+  });
+  document.querySelectorAll('[data-tab-content="' + tabGroup + '"]').forEach(c => {
+    c.classList.toggle('active', c.dataset.tab === tabName);
+  });
+}
+
+window.addEventListener('scroll', () => {
+  const scrollTop = document.getElementById('scrollTop');
+  const progressBar = document.getElementById('progressBar');
+  const scrolled = window.scrollY;
+  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = maxScroll > 0 ? (scrolled / maxScroll) * 100 : 0;
+  progressBar.style.width = pct + '%';
+  scrollTop.classList.toggle('visible', scrolled > 500);
+
+  const sections = document.querySelectorAll('.section[id], .hero[id]');
+  let current = '';
+  sections.forEach(s => {
+    if (scrolled >= s.offsetTop - 100) current = s.id;
+  });
+  if (current) {
+    document.querySelectorAll('.sidebar nav a').forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  }
+});
+
+const fadeEls = document.querySelectorAll('.fade-in');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) entry.target.classList.add('visible');
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+fadeEls.forEach(el => observer.observe(el));
+
+let searchTimeout;
+function searchPortal(query) {
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(() => _doSearch(query), 150);
+}
+
+function _doSearch(query) {
+  const resultsDiv = document.getElementById('searchResults');
+  const clearBtn = document.getElementById('searchClear');
+  clearBtn.style.display = query && query.length > 0 ? 'block' : 'none';
+  if (!query || query.length < 2) {
+    resultsDiv.style.display = 'none';
+    document.querySelectorAll('.section').forEach(s => { s.style.display = ''; });
+    return;
+  }
+  const q = query.toLowerCase();
+  const sections = document.querySelectorAll('.section[id]');
+  const matches = [];
+  sections.forEach(s => {
+    const text = s.textContent.toLowerCase();
+    const title = s.querySelector('h2') ? s.querySelector('h2').textContent : '';
+    if (text.includes(q)) {
+      const count = (text.match(new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')) || []).length;
+      matches.push({ id: s.id, title: title, count: count });
+      s.style.display = '';
+    } else {
+      s.style.display = 'none';
+    }
+  });
+  matches.sort((a, b) => b.count - a.count);
+  if (matches.length > 0 && matches.length < sections.length) {
+    resultsDiv.innerHTML = '<div style="background:var(--card);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);">' +
+      '<p style="font-size:14px;color:var(--text-light);margin-bottom:8px;">' + matches.length + ' \u05ea\u05d5\u05e6\u05d0\u05d5\u05ea \u05e0\u05de\u05e6\u05d0\u05d5:</p>' +
+      matches.map(m =>
+        '<a href="#' + m.id + '" onclick="navigateTo(\'' + m.id + '\')" style="display:block;padding:10px 12px;color:var(--primary);text-decoration:none;border-radius:8px;font-weight:600;transition:var(--transition);">' +
+        m.title + (m.count > 1 ? ' <span style="font-size:12px;color:var(--text-light);font-weight:400;">(' + m.count + ' \u05d0\u05d6\u05db\u05d5\u05e8\u05d9\u05dd)</span>' : '') +
+        '</a>'
+      ).join('') + '</div>';
+    resultsDiv.style.display = 'block';
+  } else if (matches.length === sections.length) {
+    resultsDiv.style.display = 'none';
+  } else {
+    resultsDiv.innerHTML = '<div style="background:var(--card);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);"><p style="font-size:14px;color:var(--text-light);">\u05dc\u05d0 \u05e0\u05de\u05e6\u05d0\u05d5 \u05ea\u05d5\u05e6\u05d0\u05d5\u05ea. \u05e0\u05e1\u05d5 \u05de\u05d9\u05dc\u05d4 \u05d0\u05d7\u05e8\u05ea.</p></div>';
+    resultsDiv.style.display = 'block';
+  }
+}
+
+function clearSearch() {
+  const input = document.getElementById('portalSearch');
+  input.value = '';
+  input.focus();
+  searchPortal('');
+}
+</script>
+
+</body>
+</html>

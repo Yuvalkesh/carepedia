@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legal Disclaimer | Carepedia</title>
+<meta name="description" content="Legal disclaimer for Carepedia medical information portals. Not medical advice.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --primary: #0A2540;
+  --primary-light: #1A73E8;
+  --accent: #00C9A7;
+  --bg: #FAFBFC;
+  --card: #FFFFFF;
+  --text: #1A2B3C;
+  --text-light: #5F6B7A;
+  --border: #E5E9F0;
+  --shadow: 0 4px 24px rgba(10,37,64,0.06);
+  --radius: 16px;
+  --transition: all 0.3s ease;
+}
+
+body {
+  font-family: 'Rubik', 'Segoe UI', Tahoma, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.9;
+}
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+}
+
+.nav-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 64px;
+}
+
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--primary);
+}
+
+.nav-logo .logo-icon {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--primary-light), var(--accent));
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.nav-logo span {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.nav-back {
+  color: var(--primary-light);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.nav-back:hover { opacity: 0.7; }
+
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 60px 40px 100px;
+}
+
+.page-header {
+  margin-bottom: 48px;
+  padding-bottom: 32px;
+  border-bottom: 2px solid var(--border);
+}
+
+.page-header h1 {
+  font-size: 42px;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 12px;
+}
+
+.page-header .subtitle {
+  font-size: 18px;
+  color: var(--text-light);
+}
+
+.last-updated {
+  display: inline-block;
+  background: rgba(26,115,232,0.08);
+  color: var(--primary-light);
+  padding: 6px 16px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  margin-top: 16px;
+}
+
+.alert-box {
+  background: linear-gradient(135deg, #FFF3E0, #FFF8E1);
+  border: 2px solid #FFB74D;
+  border-radius: var(--radius);
+  padding: 24px 28px;
+  margin-bottom: 40px;
+}
+
+.alert-box .alert-icon { font-size: 28px; margin-bottom: 8px; }
+
+.alert-box h3 {
+  font-size: 18px;
+  color: #E65100;
+  margin-bottom: 8px;
+}
+
+.alert-box p {
+  color: #5D4037;
+  font-size: 15px;
+}
+
+section {
+  margin-bottom: 40px;
+}
+
+section h2 {
+  font-size: 24px;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--border);
+}
+
+section h3 {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--primary);
+  margin: 20px 0 10px;
+}
+
+p {
+  margin-bottom: 14px;
+  font-size: 15px;
+  color: var(--text-light);
+}
+
+ul, ol {
+  margin: 12px 0 20px 24px;
+  color: var(--text-light);
+  font-size: 15px;
+}
+
+li {
+  margin-bottom: 8px;
+  line-height: 1.8;
+}
+
+.contact-box {
+  background: var(--card);
+  border: 2px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+  margin: 40px 0;
+  text-align: center;
+  box-shadow: var(--shadow);
+}
+
+.contact-box h3 {
+  color: var(--primary);
+  margin-bottom: 12px;
+  text-align: center;
+}
+
+.contact-box p {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.wa-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 32px;
+  background: #25D366;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: 600;
+  font-family: inherit;
+  transition: var(--transition);
+  box-shadow: 0 4px 16px rgba(37,211,102,0.3);
+}
+
+.wa-link:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(37,211,102,0.4); }
+
+.footer {
+  background: var(--primary);
+  color: rgba(255,255,255,0.7);
+  text-align: center;
+  padding: 40px;
+  font-size: 14px;
+}
+
+.footer a { color: var(--accent); text-decoration: none; }
+
+strong { color: var(--text); }
+
+.section-number {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  background: var(--primary-light);
+  color: #fff;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 700;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+@media (max-width: 768px) {
+  .container { padding: 40px 20px 60px; }
+  .page-header h1 { font-size: 30px; }
+  .page-header .subtitle { font-size: 16px; }
+  section h2 { font-size: 20px; }
+  .nav { padding: 0 20px; }
+  .alert-box { padding: 20px; }
+  .contact-box { padding: 24px 20px; }
+}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="https://carepedia.org" class="nav-logo">
+      <div class="logo-icon">C</div>
+      <span>Carepedia</span>
+    </a>
+    <a href="https://carepedia.org" class="nav-back">&larr; Back to Carepedia</a>
+  </div>
+</nav>
+
+<div class="container">
+
+  <div class="page-header">
+    <h1>Legal Disclaimer</h1>
+    <p class="subtitle">Important information regarding the use of Carepedia medical information portals</p>
+    <div class="last-updated">Last updated: February 2026</div>
+  </div>
+
+  <div class="alert-box">
+    <div class="alert-icon">&#9888;&#65039;</div>
+    <h3>This Website Does Not Provide Medical Advice</h3>
+    <p>The information provided on Carepedia and all its portals is for <strong>general educational and informational purposes only</strong>. It is not intended to be, and must not be taken as, medical advice, diagnosis, or treatment. Always seek the advice of your physician or other qualified healthcare provider with any questions you may have regarding a medical condition.</p>
+  </div>
+
+  <!-- Section 1 -->
+  <section>
+    <h2><span class="section-number">1</span> No Medical Advice</h2>
+    <p>Carepedia (accessible at carepedia.org, including all subpages, portals, and associated content) provides general health and medical information compiled from publicly available research sources. <strong>This information is not a substitute for professional medical advice, diagnosis, or treatment.</strong></p>
+    <p>The content on this website:</p>
+    <ul>
+      <li>Does <strong>not</strong> establish a doctor-patient relationship between you and Carepedia, its creators, or any contributor.</li>
+      <li>Does <strong>not</strong> constitute medical advice, clinical guidance, or a professional recommendation of any kind.</li>
+      <li>Should <strong>never</strong> be used as a basis for making medical decisions without first consulting a qualified healthcare professional.</li>
+      <li>Should <strong>not</strong> be used to self-diagnose, self-treat, or delay seeking professional medical care.</li>
+    </ul>
+    <p><strong>If you are experiencing a medical emergency, call your local emergency services (in Israel: Magen David Adom at 101) or go to the nearest emergency room immediately.</strong></p>
+  </section>
+
+  <!-- Section 2 -->
+  <section>
+    <h2><span class="section-number">2</span> No Warranties or Guarantees</h2>
+    <p>All content on Carepedia is provided <strong>"as is" and "as available"</strong> without any warranties or guarantees of any kind, whether express or implied, including but not limited to:</p>
+    <ul>
+      <li><strong>Accuracy:</strong> While we strive to provide accurate, research-based information, we make no warranty that the content is complete, correct, current, or free from errors. Medical knowledge evolves rapidly, and information may become outdated between updates.</li>
+      <li><strong>Completeness:</strong> The portals do not cover every aspect of any medical condition. Important information relevant to your specific situation may not be included.</li>
+      <li><strong>Reliability:</strong> We do not guarantee the reliability, timeliness, or suitability of the information for any particular purpose.</li>
+      <li><strong>Fitness for purpose:</strong> The information is general in nature and may not be applicable to your individual medical circumstances, genetics, history, or treatment plan.</li>
+    </ul>
+    <p>Carepedia explicitly disclaims any implied warranties of merchantability, fitness for a particular purpose, and non-infringement.</p>
+  </section>
+
+  <!-- Section 3 -->
+  <section>
+    <h2><span class="section-number">3</span> Limitation of Liability</h2>
+    <p>To the fullest extent permitted by applicable law, Carepedia, its creator (Yuval Keshtcher), contributors, affiliates, and any parties involved in creating, producing, or delivering the content on this website shall <strong>not be liable</strong> for any:</p>
+    <ul>
+      <li>Direct, indirect, incidental, consequential, special, exemplary, or punitive damages.</li>
+      <li>Loss of profits, data, use, goodwill, or other intangible losses.</li>
+      <li>Personal injury, illness, worsening of medical conditions, or death.</li>
+      <li>Damages arising from any decision made or action taken in reliance on the information provided on this website.</li>
+      <li>Damages arising from unauthorized access to or alteration of your data or transmissions.</li>
+    </ul>
+    <p>This limitation of liability applies whether the alleged liability is based on contract, tort (including negligence), strict liability, or any other legal theory, even if Carepedia has been advised of the possibility of such damages.</p>
+    <p><strong>You use this website and its content entirely at your own risk.</strong></p>
+  </section>
+
+  <!-- Section 4 -->
+  <section>
+    <h2><span class="section-number">4</span> Information Sources and Research</h2>
+    <p>The medical information presented on Carepedia portals is compiled from publicly available sources, including but not limited to:</p>
+    <ul>
+      <li>Published peer-reviewed scientific studies (PubMed, PMC, medical journals)</li>
+      <li>Government health agencies (CDC, NIH, NINDS, NICHD, WHO, Israeli Ministry of Health)</li>
+      <li>Clinical trial registries (ClinicalTrials.gov)</li>
+      <li>Medical institutions and hospital websites</li>
+      <li>Non-profit disease advocacy organizations</li>
+      <li>AI-assisted research and content generation tools</li>
+    </ul>
+    <p><strong>Important:</strong> Content on this website is generated, in part, using artificial intelligence tools. While AI assists in compiling and organizing research, AI-generated content may contain inaccuracies, misinterpretations, or hallucinated information. We review content for accuracy, but we cannot guarantee that all AI-generated text is error-free.</p>
+    <p>The inclusion of any study, drug name, treatment, clinical trial, organization, or resource does not constitute an endorsement or recommendation. Always verify information with your healthcare provider before making any medical decisions.</p>
+  </section>
+
+  <!-- Section 5 -->
+  <section>
+    <h2><span class="section-number">5</span> Drug and Treatment Information</h2>
+    <p>Information about medications, treatments, therapies, surgical procedures, and clinical trials is provided for <strong>educational purposes only</strong>. Specifically:</p>
+    <ul>
+      <li>Drug names, dosages, mechanisms of action, and side effects listed on this website are general references. Your physician may prescribe different medications or dosages based on your individual needs.</li>
+      <li><strong>Do not</strong> start, stop, or change any medication or treatment based on information found on this website without consulting your doctor.</li>
+      <li>Clinical trial information may be outdated. Trial status, eligibility criteria, and availability change frequently. Always verify directly with the trial sponsor or ClinicalTrials.gov.</li>
+      <li>Mention of emerging or experimental therapies (including stem cell therapy, gene therapy, or investigational drugs) does not imply safety, efficacy, or availability. Many experimental treatments are not approved by regulatory agencies and carry significant risks.</li>
+      <li>Information about the Israeli health basket (Sal HaBriut) and insurance coverage may change with annual updates. Verify current coverage with your Kupat Cholim.</li>
+    </ul>
+  </section>
+
+  <!-- Section 6 -->
+  <section>
+    <h2><span class="section-number">6</span> External Links and Third-Party Content</h2>
+    <p>Carepedia portals contain links to external websites, organizations, and resources. These links are provided for convenience and informational purposes only. Carepedia:</p>
+    <ul>
+      <li>Does not control, endorse, or assume responsibility for the content, privacy policies, or practices of any third-party websites.</li>
+      <li>Does not guarantee that external links are functional, safe, or free from malware.</li>
+      <li>Is not responsible for any transactions, interactions, or damages that may arise from your use of third-party websites.</li>
+    </ul>
+    <p>Accessing external links is at your own risk. We encourage you to review the terms and privacy policies of any third-party website you visit.</p>
+  </section>
+
+  <!-- Section 7 -->
+  <section>
+    <h2><span class="section-number">7</span> No Professional Relationship</h2>
+    <p>Your use of Carepedia does not create any professional relationship, including but not limited to a doctor-patient, therapist-client, attorney-client, or fiduciary relationship. Carepedia is not a healthcare provider, medical practice, or licensed medical institution.</p>
+    <p>No communication through this website (including the contact form, WhatsApp, email, or any other channel) constitutes professional medical advice or creates a professional relationship.</p>
+  </section>
+
+  <!-- Section 8 -->
+  <section>
+    <h2><span class="section-number">8</span> User Responsibility</h2>
+    <p>By using Carepedia, you acknowledge and agree that:</p>
+    <ul>
+      <li>You are solely responsible for your health decisions and any actions you take based on the information on this website.</li>
+      <li>You will consult a qualified healthcare professional before making any medical decisions.</li>
+      <li>You understand that medical information changes frequently and that content on this website may not reflect the most current research or medical standards of care.</li>
+      <li>You will not hold Carepedia, its creator, or its contributors liable for any outcomes resulting from your use of this website.</li>
+      <li>You accept all risks associated with using information from this website.</li>
+    </ul>
+  </section>
+
+  <!-- Section 9 -->
+  <section>
+    <h2><span class="section-number">9</span> Intellectual Property</h2>
+    <p>All original content, design, layout, and code on Carepedia is the intellectual property of Yuval Keshtcher. The medical information presented is compiled from publicly available sources and is attributed where possible.</p>
+    <p>You may share links to Carepedia portals freely. You may not reproduce, distribute, modify, or create derivative works from the website content without prior written permission.</p>
+  </section>
+
+  <!-- Section 10 -->
+  <section>
+    <h2><span class="section-number">10</span> Content in Hebrew</h2>
+    <p>The majority of content on Carepedia portals is written in Hebrew. Translations of medical terms, drug names, and scientific concepts from English to Hebrew may not perfectly convey the original meaning. When in doubt, refer to the original English-language medical sources cited in the portals.</p>
+    <p>This legal disclaimer is written in English and shall be the governing version. In the event of any conflict between this English version and any translated version, this English version shall prevail.</p>
+  </section>
+
+  <!-- Section 11 -->
+  <section>
+    <h2><span class="section-number">11</span> Changes to This Disclaimer</h2>
+    <p>Carepedia reserves the right to modify, update, or replace this disclaimer at any time without prior notice. Changes are effective immediately upon posting on this page. The "Last updated" date at the top of this page indicates when the disclaimer was last revised.</p>
+    <p>Your continued use of Carepedia after any changes to this disclaimer constitutes your acceptance of those changes.</p>
+  </section>
+
+  <!-- Section 12 -->
+  <section>
+    <h2><span class="section-number">12</span> Governing Law</h2>
+    <p>This disclaimer and your use of Carepedia shall be governed by and construed in accordance with the laws of the State of Israel, without regard to its conflict of law provisions. Any disputes arising from or related to the use of this website shall be subject to the exclusive jurisdiction of the competent courts in Tel Aviv-Jaffa, Israel.</p>
+  </section>
+
+  <!-- Section 13 -->
+  <section>
+    <h2><span class="section-number">13</span> Errors, Corrections, and Reporting</h2>
+    <p>Despite our best efforts, errors may exist in the content. If you believe any information on Carepedia is inaccurate, misleading, outdated, or potentially harmful, we strongly encourage you to contact us so we can review and correct it promptly.</p>
+    <p>Carepedia is not obligated to update any information on the website and shall not be liable for failing to update any content.</p>
+  </section>
+
+  <!-- Contact Box -->
+  <div class="contact-box">
+    <h3>Report an Error or Contact Us</h3>
+    <p>Found inaccurate information? Have a concern? Want to suggest a correction?<br>We take accuracy seriously. Please reach out to us directly:</p>
+    <a href="https://wa.me/+972526414555" target="_blank" rel="noopener" class="wa-link">
+      <svg viewBox="0 0 24 24" style="width:22px;height:22px;fill:#fff;"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Contact Us on WhatsApp
+    </a>
+    <p style="margin-top: 16px; font-size: 13px; color: #999;">WhatsApp: +972-52-641-4555</p>
+  </div>
+
+  <!-- Final Statement -->
+  <section>
+    <h2>Acceptance</h2>
+    <p>By accessing and using Carepedia (carepedia.org) and any of its portals, you acknowledge that you have read, understood, and agree to be bound by this Legal Disclaimer. If you do not agree with any part of this disclaimer, you must discontinue use of the website immediately.</p>
+    <p style="margin-top: 24px; font-size: 14px; color: #999;">&copy; 2026 Carepedia. Built by Yuval Keshtcher. All rights reserved.</p>
+  </section>
+
+</div>
+
+<footer class="footer">
+  <p><a href="https://carepedia.org">Carepedia</a> &mdash; Research-Based Medical Information Portals</p>
+  <p style="margin-top: 8px;">&copy; 2026 Yuval Keshtcher. All rights reserved.</p>
+</footer>
+
+</body>
+</html>

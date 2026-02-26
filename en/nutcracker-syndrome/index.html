@@ -1,0 +1,1512 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nutcracker Syndrome Hub | CarePedia Information Center</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="alternate" hreflang="he" href="https://carepedia.org/nutcracker-syndrome" />
+<link rel="alternate" hreflang="en" href="https://carepedia.org/en/nutcracker-syndrome" />
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --primary: #0f4c75;
+  --primary-light: #3282b8;
+  --accent: #00b894;
+  --accent-light: #55efc4;
+  --warm: #fdcb6e;
+  --warm-dark: #e17055;
+  --bg: #f0f4f8;
+  --card: #ffffff;
+  --text: #2c3e50;
+  --text-light: #5d6d7e;
+  --shadow: 0 4px 20px rgba(0,0,0,0.08);
+  --shadow-hover: 0 12px 40px rgba(0,0,0,0.18);
+  --radius: 16px;
+  --transition: all 0.3s cubic-bezier(.4,0,.2,1);
+  /* Aliases for Iconify icons */
+  --forest: #0f4c75;
+  --forest-mid: #3282b8;
+  --forest-light: rgba(50,130,184,0.12);
+  --amber: #fdcb6e;
+  --amber-light: rgba(253,203,110,0.12);
+  --border: #dde4eb;
+}
+
+body {
+  font-family: 'Rubik', 'Segoe UI', Tahoma, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.8;
+  overflow-x: hidden;
+  position: relative;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  background:
+    radial-gradient(ellipse at 10% 20%, rgba(15,76,117,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 90% 80%, rgba(0,184,148,0.07) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, rgba(253,203,110,0.05) 0%, transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.scroll-progress {
+  position: fixed;
+  top: 0; right: 0;
+  width: 100%; height: 4px;
+  z-index: 2000;
+  background: transparent;
+}
+.scroll-progress .bar {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, var(--accent), var(--primary-light), var(--warm));
+  border-radius: 0 0 0 4px;
+  transition: width 0.1s linear;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0; left: 0;
+  width: 280px; height: 100vh;
+  background: rgba(15,76,117,0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-right: 1px solid rgba(255,255,255,0.1);
+  z-index: 1000;
+  padding: 30px 20px;
+  overflow-y: auto;
+  transition: transform 0.4s cubic-bezier(.4,0,.2,1);
+}
+.sidebar .logo {
+  text-align: center;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+.sidebar .logo .icon { font-size: 48px; }
+.sidebar .logo h2 { color: #fff; font-size: 18px; margin-top: 8px; font-weight: 600; }
+.sidebar nav a {
+  display: flex; align-items: center; gap: 12px;
+  padding: 14px 18px; color: rgba(255,255,255,0.8);
+  text-decoration: none; border-radius: 12px;
+  margin-bottom: 4px; font-size: 15px; transition: var(--transition);
+}
+.sidebar nav a:hover, .sidebar nav a.active {
+  background: rgba(255,255,255,0.15); color: #fff; transform: translateX(4px);
+}
+.sidebar nav a .nav-icon { font-size: 22px; min-width: 30px; text-align: center; }
+
+.menu-toggle {
+  display: none;
+  position: fixed;
+  top: 20px; left: 20px;
+  z-index: 1100;
+  background: var(--primary); color: #fff;
+  border: none; border-radius: 12px;
+  width: 50px; height: 50px; font-size: 24px;
+  cursor: pointer; box-shadow: var(--shadow); transition: var(--transition);
+}
+.menu-toggle:hover { transform: scale(1.05); }
+.menu-toggle.open { border-radius: 50%; background: var(--warm-dark); }
+
+.main {
+  margin-left: 280px;
+  min-height: 100vh;
+  position: relative;
+  z-index: 1;
+}
+
+.hero {
+  background: linear-gradient(135deg, var(--primary) 0%, #3282b8 40%, var(--accent) 100%);
+  padding: 80px 60px;
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -50%; left: -50%;
+  width: 200%; height: 200%;
+  background: radial-gradient(circle, rgba(255,255,255,0.05) 0%, transparent 60%);
+  animation: float 20s linear infinite;
+}
+@keyframes float { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+.hero-content { position: relative; z-index: 1; max-width: 900px; }
+.hero h1 { font-size: 52px; font-weight: 800; margin-bottom: 10px; line-height: 1.3; }
+.hero .greeting { font-size: 22px; opacity: 0.95; margin-bottom: 30px; line-height: 1.7; }
+.hero .subtitle { font-size: 18px; opacity: 0.8; max-width: 700px; }
+
+.fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+.fade-in.visible { opacity: 1; transform: translateY(0); }
+
+.section { padding: 60px; max-width: 1100px; margin: 0 auto; }
+.section-header {
+  display: flex; align-items: center; gap: 16px;
+  margin-bottom: 40px; padding-bottom: 20px;
+  border-bottom: 3px solid var(--primary-light);
+}
+.section-header .sec-icon { font-size: 42px; }
+.section-header h2 { font-size: 36px; color: var(--primary); }
+.section-header p { color: var(--text-light); font-size: 16px; margin-top: 4px; }
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 24px; margin-bottom: 40px;
+}
+.card {
+  background: var(--card); border-radius: var(--radius); padding: 30px;
+  box-shadow: var(--shadow); transition: var(--transition);
+  border-top: 4px solid var(--primary-light);
+  position: relative; overflow: hidden;
+}
+.card:hover { transform: translateY(-6px) scale(1.01); box-shadow: var(--shadow-hover); }
+.card .card-icon { font-size: 40px; margin-bottom: 16px; }
+.card h3 { font-size: 20px; color: var(--primary); margin-bottom: 12px; }
+.card p { color: var(--text-light); font-size: 15px; line-height: 1.8; }
+.card.green { border-top-color: var(--accent); }
+.card.orange { border-top-color: var(--warm); }
+.card.blue { border-top-color: var(--primary-light); }
+
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 20px; margin-top: 40px;
+}
+.cat-card {
+  background: var(--card); border-radius: var(--radius); padding: 30px 24px;
+  text-align: center; cursor: pointer; transition: var(--transition);
+  box-shadow: var(--shadow); text-decoration: none; color: var(--text);
+}
+.cat-card:hover { transform: translateY(-6px) scale(1.02); box-shadow: var(--shadow-hover); }
+.cat-card .cat-icon { font-size: 48px; margin-bottom: 14px; }
+.cat-card h3 { font-size: 18px; color: var(--primary); margin-bottom: 8px; }
+.cat-card p { font-size: 13px; color: var(--text-light); }
+
+.accordion { margin-bottom: 16px; }
+.accordion-header {
+  background: var(--card); padding: 20px 24px; border-radius: var(--radius);
+  cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+  box-shadow: var(--shadow); transition: var(--transition);
+  font-size: 17px; font-weight: 600; color: var(--primary);
+}
+.accordion-header:hover { background: #eef4fb; }
+.accordion-header .arrow { transition: transform 0.3s ease; font-size: 20px; }
+.accordion-header.open .arrow { transform: rotate(180deg); }
+.accordion-body {
+  max-height: 0; overflow: clip; transition: max-height 0.4s ease;
+  background: var(--card); border-radius: 0 0 var(--radius) var(--radius); margin-top: -8px;
+}
+.accordion-body .inner { padding: 20px 24px 24px; color: var(--text-light); line-height: 2; }
+
+.tabs { display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap; }
+.tab-btn {
+  padding: 12px 24px; background: var(--card);
+  border: 2px solid #dde4eb; border-radius: 30px;
+  cursor: pointer; font-size: 15px; font-family: inherit;
+  color: var(--text-light); transition: var(--transition);
+}
+.tab-btn:hover { border-color: var(--primary-light); color: var(--primary); }
+.tab-btn.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+.tab-content { display: none; animation: fadeIn 0.4s ease; }
+.tab-content.active { display: block; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+.info-box {
+  background: linear-gradient(135deg, #eaf4fb 0%, #e8f8f0 100%);
+  border-radius: var(--radius); padding: 24px 28px; margin: 24px 0;
+  border-left: 5px solid var(--primary-light);
+}
+.info-box.warning { background: linear-gradient(135deg, #fef9e7 0%, #fdebd0 100%); border-left-color: var(--warm); }
+.info-box.success { background: linear-gradient(135deg, #e8f8f0 0%, #d5f5e3 100%); border-left-color: var(--accent); }
+.info-box h4 { color: var(--primary); margin-bottom: 8px; font-size: 17px; }
+.info-box p { color: var(--text-light); font-size: 15px; }
+
+.link-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 24px; background: var(--primary);
+  color: #fff; text-decoration: none; border-radius: 30px;
+  font-size: 15px; transition: var(--transition); margin: 6px;
+}
+.link-btn:hover { background: var(--primary-light); transform: translateY(-2px); }
+.link-btn.green { background: var(--accent); }
+.link-btn.green:hover { background: var(--accent-light); color: var(--text); }
+.link-btn.orange { background: var(--warm-dark); }
+.link-btn.orange:hover { background: var(--warm); color: var(--text); }
+
+.styled-table {
+  width: 100%; border-collapse: collapse; margin: 20px 0;
+  background: var(--card); border-radius: var(--radius);
+  overflow: hidden; box-shadow: var(--shadow);
+}
+.styled-table thead { background: var(--primary); color: #fff; }
+.styled-table th { padding: 16px 20px; text-align: left; font-weight: 600; }
+.styled-table td { padding: 14px 20px; border-bottom: 1px solid #eee; }
+.styled-table tbody tr:hover { background: #f7fafc; }
+
+.timeline { position: relative; padding-left: 40px; margin: 30px 0; }
+.timeline::before {
+  content: '';
+  position: absolute; left: 12px; top: 0; bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom, var(--primary-light), var(--accent));
+  border-radius: 3px;
+}
+.timeline-item {
+  position: relative; margin-bottom: 30px; padding: 24px;
+  background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow);
+}
+.timeline-item::before {
+  content: ''; position: absolute;
+  left: -34px; top: 30px;
+  width: 16px; height: 16px;
+  background: var(--accent); border-radius: 50%; border: 3px solid var(--bg);
+}
+.timeline-item h4 { color: var(--primary); font-size: 18px; margin-bottom: 8px; }
+.timeline-item p { color: var(--text-light); }
+.timeline-item .time-label {
+  display: inline-block; background: var(--primary); color: #fff;
+  padding: 4px 14px; border-radius: 20px; font-size: 13px; margin-bottom: 10px;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px; margin: 30px 0;
+}
+.stat-box {
+  background: linear-gradient(135deg, var(--card) 0%, #f7fafc 100%);
+  border-radius: var(--radius); padding: 24px; text-align: center;
+  box-shadow: var(--shadow); border-bottom: 3px solid var(--primary-light);
+  transition: var(--transition);
+}
+.stat-box:nth-child(2) { border-bottom-color: var(--accent); }
+.stat-box:nth-child(3) { border-bottom-color: var(--warm); }
+.stat-box:nth-child(4) { border-bottom-color: var(--warm-dark); }
+.stat-box:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+.stat-box .stat-num {
+  font-size: 36px; font-weight: 800;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.stat-box .stat-label { color: var(--text-light); font-size: 14px; margin-top: 6px; }
+
+.carepedia-cta {
+  background: linear-gradient(135deg, #1A73E8, #00C9A7);
+  padding: 48px 24px; text-align: center; color: #fff;
+}
+.carepedia-cta h3 { font-size: 24px; font-weight: 700; margin-bottom: 12px; }
+.carepedia-cta p { font-size: 16px; opacity: 0.9; margin-bottom: 24px; max-width: 500px; margin-left: auto; margin-right: auto; }
+.carepedia-cta .cta-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 14px 32px; background: #fff; color: #1A73E8;
+  text-decoration: none; border-radius: 30px; font-size: 16px; font-weight: 700;
+  font-family: inherit; transition: all 0.3s ease; box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+}
+.carepedia-cta .cta-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+
+.credit-bar {
+  display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap;
+  padding: 14px 20px; font-size: 14px; color: rgba(255,255,255,0.85); position: relative; z-index: 1;
+}
+.credit-bar span { opacity: 0.9; }
+.portal-request-btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 10px 22px; background: var(--primary-light); color: #fff;
+  text-decoration: none; border-radius: 30px; font-size: 14px;
+  font-family: inherit; font-weight: 600; transition: var(--transition);
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+.portal-request-btn:hover { background: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 20px rgba(0,0,0,0.2); }
+
+.footer {
+  background: var(--primary); color: rgba(255,255,255,0.8);
+  text-align: center; padding: 40px; font-size: 14px;
+}
+
+.scroll-top {
+  position: fixed; bottom: 30px; left: 30px;
+  width: 50px; height: 50px; background: var(--primary);
+  color: #fff; border: none; border-radius: 50%;
+  font-size: 22px; cursor: pointer; box-shadow: var(--shadow);
+  transition: var(--transition); opacity: 0; pointer-events: none; z-index: 999;
+}
+.scroll-top.visible { opacity: 1; pointer-events: auto; }
+.scroll-top:hover { background: var(--primary-light); transform: translateY(-3px); }
+
+.search-box { position: relative; margin: 0 auto; }
+.search-box input {
+  width: 100%; padding: 14px 20px 14px 50px;
+  border: 2px solid rgba(15,76,117,0.15); border-radius: 30px;
+  font-size: 16px; font-family: 'Rubik', sans-serif;
+  background: var(--card); color: var(--text); transition: var(--transition);
+  box-sizing: border-box;
+}
+.search-box input:focus { outline: none; border-color: var(--primary-light); box-shadow: 0 0 0 4px rgba(50,130,184,0.1); }
+.search-box .search-icon {
+  position: absolute; left: 18px; top: 50%;
+  transform: translateY(-50%); font-size: 20px; pointer-events: none;
+}
+
+.sidebar-overlay {
+  display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.5); z-index: 999; opacity: 0; transition: opacity 0.3s ease;
+}
+.sidebar-overlay.active { display: block; opacity: 1; }
+
+@media (max-width: 900px) {
+  .sidebar { transform: translateX(-100%); width: 270px; }
+  .sidebar.open { transform: translateX(0); }
+  .menu-toggle { display: block; }
+  .main { margin-left: 0; }
+  .hero { padding: 60px 30px; }
+  .section { padding: 40px 24px; }
+}
+
+@media (max-width: 768px) {
+  .sidebar { transform: translateX(-100%); width: 260px; }
+  .sidebar.open { transform: translateX(0); }
+  .menu-toggle { display: block; }
+  .main { margin-left: 0; }
+  .hero { padding: 40px 20px 36px; }
+  .hero h1 { font-size: 28px; line-height: 1.3; }
+  .hero .greeting { font-size: 16px; line-height: 1.7; }
+  .hero .subtitle { font-size: 14px; }
+  .section { padding: 28px 16px; }
+  .section-header { flex-direction: column; align-items: flex-start; gap: 8px; margin-bottom: 24px; padding-bottom: 14px; }
+  .section-header .sec-icon { font-size: 32px; }
+  .section-header h2 { font-size: 24px; }
+  .section-header p { font-size: 14px; }
+  .cards-grid { grid-template-columns: 1fr; gap: 16px; margin-bottom: 24px; }
+  .card { padding: 20px; }
+  .card:hover { transform: none; }
+  .cat-card:hover { transform: none; }
+  .stat-box:hover { transform: none; }
+  .link-btn:hover { transform: none; }
+  .portal-request-btn:hover { transform: none; }
+  .scroll-top:hover { transform: none; }
+  .sidebar nav a:hover { transform: none; }
+  .card .card-icon { font-size: 32px; margin-bottom: 10px; }
+  .card h3 { font-size: 17px; }
+  .card p { font-size: 14px; }
+  .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 24px; }
+  .cat-card { padding: 18px 12px; }
+  .cat-card .cat-icon { font-size: 32px; margin-bottom: 8px; }
+  .cat-card h3 { font-size: 14px; }
+  .cat-card p { font-size: 11px; }
+  .stats-row { grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 20px 0; }
+  .stat-box { padding: 16px 10px; }
+  .stat-box .stat-num { font-size: 26px; }
+  .stat-box .stat-label { font-size: 12px; }
+  .tabs { gap: 6px; margin-bottom: 16px; }
+  .tab-btn { padding: 8px 14px; font-size: 13px; border-radius: 20px; }
+  .styled-table { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; font-size: 13px; }
+  .styled-table th { padding: 10px 12px; font-size: 13px; white-space: nowrap; }
+  .styled-table td { padding: 10px 12px; font-size: 13px; min-width: 100px; }
+  .info-box { padding: 16px 18px; margin: 16px 0; }
+  .info-box h4 { font-size: 15px; }
+  .info-box p { font-size: 13px; }
+  .accordion-header { padding: 14px 16px; font-size: 15px; }
+  .accordion-body .inner { padding: 14px 16px 18px; font-size: 14px; line-height: 1.9; }
+  .timeline { padding-left: 30px; margin: 20px 0; }
+  .timeline-item { padding: 16px; margin-bottom: 20px; }
+  .timeline-item::before { left: -24px; width: 12px; height: 12px; top: 22px; }
+  .timeline-item h4 { font-size: 16px; }
+  .timeline-item p { font-size: 13px; }
+  .link-btn { padding: 10px 16px; font-size: 13px; margin: 4px 2px; }
+  .search-box input { padding: 12px 18px 12px 40px; font-size: 14px; }
+  .footer { padding: 28px 16px; font-size: 13px; }
+  .scroll-top { width: 42px; height: 42px; font-size: 18px; bottom: 20px; left: 16px; }
+}
+
+@media (max-width: 380px) {
+  .hero h1 { font-size: 24px; }
+  .hero .greeting { font-size: 15px; }
+  .cat-grid { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .cat-card { padding: 14px 8px; }
+  .cat-card .cat-icon { font-size: 26px; }
+  .cat-card h3 { font-size: 13px; }
+  .cat-card p { display: none; }
+  .stats-row { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .stat-box .stat-num { font-size: 22px; }
+  .section { padding: 20px 12px; }
+  .tab-btn { padding: 7px 10px; font-size: 12px; }
+}
+
+.disclaimer-banner {
+  background: linear-gradient(135deg, #FFF3E0, #FFF8E1);
+  border-bottom: 2px solid #FFB74D;
+  padding: 10px 20px; text-align: center; font-size: 13px; color: #5D4037;
+  position: relative; z-index: 1500;
+  display: flex; align-items: center; justify-content: center; gap: 8px; flex-wrap: wrap;
+}
+.disclaimer-banner strong { color: #E65100; }
+.disclaimer-banner a { color: #1A73E8; text-decoration: underline; font-weight: 600; }
+.disclaimer-banner a:hover { color: #0D47A1; }
+@media (max-width: 768px) { .disclaimer-banner { font-size: 12px; padding: 8px 12px; } }
+</style>
+<script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js" defer></script>
+</head>
+<body>
+
+<!-- DISCLAIMER BANNER -->
+<div class="disclaimer-banner">
+  <span>⚠️</span>
+  <span><strong>This is not medical advice.</strong> Always consult your doctor. <a href="/disclaimer">Full legal disclaimer &rarr;</a></span>
+</div>
+
+<!-- SCROLL PROGRESS BAR -->
+<div class="scroll-progress"><div class="bar" id="progressBar"></div></div>
+
+<!-- MOBILE OVERLAY -->
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeMenu()"></div>
+
+<!-- MOBILE MENU TOGGLE -->
+<button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">☰</button>
+
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="logo">
+    <div class="icon">🥜</div>
+    <h2>Nutcracker Syndrome Hub</h2>
+  </div>
+  <nav>
+    <a href="#home" class="active" onclick="navigate(this)"><span class="nav-icon">🏠</span>Home</a>
+    <a href="#about" onclick="navigate(this)"><span class="nav-icon">📖</span>What is the Syndrome?</a>
+    <a href="#treatments" onclick="navigate(this)"><span class="nav-icon">💊</span>Treatments &amp; Surgery</a>
+    <a href="#trials" onclick="navigate(this)"><span class="nav-icon">🔬</span>Clinical Trials</a>
+    <a href="#research" onclick="navigate(this)"><span class="nav-icon">🧬</span>New Research</a>
+    <a href="#diagnosis" onclick="navigate(this)"><span class="nav-icon">🩺</span>Diagnosis &amp; Imaging</a>
+    <a href="#lifestyle" onclick="navigate(this)"><span class="nav-icon">🏃</span>Lifestyle &amp; Management</a>
+    <a href="#pregnancy" onclick="navigate(this)"><span class="nav-icon">🤰</span>Pregnancy &amp; Fertility</a>
+    <a href="#pediatric" onclick="navigate(this)"><span class="nav-icon">👶</span>Children &amp; Adolescents</a>
+    <a href="#stories" onclick="navigate(this)"><span class="nav-icon">⭐</span>Success Stories</a>
+    <a href="#resources" onclick="navigate(this)"><span class="nav-icon">🔗</span>Links &amp; Resources</a>
+  </nav>
+</aside>
+
+<!-- MAIN CONTENT -->
+<div class="main">
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="credit-bar">
+      <span>Built by <strong>Yuval Kashtkir</strong> and his robot assistants</span>
+      <a href="https://carepedia.org/en/#contact" target="_blank" class="portal-request-btn">
+        ➕ Want a portal for another disease?
+      </a>
+    </div>
+    <div class="hero-content">
+      <h1>Nutcracker Syndrome Learning Center</h1>
+      <p class="greeting">
+        One place with in-depth information, current research, and practical tools<br>
+        for people living with Nutcracker Syndrome and their families.
+      </p>
+      <p class="subtitle">
+        A rare condition caused by compression of the left renal vein. Here you will find research-based medical information, treatment options, and links to leading medical centers worldwide.
+      </p>
+      <div class="search-box" style="margin-top: 30px; max-width: 600px;">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="portalSearch" placeholder="Search the portal..." oninput="searchPortal(this.value)">
+        <button class="search-clear" id="searchClear" onclick="clearSearch()" style="display:none;">✕</button>
+      </div>
+      <div id="searchResults" style="display:none; margin-top: 16px; max-width: 600px;"></div>
+    </div>
+  </section>
+
+  <!-- QUICK NAVIGATION -->
+  <section class="section fade-in" style="padding-bottom: 20px;">
+    <div class="cat-grid">
+      <a class="cat-card" href="#about" onclick="navigateTo('about')">
+        <div class="cat-icon">📖</div>
+        <h3>What is the Syndrome?</h3>
+        <p>Basic understanding and anatomy</p>
+      </a>
+      <a class="cat-card" href="#treatments" onclick="navigateTo('treatments')">
+        <div class="cat-icon">💊</div>
+        <h3>Treatments &amp; Surgery</h3>
+        <p>Conservative, endovascular, and surgical</p>
+      </a>
+      <a class="cat-card" href="#trials" onclick="navigateTo('trials')">
+        <div class="cat-icon">🔬</div>
+        <h3>Clinical Trials</h3>
+        <p>Active research worldwide</p>
+      </a>
+      <a class="cat-card" href="#research" onclick="navigateTo('research')">
+        <div class="cat-icon">🧬</div>
+        <h3>New Research</h3>
+        <p>Breakthroughs and international consensus</p>
+      </a>
+      <a class="cat-card" href="#diagnosis" onclick="navigateTo('diagnosis')">
+        <div class="cat-icon">🩺</div>
+        <h3>Diagnosis &amp; Imaging</h3>
+        <p>Ultrasound, CT, and venography</p>
+      </a>
+      <a class="cat-card" href="#lifestyle" onclick="navigateTo('lifestyle')">
+        <div class="cat-icon">🏃</div>
+        <h3>Lifestyle &amp; Management</h3>
+        <p>Nutrition, activity, pain management</p>
+      </a>
+      <a class="cat-card" href="#pregnancy" onclick="navigateTo('pregnancy')">
+        <div class="cat-icon">🤰</div>
+        <h3>Pregnancy &amp; Fertility</h3>
+        <p>Impact on pregnancy and fertility</p>
+      </a>
+      <a class="cat-card" href="#pediatric" onclick="navigateTo('pediatric')">
+        <div class="cat-icon">👶</div>
+        <h3>Children &amp; Adolescents</h3>
+        <p>Diagnosis and treatment in young patients</p>
+      </a>
+      <a class="cat-card" href="#stories" onclick="navigateTo('stories')">
+        <div class="cat-icon">⭐</div>
+        <h3>Success Stories</h3>
+        <p>People who returned to full lives</p>
+      </a>
+      <a class="cat-card" href="#resources" onclick="navigateTo('resources')">
+        <div class="cat-icon">🔗</div>
+        <h3>Links &amp; Resources</h3>
+        <p>Organizations, centers, and information</p>
+      </a>
+    </div>
+  </section>
+
+  <!-- SECTION: ABOUT -->
+  <section class="section fade-in" id="about">
+    <div class="section-header">
+      <span class="sec-icon">📖</span>
+      <div>
+        <h2>What is Nutcracker Syndrome?</h2>
+        <p>Understanding the anatomy, types, symptoms, and prevalence</p>
+      </div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-box">
+        <div class="stat-num">Rare</div>
+        <div class="stat-label">Exact prevalence unknown due to underdiagnosis</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">20–30</div>
+        <div class="stat-label">Peak age of first diagnosis (years)</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">4 years</div>
+        <div class="stat-label">Average time to correct diagnosis</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-num">3 types</div>
+        <div class="stat-label">Anterior (common), posterior, and combined</div>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>What happens in the body?</h4>
+      <p>Nutcracker Syndrome occurs when the <strong>left renal vein (LRV)</strong> is compressed between two anatomical structures. In the most common (anterior) type, the compression occurs between the <strong>aorta</strong> and the <strong>superior mesenteric artery (SMA)</strong>. The compression creates elevated venous pressure that causes blood congestion in the left kidney and surrounding structures.</p>
+      <p style="margin-top: 10px;"><strong>Important distinction:</strong> "Nutcracker Phenomenon" refers to the anatomical finding alone without symptoms. "Nutcracker Syndrome" describes patients who experience actual symptoms as a result of the compression.</p>
+    </div>
+
+    <h3 style="margin: 30px 0 20px; color: var(--primary); font-size: 22px;">Types of the Syndrome</h3>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🔴</div>
+        <h3>Anterior Type</h3>
+        <p>The most common type. The left renal vein is compressed between the aorta and the superior mesenteric artery. This accounts for the majority of diagnosed cases.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">🔵</div>
+        <h3>Posterior Type</h3>
+        <p>The rarer type. The left renal vein passes behind the aorta and is compressed between the aorta and the spine (vertebrae).</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">🟡</div>
+        <h3>Combined Type</h3>
+        <p>A particularly rare condition in which both anterior and posterior compression occur simultaneously. Sporadically documented in the medical literature.</p>
+      </div>
+    </div>
+
+    <h3 style="margin: 30px 0 20px; color: var(--primary); font-size: 22px;">Main Symptoms</h3>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🩸</div>
+        <h3>Blood in Urine (Hematuria)</h3>
+        <p>The most common symptom. Can be visible (gross) or microscopic. Results from elevated venous pressure in the kidney causing bleeding from small vessels.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">💢</div>
+        <h3>Left-sided Flank Pain</h3>
+        <p>Pain in the area of the left kidney or lower abdomen. Can be chronic and persistent, or worsen with prolonged standing and physical exertion.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">🔄</div>
+        <h3>Pelvic Venous Congestion</h3>
+        <p>Especially in women. Causes chronic pelvic pain, pain during intercourse, pelvic varices, and sometimes varicose veins in the legs.</p>
+      </div>
+      <div class="card blue">
+        <div class="card-icon">🔬</div>
+        <h3>Protein in Urine (Proteinuria)</h3>
+        <p>Protein in urine due to elevated venous pressure. When compression is significant, orthostatic proteinuria can be detected on urine tests.</p>
+      </div>
+    </div>
+
+    <div class="info-box warning">
+      <h4>Additional Symptoms</h4>
+      <p>• <strong>Varicocele</strong> in men, especially on the left side, due to impaired venous drainage<br>
+      • <strong>Lower back pain</strong> radiating to the left side<br>
+      • <strong>Chronic fatigue</strong> and anemia (due to ongoing bleeding)<br>
+      • <strong>Impaired renal function</strong> in severe untreated cases</p>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>Why is it called "Nutcracker"?</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <div class="inner">
+          <p>The name comes from the anatomical resemblance. The two arteries (the aorta and the superior mesenteric artery) act like the two handles of a nutcracker, and the left renal vein is "caught" between them like a nut. The compression partially obstructs venous blood flow from the kidney and creates elevated pressure.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>Who is at risk?</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <div class="inner">
+          <p>The syndrome is more common in:</p>
+          <ul style="padding-left: 20px; margin-top: 10px;">
+            <li><strong>Women</strong> more than men</li>
+            <li>People with <strong>low BMI</strong> (very thin), due to less fatty tissue surrounding the vessels</li>
+            <li>Ages <strong>20 to 30</strong> (first peak) and in <strong>middle age</strong> (second peak)</li>
+            <li><strong>Adolescents</strong> who grow rapidly (rapid height growth can change the angle between the arteries)</li>
+          </ul>
+          <p style="margin-top: 10px;">Important to note: the syndrome cannot be predicted in advance and there is no known genetic cause.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>Is it life-threatening?</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <div class="inner">
+          <p>In most cases, Nutcracker Syndrome is <strong>not life-threatening</strong>. However, untreated cases can lead to:</p>
+          <ul style="padding-left: 20px; margin-top: 10px;">
+            <li>Chronic anemia due to ongoing bleeding</li>
+            <li>Renal damage due to prolonged venous pressure</li>
+            <li>Blood clots (thrombosis) in the renal vein</li>
+            <li>Fertility impairment</li>
+          </ul>
+          <p style="margin-top: 10px;">Early diagnosis and proper management significantly improve quality of life and prevent complications.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: TREATMENTS -->
+  <section class="section fade-in" id="treatments">
+    <div class="section-header">
+      <span class="sec-icon">💊</span>
+      <div>
+        <h2>Treatments &amp; Surgery</h2>
+        <p>From conservative management to advanced surgery and innovative stents</p>
+      </div>
+    </div>
+
+    <div class="tabs" data-tab-group="treatments">
+      <button class="tab-btn active" data-tab="conservative" onclick="switchTab('treatments','conservative')">Conservative Treatment</button>
+      <button class="tab-btn" data-tab="endovascular" onclick="switchTab('treatments','endovascular')">Endovascular (Stent)</button>
+      <button class="tab-btn" data-tab="surgery" onclick="switchTab('treatments','surgery')">Surgical Approaches</button>
+      <button class="tab-btn" data-tab="comparison" onclick="switchTab('treatments','comparison')">Comparison</button>
+    </div>
+
+    <!-- TAB: Conservative -->
+    <div class="tab-content active" data-tab-content="treatments" data-tab="conservative">
+      <div class="info-box">
+        <h4>Conservative Approach</h4>
+        <p>Recommended as first-line treatment, especially for children, adolescents, and adults with mild symptoms. Success rate of approximately 52% according to a 2025 systematic review (Annals of Vascular Surgery).</p>
+      </div>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">⏰</div>
+          <h3>Watchful Waiting</h3>
+          <p>In mild cases, especially in children and adolescents, observation for 2 to 6 months. Symptoms sometimes resolve spontaneously with growth and weight gain.</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon">💊</div>
+          <h3>Anti-inflammatory Medications</h3>
+          <p>NSAIDs such as ibuprofen and naproxen for pain and inflammation relief. Used for chronic pain management.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon">🩹</div>
+          <h3>Compression Garments</h3>
+          <p>Compression stockings can relieve pelvic venous congestion and reduce feelings of heaviness and pain.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: Endovascular -->
+    <div class="tab-content" data-tab-content="treatments" data-tab="endovascular">
+      <div class="info-box">
+        <h4>Endovascular Treatment (Stent)</h4>
+        <p>Insertion of a stent (support device) into the renal vein to keep it open. Symptom resolution rate of approximately 76% (2025 systematic review, 578 patients). The procedure is performed via catheterization and does not require open surgery.</p>
+      </div>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">🔧</div>
+          <h3>Classic Endovascular Stent</h3>
+          <p>A metal support that expands inside the vein. Re-intervention rate: approximately 11%. Primary risk: stent migration, which may require emergency surgery.</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon">⚓</div>
+          <h3>Novel Anchoring Technique (2025)</h3>
+          <p>A new technique published in 2025: insertion of a second stent into the gonadal vein through the primary stent mesh, creating a mechanical "lock" that prevents migration. Entirely endovascular approach requiring no open surgery.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon">🖨️</div>
+          <h3>3D-Printed PEEK Stent</h3>
+          <p>A custom-printed extravascular stent from PEEK material, placed laparoscopically. Advantage: replaceable as the patient grows. Still in early research stages.</p>
+        </div>
+      </div>
+      <div class="info-box warning">
+        <h4>Risks of Endovascular Stent</h4>
+        <p>• <strong>Stent migration</strong>: The primary risk; can reach the heart or lungs<br>
+        • <strong>Restenosis</strong>: Re-narrowing of the vein<br>
+        • <strong>Thrombosis</strong> on the stent<br>
+        • Per the 2024 Delphi consensus: international experts believe the risk of stent migration outweighs the benefits of the less invasive procedure</p>
+      </div>
+    </div>
+
+    <!-- TAB: Surgery -->
+    <div class="tab-content" data-tab-content="treatments" data-tab="surgery">
+      <div class="info-box success">
+        <h4>Surgical Approaches</h4>
+        <p>In the international Delphi consensus (2024, 20 experts), <strong>left renal vein (LRV) transposition</strong> was defined as the first-choice surgery. Surgical approaches offer the highest success rates.</p>
+      </div>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">✂️</div>
+          <h3>LRV Transposition</h3>
+          <p>The first-choice surgery. The vein is detached and reconnected to the inferior vena cava at a lower position, to avoid the compression zone. Success rate: 92%. Re-intervention rate: 28.5%.</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon">🔄</div>
+          <h3>Renal Autotransplantation (RAT)</h3>
+          <p>The kidney is removed from the body and retransplanted into the pelvis, connected to new vessels. A multicenter study of 105 patients (2025) showed 93.1% complete pain relief, with opioid use declining from 48.6% to 17%.</p>
+        </div>
+        <div class="card orange">
+          <div class="card-icon">🤖</div>
+          <h3>Robotic Surgery</h3>
+          <p>Robot-assisted laparoscopic approach for external stent placement or vein transposition. Less invasive with faster recovery. Also suitable for patients who failed endovascular stenting.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: Comparison -->
+    <div class="tab-content" data-tab-content="treatments" data-tab="comparison">
+      <h3 style="color: var(--primary); margin-bottom: 20px;">Treatment Method Comparison (2025 Systematic Review, 578 Patients)</h3>
+      <table class="styled-table">
+        <thead>
+          <tr>
+            <th>Treatment Method</th>
+            <th>Symptom Resolution</th>
+            <th>Re-intervention Rate</th>
+            <th>Notes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>LRV Transposition</strong></td>
+            <td>92%</td>
+            <td>28.5%</td>
+            <td>First-choice surgery (Delphi consensus)</td>
+          </tr>
+          <tr>
+            <td><strong>Extravascular Stent</strong></td>
+            <td>80%</td>
+            <td>0%</td>
+            <td>No re-intervention reported</td>
+          </tr>
+          <tr>
+            <td><strong>Endovascular Stent</strong></td>
+            <td>76%</td>
+            <td>11.3%</td>
+            <td>Migration risk</td>
+          </tr>
+          <tr>
+            <td><strong>Renal Autotransplantation (RAT)</strong></td>
+            <td>69%</td>
+            <td>7.2%</td>
+            <td>93.1% pain relief (105-patient study)</td>
+          </tr>
+          <tr>
+            <td><strong>Gonadal Vein Transposition</strong></td>
+            <td>61%</td>
+            <td>0%</td>
+            <td>Less common option</td>
+          </tr>
+          <tr>
+            <td><strong>Conservative Treatment</strong></td>
+            <td>52%</td>
+            <td>Not applicable</td>
+            <td>Recommended as first-line in children</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="info-box">
+        <h4>Data Source</h4>
+        <p>Data from a 2025 systematic review published in <a href="https://pubmed.ncbi.nlm.nih.gov/40816484/" target="_blank" style="color: var(--primary);">Annals of Vascular Surgery</a>. The review included 24 studies and 578 patients published between 2014 and 2025.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: CLINICAL TRIALS -->
+  <section class="section fade-in" id="trials">
+    <div class="section-header">
+      <span class="sec-icon">🔬</span>
+      <div>
+        <h2>Clinical Trials</h2>
+        <p>Active research and recently completed studies</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>State of Clinical Research</h4>
+      <p>Due to the rarity of Nutcracker Syndrome, the number of registered clinical trials is limited. Most studies are retrospective (looking back at already treated patients) or case reports. Below are the significant studies that are ongoing or recently completed.</p>
+    </div>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <span class="time-label">2024</span>
+        <h4>Prospective Monocentric Study: Multidisciplinary Approach to Diagnosis and Treatment</h4>
+        <p>A prospective monocentric study to validate a multidisciplinary diagnostic and treatment approach. Aim: to create a standardized diagnostic algorithm for Nutcracker Syndrome.</p>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/39250305/" target="_blank" class="link-btn" style="margin-top: 10px;">PubMed</a>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">2025</span>
+        <h4>Multicenter Study: Renal Autotransplantation as Definitive Treatment</h4>
+        <p>The largest study to date: 105 patients from multiple medical centers who underwent renal autotransplantation. Results: 93.1% complete pain relief at 12 months of follow-up.</p>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/39362632/" target="_blank" class="link-btn green" style="margin-top: 10px;">PubMed</a>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">2025</span>
+        <h4>Systematic Review: Contemporary Management of the Syndrome</h4>
+        <p>Review of 24 studies (578 patients) published in Annals of Vascular Surgery. Conclusion: no global diagnostic algorithm exists yet, and optimal treatment remains scientifically debated.</p>
+        <a href="https://pubmed.ncbi.nlm.nih.gov/40816484/" target="_blank" class="link-btn orange" style="margin-top: 10px;">PubMed</a>
+      </div>
+      <div class="timeline-item">
+        <span class="time-label">2025</span>
+        <h4>Novel Anchoring Technique for Stent (Novel Anchoring Technique)</h4>
+        <p>Development of a new endovascular technique: placement of an "anchor" stent in the gonadal vein through the primary stent mesh, creating a mechanical lock to prevent stent migration. Less invasive approach with rapid recovery.</p>
+        <a href="https://www.jvscit.org/article/S2468-4287(25)00179-0/fulltext" target="_blank" class="link-btn" style="margin-top: 10px;">Full Article</a>
+      </div>
+    </div>
+
+    <div class="info-box success">
+      <h4>How to Find Clinical Trials</h4>
+      <p>You can search for active trials at <a href="https://clinicaltrials.gov/search?cond=Nutcracker+Syndrome" target="_blank" style="color: var(--accent);">ClinicalTrials.gov</a>. Search "Nutcracker Syndrome" and filter by Status: Recruiting. It is recommended to speak with your treating physician before joining a trial.</p>
+    </div>
+  </section>
+
+  <!-- SECTION: RESEARCH -->
+  <section class="section fade-in" id="research">
+    <div class="section-header">
+      <span class="sec-icon">🧬</span>
+      <div>
+        <h2>New Research</h2>
+        <p>Breakthroughs, international consensus, and findings from 2024 and 2025</p>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🌍</div>
+        <h3>International Delphi Consensus (2024)</h3>
+        <p>20 international experts developed 37 agreed statements regarding diagnosis, management, and follow-up. This is the first step toward standardized treatment guidelines. Published in the <a href="https://pubmed.ncbi.nlm.nih.gov/39362632/" target="_blank" style="color: var(--primary);">Journal of Vascular Surgery: Venous and Lymphatic Disorders</a>.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">🏥</div>
+        <h3>Autotransplantation: 105-Patient Study (2025)</h3>
+        <p>The largest study ever on renal autotransplantation for Nutcracker Syndrome. 93.1% complete pain relief, dramatic reduction in opioid use. Surgical approaches: open and robotic.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">⚓</div>
+        <h3>Anchoring Technique for Stent (2025)</h3>
+        <p>Innovative solution to the stent migration problem: insertion of a second stent through the primary stent mesh as an "anchor." Entirely endovascular, no open surgery. Initial results: rapid symptom relief.</p>
+      </div>
+    </div>
+
+    <h3 style="color: var(--primary); margin: 30px 0 20px;">Key Findings from the International Consensus</h3>
+    <div class="info-box">
+      <h4>Key Agreements (Delphi 2024)</h4>
+      <p>• <strong>Imaging is mandatory</strong> to confirm the diagnosis<br>
+      • <strong>Venography (catheterization)</strong> is part of the diagnostic process, combined with cross-sectional imaging (CT/MRI)<br>
+      • <strong>LRV transposition</strong> is the first-choice surgical option<br>
+      • <strong>Risk of stent migration</strong> outweighs the benefits of a less invasive procedure<br>
+      • <strong>No agreed diagnostic threshold values yet</strong> (e.g., what pressure ratio is diagnostic?)</p>
+    </div>
+
+    <h3 style="color: var(--primary); margin: 30px 0 20px;">Topics Requiring Further Research</h3>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">💊</div>
+        <h3>Antiplatelet Therapy</h3>
+        <p>No consensus on the type of drug, dose, and duration of antiplatelet therapy after stent placement.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">🔧</div>
+        <h3>Endovascular Treatment</h3>
+        <p>Further research is still needed on the optimal stent type, size, and techniques to prevent migration.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">🔄</div>
+        <h3>Autotransplantation</h3>
+        <p>Need for prospective studies with long-term follow-up. Direct comparison to other surgical methods.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: DIAGNOSIS -->
+  <section class="section fade-in" id="diagnosis">
+    <div class="section-header">
+      <span class="sec-icon">🩺</span>
+      <div>
+        <h2>Diagnosis &amp; Imaging</h2>
+        <p>Imaging methods, diagnostic criteria, and the gold standard</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>The Challenge of Diagnosis</h4>
+      <p>Nutcracker Syndrome is underdiagnosed due to non-specific symptoms, diverse clinical presentations, and the absence of uniform diagnostic criteria. The average time from symptom onset to diagnosis is <strong>approximately 4 years</strong>.</p>
+    </div>
+
+    <div class="tabs" data-tab-group="diagnosis">
+      <button class="tab-btn active" data-tab="ultrasound" onclick="switchTab('diagnosis','ultrasound')">Doppler Ultrasound</button>
+      <button class="tab-btn" data-tab="ct" onclick="switchTab('diagnosis','ct')">CT Angiography</button>
+      <button class="tab-btn" data-tab="venography" onclick="switchTab('diagnosis','venography')">Venography (Gold Standard)</button>
+    </div>
+
+    <div class="tab-content active" data-tab-content="diagnosis" data-tab="ultrasound">
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">📊</div>
+          <h3>Doppler Ultrasound (DUS)</h3>
+          <p>Recommended initial test. Non-invasive, radiation-free. Measures flow velocity ratios in the renal vein. <strong>Sensitivity: 80%, Specificity: 94%</strong>. A peak velocity ratio above 4:1 to 5:1 (hilum vs. narrowed segment) raises suspicion.</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon">📈</div>
+          <h3>What Does the Test Measure?</h3>
+          <p>Compares blood flow velocity in the renal vein at the kidney hilum to the velocity in the narrowed zone (between the arteries). A high ratio indicates significant compression.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" data-tab-content="diagnosis" data-tab="ct">
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">🖥️</div>
+          <h3>CT Angiography (CTA)</h3>
+          <p>Provides detailed anatomical imaging. <strong>The "Beak Sign"</strong>: sudden narrowing of the renal vein near the mesenteric artery, sensitivity 91.7% and specificity 88.9%.</p>
+        </div>
+        <div class="card green">
+          <div class="card-icon">📐</div>
+          <h3>Diagnostic Measurements</h3>
+          <p>• <strong>Aorto-SMA angle</strong>: Normal angle 45–90 degrees. Angle below 35 degrees is suspicious for the syndrome<br>
+          • <strong>Diameter ratio</strong>: Vein diameter ratio (hilum vs. narrowed segment) above 4:1 to 5:1<br>
+          • <strong>Sensitivity: 69%, Specificity: 89%</strong></p>
+        </div>
+      </div>
+    </div>
+
+    <div class="tab-content" data-tab-content="diagnosis" data-tab="venography">
+      <div class="info-box success">
+        <h4>Venography with Pressure Measurement (Gold Standard)</h4>
+        <p>Venous catheterization with direct pressure measurement. A mean renocaval pressure gradient <strong>above 3 mmHg</strong> is considered diagnostic. Sometimes combined with <strong>intravascular ultrasound (IVUS)</strong> for maximum precision. This is the most accurate but also most invasive test.</p>
+      </div>
+    </div>
+
+    <h3 style="color: var(--primary); margin: 30px 0 20px;">Frequently Asked Questions About Diagnosis</h3>
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>Which test should I start with?</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <div class="inner">
+          <p>Experts recommend starting with Doppler ultrasound as the primary screening test. If findings are suspicious, proceed to CT angiography. Catheterization with pressure measurement is reserved for cases requiring final confirmation before surgery.</p>
+        </div>
+      </div>
+    </div>
+    <div class="accordion">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>Do I need to fast before the tests?</span>
+        <span class="arrow">▼</span>
+      </div>
+      <div class="accordion-body">
+        <div class="inner">
+          <p>For Doppler ultrasound: fasting for 6 to 8 hours is recommended to minimize intestinal gas that may interfere with the test. For CT angiography: fasting for 4 hours before contrast injection. For catheterization: overnight fasting per the medical center's instructions.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION: LIFESTYLE -->
+  <section class="section fade-in" id="lifestyle">
+    <div class="section-header">
+      <span class="sec-icon">🏃</span>
+      <div>
+        <h2>Lifestyle &amp; Management</h2>
+        <p>Nutrition, physical activity, pain management, and daily tips</p>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🥗</div>
+        <h3>Nutrition</h3>
+        <p>• Reduce sodium (salt) intake to maintain healthy blood pressure<br>
+        • Increase potassium intake (bananas, avocado, leafy vegetables)<br>
+        • Maintain a healthy weight: very low BMI can worsen symptoms<br>
+        • Adequate hydration</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">🚶</div>
+        <h3>Physical Activity</h3>
+        <p>• <strong>Avoid high-intensity activity</strong> that may worsen bleeding<br>
+        • Walking, swimming, and yoga are recommended<br>
+        • Avoid prolonged sitting (get up and stretch every 30–45 minutes)<br>
+        • Moderate consistent activity is preferable to occasional intense workouts</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">💆</div>
+        <h3>Pain Management</h3>
+        <p>• <strong>NSAIDs</strong>: ibuprofen (Advil) or naproxen (Aleve) for pain and inflammation<br>
+        • <strong>Compression garments</strong>: reduce pelvic venous congestion<br>
+        • <strong>Local heat</strong>: heating pad on the area of pain<br>
+        • <strong>Avoid caffeine, alcohol, and tobacco</strong></p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>Important Tip: Maintaining a Healthy Weight</h4>
+      <p>The syndrome is more common in very thin people. If you are naturally thin, maintaining a balanced diet and gaining healthy body fat can help: the soft tissue surrounding the vessels provides a "cushion" that reduces compression.</p>
+    </div>
+
+    <div class="info-box warning">
+      <h4>When to Go to the Emergency Room</h4>
+      <p>• Heavy blood in urine (red/brown urine) that is unexpected<br>
+      • Sudden sharp pain on the left side that does not subside<br>
+      • High fever with back/abdominal pain<br>
+      • Dizziness or extreme weakness (signs of severe anemia)</p>
+    </div>
+  </section>
+
+  <!-- SECTION: PREGNANCY -->
+  <section class="section fade-in" id="pregnancy">
+    <div class="section-header">
+      <span class="sec-icon">🤰</span>
+      <div>
+        <h2>Pregnancy &amp; Fertility</h2>
+        <p>The effect of the syndrome on pregnancy, fertility, and family planning</p>
+      </div>
+    </div>
+
+    <div class="info-box warning">
+      <h4>Pregnancy and Nutcracker Syndrome</h4>
+      <p>Pregnancy can <strong>worsen</strong> the symptoms of the syndrome. The physiological changes of pregnancy (increased blood volume, aortic dilation) can increase compression on the left renal vein.</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">⚠️</div>
+        <h3>Risks During Pregnancy</h3>
+        <p>• Worsening hematuria<br>
+        • Increased pelvic and back pain<br>
+        • In patients with a stent: pregnancy is considered <strong>high-risk</strong><br>
+        • Need for enhanced monitoring of renal blood flow</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">💉</div>
+        <h3>Managing Pregnancy with a Stent</h3>
+        <p>Patients with a stent require treatment with <strong>low molecular weight heparin</strong> and serial Doppler monitoring of renal vein flow.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">👶</div>
+        <h3>Fertility</h3>
+        <p>• In women: the syndrome itself generally <strong>does not impair fertility</strong><br>
+        • In men: varicocele caused by the syndrome can <strong>impair sperm quality</strong> over time<br>
+        • Treating the syndrome may improve fertility</p>
+      </div>
+    </div>
+
+    <div class="info-box success">
+      <h4>Recommendation</h4>
+      <p>If you have Nutcracker Syndrome and are planning a pregnancy, it is important to consult with a vascular surgeon and a high-risk obstetrician <strong>before pregnancy</strong> to plan appropriate medical monitoring.</p>
+    </div>
+  </section>
+
+  <!-- SECTION: PEDIATRIC -->
+  <section class="section fade-in" id="pediatric">
+    <div class="section-header">
+      <span class="sec-icon">👶</span>
+      <div>
+        <h2>Children &amp; Adolescents</h2>
+        <p>Diagnosis, treatment, and follow-up in younger patients</p>
+      </div>
+    </div>
+
+    <div class="info-box">
+      <h4>Nutcracker Syndrome in Young Patients</h4>
+      <p>The syndrome is also diagnosed in children and adolescents, sometimes after a routine urinalysis reveals microscopic blood. In children, the initial approach is almost always <strong>conservative</strong>, as growth and weight gain can improve the condition.</p>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🌱</div>
+        <h3>Initial Conservative Approach</h3>
+        <p>Natural growth and body weight gain change the anatomical angle between the arteries. In many cases, symptoms moderate or disappear completely with growth.</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">🖨️</div>
+        <h3>3D-Printed Stent for Children</h3>
+        <p>An exciting innovation: custom-printed external stents from PEEK material. The major advantage: they can be replaced as the child grows, solving a significant limitation of conventional stents.</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">📋</div>
+        <h3>Follow-up and Monitoring</h3>
+        <p>• Periodic urinalysis (every 3–6 months)<br>
+        • Periodic Doppler ultrasound<br>
+        • Weight and growth monitoring<br>
+        • Reassessment if symptoms worsen</p>
+      </div>
+    </div>
+
+    <div class="info-box warning">
+      <h4>When to Intervene?</h4>
+      <p>Intervention in children is reserved for cases of:<br>
+      • Recurrent and significant bleeding unresponsive to conservative treatment<br>
+      • Anemia requiring blood transfusions<br>
+      • Chronic pain affecting quality of life<br>
+      • Impaired renal function</p>
+    </div>
+  </section>
+
+  <!-- SECTION: STORIES -->
+  <section class="section fade-in" id="stories">
+    <div class="section-header">
+      <span class="sec-icon">⭐</span>
+      <div>
+        <h2>Success Stories</h2>
+        <p>People who underwent treatment and returned to full lives</p>
+      </div>
+    </div>
+
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">💪</div>
+        <h3>From the Support Community (6,000 Members)</h3>
+        <p>"After years of pain and tests that found nothing, I was finally diagnosed. Surgery changed my life. I can walk, run, and live without pain again. Don't give up searching for answers."</p>
+      </div>
+      <div class="card green">
+        <div class="card-icon">🏃</div>
+        <h3>Return to Normal Life</h3>
+        <p>"I underwent renal autotransplantation and within two months I was back to physical activity. The pain disappeared completely. The 2025 research shows this is not just my case: 93% of patients report complete relief."</p>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">🎯</div>
+        <h3>The Importance of Early Diagnosis</h3>
+        <p>"It took 6 years before I was diagnosed. I went from doctor to doctor. What helped: finding a vascular specialist who knows the syndrome. Your knowledge as patients is the most powerful tool."</p>
+      </div>
+    </div>
+
+    <div class="info-box success">
+      <h4>Support Community</h4>
+      <p>There is an online support community of approximately <strong>6,000 people</strong> living with Nutcracker Syndrome. The community provides emotional support, sharing of experiences with doctors and treatment methods, and up-to-date information on research.</p>
+    </div>
+  </section>
+
+  <!-- SECTION: RESOURCES -->
+  <section class="section fade-in" id="resources">
+    <div class="section-header">
+      <span class="sec-icon">🔗</span>
+      <div>
+        <h2>Links &amp; Resources</h2>
+        <p>International organizations, leading medical centers, and additional information</p>
+      </div>
+    </div>
+
+    <h3 style="color: var(--primary); margin-bottom: 20px;">International Organizations</h3>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🌐</div>
+        <h3>NORD</h3>
+        <p>National Organization for Rare Disorders. Information on rare diseases, resources for patients and families.</p>
+        <a href="https://rarediseases.org/mondo-disease/renal-nutcracker-syndrome/" target="_blank" class="link-btn" style="margin-top: 10px;">NORD Website</a>
+      </div>
+      <div class="card green">
+        <div class="card-icon">🏛️</div>
+        <h3>GARD / NIH</h3>
+        <p>Genetic and Rare Diseases Information Center, part of the US National Institutes of Health.</p>
+        <a href="https://rarediseases.info.nih.gov/diseases/11971/renal-nutcracker-syndrome" target="_blank" class="link-btn green" style="margin-top: 10px;">GARD Website</a>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">🌍</div>
+        <h3>Orphanet</h3>
+        <p>Leading European portal for rare disease information. Detailed information on diagnosis and treatment.</p>
+        <a href="https://www.orpha.net/en/disease/detail/71273" target="_blank" class="link-btn orange" style="margin-top: 10px;">Orphanet Website</a>
+      </div>
+    </div>
+
+    <h3 style="color: var(--primary); margin: 30px 0 20px;">International Vascular Centers of Excellence</h3>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🏥</div>
+        <h3>Vascular Anomalies Center (Boston Children's)</h3>
+        <p>One of the world's leading centers for complex vascular conditions including Nutcracker Syndrome. Multidisciplinary team approach.</p>
+        <a href="https://www.childrenshospital.org/treatments/vascular-anomalies-center" target="_blank" class="link-btn" style="margin-top: 10px;">Learn More</a>
+      </div>
+      <div class="card green">
+        <div class="card-icon">🏥</div>
+        <h3>Cleveland Clinic Vascular Surgery</h3>
+        <p>Comprehensive resource for Nutcracker Syndrome including symptoms, diagnosis, and treatment, with an experienced vascular team.</p>
+        <a href="https://my.clevelandclinic.org/health/diseases/23494-nutcracker-syndrome" target="_blank" class="link-btn green" style="margin-top: 10px;">Cleveland Clinic Guide</a>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">🏥</div>
+        <h3>Mayo Clinic Vascular Surgery</h3>
+        <p>World-renowned center for vascular conditions. Multidisciplinary expertise in renal vein compression syndromes.</p>
+        <a href="https://www.mayoclinic.org/" target="_blank" class="link-btn orange" style="margin-top: 10px;">Mayo Clinic</a>
+      </div>
+    </div>
+
+    <h3 style="color: var(--primary); margin: 30px 0 20px;">Additional Information Sources</h3>
+    <div class="cards-grid">
+      <div class="card">
+        <div class="card-icon">🔬</div>
+        <h3>ClinicalTrials.gov</h3>
+        <p>Search for active clinical trials for Nutcracker Syndrome.</p>
+        <a href="https://clinicaltrials.gov/search?cond=Nutcracker+Syndrome" target="_blank" class="link-btn" style="margin-top: 10px;">Search Trials</a>
+      </div>
+      <div class="card green">
+        <div class="card-icon">📚</div>
+        <h3>National Kidney Registry</h3>
+        <p>Resources for patients with Nutcracker Syndrome, including recommended treatment centers.</p>
+        <a href="https://www.kidneyregistry.com/for-donors/i-want-to-learn-more-about-living-kidney-donation/resources-for-individuals-with-nutcracker-syndrome/" target="_blank" class="link-btn green" style="margin-top: 10px;">Resources</a>
+      </div>
+      <div class="card orange">
+        <div class="card-icon">🌐</div>
+        <h3>Society for Vascular Surgery</h3>
+        <p>Professional vascular surgery society with patient resources and physician directory.</p>
+        <a href="https://vascular.org/" target="_blank" class="link-btn orange" style="margin-top: 10px;">SVS Website</a>
+      </div>
+    </div>
+
+    <h3 style="color: var(--primary); margin: 30px 0 20px;">Key Scientific Articles</h3>
+    <div class="info-box">
+      <h4>Recommended Reading</h4>
+      <p>
+        <ul style="padding-left: 20px; margin-top: 10px;">
+          <li><a href="https://pubmed.ncbi.nlm.nih.gov/39362632/" target="_blank" style="color: var(--primary);">Heilijgers et al. (2024)</a> — International Delphi consensus: 37 statements on diagnosis, management, and follow-up</li>
+          <li><a href="https://pubmed.ncbi.nlm.nih.gov/40816484/" target="_blank" style="color: var(--primary);">Annals of Vascular Surgery (2025)</a> — Systematic review of 578 patients: comparison of treatment methods</li>
+          <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11764761/" target="_blank" style="color: var(--primary);">Renal Autotransplant Study (2025)</a> — 105 patients: autotransplantation as definitive treatment</li>
+          <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC11950451/" target="_blank" style="color: var(--primary);">CVIR Endovascular (2025)</a> — Controversies in Nutcracker Syndrome treatment</li>
+          <li><a href="https://www.ncbi.nlm.nih.gov/books/NBK559189/" target="_blank" style="color: var(--primary);">StatPearls (2025)</a> — Updated overview: Nutcracker Syndrome and LRV Entrapment</li>
+          <li><a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC8569268/" target="_blank" style="color: var(--primary);">Kolber et al. (2021)</a> — Diagnosis and treatment: comprehensive review</li>
+        </ul>
+      </p>
+    </div>
+  </section>
+
+  <!-- CAREPEDIA CTA -->
+  <div class="carepedia-cta">
+    <h3>Want a research-based medical information portal?</h3>
+    <p>We build portals for physicians, associations, and medical centers. Tell us about your needs.</p>
+    <a href="https://carepedia.org/en/#contact" class="cta-btn">Want a portal? Contact us</a>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p style="margin-bottom: 16px;">
+      Built by <strong>Yuval Kashtkir</strong> and his robot assistants | <a href="https://carepedia.org" style="color:var(--accent-light);text-decoration:none;">Carepedia</a>
+    </p>
+    <a href="https://carepedia.org/en/#contact" target="_blank" class="portal-request-btn" style="margin-bottom: 20px;">➕ Want a portal for another disease?</a>
+    <p style="margin-top: 20px; font-size: 15px; opacity: 0.85;">All information on this site is for educational purposes only and does not substitute professional medical advice.</p>
+    <p style="margin-top: 8px; font-size: 13px; opacity: 0.7;"><a href="/disclaimer" style="color:var(--accent-light);text-decoration:underline;">Legal Disclaimer</a> | <a href="https://carepedia.org/en/#contact" target="_blank" rel="noopener" style="color:var(--accent-light);text-decoration:underline;">Report an Error</a></p>
+    <p style="margin-top: 10px; font-size: 14px; opacity: 0.7;">Last updated: February 2026 | Includes citations from peer-reviewed scientific articles</p>
+  </footer>
+
+</div>
+
+<!-- SCROLL TO TOP -->
+<button class="scroll-top" id="scrollTop" onclick="window.scrollTo({top:0,behavior:'smooth'})">⬆</button>
+
+<script>
+function toggleMenu() {
+  const sidebar = document.getElementById('sidebar');
+  const toggle = document.getElementById('menuToggle');
+  const overlay = document.getElementById('sidebarOverlay');
+  sidebar.classList.toggle('open');
+  toggle.classList.toggle('open');
+  overlay.classList.toggle('active');
+  toggle.textContent = sidebar.classList.contains('open') ? '✕' : '☰';
+  document.body.style.overflow = sidebar.classList.contains('open') ? 'hidden' : '';
+}
+
+function closeMenu() {
+  const sidebar = document.getElementById('sidebar');
+  const toggle = document.getElementById('menuToggle');
+  const overlay = document.getElementById('sidebarOverlay');
+  sidebar.classList.remove('open');
+  toggle.classList.remove('open');
+  overlay.classList.remove('active');
+  toggle.textContent = '☰';
+  document.body.style.overflow = '';
+}
+
+function navigate(el) {
+  document.querySelectorAll('.sidebar nav a').forEach(a => a.classList.remove('active'));
+  el.classList.add('active');
+  closeMenu();
+}
+
+function navigateTo(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: 'smooth' });
+  document.querySelectorAll('.sidebar nav a').forEach(a => {
+    a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+  });
+}
+
+function toggleAccordion(header) {
+  const body = header.nextElementSibling;
+  const isOpen = header.classList.contains('open');
+  header.classList.toggle('open');
+  body.style.maxHeight = isOpen ? '0' : body.scrollHeight + 'px';
+}
+
+function switchTab(tabGroup, tabName) {
+  document.querySelectorAll('[data-tab-group="' + tabGroup + '"] .tab-btn').forEach(b => {
+    b.classList.toggle('active', b.dataset.tab === tabName);
+  });
+  document.querySelectorAll('[data-tab-content="' + tabGroup + '"]').forEach(c => {
+    c.classList.toggle('active', c.dataset.tab === tabName);
+  });
+}
+
+// Scroll progress bar + scroll spy
+window.addEventListener('scroll', () => {
+  const scrollTop = document.getElementById('scrollTop');
+  const progressBar = document.getElementById('progressBar');
+  const scrolled = window.scrollY;
+  const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+  const pct = maxScroll > 0 ? (scrolled / maxScroll) * 100 : 0;
+  progressBar.style.width = pct + '%';
+  scrollTop.classList.toggle('visible', scrolled > 500);
+
+  // Scroll spy
+  const sections = document.querySelectorAll('.section[id], .hero[id]');
+  let current = '';
+  sections.forEach(s => {
+    if (scrolled >= s.offsetTop - 100) current = s.id;
+  });
+  if (current) {
+    document.querySelectorAll('.sidebar nav a').forEach(a => {
+      a.classList.toggle('active', a.getAttribute('href') === '#' + current);
+    });
+  }
+});
+
+// Fade-in on scroll (IntersectionObserver)
+const fadeEls = document.querySelectorAll('.fade-in');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -50px 0px' });
+fadeEls.forEach(el => observer.observe(el));
+
+// Portal search — with highlight, clear button, and debounce
+let searchTimeout;
+function searchPortal(query) {
+  clearTimeout(searchTimeout);
+  searchTimeout = setTimeout(() => _doSearch(query), 150);
+}
+
+function _doSearch(query) {
+  const resultsDiv = document.getElementById('searchResults');
+  const clearBtn = document.getElementById('searchClear');
+
+  clearBtn.style.display = query && query.length > 0 ? 'block' : 'none';
+
+  if (!query || query.length < 2) {
+    resultsDiv.style.display = 'none';
+    document.querySelectorAll('.section').forEach(s => {
+      s.style.display = '';
+      s.querySelectorAll('mark.search-hl').forEach(m => {
+        m.replaceWith(document.createTextNode(m.textContent));
+      });
+    });
+    return;
+  }
+  const q = query.toLowerCase();
+  const sections = document.querySelectorAll('.section[id]');
+  const matches = [];
+  sections.forEach(s => {
+    const text = s.textContent.toLowerCase();
+    const title = s.querySelector('h2') ? s.querySelector('h2').textContent : '';
+    const subtitle = s.querySelector('.section-header p') ? s.querySelector('.section-header p').textContent : '';
+    if (text.includes(q)) {
+      const count = (text.match(new RegExp(q.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g')) || []).length;
+      matches.push({ id: s.id, title: title, subtitle: subtitle, count: count, el: s });
+      s.style.display = '';
+    } else {
+      s.style.display = 'none';
+    }
+  });
+  matches.sort((a, b) => b.count - a.count);
+
+  if (matches.length > 0 && matches.length < sections.length) {
+    resultsDiv.innerHTML = '<div style="background:var(--card);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);">' +
+      '<p style="font-size:14px;color:var(--text-light);margin-bottom:8px;">' + matches.length + ' results found:</p>' +
+      matches.map(m =>
+        '<a href="#' + m.id + '" onclick="navigateTo(\'' + m.id + '\')" style="display:block;padding:10px 12px;color:var(--primary);text-decoration:none;border-radius:8px;font-weight:600;transition:var(--transition);">' +
+        m.title +
+        (m.count > 1 ? ' <span style="font-size:12px;color:var(--text-light);font-weight:400;">(' + m.count + ' mentions)</span>' : '') +
+        '</a>'
+      ).join('') +
+      '</div>';
+    resultsDiv.style.display = 'block';
+  } else if (matches.length === sections.length) {
+    resultsDiv.style.display = 'none';
+  } else {
+    resultsDiv.innerHTML = '<div style="background:var(--card);border-radius:var(--radius);padding:16px 20px;box-shadow:var(--shadow);"><p style="font-size:14px;color:var(--text-light);">No results found. Try a different word.</p></div>';
+    resultsDiv.style.display = 'block';
+  }
+}
+
+function clearSearch() {
+  const input = document.getElementById('portalSearch');
+  input.value = '';
+  input.focus();
+  searchPortal('');
+}
+</script>
+
+</body>
+</html>
