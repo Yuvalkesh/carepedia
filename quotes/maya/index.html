@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>הצעת מחיר — פורטל ורטיגו והפרעות וסטיבולאריות | Carepedia</title>
+<meta name="description" content="הצעת מחיר אישית להקמת פורטל מידע רפואי בנושא ורטיגו והפרעות וסטיבולאריות.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://code.iconify.design/iconify-icon/2.1.0/iconify-icon.min.js" defer></script>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --forest:        #1A3828;
+  --forest-mid:    #2A5C44;
+  --forest-light:  #E8F2EC;
+  --amber:         #D4845A;
+  --amber-light:   #F5DED0;
+  --bg:            #F8F7F4;
+  --bg-warm:       #EFEBE3;
+  --card:          #FFFFFF;
+  --text:          #1C1A18;
+  --text-light:    #5A5650;
+  --text-muted:    #9A968F;
+  --border:        #DEDAD2;
+  --border-strong: #C8C4BB;
+  --shadow:        0 1px 8px rgba(26,56,40,0.05);
+  --shadow-md:     0 4px 20px rgba(26,56,40,0.09);
+  --shadow-lg:     0 12px 48px rgba(26,56,40,0.14);
+  --radius:        12px;
+  --radius-sm:     8px;
+  --tr:            all 0.22s ease;
+}
+
+body {
+  font-family: 'Rubik', 'Segoe UI', Tahoma, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.75;
+  overflow-x: clip;
+}
+
+/* ===== NAV ===== */
+.nav {
+  position: fixed;
+  top: 0; right: 0; left: 0;
+  z-index: 1000;
+  background: rgba(248,247,244,0.97);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+}
+.nav-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 68px;
+}
+.nav-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: var(--forest);
+}
+.nav-logo-mark {
+  width: 36px; height: 36px;
+  background: var(--forest);
+  border-radius: var(--radius-sm);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+.nav-logo span {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.nav-badge {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text-muted);
+  padding: 5px 12px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+}
+.nav-cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--forest);
+  color: #fff;
+  text-decoration: none;
+  padding: 9px 20px;
+  border-radius: var(--radius-sm);
+  font-size: 14px;
+  font-weight: 600;
+  transition: var(--tr);
+}
+.nav-cta-btn:hover { background: var(--forest-mid); }
+
+/* ===== HERO ===== */
+.hero {
+  padding: 152px 40px 96px;
+  position: relative;
+  overflow: hidden;
+  background-color: var(--bg);
+  background-image: radial-gradient(circle, var(--border) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+.hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 180px;
+  background: linear-gradient(to bottom, transparent, var(--bg));
+  pointer-events: none;
+}
+.hero-content {
+  position: relative;
+  max-width: 780px;
+  margin: 0 auto;
+  text-align: center;
+  z-index: 1;
+}
+.hero-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--forest-mid);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 32px;
+}
+.hero-eyebrow::before,
+.hero-eyebrow::after {
+  content: '';
+  display: inline-block;
+  width: 28px; height: 1.5px;
+  background: var(--forest-mid);
+  opacity: 0.45;
+}
+.hero h1 {
+  font-size: 56px;
+  font-weight: 900;
+  line-height: 1.2;
+  color: var(--text);
+  margin-bottom: 24px;
+  letter-spacing: -1.5px;
+}
+.hero h1 em {
+  font-style: normal;
+  color: var(--forest);
+  position: relative;
+}
+.hero h1 em::after {
+  content: '';
+  position: absolute;
+  bottom: 3px; right: 0; left: 0;
+  height: 3px;
+  background: var(--amber);
+  border-radius: 2px;
+}
+.hero p {
+  font-size: 19px;
+  color: var(--text-light);
+  max-width: 620px;
+  margin: 0 auto 40px;
+  line-height: 1.85;
+  font-weight: 400;
+}
+.hero-ctas {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* ===== BUTTONS ===== */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 15px 32px;
+  background: var(--forest);
+  color: #fff;
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  font-size: 16px;
+  font-weight: 600;
+  font-family: inherit;
+  border: none;
+  cursor: pointer;
+  transition: var(--tr);
+}
+.btn-primary:hover {
+  background: var(--forest-mid);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+}
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 32px;
+  background: transparent;
+  color: var(--text);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  font-size: 16px;
+  font-weight: 600;
+  border: 1.5px solid var(--border-strong);
+  cursor: pointer;
+  font-family: inherit;
+  transition: var(--tr);
+}
+.btn-secondary:hover {
+  border-color: var(--forest);
+  color: var(--forest);
+  transform: translateY(-1px);
+}
+
+/* ===== PRICE BANNER ===== */
+.price-banner {
+  background: var(--card);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 40px;
+}
+.price-banner-inner {
+  max-width: 820px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+.price-main {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.price-num {
+  font-size: 64px;
+  font-weight: 900;
+  color: var(--forest);
+  line-height: 1;
+  letter-spacing: -3px;
+}
+.price-currency {
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--forest);
+}
+.price-vat {
+  font-size: 15px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.price-label {
+  font-size: 14px;
+  color: var(--text-muted);
+  margin-top: 6px;
+  font-weight: 500;
+}
+.price-note {
+  font-size: 15px;
+  color: var(--text-light);
+  max-width: 360px;
+  line-height: 1.8;
+}
+.price-note strong {
+  color: var(--forest);
+  font-weight: 700;
+}
+
+/* ===== SECTION COMMON ===== */
+.section {
+  padding: 100px 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--amber);
+  margin-bottom: 14px;
+}
+.section-tag::before {
+  content: '';
+  display: inline-block;
+  width: 18px; height: 2px;
+  background: var(--amber);
+  border-radius: 1px;
+}
+.section-title {
+  font-size: 40px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 16px;
+  letter-spacing: -0.8px;
+  line-height: 1.2;
+}
+.section-desc {
+  font-size: 17px;
+  color: var(--text-light);
+  max-width: 580px;
+  line-height: 1.85;
+}
+.section-center { text-align: center; }
+.section-center .section-desc { margin: 0 auto; }
+
+/* ===== WHAT'S INCLUDED ===== */
+.includes-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-top: 60px;
+}
+.include-card {
+  background: var(--card);
+  padding: 40px 32px;
+  text-align: right;
+  transition: var(--tr);
+}
+.include-card:hover { background: #FEFDFB; }
+.include-icon {
+  font-size: 38px;
+  color: var(--forest);
+  margin-bottom: 16px;
+  display: block;
+}
+.include-card h3 {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.include-card p {
+  font-size: 15px;
+  color: var(--text-light);
+  line-height: 1.85;
+}
+
+/* ===== FEATURES SECTION ===== */
+.features-section {
+  background: var(--bg-warm);
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 100px 40px;
+}
+.features-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 18px;
+  margin-top: 56px;
+}
+.feature-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+  transition: var(--tr);
+}
+.feature-card:hover {
+  border-color: var(--forest-mid);
+  box-shadow: var(--shadow-md);
+}
+.feature-icon {
+  font-size: 42px;
+  color: var(--forest);
+  margin-bottom: 20px;
+  display: block;
+}
+.feature-card h3 {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.feature-card p {
+  font-size: 14px;
+  color: var(--text-light);
+  line-height: 1.85;
+}
+
+/* ===== PROCESS ===== */
+.steps-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  margin-top: 60px;
+}
+.step-card {
+  background: var(--card);
+  padding: 48px 36px;
+  text-align: right;
+  transition: var(--tr);
+}
+.step-card:hover { background: #FEFDFB; }
+.step-num {
+  font-size: 60px;
+  font-weight: 900;
+  color: var(--amber-light);
+  line-height: 1;
+  margin-bottom: 12px;
+  letter-spacing: -3px;
+}
+.step-icon {
+  font-size: 38px;
+  color: var(--forest);
+  margin-bottom: 16px;
+  display: block;
+}
+.step-card h3 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+.step-card p {
+  font-size: 15px;
+  color: var(--text-light);
+  line-height: 1.85;
+}
+
+/* ===== ABOUT SECTION ===== */
+.about-section {
+  padding: 100px 40px;
+  background: var(--bg);
+}
+.about-inner {
+  max-width: 820px;
+  margin: 0 auto;
+}
+.about-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 48px 44px;
+  display: flex;
+  align-items: flex-start;
+  gap: 36px;
+}
+.about-avatar {
+  width: 80px; height: 80px;
+  border-radius: 50%;
+  background: var(--forest-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  color: var(--forest);
+  flex-shrink: 0;
+}
+.about-text h3 {
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+.about-text p {
+  font-size: 16px;
+  color: var(--text-light);
+  line-height: 1.85;
+  margin-bottom: 20px;
+}
+.about-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.about-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--forest);
+  text-decoration: none;
+  padding: 7px 14px;
+  border: 1.5px solid var(--forest-light);
+  border-radius: var(--radius-sm);
+  background: var(--forest-light);
+  transition: var(--tr);
+}
+.about-link:hover {
+  background: var(--forest);
+  color: #fff;
+  border-color: var(--forest);
+}
+
+/* ===== CTA SECTION ===== */
+.cta-section {
+  padding: 100px 40px;
+  background: var(--forest);
+}
+.cta-inner {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+.cta-label {
+  display: inline-block;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2.5px;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 28px;
+}
+.cta-inner h2 {
+  font-size: 44px;
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 20px;
+  letter-spacing: -1px;
+  line-height: 1.2;
+}
+.cta-inner p {
+  font-size: 18px;
+  color: rgba(255,255,255,0.68);
+  margin-bottom: 44px;
+  line-height: 1.85;
+}
+.cta-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 40px;
+  background: #fff;
+  color: var(--forest);
+  text-decoration: none;
+  border-radius: var(--radius-sm);
+  font-size: 17px;
+  font-weight: 700;
+  font-family: inherit;
+  transition: var(--tr);
+}
+.cta-btn:hover {
+  background: var(--amber-light);
+  transform: translateY(-2px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.2);
+}
+.cta-note {
+  font-size: 13px;
+  color: rgba(255,255,255,0.35);
+  margin-top: 20px;
+}
+
+/* ===== FOOTER ===== */
+.footer {
+  background: var(--forest);
+  color: rgba(255,255,255,0.55);
+  padding: 64px 40px 40px;
+  border-top: 1px solid rgba(255,255,255,0.08);
+}
+.footer-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 48px;
+}
+.footer-brand h3 {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+.footer-brand p {
+  font-size: 14px;
+  max-width: 300px;
+  line-height: 1.85;
+  color: rgba(255,255,255,0.48);
+}
+.footer-bottom {
+  max-width: 1200px;
+  margin: 40px auto 0;
+  padding-top: 24px;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  font-size: 13px;
+  color: rgba(255,255,255,0.35);
+  text-align: center;
+}
+
+/* ===== ANIMATIONS ===== */
+.fade-up {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.fade-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 960px) {
+  .nav { padding: 0 20px; }
+  .nav-badge { display: none; }
+
+  .hero { padding: 122px 24px 68px; }
+  .hero h1 { font-size: 40px; }
+  .hero p { font-size: 17px; }
+
+  .price-banner { padding: 28px 20px; }
+  .price-banner-inner { flex-direction: column; gap: 16px; }
+  .price-num { font-size: 52px; }
+
+  .section { padding: 64px 24px; }
+  .section-title { font-size: 30px; }
+
+  .includes-grid { grid-template-columns: 1fr; }
+  .steps-grid { grid-template-columns: 1fr; }
+
+  .features-section { padding: 64px 24px; }
+  .features-grid { grid-template-columns: repeat(2, 1fr); }
+
+  .about-section { padding: 64px 24px; }
+  .about-card { flex-direction: column; padding: 32px 24px; gap: 20px; }
+
+  .cta-section { padding: 64px 24px; }
+  .cta-inner h2 { font-size: 32px; }
+
+  .footer { padding: 48px 24px 32px; }
+  .footer-inner { flex-direction: column; gap: 24px; }
+}
+
+@media (max-width: 560px) {
+  .hero h1 { font-size: 32px; letter-spacing: -0.5px; }
+  .hero p { font-size: 16px; }
+  .btn-primary, .btn-secondary { padding: 13px 22px; font-size: 15px; width: 100%; justify-content: center; }
+  .section-title { font-size: 26px; }
+  .features-grid { grid-template-columns: 1fr; }
+  .cta-btn { width: 100%; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-inner">
+    <a href="https://carepedia.org" class="nav-logo">
+      <div class="nav-logo-mark">
+        <iconify-icon icon="solar:medical-kit-bold" style="font-size:20px;"></iconify-icon>
+      </div>
+      <span>Carepedia</span>
+    </a>
+    <div class="nav-right">
+      <span class="nav-badge">הצעת מחיר אישית — מאיה</span>
+      <a href="https://wa.me/+972526414555" class="nav-cta-btn" target="_blank">
+        <iconify-icon icon="solar:chat-round-dots-bold"></iconify-icon>
+        בואי נדבר
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content fade-up">
+    <div class="hero-eyebrow">הצעת מחיר אישית</div>
+    <h1>
+      פורטל <em>ורטיגו והפרעות<br>וסטיבולאריות</em>
+    </h1>
+    <p>
+      הצעה מותאמת אישית עבורך, מאיה. פורטל מידע רפואי מבוסס מחקר, בעברית ובאנגלית, שיעזור למטופלים ולמשפחותיהם להבין, להתמצא ולנהל את מסע ההחלמה שלהם.
+    </p>
+    <div class="hero-ctas">
+      <a href="https://wa.me/+972526414555" class="btn-primary" target="_blank">
+        <iconify-icon icon="solar:chat-square-call-bold"></iconify-icon>
+        אני רוצה להתקדם
+      </a>
+      <a href="#includes" class="btn-secondary">
+        מה כלול?
+        <iconify-icon icon="solar:arrow-left-bold"></iconify-icon>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- PRICE BANNER -->
+<div class="price-banner">
+  <div class="price-banner-inner">
+    <div>
+      <div class="price-main">
+        <span class="price-num">5,000</span>
+        <span class="price-currency">₪</span>
+        <span class="price-vat">+ מע"מ</span>
+      </div>
+      <div class="price-label">הקמת פורטל רפואי מלא</div>
+    </div>
+    <p class="price-note">
+      מחיר אחיד, ללא הפתעות. <strong>כולל הכל</strong> — עברית ואנגלית, 5 סבבי תיקונים, חיבור לדומיין שלך וליווי טכני לאורך כל הדרך.
+    </p>
+    <a href="https://wa.me/+972526414555" class="btn-primary" target="_blank">
+      <iconify-icon icon="solar:chat-round-dots-bold"></iconify-icon>
+      נדבר בוואטסאפ
+    </a>
+  </div>
+</div>
+
+<!-- WHAT'S INCLUDED -->
+<div id="includes">
+<section class="section">
+  <div class="fade-up">
+    <div class="section-tag">מה כלול</div>
+    <h2 class="section-title">הכל מגיע עם הפורטל</h2>
+    <p class="section-desc">אין תוספות נסתרות. מה שרואים זה מה שמקבלים.</p>
+  </div>
+  <div class="includes-grid fade-up">
+    <div class="include-card">
+      <iconify-icon icon="solar:translation-bold" class="include-icon"></iconify-icon>
+      <h3>עברית ואנגלית</h3>
+      <p>הפורטל יבנה בשתי שפות — עברית לקהל הישראלי, ואנגלית לגולשים מכל העולם. שתי גרסאות מלאות, לא תרגום גוגל.</p>
+    </div>
+    <div class="include-card">
+      <iconify-icon icon="solar:pen-new-square-bold" class="include-icon"></iconify-icon>
+      <h3>5 סבבי תיקונים ושיפורים</h3>
+      <p>לאחר שתקבלי את הפורטל, יש לך 5 סבבים מלאים לבקש שינויים, התאמות ותיקונים. עד שזה מדויק בשבילך.</p>
+    </div>
+    <div class="include-card">
+      <iconify-icon icon="solar:globe-bold" class="include-icon"></iconify-icon>
+      <h3>חיבור לדומיין שלך</h3>
+      <p>נחבר את הפורטל לדומיין שלך ונוודא שהכל עובד חלק. אין צורך בידע טכני מצדך.</p>
+    </div>
+    <div class="include-card">
+      <iconify-icon icon="solar:shield-check-bold" class="include-icon"></iconify-icon>
+      <h3>תוכן מבוסס מחקר</h3>
+      <p>כל מידע רפואי בפורטל מבוסס על מחקרים מדעיים עדכניים. אנחנו בודקים מקורות ולא מבדים. אמינות היא הבסיס.</p>
+    </div>
+    <div class="include-card">
+      <iconify-icon icon="solar:smartphone-bold" class="include-icon"></iconify-icon>
+      <h3>מותאם למובייל</h3>
+      <p>הפורטל ייראה מושלם בכל מכשיר — טלפון, טאבלט ומחשב. רוב הגולשים מגיעים מהנייד, ונדאג שחווית הגלישה תהיה מעולה.</p>
+    </div>
+    <div class="include-card">
+      <iconify-icon icon="solar:headphones-round-sound-bold" class="include-icon"></iconify-icon>
+      <h3>ליווי טכני לאורך הדרך</h3>
+      <p>לאחר ההקמה, אני זמין לכל שאלה טכנית. לא נעלמים אחרי האספקה.</p>
+    </div>
+  </div>
+</section>
+</div>
+
+<!-- HOW IT WORKS -->
+<div class="features-section">
+  <div class="features-inner">
+    <div class="fade-up">
+      <div class="section-tag">התהליך</div>
+      <h2 class="section-title">מהשיחה הראשונה ועד הפורטל החי</h2>
+      <p class="section-desc">תהליך פשוט, שקוף ומהיר. לא תצטרכי להתעסק בטכנולוגיה.</p>
+    </div>
+    <div class="steps-grid fade-up" style="margin-top:60px;">
+      <div class="step-card">
+        <div class="step-num">01</div>
+        <iconify-icon icon="solar:chat-square-call-bold" class="step-icon"></iconify-icon>
+        <h3>שיחת היכרות</h3>
+        <p>נדבר על המיזם שלך, על קהל היעד ועל התוכן שרוצים להעביר. אני מבין, את מספרת.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">02</div>
+        <iconify-icon icon="solar:code-bold" class="step-icon"></iconify-icon>
+        <h3>בנייה ואיכלוס תוכן</h3>
+        <p>בונה את הפורטל עם כל המידע הרפואי, מחקרים, טיפולים ומשאבים. את מאשרת בדרך.</p>
+      </div>
+      <div class="step-card">
+        <div class="step-num">03</div>
+        <iconify-icon icon="solar:rocket-bold" class="step-icon"></iconify-icon>
+        <h3>השקה ולייב</h3>
+        <p>מחברים לדומיין שלך, מוודאים שהכל עובד, ואת יוצאת לדרך עם פורטל מקצועי ומבוסס.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- WHY CAREPEDIA -->
+<section class="section">
+  <div class="fade-up section-center">
+    <div class="section-tag">למה Carepedia</div>
+    <h2 class="section-title">לא עוד אתר מידע. פורטל רפואי אמיתי.</h2>
+    <p class="section-desc">ההבדל בין אתר שנראה רפואי לאתר שנבנה נכון.</p>
+  </div>
+  <div class="features-grid fade-up" style="margin-top:56px;">
+    <div class="feature-card">
+      <iconify-icon icon="solar:diploma-bold" class="feature-icon"></iconify-icon>
+      <h3>אמינות מדעית</h3>
+      <p>כל טענה מגובה במקורות. מטופלים ורופאים יכולים לסמוך על המידע. אנחנו לא ממציאים.</p>
+    </div>
+    <div class="feature-card">
+      <iconify-icon icon="solar:users-group-rounded-bold" class="feature-icon"></iconify-icon>
+      <h3>מותאם למטופלים</h3>
+      <p>מידע רפואי מורכב מוצג בשפה ברורה ונגישה. לא מילון מונחים — מדריך חיים אמיתי.</p>
+    </div>
+    <div class="feature-card">
+      <iconify-icon icon="solar:settings-minimalistic-bold" class="feature-icon"></iconify-icon>
+      <h3>מופעל על ידי AI</h3>
+      <p>סוכני AI מתקדמים סורקים ספרות מדעית עדכנית ומרכיבים תוכן מבוסס עבורך. מהיר, מדויק, אחראי.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT YUVAL -->
+<div class="about-section">
+  <div class="about-inner">
+    <div class="fade-up section-tag" style="margin-bottom:24px;">מי מאחורי זה</div>
+    <div class="about-card fade-up">
+      <div class="about-avatar">
+        <iconify-icon icon="solar:user-circle-bold"></iconify-icon>
+      </div>
+      <div class="about-text">
+        <h3>יובל קש</h3>
+        <p>
+          יזם טכנולוגי ומוביל בתחום הבינה המלאכותית. בניתי סוכני AI שבונים פורטלים רפואיים בדיוק כזה — מהר, מדויק ובאחריות. Carepedia היא פרויקט שמטרתו להנגיש מידע רפואי איכותי לכל מי שזקוק לו.
+        </p>
+        <div class="about-links">
+          <a href="https://www.globes.co.il/news/article.aspx?did=1001459619" target="_blank" class="about-link">
+            <iconify-icon icon="solar:newspaper-bold"></iconify-icon>
+            כתבה בגלובס
+          </a>
+          <a href="https://www.linkedin.com/in/yuvalkesh/" target="_blank" class="about-link">
+            <iconify-icon icon="solar:diploma-verified-bold"></iconify-icon>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="cta-section">
+  <div class="cta-inner fade-up">
+    <div class="cta-label">מוכנה?</div>
+    <h2>בואי נתחיל את הפורטל שלך</h2>
+    <p>
+      שיחת וואטסאפ קצרה — ונצא לדרך. הפורטל שלך יכול להיות חי תוך שבועות.
+    </p>
+    <a href="https://wa.me/+972526414555" class="cta-btn" target="_blank">
+      <iconify-icon icon="solar:chat-round-dots-bold" style="font-size:22px;"></iconify-icon>
+      שלחי הודעה ביואטסאפ
+    </a>
+    <p class="cta-note">הצעה זו תקפה למאיה. 5,000 ₪ + מע"מ, כולל הכל.</p>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <h3>Carepedia</h3>
+      <p>פורטלי מידע רפואי מבוססי מחקר. עוזרים למטופלים, לרופאים ולעמותות להנגיש ידע רפואי נכון.</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    © 2025 Carepedia · <a href="https://carepedia.org" style="color:rgba(255,255,255,0.45);">carepedia.org</a>
+  </div>
+</footer>
+
+<script>
+// Fade-up on scroll
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08 });
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
