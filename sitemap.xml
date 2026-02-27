@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- Root pages -->
+  <url>
+    <loc>https://carepedia.org/</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/"/>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://carepedia.org/en/</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/"/>
+    <changefreq>monthly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Bilingual portals (Hebrew + English) -->
+  <url>
+    <loc>https://carepedia.org/1p36</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/1p36"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/1p36"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://carepedia.org/en/1p36</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/1p36"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/1p36"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://carepedia.org/als</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/als"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/als"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://carepedia.org/en/als</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/als"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/als"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://carepedia.org/autism</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/autism"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/autism"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://carepedia.org/en/autism</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/autism"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/autism"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://carepedia.org/autism-early-childhood</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/autism-early-childhood"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/autism-early-childhood"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://carepedia.org/en/autism-early-childhood</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/autism-early-childhood"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/autism-early-childhood"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://carepedia.org/breast-cancer</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/breast-cancer"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/breast-cancer"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://carepedia.org/en/breast-cancer</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/breast-cancer"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/breast-cancer"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://carepedia.org/bronchiectasis</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/bronchiectasis"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/bronchiectasis"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://carepedia.org/en/bronchiectasis</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/bronchiectasis"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/bronchiectasis"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://carepedia.org/cerebral-palsy</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/cerebral-palsy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/cerebral-palsy"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://carepedia.org/en/cerebral-palsy</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/cerebral-palsy"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/cerebral-palsy"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://carepedia.org/dmd</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/dmd"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/dmd"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://carepedia.org/en/dmd</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/dmd"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/dmd"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://carepedia.org/dystonia</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/dystonia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/dystonia"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://carepedia.org/en/dystonia</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/dystonia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/dystonia"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://carepedia.org/ehlers-danlos</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/ehlers-danlos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/ehlers-danlos"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://carepedia.org/en/ehlers-danlos</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/ehlers-danlos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/ehlers-danlos"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://carepedia.org/fanconi-anemia</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/fanconi-anemia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/fanconi-anemia"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://carepedia.org/en/fanconi-anemia</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/fanconi-anemia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/fanconi-anemia"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://carepedia.org/fasd</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/fasd"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/fasd"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://carepedia.org/en/fasd</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/fasd"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/fasd"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://carepedia.org/hair-loss</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/hair-loss"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/hair-loss"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://carepedia.org/en/hair-loss</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/hair-loss"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/hair-loss"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://carepedia.org/hemophilia</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/hemophilia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/hemophilia"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://carepedia.org/en/hemophilia</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/hemophilia"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/hemophilia"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://carepedia.org/hyperemesis</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/hyperemesis"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/hyperemesis"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://carepedia.org/en/hyperemesis</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/hyperemesis"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/hyperemesis"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://carepedia.org/ms</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/ms"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/ms"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://carepedia.org/en/ms</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/ms"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/ms"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://carepedia.org/nutcracker-syndrome</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/nutcracker-syndrome"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/nutcracker-syndrome"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://carepedia.org/en/nutcracker-syndrome</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/nutcracker-syndrome"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/nutcracker-syndrome"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://carepedia.org/parkinson</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/parkinson"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/parkinson"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://carepedia.org/en/parkinson</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/parkinson"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/parkinson"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://carepedia.org/rett</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/rett"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/rett"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://carepedia.org/en/rett</loc>
+    <xhtml:link rel="alternate" hreflang="he" href="https://carepedia.org/rett"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://carepedia.org/en/rett"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Hebrew-only portals (no English version) -->
+  <url>
+    <loc>https://carepedia.org/eating-disorders</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://carepedia.org/miluim</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://carepedia.org/oi</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <url>
+    <loc>https://carepedia.org/polycythemia-vera</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Supporting pages -->
+  <url>
+    <loc>https://carepedia.org/disclaimer</loc>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+</urlset>
