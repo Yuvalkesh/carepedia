@@ -474,13 +474,14 @@ body {
 .about-avatar {
   width: 80px; height: 80px;
   border-radius: 50%;
-  background: var(--forest-light);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 36px;
-  color: var(--forest);
+  overflow: hidden;
   flex-shrink: 0;
+  border: 3px solid var(--forest-light);
+}
+.about-avatar img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center top;
 }
 .about-text h3 {
   font-size: 22px;
@@ -839,10 +840,10 @@ body {
     <div class="fade-up section-tag" style="margin-bottom:24px;">מי מאחורי זה</div>
     <div class="about-card fade-up">
       <div class="about-avatar">
-        <iconify-icon icon="solar:user-circle-bold"></iconify-icon>
+        <img src="yuval.jpeg" alt="יובל קשטכר">
       </div>
       <div class="about-text">
-        <h3>יובל קש</h3>
+        <h3>יובל קשטכר</h3>
         <p>
           יזם טכנולוגי ומוביל בתחום הבינה המלאכותית. בניתי סוכני AI שבונים פורטלים רפואיים בדיוק כזה — מהר, מדויק ובאחריות. Carepedia היא פרויקט שמטרתו להנגיש מידע רפואי איכותי לכל מי שזקוק לו.
         </p>
