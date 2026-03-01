@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="ru" dir="ltr">
+<html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVPGTN8XS1"></script>
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZVPGTN8XS1');</script>
-<title>Emergency Info Israel | Экстренная помощь | معلومات الطوارئ | የአደጋ ጊዜ መረጃ</title>
-<meta name="description" content="Emergency information for residents of Israel in Russian, Arabic and Amharic. What to do during a red alert siren, shelter instructions, emergency numbers.">
+<title>פורטל חירום | Emergency Info Israel | Экстренная помощь | معلومات الطوارئ | የአደጋ ጊዜ መረጃ</title>
+<meta name="description" content="מידע חירום לתושבי ישראל: מה לעשות בזמן אזעקה, היכן להתמגן ומספרי חירום. גם ברוסית, ערבית ואמהרית.">
 <link rel="canonical" href="https://carepedia.org/war-emergency">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -168,9 +168,15 @@ body { background: var(--bg); color: var(--text); line-height: 1.8; overflow-x: 
 #lang-ar .alert-box.amber{ border-left: none; border-right: 5px solid var(--amber); }
 
 /* Font families */
+#lang-he { font-family: 'Rubik', 'Segoe UI', sans-serif; }
 #lang-ru { font-family: 'Rubik', 'Segoe UI', sans-serif; }
 #lang-ar { font-family: 'Cairo', 'Segoe UI', sans-serif; }
 #lang-am { font-family: 'Noto Sans Ethiopic', 'Rubik', sans-serif; }
+
+/* RTL overrides for Hebrew */
+#lang-he .alert-box.red  { border-left: none; border-right: 5px solid var(--red); }
+#lang-he .alert-box.green{ border-left: none; border-right: 5px solid var(--green); }
+#lang-he .alert-box.amber{ border-left: none; border-right: 5px solid var(--amber); }
 
 /* Mobile */
 @media (max-width: 640px) {
@@ -191,15 +197,102 @@ body { background: var(--bg); color: var(--text); line-height: 1.8; overflow-x: 
 <body>
 
 <div class="lang-bar">
-  <a href="https://carepedia.org" class="site-logo">← CarePedia</a>
-  <button class="lang-btn active" id="btn-ru" onclick="setLang('ru')">🇷🇺 Русский</button>
+  <a href="https://carepedia.org" class="site-logo" id="site-logo">CarePedia ←</a>
+  <button class="lang-btn active" id="btn-he" onclick="setLang('he')">🇮🇱 עברית</button>
+  <button class="lang-btn" id="btn-ru" onclick="setLang('ru')">🇷🇺 Русский</button>
   <button class="lang-btn" id="btn-ar" onclick="setLang('ar')">🇸🇦 العربية</button>
   <button class="lang-btn" id="btn-am" onclick="setLang('am')">🇪🇹 አማርኛ</button>
 </div>
 
 
+<!-- ═══════════════════════════════════ HEBREW ═══════════════════════════════════ -->
+<div class="lang-section active" id="lang-he" dir="rtl">
+  <div class="hero">
+    <div class="hero-inner">
+      <span class="emergency-icon">🚨</span>
+      <h1>פורטל חירום לתושבי ישראל</h1>
+      <p>מה לעשות בזמן אזעקה, היכן להתמגן, עזרה ראשונה ומספרי חירום — כל המידע במקום אחד</p>
+    </div>
+  </div>
+  <div class="content">
+
+    <div class="section">
+      <div class="section-title"><span class="sec-icon">📞</span> מספרי חירום</div>
+      <div class="numbers-grid">
+        <div class="num-card"><span class="num-icon">🚑</span><div class="num">101</div><div class="num-label">מד"א — אמבולנס</div></div>
+        <div class="num-card green"><span class="num-icon">🚔</span><div class="num">100</div><div class="num-label">משטרה</div></div>
+        <div class="num-card amber"><span class="num-icon">🚒</span><div class="num">102</div><div class="num-label">כיבוי אש</div></div>
+        <div class="num-card blue"><span class="num-icon">⛽</span><div class="num">104</div><div class="num-label">חירום גז</div></div>
+        <div class="num-card purple"><span class="num-icon">🛡️</span><div class="num">1202</div><div class="num-label">פיקוד העורף</div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title"><span class="sec-icon">🔴</span> כשיש אזעקה — צבע אדום</div>
+      <div class="alert-box red">
+        <span class="alert-icon">⚠️</span>
+        <div><h4>יש לכם 60–90 שניות</h4><p>מרגע האזעקה ועד פגיעת הרקטה — כ-60 עד 90 שניות באזור המרכז. פעלו מיד.</p></div>
+      </div>
+      <div class="steps">
+        <div class="step urgent"><div class="step-num">1</div><div class="step-text"><h4>היכנסו מיד למרחב המוגן</h4><p>ממ"ד, ממ"ק, או חדר מדרגות ללא חלונות — לפי הסדר הזה.</p></div></div>
+        <div class="step urgent"><div class="step-num">2</div><div class="step-text"><h4>סגרו את הדלת</h4><p>סגרו ונעלו את הדלת. בממ"ד — סגרו גם את החלון ונעלו את התריס.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text"><h4>הישארו 10 דקות</h4><p>אל תצאו לפני שעברו 10 דקות מלאות מתום האזעקה.</p></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-text"><h4>עקבו אחר ההוראות הרשמיות</h4><p>האזינו לרדיו (גלגלצ / רשת ב') או עקבו אחר אפליקציית פיקוד העורף.</p></div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title"><span class="sec-icon">🏃</span> בחוץ או ברכב בזמן אזעקה</div>
+      <div class="steps">
+        <div class="step urgent"><div class="step-num">🚶</div><div class="step-text"><h4>ברחוב</h4><p>שכבו על הקרקע פנים למטה, כסו את הראש בידיים. הישארו כך עד תום האזעקה ועוד 10 דקות.</p></div></div>
+        <div class="step urgent"><div class="step-num">🚗</div><div class="step-text"><h4>ברכב</h4><p>עצרו, רדו מהרכב, התרחקו ממנו ושכבו על הקרקע עם ידיים מעל הראש.</p></div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title"><span class="sec-icon">🏠</span> סוגי מרחבים מוגנים — מהטוב לפחות טוב</div>
+      <div class="shelter-grid">
+        <div class="shelter-card"><span class="sh-icon">🛡️</span><h4>ממ"ד</h4><p>ההגנה הטובה ביותר. חדר מוגן עם חלון ממוגן ודלת פלדה.</p></div>
+        <div class="shelter-card orange"><span class="sh-icon">🏚️</span><h4>מקלט / ממ"ק</h4><p>לרוב בקומת הקרקע של הבניין. חפשו את שלט החץ הכחול.</p></div>
+        <div class="shelter-card blue"><span class="sh-icon">🪜</span><h4>חדר מדרגות</h4><p>חדר מדרגות פנימי ללא חלונות — רדו לקומה הנמוכה ביותר.</p></div>
+        <div class="shelter-card gray"><span class="sh-icon">🏢</span><h4>מסדרון פנימי</h4><p>מסדרון פנימי בקומות נמוכות, רחוק מחלונות — האפשרות האחרונה.</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title"><span class="sec-icon">🩺</span> עזרה ראשונה</div>
+      <div class="alert-box red">
+        <span class="alert-icon">🚑</span>
+        <div><h4>בכל פציעה — התקשרו מיד ל-101</h4><p>אל תפנו פצוע קשה לבד — המתינו לאמבולנס.</p></div>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="step-num">🩸</div><div class="step-text"><h4>עצירת דימום</h4><p>לחצו על הפצע עם בד נקי או תחבושת. שמרו על לחץ רציף לפחות 10 דקות ללא הרפיה.</p></div></div>
+        <div class="step"><div class="step-num">🦴</div><div class="step-text"><h4>חשד לפגיעה בעמוד השדרה</h4><p>אל תזיזו את הנפגע. קבעו את הראש והצוואר, המתינו לאמבולנס.</p></div></div>
+        <div class="step"><div class="step-num">😮‍💨</div><div class="step-text"><h4>חסר הכרה / לא נושם</h4><p>התחילו החייאה: 30 לחיצות על בית החזה, 2 נשיפות. המשיכו עד הגעת האמבולנס. התקשרו ל-101.</p></div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title"><span class="sec-icon">💙</span> תמיכה נפשית — בחינם, 24/7</div>
+      <div class="alert-box green">
+        <span class="alert-icon">💚</span>
+        <div><h4>חרדה, פחד, פאניקה — זה טבעי לחלוטין</h4><p>אתם לא לבד. עזרה מקצועית זמינה בחינם, סביב השעון.</p></div>
+      </div>
+      <div class="hotlines">
+        <div class="hotline"><div class="hl-num">1201</div><div class="hl-info"><h4>ער"ן — סיוע רגשי בחירום</h4><p>בעברית, ערבית ורוסית. בחינם, 24/7.</p></div></div>
+        <div class="hotline"><div class="hl-num" style="font-size:19px;">1800-363-363</div><div class="hl-info"><h4>נט"ל — טראומה ופוסט-טראומה</h4><p>מתמחה בפגיעות נפשיות הקשורות לאירועי ביטחון. בחינם.</p></div></div>
+        <div class="hotline"><div class="hl-num" style="font-size:19px;">1800-500-381</div><div class="hl-info"><h4>אנוש — בריאות הנפש</h4><p>מידע והפניה למטפלים. בחינם.</p></div></div>
+        <div class="hotline"><div class="hl-num" style="font-size:19px;">1800-522-000</div><div class="hl-info"><h4>אל"ם — לצעירים ונוער</h4><p>תמיכה לצעירים במצבי משבר. בחינם.</p></div></div>
+      </div>
+    </div>
+
+  </div>
+  <footer class="page-footer"><p>CarePedia — מידע רפואי לתושבי ישראל · <a href="https://carepedia.org">carepedia.org</a></p></footer>
+</div>
+
+
 <!-- ═══════════════════════════════════ RUSSIAN ══════════════════════════════════ -->
-<div class="lang-section active" id="lang-ru">
+<div class="lang-section" id="lang-ru">
   <div class="hero">
     <div class="hero-inner">
       <span class="emergency-icon">🚨</span>
@@ -462,22 +555,25 @@ function setLang(lang) {
   document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
   document.getElementById('lang-' + lang).classList.add('active');
   document.getElementById('btn-' + lang).classList.add('active');
+  const rtl = (lang === 'he' || lang === 'ar');
   document.documentElement.lang = lang;
-  document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
-  const logo = document.querySelector('.lang-bar .site-logo');
+  document.documentElement.dir = rtl ? 'rtl' : 'ltr';
+  const logo = document.getElementById('site-logo');
   if (logo) {
-    logo.style.left  = (lang === 'ar') ? 'auto' : '20px';
-    logo.style.right = (lang === 'ar') ? '20px'  : 'auto';
+    logo.style.left  = rtl ? 'auto' : '20px';
+    logo.style.right = rtl ? '20px' : 'auto';
+    logo.textContent = rtl ? 'CarePedia \u2192' : '\u2190 CarePedia';
   }
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Auto-detect browser language
+// Default: Hebrew. Auto-detect other languages.
 (function() {
   const lang = (navigator.language || '').toLowerCase();
   if (lang.startsWith('ar')) setLang('ar');
   else if (lang.startsWith('am') || lang.startsWith('ti')) setLang('am');
-  else setLang('ru');
+  else if (lang.startsWith('ru')) setLang('ru');
+  else setLang('he');
 })();
 </script>
 
