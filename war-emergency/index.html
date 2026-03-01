@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html lang="ru" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-ZVPGTN8XS1"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-ZVPGTN8XS1');</script>
+<title>Emergency Info Israel | Экстренная помощь | معلومات الطوارئ | የአደጋ ጊዜ መረጃ</title>
+<meta name="description" content="Emergency information for residents of Israel in Russian, Arabic and Amharic. What to do during a red alert siren, shelter instructions, emergency numbers.">
+<link rel="canonical" href="https://carepedia.org/war-emergency">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&family=Cairo:wght@400;600;700;800&family=Noto+Sans+Ethiopic:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --primary: #1A3A5C;
+  --primary-light: #2563EB;
+  --red: #DC2626;
+  --red-light: #FEF2F2;
+  --red-dark: #991B1B;
+  --green: #059669;
+  --green-light: #ECFDF5;
+  --amber: #D97706;
+  --amber-light: #FFFBEB;
+  --bg: #F1F5F9;
+  --card: #ffffff;
+  --text: #1E293B;
+  --text-light: #64748B;
+  --shadow: 0 4px 20px rgba(0,0,0,0.08);
+  --shadow-hover: 0 12px 40px rgba(0,0,0,0.15);
+  --radius: 16px;
+  --transition: all 0.3s cubic-bezier(.4,0,.2,1);
+}
+
+body { background: var(--bg); color: var(--text); line-height: 1.8; overflow-x: hidden; }
+
+/* Language Bar */
+.lang-bar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  background: var(--primary); padding: 12px 20px;
+  display: flex; align-items: center; justify-content: center; gap: 10px;
+  box-shadow: 0 2px 20px rgba(0,0,0,0.2);
+}
+.lang-bar .site-logo {
+  position: absolute; left: 20px;
+  color: rgba(255,255,255,0.6); font-size: 13px;
+  font-family: 'Rubik', sans-serif; text-decoration: none; transition: var(--transition);
+}
+.lang-bar .site-logo:hover { color: #fff; }
+.lang-btn {
+  padding: 10px 24px; border: 2px solid rgba(255,255,255,0.3);
+  border-radius: 30px; background: transparent; color: rgba(255,255,255,0.75);
+  font-size: 15px; font-weight: 600; cursor: pointer; transition: var(--transition); font-family: inherit;
+}
+.lang-btn:hover { border-color: rgba(255,255,255,0.7); color: #fff; }
+.lang-btn.active {
+  background: var(--red); border-color: var(--red); color: #fff;
+  box-shadow: 0 4px 15px rgba(220,38,38,0.4);
+}
+
+/* Layout */
+.lang-section { display: none; padding-top: 64px; }
+.lang-section.active { display: block; }
+
+/* Hero */
+.hero {
+  background: linear-gradient(135deg, #7F1D1D 0%, #DC2626 50%, #B45309 100%);
+  padding: 60px 24px; color: #fff; text-align: center; position: relative; overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.06) 0%, transparent 60%);
+}
+.hero-inner { position: relative; z-index: 1; max-width: 700px; margin: 0 auto; }
+.hero .emergency-icon { font-size: 72px; margin-bottom: 16px; display: block; }
+.hero h1 { font-size: 38px; font-weight: 800; line-height: 1.3; margin-bottom: 12px; }
+.hero p { font-size: 18px; opacity: 0.9; max-width: 560px; margin: 0 auto; }
+
+/* Content */
+.content { max-width: 860px; margin: 0 auto; padding: 40px 20px 60px; }
+
+/* Section */
+.section { margin-bottom: 40px; }
+.section-title {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 22px; font-weight: 700; color: var(--primary);
+  margin-bottom: 20px; padding-bottom: 12px; border-bottom: 3px solid var(--primary-light);
+}
+.section-title .sec-icon { font-size: 32px; }
+
+/* Emergency Numbers */
+.numbers-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 16px; }
+.num-card {
+  background: var(--card); border-radius: var(--radius); padding: 24px 16px;
+  text-align: center; box-shadow: var(--shadow); border-top: 4px solid var(--red); transition: var(--transition);
+}
+.num-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
+.num-card .num { font-size: 40px; font-weight: 800; color: var(--red); line-height: 1; margin-bottom: 8px; }
+.num-card .num-icon { font-size: 28px; margin-bottom: 8px; display: block; }
+.num-card .num-label { font-size: 13px; color: var(--text-light); font-weight: 500; }
+.num-card.green { border-top-color: var(--green); } .num-card.green .num { color: var(--green); }
+.num-card.amber { border-top-color: var(--amber); } .num-card.amber .num { color: var(--amber); }
+.num-card.blue  { border-top-color: var(--primary-light); } .num-card.blue .num { color: var(--primary-light); }
+.num-card.purple { border-top-color: #7C3AED; } .num-card.purple .num { color: #7C3AED; font-size: 28px; }
+
+/* Steps */
+.steps { display: flex; flex-direction: column; gap: 14px; }
+.step {
+  display: flex; align-items: flex-start; gap: 16px;
+  background: var(--card); border-radius: var(--radius); padding: 20px 24px; box-shadow: var(--shadow);
+}
+.step .step-num {
+  min-width: 40px; height: 40px; background: var(--primary); color: #fff;
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 700; flex-shrink: 0;
+}
+.step.urgent .step-num { background: var(--red); }
+.step .step-text h4 { font-size: 16px; font-weight: 700; color: var(--primary); margin-bottom: 4px; }
+.step .step-text p { font-size: 14px; color: var(--text-light); line-height: 1.7; }
+
+/* Alert Box */
+.alert-box {
+  border-radius: var(--radius); padding: 20px 24px; margin: 16px 0;
+  display: flex; gap: 14px; align-items: flex-start;
+}
+.alert-box.red  { background: var(--red-light);   border-left: 5px solid var(--red); }
+.alert-box.green{ background: var(--green-light);  border-left: 5px solid var(--green); }
+.alert-box.amber{ background: var(--amber-light);  border-left: 5px solid var(--amber); }
+.alert-box .alert-icon { font-size: 28px; flex-shrink: 0; }
+.alert-box h4 { font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+.alert-box.red h4   { color: var(--red-dark); }
+.alert-box.green h4 { color: #065F46; }
+.alert-box.amber h4 { color: #92400E; }
+.alert-box p { font-size: 14px; color: var(--text-light); line-height: 1.7; }
+
+/* Shelter Grid */
+.shelter-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(195px, 1fr)); gap: 16px; }
+.shelter-card {
+  background: var(--card); border-radius: var(--radius); padding: 24px 20px;
+  box-shadow: var(--shadow); text-align: center; border-bottom: 4px solid var(--green);
+}
+.shelter-card .sh-icon { font-size: 44px; margin-bottom: 12px; display: block; }
+.shelter-card h4 { font-size: 16px; font-weight: 700; color: var(--primary); margin-bottom: 6px; }
+.shelter-card p { font-size: 13px; color: var(--text-light); line-height: 1.6; }
+.shelter-card.orange { border-bottom-color: var(--amber); }
+.shelter-card.blue   { border-bottom-color: var(--primary-light); }
+.shelter-card.gray   { border-bottom-color: #94A3B8; }
+
+/* Hotlines */
+.hotlines { display: flex; flex-direction: column; gap: 12px; }
+.hotline {
+  background: var(--card); border-radius: var(--radius);
+  padding: 18px 24px; box-shadow: var(--shadow); display: flex; align-items: center; gap: 16px;
+}
+.hotline .hl-num { font-size: 26px; font-weight: 800; color: var(--primary-light); min-width: 100px; }
+.hotline .hl-info h4 { font-size: 15px; font-weight: 700; color: var(--primary); margin-bottom: 2px; }
+.hotline .hl-info p { font-size: 13px; color: var(--text-light); }
+
+/* Footer */
+.page-footer { background: var(--primary); color: rgba(255,255,255,0.6); text-align: center; padding: 24px 20px; font-size: 13px; }
+.page-footer a { color: rgba(255,255,255,0.8); }
+
+/* RTL overrides for Arabic */
+#lang-ar .alert-box.red  { border-left: none; border-right: 5px solid var(--red); }
+#lang-ar .alert-box.green{ border-left: none; border-right: 5px solid var(--green); }
+#lang-ar .alert-box.amber{ border-left: none; border-right: 5px solid var(--amber); }
+
+/* Font families */
+#lang-ru { font-family: 'Rubik', 'Segoe UI', sans-serif; }
+#lang-ar { font-family: 'Cairo', 'Segoe UI', sans-serif; }
+#lang-am { font-family: 'Noto Sans Ethiopic', 'Rubik', sans-serif; }
+
+/* Mobile */
+@media (max-width: 640px) {
+  .lang-btn { padding: 8px 14px; font-size: 13px; }
+  .lang-bar .site-logo { display: none; }
+  .hero { padding: 40px 20px; }
+  .hero h1 { font-size: 26px; }
+  .hero .emergency-icon { font-size: 54px; }
+  .numbers-grid { grid-template-columns: repeat(2, 1fr); }
+  .shelter-grid { grid-template-columns: repeat(2, 1fr); }
+  .step { flex-direction: column; gap: 10px; }
+  .hotline { flex-wrap: wrap; }
+  .content { padding: 24px 16px 40px; }
+  .section-title { font-size: 18px; }
+}
+</style>
+</head>
+<body>
+
+<div class="lang-bar">
+  <a href="https://carepedia.org" class="site-logo">← CarePedia</a>
+  <button class="lang-btn active" id="btn-ru" onclick="setLang('ru')">🇷🇺 Русский</button>
+  <button class="lang-btn" id="btn-ar" onclick="setLang('ar')">🇸🇦 العربية</button>
+  <button class="lang-btn" id="btn-am" onclick="setLang('am')">🇪🇹 አማርኛ</button>
+</div>
+
+
+<!-- ═══════════════════════════════════ RUSSIAN ══════════════════════════════════ -->
+<div class="lang-section active" id="lang-ru">
+  <div class="hero">
+    <div class="hero-inner">
+      <span class="emergency-icon">🚨</span>
+      <h1>Экстренная помощь в Израиле</h1>
+      <p>Что делать во время тревоги, где укрыться и куда звонить — вся необходимая информация</p>
+    </div>
+  </div>
+  <div class="content">
+
+    <div class="section">
+      <div class="section-title"><span class="sec-icon">📞</span> Номера экстренных служб</div>
+      <div class="numbers-grid">
+        <div class="num-card"><span class="num-icon">🚑</span><div class="num">101</div><div class="num-label">Скорая помощь (МДА)</div></div>
+        <div class="num-card green"><span class="num-icon">🚔</span><div class="num">100</div><div class="num-label">Полиция</div></div>
+        <div class="num-card amber"><span class="num-icon">🚒</span><div class="num">102</div><div class="num-label">Пожарная служба</div></div>
+        <div class="num-card blue"><span class="num-icon">⛽</span><div class="num">104</div><div class="num-label">Газовая служба</div></div>
+        <div class="num-card purple"><span class="num-icon">🛡️</span><div class="num">1202</div><div class="num-label">Командование тылом (Пикуд Ха-Ореф)</div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title"><span class="sec-icon">🔴</span> Когда звучит сирена тревоги (Цева Адом)</div>
+      <div class="alert-box red">
+        <span class="alert-icon">⚠️</span>
+        <div><h4>У вас есть 60–90 секунд</h4><p>С момента сигнала тревоги до удара ракеты в центральных районах Израиля около 60–90 секунд. Действуйте немедленно.</p></div>
+      </div>
+      <div class="steps">
+        <div class="step urgent"><div class="step-num">1</div><div class="step-text"><h4>Немедленно идите в укрытие</h4><p>Войдите в защищённую комнату (мамад), бомбоубежище или лестничную клетку без окон.</p></div></div>
+        <div class="step urgent"><div class="step-num">2</div><div class="step-text"><h4>Закройте и заприте дверь</h4><p>Плотно закройте дверь. В защищённой комнате также закройте окно и задвиньте засов.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text"><h4>Оставайтесь 10 минут</h4><p>Не покидайте укрытие раньше чем через 10 минут после окончания сирены.</p></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-text"><h4>Следите за официальными сообщениями</h4><p>Слушайте радио (Решет Бет — 95.5 FM) или следите за сайтом пикуд-ха-ореф.</p></div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title"><span class="sec-icon">🏃</span> Если вы на улице или в машине</div>
+      <div class="steps">
+        <div class="step urgent"><div class="step-num">🚶</div><div class="step-text"><h4>На улице</h4><p>Лягте на землю лицом вниз. Закройте голову руками. Оставайтесь так до окончания сирены и ещё 10 минут после.</p></div></div>
+        <div class="step urgent"><div class="step-num">🚗</div><div class="step-text"><h4>В машине</h4><p>Остановитесь, выйдите из машины, отойдите от неё и лягте на землю, закрыв голову руками.</p></div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title"><span class="sec-icon">🏠</span> Типы укрытий — от лучшего к худшему</div>
+      <div class="shelter-grid">
+        <div class="shelter-card"><span class="sh-icon">🛡️</span><h4>Защищённая комната (Мамад)</h4><p>Лучшая защита. Укреплённая комната с бронированным окном и металлической дверью.</p></div>
+        <div class="shelter-card orange"><span class="sh-icon">🏚️</span><h4>Общественное бомбоубежище</h4><p>Обычно в подвале. Ищите знак с синей стрелкой.</p></div>
+        <div class="shelter-card blue"><span class="sh-icon">🪜</span><h4>Лестничная клетка</h4><p>Внутренняя лестница без окон. Спуститесь как можно ниже.</p></div>
+        <div class="shelter-card gray"><span class="sh-icon">🏢</span><h4>Внутренний коридор</h4><p>Нижние этажи, подальше от окон — последний вариант.</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title"><span class="sec-icon">🩺</span> Первая помощь</div>
+      <div class="alert-box red">
+        <span class="alert-icon">🚑</span>
+        <div><h4>При любой травме — немедленно звоните 101</h4><p>Не везите тяжело раненого самостоятельно — дождитесь скорой.</p></div>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="step-num">🩸</div><div class="step-text"><h4>Остановка кровотечения</h4><p>Надавите на рану чистой тканью. Удерживайте давление не менее 10 минут без ослабления.</p></div></div>
+        <div class="step"><div class="step-num">🦴</div><div class="step-text"><h4>Подозрение на перелом позвоночника</h4><p>Не двигайте пострадавшего. Зафиксируйте голову и шею, дождитесь скорой.</p></div></div>
+        <div class="step"><div class="step-num">😮‍💨</div><div class="step-text"><h4>Человек без сознания / не дышит</h4><p>Начните CPR: 30 нажатий на грудину, 2 вдоха. Продолжайте до приезда скорой. Позвоните 101.</p></div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title"><span class="sec-icon">💙</span> Психологическая поддержка — бесплатно, 24/7</div>
+      <div class="alert-box green">
+        <span class="alert-icon">💚</span>
+        <div><h4>Стресс, страх, паника — это нормально</h4><p>Вы не одни. Профессиональная помощь доступна бесплатно, круглосуточно.</p></div>
+      </div>
+      <div class="hotlines">
+        <div class="hotline"><div class="hl-num">1201</div><div class="hl-info"><h4>ЭРАН — экстренная психологическая помощь</h4><p>На иврите и русском. Бесплатно, 24/7.</p></div></div>
+        <div class="hotline"><div class="hl-num" style="font-size:19px;">1800-363-363</div><div class="hl-info"><h4>НАТАЛ — поддержка при травме и ПТСР</h4><p>Специализируется на военной травме. Бесплатно.</p></div></div>
+        <div class="hotline"><div class="hl-num" style="font-size:19px;">1800-600-686</div><div class="hl-info"><h4>Ран-Шлиль — для русскоязычных</h4><p>Психологическая помощь на русском языке. Бесплатно.</p></div></div>
+        <div class="hotline"><div class="hl-num" style="font-size:19px;">1800-500-381</div><div class="hl-info"><h4>ЭНОШИ — психическое здоровье</h4><p>Информация и направления к специалистам. Бесплатно.</p></div></div>
+      </div>
+    </div>
+
+  </div>
+  <footer class="page-footer"><p>CarePedia — медицинская информация для жителей Израиля · <a href="https://carepedia.org">carepedia.org</a></p></footer>
+</div>
+
+
+<!-- ═══════════════════════════════════ ARABIC ═══════════════════════════════════ -->
+<div class="lang-section" id="lang-ar" dir="rtl">
+  <div class="hero">
+    <div class="hero-inner">
+      <span class="emergency-icon">🚨</span>
+      <h1>معلومات الطوارئ في إسرائيل</h1>
+      <p>ماذا تفعل عند سماع صافرة الإنذار، أين تحتمي، وأرقام الطوارئ — كل ما تحتاجه هنا</p>
+    </div>
+  </div>
+  <div class="content">
+
+    <div class="section">
+      <div class="section-title"><span class="sec-icon">📞</span> أرقام الطوارئ</div>
+      <div class="numbers-grid">
+        <div class="num-card"><span class="num-icon">🚑</span><div class="num">101</div><div class="num-label">الإسعاف (مداء)</div></div>
+        <div class="num-card green"><span class="num-icon">🚔</span><div class="num">100</div><div class="num-label">الشرطة</div></div>
+        <div class="num-card amber"><span class="num-icon">🚒</span><div class="num">102</div><div class="num-label">إطفاء الحرائق</div></div>
+        <div class="num-card blue"><span class="num-icon">⛽</span><div class="num">104</div><div class="num-label">طوارئ الغاز</div></div>
+        <div class="num-card purple"><span class="num-icon">🛡️</span><div class="num">1202</div><div class="num-label">قيادة الجبهة الداخلية (بيكود هاأوريف)</div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title"><span class="sec-icon">🔴</span> عند سماع صافرة الإنذار الأحمر (تسيفا أدوم)</div>
+      <div class="alert-box red">
+        <span class="alert-icon">⚠️</span>
+        <div><h4>لديك 60–90 ثانية فقط</h4><p>من لحظة الإنذار حتى سقوط الصاروخ في وسط إسرائيل — 60 إلى 90 ثانية. تصرف فوراً دون تردد.</p></div>
+      </div>
+      <div class="steps">
+        <div class="step urgent"><div class="step-num">1</div><div class="step-text"><h4>اذهب فوراً إلى الملجأ</h4><p>ادخل إلى الغرفة المحمية (الممد) أو ملجأ البناء أو درج البناء الداخلي بدون نوافذ.</p></div></div>
+        <div class="step urgent"><div class="step-num">2</div><div class="step-text"><h4>أغلق الباب وأحكم إغلاقه</h4><p>أغلق الباب جيداً. في الغرفة المحمية أغلق النافذة أيضاً وأحكم الإغلاق بالمزلاج.</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text"><h4>ابق 10 دقائق بعد انتهاء الصفارة</h4><p>لا تغادر الملجأ إلا بعد مرور 10 دقائق كاملة من توقف صوت الإنذار.</p></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-text"><h4>تابع التعليمات الرسمية</h4><p>استمع إلى الراديو الرسمي أو تطبيق بيكود هاأوريف للحصول على آخر التعليمات.</p></div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title"><span class="sec-icon">🏃</span> إذا كنت في الشارع أو في السيارة</div>
+      <div class="steps">
+        <div class="step urgent"><div class="step-num">🚶</div><div class="step-text"><h4>في الشارع</h4><p>استلقِ أرضاً وجهاً للأسفل. غطِّ رأسك بيديك. ابق هكذا حتى انتهاء الإنذار وعشر دقائق بعده.</p></div></div>
+        <div class="step urgent"><div class="step-num">🚗</div><div class="step-text"><h4>في السيارة</h4><p>أوقف السيارة، انزل منها، ابتعد عنها واستلقِ أرضاً مغطياً رأسك بيديك.</p></div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title"><span class="sec-icon">🏠</span> أنواع الملاجئ — من الأفضل إلى الأقل</div>
+      <div class="shelter-grid">
+        <div class="shelter-card"><span class="sh-icon">🛡️</span><h4>الغرفة المحمية (الممد)</h4><p>أفضل حماية. غرفة مدعمة بنافذة مصفحة وباب معدني.</p></div>
+        <div class="shelter-card orange"><span class="sh-icon">🏚️</span><h4>ملجأ البناء</h4><p>يوجد عادةً في قبو البناء. ابحث عن علامة السهم الأزرق.</p></div>
+        <div class="shelter-card blue"><span class="sh-icon">🪜</span><h4>درج البناء الداخلي</h4><p>الدرج بدون نوافذ — انزل إلى أدنى طابق ممكن.</p></div>
+        <div class="shelter-card gray"><span class="sh-icon">🏢</span><h4>الممر الداخلي</h4><p>ممر داخلي بعيد عن النوافذ — آخر خيار متاح.</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title"><span class="sec-icon">🩺</span> الإسعافات الأولية</div>
+      <div class="alert-box red">
+        <span class="alert-icon">🚑</span>
+        <div><h4>عند أي إصابة — اتصل بـ 101 فوراً</h4><p>لا تنقل المصاب بإصابة خطيرة بنفسك — انتظر الإسعاف.</p></div>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="step-num">🩸</div><div class="step-text"><h4>وقف النزيف</h4><p>اضغط على الجرح بقماش نظيف. احتفظ بالضغط 10 دقائق بدون إراحة.</p></div></div>
+        <div class="step"><div class="step-num">🦴</div><div class="step-text"><h4>الاشتباه بإصابة العمود الفقري</h4><p>لا تحرك المصاب. ثبّت الرأس والرقبة وانتظر الإسعاف.</p></div></div>
+        <div class="step"><div class="step-num">😮‍💨</div><div class="step-text"><h4>شخص فاقد الوعي / لا يتنفس</h4><p>ابدأ الإنعاش القلبي: 30 ضغطة على الصدر، نفسان. استمر حتى وصول الإسعاف. اتصل بـ 101.</p></div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title"><span class="sec-icon">💙</span> الدعم النفسي — مجاناً، 24/7</div>
+      <div class="alert-box green">
+        <span class="alert-icon">💚</span>
+        <div><h4>التوتر والخوف والقلق — أمر طبيعي تماماً</h4><p>أنت لست وحدك. المساعدة المهنية متاحة مجاناً على مدار الساعة.</p></div>
+      </div>
+      <div class="hotlines">
+        <div class="hotline"><div class="hl-num">1201</div><div class="hl-info"><h4>إيران — دعم نفسي طارئ</h4><p>متوفر بالعربية والعبرية. مجاناً، 24/7.</p></div></div>
+        <div class="hotline"><div class="hl-num" style="font-size:19px;">1800-363-363</div><div class="hl-info"><h4>ناتال — دعم الصدمات النفسية</h4><p>متخصص في الصدمات الحربية. مجاناً.</p></div></div>
+        <div class="hotline"><div class="hl-num" style="font-size:19px;">1800-500-381</div><div class="hl-info"><h4>إينوشي — الصحة النفسية</h4><p>معلومات وإحالة إلى متخصصين. مجاناً.</p></div></div>
+        <div class="hotline"><div class="hl-num" style="font-size:19px;">1800-522-000</div><div class="hl-info"><h4>إيليم — للشباب والأطفال</h4><p>دعم للشباب في حالات الأزمة. مجاناً.</p></div></div>
+      </div>
+    </div>
+
+  </div>
+  <footer class="page-footer"><p>CarePedia — معلومات طبية لسكان إسرائيل · <a href="https://carepedia.org">carepedia.org</a></p></footer>
+</div>
+
+
+<!-- ═══════════════════════════════════ AMHARIC ══════════════════════════════════ -->
+<div class="lang-section" id="lang-am">
+  <div class="hero">
+    <div class="hero-inner">
+      <span class="emergency-icon">🚨</span>
+      <h1>በእስራኤል የአደጋ ጊዜ መረጃ</h1>
+      <p>ማንቂያ ሲሰማ ምን ማድረግ እንዳለቦት፣ የት መሸሸግ እንዳለቦት እና የአደጋ ጊዜ ቁጥሮች — ሁሉም እዚህ አለ</p>
+    </div>
+  </div>
+  <div class="content">
+
+    <div class="section">
+      <div class="section-title"><span class="sec-icon">📞</span> የአደጋ ጊዜ ቁጥሮች</div>
+      <div class="numbers-grid">
+        <div class="num-card"><span class="num-icon">🚑</span><div class="num">101</div><div class="num-label">አምቡላንስ (MDA)</div></div>
+        <div class="num-card green"><span class="num-icon">🚔</span><div class="num">100</div><div class="num-label">ፖሊስ</div></div>
+        <div class="num-card amber"><span class="num-icon">🚒</span><div class="num">102</div><div class="num-label">እሳት አደጋ</div></div>
+        <div class="num-card blue"><span class="num-icon">⛽</span><div class="num">104</div><div class="num-label">የጋዝ አደጋ</div></div>
+        <div class="num-card purple"><span class="num-icon">🛡️</span><div class="num">1202</div><div class="num-label">የጀርባ ግንባር ዕዝ (Pikud HaOref)</div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title"><span class="sec-icon">🔴</span> ቀይ ማንቂያ ሲሰማ (Tzeva Adom)</div>
+      <div class="alert-box red">
+        <span class="alert-icon">⚠️</span>
+        <div><h4>60–90 ሰከንድ ብቻ አለዎት</h4><p>ማንቂያ ከተሰጠ ጀምሮ ሚሳኤሉ እስኪደርስ ድረስ — በእስራኤል መሃል ከ60 እስከ 90 ሰከንድ ብቻ ነው። ወዲያውኑ ይንቀሳቀሱ።</p></div>
+      </div>
+      <div class="steps">
+        <div class="step urgent"><div class="step-num">1</div><div class="step-text"><h4>ወዲያው ወደ መጠለያ ይሂዱ</h4><p>ወደ ጥበቃ ክፍሉ (ማማድ)፣ ወደ ህንፃው ጥበቃ ቦታ፣ ወይም ወደ መስኮት ወደሌለው ደረጃ ይሂዱ።</p></div></div>
+        <div class="step urgent"><div class="step-num">2</div><div class="step-text"><h4>በሩን ዝጉ እና ቆልፉ</h4><p>በሩን ጠርቅሞ ይዝጉ። በጥበቃ ክፍሉ ውስጥ መስኮቱንም ዝጉ እና ቆልፉ።</p></div></div>
+        <div class="step"><div class="step-num">3</div><div class="step-text"><h4>ለ10 ደቂቃ ቆዩ</h4><p>ማንቂያው ከቆመ በኋላ ሙሉ 10 ደቂቃ ሳያልፍ ከመጠለያው አትውጡ።</p></div></div>
+        <div class="step"><div class="step-num">4</div><div class="step-text"><h4>ኦፊሴላዊ መልዕክቶችን ተከታተሉ</h4><p>ሬዲዮ ወይም Pikud HaOref ትግበራ (አፕሊኬሽን) ይከታተሉ።</p></div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title"><span class="sec-icon">🏃</span> ከቤት ወጭ ወይም በመኪና ውስጥ ከሆኑ</div>
+      <div class="steps">
+        <div class="step urgent"><div class="step-num">🚶</div><div class="step-text"><h4>በጎዳና ላይ ከሆኑ</h4><p>ፊትዎን ወደ ምድር አድርገው ይዋሉ። ሁለቱ እጆቻቸው ጭንቅላቸውን ይሸፍኑ። ማንቂያው ካቆመ ከ10 ደቂቃ በፊት አትነሱ።</p></div></div>
+        <div class="step urgent"><div class="step-num">🚗</div><div class="step-text"><h4>በመኪና ውስጥ ከሆኑ</h4><p>መኪናዎን ያቁሙ፣ ይውጡ፣ ከመኪናው ይራቁ፣ ምድር ላይ ይዋሉ — ጭንቅላቶን ይሸፍኑ።</p></div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title"><span class="sec-icon">🏠</span> የመጠለያ ዓይነቶች — ከምርጡ እስከ ዝቅተኛው</div>
+      <div class="shelter-grid">
+        <div class="shelter-card"><span class="sh-icon">🛡️</span><h4>ጥበቃ ክፍል (ማማድ)</h4><p>ምርጥ ጥበቃ። የታጠቀ መስኮትና የብረት በር ያለው ምሽግ ክፍል።</p></div>
+        <div class="shelter-card orange"><span class="sh-icon">🏚️</span><h4>ህንፃ ጥበቃ ቦታ</h4><p>አብዛኛውን ጊዜ ምድር ቤት ውስጥ ይገኛል። ሰማያዊ ቀስቱን ምልክት ይፈልጉ።</p></div>
+        <div class="shelter-card blue"><span class="sh-icon">🪜</span><h4>ደረጃ (መስኮት የሌለው)</h4><p>ያለ መስኮት ውስጣዊ ደረጃ — ወደ ታች ወደሚቻለው ወርዱ።</p></div>
+        <div class="shelter-card gray"><span class="sh-icon">🏢</span><h4>ውስጣዊ ኮሪዶር</h4><p>ከታቹ ፎቅ ያለ መስኮት ውስጣዊ ኮሪዶር — ከመስኮቶች ይራቁ።</p></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title"><span class="sec-icon">🩺</span> የመጀመሪያ ህክምና ዕርዳታ</div>
+      <div class="alert-box red">
+        <span class="alert-icon">🚑</span>
+        <div><h4>ማንኛውም ጉዳት ሲደርስ — ወዲያው 101 ደውሉ</h4><p>ከባድ ጉዳት ደርሶባቸው ያለ ሰው ብቻዎን አያንቀሳቅሱ — አምቡላንስ ይጠብቁ።</p></div>
+      </div>
+      <div class="steps">
+        <div class="step"><div class="step-num">🩸</div><div class="step-text"><h4>ደም መፍሰስን ማቆም</h4><p>ንጹህ ጨርቅ ወይም ማሰሪያ ጠቅሞ ቁስሉን ተጭኑ። ለ10 ደቂቃ ሳይፈቱ ይቀጥሉ።</p></div></div>
+        <div class="step"><div class="step-num">🦴</div><div class="step-text"><h4>የአከርካሪ አጥንት ጉዳት ጥርጣሬ</h4><p>ሰውዬውን አታንቀሳቅሱ። ጭንቅላቱንና አንገቱን አስተካክሉ — አምቡላንስ ይጠብቁ።</p></div></div>
+        <div class="step"><div class="step-num">😮‍💨</div><div class="step-text"><h4>ንቃተ ህሊና ያጣ / ትንፋሽ የሌለው</h4><p>CPR ጀምሩ፦ 30 ጊዜ ደረቱ ላይ ይጫኑ፣ 2 ጊዜ አፍ ለአፍ ይስጡ። አምቡላንስ እስኪደርስ ቀጥሉ። 101 ደውሉ።</p></div></div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title"><span class="sec-icon">💙</span> የስነ ልቦና ድጋፍ — ነጻ፣ 24/7</div>
+      <div class="alert-box green">
+        <span class="alert-icon">💚</span>
+        <div><h4>ጭንቀት፣ ፍርሃት፣ ድንጋጤ — ተፈጥሯዊ ነው</h4><p>ብቻዎን አይደሉም። ሙያዊ ዕርዳታ 24 ሰዓት ነጻ ይቀርባል።</p></div>
+      </div>
+      <div class="hotlines">
+        <div class="hotline"><div class="hl-num">1201</div><div class="hl-info"><h4>ERAN — ድንገተኛ የስነ ልቦና ዕርዳታ</h4><p>በዕብራይስጥ እና በዐረብኛ ይቀርባል። ነጻ፣ 24/7።</p></div></div>
+        <div class="hotline"><div class="hl-num" style="font-size:19px;">1800-363-363</div><div class="hl-info"><h4>NATAL — ለጦርነት ቀውስ እና PTSD</h4><p>በጦርነት ሳቢያ ለደረሰ ስነ ልቦና ጉዳት ልዩ ዕርዳታ። ነጻ።</p></div></div>
+        <div class="hotline"><div class="hl-num" style="font-size:19px;">1800-500-381</div><div class="hl-info"><h4>ENOSH — የአዕምሮ ጤና</h4><p>መረጃ እና ወደ ስፔሻሊስቶች ማዛወር። ነጻ።</p></div></div>
+        <div class="hotline"><div class="hl-num">*6005</div><div class="hl-info"><h4>ለኢትዮጵያ ማህበረሰብ — רווחה</h4><p>ለኢትዮጵያ አይሁዶች የማህበራዊ ዕርዳታ። ነጻ።</p></div></div>
+      </div>
+    </div>
+
+  </div>
+  <footer class="page-footer"><p>CarePedia — ለእስራኤል ነዋሪዎች የህክምና መረጃ · <a href="https://carepedia.org">carepedia.org</a></p></footer>
+</div>
+
+
+<script>
+function setLang(lang) {
+  document.querySelectorAll('.lang-section').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+  document.getElementById('lang-' + lang).classList.add('active');
+  document.getElementById('btn-' + lang).classList.add('active');
+  document.documentElement.lang = lang;
+  document.documentElement.dir = (lang === 'ar') ? 'rtl' : 'ltr';
+  const logo = document.querySelector('.lang-bar .site-logo');
+  if (logo) {
+    logo.style.left  = (lang === 'ar') ? 'auto' : '20px';
+    logo.style.right = (lang === 'ar') ? '20px'  : 'auto';
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Auto-detect browser language
+(function() {
+  const lang = (navigator.language || '').toLowerCase();
+  if (lang.startsWith('ar')) setLang('ar');
+  else if (lang.startsWith('am') || lang.startsWith('ti')) setLang('am');
+  else setLang('ru');
+})();
+</script>
+
+</body>
+</html>
