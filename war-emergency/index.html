@@ -149,6 +149,37 @@ body::before {
 
 .sidebar nav a .nav-icon { font-size: 20px; min-width: 28px; text-align: center; }
 
+/* LANGUAGE TOGGLE */
+.lang-toggle {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  z-index: 1200;
+  background: #fff;
+  color: var(--primary);
+  border: 2px solid var(--primary-light);
+  border-radius: 30px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 700;
+  font-family: 'Rubik', sans-serif;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+  transition: var(--transition);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.lang-toggle:hover {
+  background: var(--primary);
+  color: #fff;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 28px rgba(0,0,0,0.22);
+}
+@media (max-width: 900px) {
+  .lang-toggle { bottom: 20px; left: 20px; font-size: 13px; padding: 9px 16px; }
+}
+
 /* MOBILE MENU */
 .menu-toggle {
   display: none;
@@ -1441,18 +1472,18 @@ body::before {
     <div class="ov-section-title">🩺 የመጀመሪያ ህክምና ዕርዳታ</div>
     <div class="ov-alert r"><span class="ai">🚑</span><div><h4>ማንኛውም ጉዳት ሲደርስ — 101 ደውሉ</h4><p>ከባድ ጉዳት ደርሶባቸው ያለ ሰው ብቻዎን አያንቀሳቅሱ — አምቡላንስ ይጠብቁ።</p></div></div>
     <div class="ov-card-grid">
-      <div class="ov-card red"><span class="ov-card-icon">🩸</span><h4>ደም መፍሰስን ማቆም</h4><p>ንጹህ ጨርቅ ወይም ማሰሪያ ጠቅሞ ቁስሉን ተጭኑ። ለ10 ደቂቃ ሳይፈቱ ይቀጥሉ። ብዙ ደም ከሆነ — ኩርኩር (tourniquet) ጉዳቱ ከላይ።</p></div></div>
-      <div class="ov-card red"><span class="ov-card-icon">🦴</span><h4>የአከርካሪ አጥንት ጉዳት</h4><p>ሰውዬውን አታንቀሳቅሱ። ጭንቅላቱንና አንገቱን አስተካክሉ — አምቡላንስ ይጠብቁ። ሕይወት አደጋ ላይ ካልሆነ።</p></div></div>
-      <div class="ov-card red"><span class="ov-card-icon">😮‍💨</span><h4>ንቃተ ህሊና ያጣ / ትንፋሽ የሌለው</h4><p>CPR: 30 ጊዜ ደረቱ ላይ ይጫኑ + 2 ጊዜ አፍ ለአፍ። አምቡላንስ እስኪደርስ ቀጥሉ।</p></div></div>
-      <div class="ov-card red"><span class="ov-card-icon">🔥</span><h4>ቃጠሎ</h4><p>ቀዝቃዛ (ቀዘቀዘ ያይደለ) ውሃ ለ20 ደቂቃ ያጥቡ። ዘይት ወይም ሌላ ነገር አታስቀምጡ። ንጹህ ጨርቅ ይሸፍኑ።</p></div></div>
+      <div class="ov-card red"><span class="ov-card-icon">🩸</span><h4>ደም መፍሰስን ማቆም</h4><p>ንጹህ ጨርቅ ወይም ማሰሪያ ጠቅሞ ቁስሉን ተጭኑ። ለ10 ደቂቃ ሳይፈቱ ይቀጥሉ። ብዙ ደም ከሆነ — ኩርኩር (tourniquet) ጉዳቱ ከላይ።</p></div>
+      <div class="ov-card red"><span class="ov-card-icon">🦴</span><h4>የአከርካሪ አጥንት ጉዳት</h4><p>ሰውዬውን አታንቀሳቅሱ። ጭንቅላቱንና አንገቱን አስተካክሉ — አምቡላንስ ይጠብቁ። ሕይወት አደጋ ላይ ካልሆነ።</p></div>
+      <div class="ov-card red"><span class="ov-card-icon">😮‍💨</span><h4>ንቃተ ህሊና ያጣ / ትንፋሽ የሌለው</h4><p>CPR: 30 ጊዜ ደረቱ ላይ ይጫኑ + 2 ጊዜ አፍ ለአፍ። አምቡላንስ እስኪደርስ ቀጥሉ।</p></div>
+      <div class="ov-card red"><span class="ov-card-icon">🔥</span><h4>ቃጠሎ</h4><p>ቀዝቃዛ (ቀዘቀዘ ያይደለ) ውሃ ለ20 ደቂቃ ያጥቡ። ዘይት ወይም ሌላ ነገር አታስቀምጡ። ንጹህ ጨርቅ ይሸፍኑ።</p></div>
     </div>
 
     <div class="ov-section-title">👶 ህጻናትና አዛውንቶች</div>
     <div class="ov-card-grid">
-      <div class="ov-card"><span class="ov-card-icon">🧒</span><h4>ህጻናቱን አስቀድሞ ያዘጋጁ</h4><p>በቤቱ ውስጥ ልምምድ ያድርጉ። በቀላሉ ያስረዱ: "ደወሉ ሲሰማ — ወደ ልዩ ክፍላችን እንሮጣለን"። አይፍሩ ግን ያዘጋጁ።</p></div></div>
-      <div class="ov-card"><span class="ov-card-icon">🤗</span><h4>ረጋ ይበሉ</h4><p>ህጻናቱ የአዋቂዎቹን ምላሽ ይከተላሉ። ሰላምተኛ ብትሆኑ ልጁም ሰላምተኛ ይሆናል። ማንቂያ ሲሰማ እጃቸውን ያያዙ።</p></div></div>
-      <div class="ov-card"><span class="ov-card-icon">👴</span><h4>አዛውንትና አካል ጉዳተኞች</h4><p>አስቀድሞ የጎረቤቶቹ ዕርዳታ ያቅዱ። እንጨቱ ወይም ዊልቸሩ ከአልጋ አጠገብ ይሁን። የሕክምና ጥሪ ቁጥር ሁልጊዜ ይያዙ።</p></div></div>
-      <div class="ov-card"><span class="ov-card-icon">♿</span><h4>ዊልቸር ተጠቃሚዎች</h4><p>ወደ መጠለያ መድረስ ካልቻሉ — ወደ ምድር ዝቅ ይበሉ እና ጭንቅላቶን ይሸፍኑ። አስቀድሞ ከከተማ ቤት ጋር ይመዝገቡ።</p></div></div>
+      <div class="ov-card"><span class="ov-card-icon">🧒</span><h4>ህጻናቱን አስቀድሞ ያዘጋጁ</h4><p>በቤቱ ውስጥ ልምምድ ያድርጉ። በቀላሉ ያስረዱ: "ደወሉ ሲሰማ — ወደ ልዩ ክፍላችን እንሮጣለን"። አይፍሩ ግን ያዘጋጁ።</p></div>
+      <div class="ov-card"><span class="ov-card-icon">🤗</span><h4>ረጋ ይበሉ</h4><p>ህጻናቱ የአዋቂዎቹን ምላሽ ይከተላሉ። ሰላምተኛ ብትሆኑ ልጁም ሰላምተኛ ይሆናል። ማንቂያ ሲሰማ እጃቸውን ያያዙ።</p></div>
+      <div class="ov-card"><span class="ov-card-icon">👴</span><h4>አዛውንትና አካል ጉዳተኞች</h4><p>አስቀድሞ የጎረቤቶቹ ዕርዳታ ያቅዱ። እንጨቱ ወይም ዊልቸሩ ከአልጋ አጠገብ ይሁን። የሕክምና ጥሪ ቁጥር ሁልጊዜ ይያዙ።</p></div>
+      <div class="ov-card"><span class="ov-card-icon">♿</span><h4>ዊልቸር ተጠቃሚዎች</h4><p>ወደ መጠለያ መድረስ ካልቻሉ — ወደ ምድር ዝቅ ይበሉ እና ጭንቅላቶን ይሸፍኑ። አስቀድሞ ከከተማ ቤት ጋር ይመዝገቡ።</p></div>
     </div>
 
     <div class="ov-section-title">💙 የስነ ልቦና ድጋፍ — ነጻ፣ 24/7</div>
@@ -1544,6 +1575,11 @@ function setLang(lang) {
     <a href="#resources" onclick="navigate(this)"><span class="nav-icon">🔗</span>קישורים ומשאבים</a>
   </nav>
 </aside>
+
+<!-- LANGUAGE TOGGLE -->
+<a href="/en/war-emergency" class="lang-toggle" title="Switch to English">
+  🇬🇧 English
+</a>
 
 <!-- MAIN CONTENT -->
 <div class="main">
